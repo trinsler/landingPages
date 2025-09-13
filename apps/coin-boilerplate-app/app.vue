@@ -20,7 +20,7 @@ useHead({
   meta: [
     { name: 'description', content: 'Buy digital coins securely with Google OAuth and Stripe payments. Modern Nuxt 3 application with real-time updates.' },
     { name: 'keywords', content: 'digital coins, stripe payments, oauth, nuxt, vue, typescript' },
-    { name: 'author', content: 'CoinApp' },
+    { name: 'author', content: 'Trinsler' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { property: 'og:title', content: 'CoinApp - Secure Digital Coin Platform' },
     { property: 'og:description', content: 'Buy digital coins securely with Google OAuth and Stripe payments.' },
