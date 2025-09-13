@@ -82,13 +82,30 @@ CREATE POLICY "Users can update own profile" ON public.users
 CREATE POLICY "Users can view own transactions" ON public.transactions
   FOR SELECT USING (auth.uid() = user_id);
 
+CREATE POLICY "Users can insert own transactions" ON public.transactions
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
 -- RLS Policies for payment_sessions table
 CREATE POLICY "Users can view own payment sessions" ON public.payment_sessions
   FOR SELECT USING (auth.uid() = user_id);
 
+CREATE POLICY "Users can insert own payment sessions" ON public.payment_sessions
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
 -- RLS Policies for audit_logs table
 CREATE POLICY "Users can view own audit logs" ON public.audit_logs
   FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own audit logs" ON public.audit_logs
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
+-- Authenticated users can insert their own profile
+CREATE POLICY "Users can insert own profile" ON public.users
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = id);
 
 -- Function to automatically create user profile
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -103,7 +120,7 @@ BEGIN
   );
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET row_security = off;
 
 -- Trigger to automatically create user profile on signup
 CREATE TRIGGER on_auth_user_created
@@ -147,3 +164,20 @@ CREATE TRIGGER update_transactions_updated_at
 CREATE TRIGGER update_payment_sessions_updated_at
   BEFORE UPDATE ON public.payment_sessions
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+  -- Add the increment_user_coins function that's used in the webhook
+CREATE OR REPLACE FUNCTION increment_user_coins(user_id_param UUID, coins_to_add INTEGER)
+RETURNS VOID AS $$
+BEGIN
+  UPDATE public.users 
+  SET 
+    coins = coins + coins_to_add,
+    updated_at = NOW()
+  WHERE id = user_id_param;
+  
+  -- Check if the user exists
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'User with ID % not found', user_id_param;
+  END IF;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;

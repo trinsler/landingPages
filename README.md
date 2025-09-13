@@ -1,30 +1,30 @@
 # Monorepo
 
-Ein **NPM Workspace Monorepo** mit geteilten Packages für Landing Pages und Apps. **Ein `npm update` aktualisiert alle Apps**
+An **NPM Workspace Monorepo** with shared packages for Landing Pages and Apps. **One `npm update` updates all apps**
 
 ## Shared Tech Stack
 
-Alle Apps nutzen:
+All apps use:
 
 - **Frontend**: Nuxt 4, Vue 3, TypeScript, Tailwind CSS, Shadcn
 - **Backend**: Supabase (Auth + DB + Edge Functions)
 - **Payments**: Stripe
 - **State**: Pinia
 - **UI**: Headless UI, Heroicons
-- **Build**: Vite + tsup (für Packages)
+- **Build**: Vite + tsup (for packages)
 
-### Zentrale Dependency-Verwaltung
-- **Ein `npm update`** → **Alle Apps** aktualisiert
-- **Ein `npm install package`** → **Für alle Apps** verfügbar
-- **Konsistente Versionen** überall
-- **Shared Code** zwischen Apps
+### Centralized Dependency Management
+- **One `npm update`** → **All apps** updated
+- **One `npm install package`** → **Available for all apps**
+- **Consistent versions** everywhere
+- **Shared code** between apps
 
 ### Shared Packages
 - **`@monorepo/shared`** - Types, Utils, Constants
-- **`@monorepo/ui`** - Wiederverwendbare UI Componentse
+- **`@monorepo/ui`** - Reusable UI Components
 
 ### 📱 Apps
-- **`coin-boilerplate-app`** - Vollständige Boilerplate mit OAuth, Payments, Email-Subscription
+- **`coin-boilerplate-app`** - Complete boilerplate with OAuth, Payments, Email subscription
 
 ## 🚀 Quick Start
 
@@ -39,113 +39,85 @@ npm install
 npm run build:packages
 ```
 
-### 2. Existierende App starten
+### 2. Start existing app
 
 ```bash
-npm run dev:coin    # coin-boilerplate-app auf localhost:3000
+npm run dev:coin    # coin-boilerplate-app on localhost:3000
 ```
 
-### 3. Neue App erstellen
+### 3. Create new app
 
 ```bash
-# Neue App basierend auf coin-boilerplate-app
+# New app based on coin-boilerplate-app
 npm run create-new-app my-landing-page
 
-# App konfigurieren
+# Configure app
 cd apps/my-landing-page
 cp .env.example .env
-# .env ausfüllen
+# Fill out .env
 
-# Zurück ins Root und starten
+# Back to root and start
 cd ../..
 npm run dev:mylandingpage
 ```
 
 ## 📦 Dependency Management
 
-### Ein Update für ALLE Apps
+### One update for ALL apps
 
 ```bash
-# EINMAL ausführen → ALLE Apps profitieren:
-npm update              # Nuxt, Tailwind, Vue, etc. für alle Apps
-npm install @vueuse/core # Neues Package für alle Apps
-npm audit fix           # Security Updates für alle Apps
+# Run ONCE → ALL apps benefit:
+npm update              # Nuxt, Tailwind, Vue, etc. for all apps
+npm install @vueuse/core # New package for all apps
+npm audit fix           # Security updates for all apps
 ```
 
-### Package hinzufügen
+### Add package
 
 ```bash
-# Im Root hinzufügen = Für alle Apps verfügbar
+# Add in root = Available for all apps
 npm install lucide-vue-next
 
-# Development Dependencies
+# Development dependencies
 npm install -D vitest
 ```
 
-### Per-App Development
+### Per-app development
 
 ```bash
-# In eine App wechseln (optional)
+# Switch to an app (optional)
 cd apps/my-app
 
-# Standard Nuxt Commands funktionieren
+# Standard Nuxt commands work
 npm run dev          # localhost:3000
-npm run build        # Production Build
-npm run generate     # Static Generation
+npm run build        # Production build
+npm run generate     # Static generation
 
-# Aber besser: Im Root arbeiten
+# But better: Work from root
 cd ../..
-npm run dev:myapp    # Aus Root starten
+npm run dev:myapp    # Start from root
 ```
 
-### Parallel Development
+### Parallel development
 
 ```bash
-# Mehrere Apps gleichzeitig
+# Multiple apps simultaneously
 npm run dev:coin &                    # Port 3000
 NUXT_PORT=3001 npm run dev:myapp &    # Port 3001
 NUXT_PORT=3002 npm run dev:another &  # Port 3002
 ```
 
-## Services Setup (Einmalig)
-
-### Supabase
-
-```sql
--- 1. Projekt auf supabase.com erstellen
--- 2. Schema ausführen:
-
--- Aus packages/shared (für alle Apps):
--- apps/coin-boilerplate-app/supabase/schema.sql
-
--- Email Subscriptions Schema:
--- packages/email-subscription/src/schemas/email-subscriptions.sql
-
--- 3. Edge Functions deployen:
-cd apps/my-app
-supabase functions deploy stripe-webhook
-```
+## Services Setup
 
 ### Google OAuth
 
-```bash
-# 1. Google Cloud Console → OAuth 2.0 Client
-# 2. Redirect URIs:
-#    - http://localhost:3000/auth/callback (Dev)
-#    - https://yourdomain.com/auth/callback (Prod)
-```
+See SETUP_OAUTH.md
 
-### Stripe
+### Supabase and Stripe
 
-```bash
-# 1. Stripe Dashboard → API Keys
-# 2. Webhooks:
-#    - Events: checkout.session.completed, checkout.session.expired
-#    - Endpoint: https://project.supabase.co/functions/v1/stripe-webhook
-```
+See SETUP_SUPABASE.md
 
-
-### 🔗 Useful Links
+## 🔗 Useful Links
 
 - [NPM Workspaces Docs](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 - [Nuxt 3 Docs](https://nuxt.com/docs)

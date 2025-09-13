@@ -46,92 +46,29 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Check if this session has already been processed
+    // Only check if webhook has processed the payment - don't process here
     const { data: existingTransaction } = await supabase
       .from('transactions')
-      .select('id')
+      .select('*')
       .eq('provider_payment_id', sessionId)
       .single()
 
     if (existingTransaction) {
+      // Webhook already processed - return success
       return {
         success: true,
-        message: 'Payment already processed',
-        coins: parseInt(session.metadata?.coins || '0')
+        message: 'Payment processed successfully',
+        coins: existingTransaction.coins,
+        transactionId: existingTransaction.id
       }
     }
 
-    // Process the payment
-    const coins = parseInt(session.metadata?.coins || '0')
-    const amount = session.amount_total ? session.amount_total / 100 : 0
-
-    // Start database transaction
-    const { data: transaction, error: transactionError } = await supabase
-      .from('transactions')
-      .insert({
-        user_id: user.id,
-        type: 'purchase',
-        amount: amount,
-        coins: coins,
-        status: 'completed',
-        provider: 'stripe',
-        provider_payment_id: sessionId,
-        metadata: {
-          stripe_session_id: sessionId,
-          package_id: session.metadata?.package_id
-        }
-      })
-      .select()
-      .single()
-
-    if (transactionError) {
-      throw transactionError
-    }
-
-    // Update user coins
-    const { error: updateError } = await supabase.rpc('increment_user_coins', {
-      user_id_param: user.id,
-      coins_to_add: coins
-    })
-
-    if (updateError) {
-      // If coins update fails, mark transaction as failed
-      await supabase
-        .from('transactions')
-        .update({ status: 'failed' })
-        .eq('id', transaction.id)
-      
-      throw updateError
-    }
-
-    // Update payment session status
-    if (session.metadata?.payment_session_id) {
-      await supabase
-        .from('payment_sessions')
-        .update({ status: 'completed' })
-        .eq('id', session.metadata.payment_session_id)
-    }
-
-    // Log audit trail
-    await supabase
-      .from('audit_logs')
-      .insert({
-        user_id: user.id,
-        action: 'coin_purchase',
-        resource_type: 'transaction',
-        resource_id: transaction.id,
-        new_values: {
-          coins_added: coins,
-          amount_paid: amount,
-          provider: 'stripe'
-        }
-      })
-
+    // Webhook hasn't processed yet - return pending status
     return {
-      success: true,
-      message: 'Payment processed successfully',
-      coins: coins,
-      transactionId: transaction.id
+      success: false,
+      message: 'Payment verification in progress. Webhook will process this payment.',
+      pending: true,
+      coins: parseInt(session.metadata?.coins || '0')
     }
   } catch (error) {
     console.error('Error verifying payment session:', error)

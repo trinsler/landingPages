@@ -134,3 +134,7 @@ Thumbs.db
 
 # Stripe CLI
 .config/
+
+# Supabase
+.temp/
+supabase/.temp/

@@ -33,25 +33,56 @@ export default defineEventHandler(async (event) => {
     apiVersion: '2024-06-20' as any
   })
 
-  // Define coin packages
+  // Define coin packages - Server-side validation
   const packages = {
     'coin_pack_100': { coins: 100, price: 99, name: '100 Coins' },
     'coin_pack_1000': { coins: 1000, price: 499, name: '1000 Coins' },
     'coin_pack_5000': { coins: 5000, price: 1999, name: '5000 Coins' },
     'coin_pack_10000': { coins: 10000, price: 3499, name: '10000 Coins' }
-  }
+  } as const
 
-  const selectedPackage = packages[packageId as keyof typeof packages]
-  if (!selectedPackage) {
+  // Validate package ID against server-side whitelist
+  const allowedPackageIds = Object.keys(packages)
+  if (!allowedPackageIds.includes(packageId)) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid package ID'
     })
   }
 
+  const selectedPackage = packages[packageId as keyof typeof packages]
+
+  // Double-check package data integrity
+  if (!selectedPackage || typeof selectedPackage.coins !== 'number' || typeof selectedPackage.price !== 'number') {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Package data corruption detected'
+    })
+  }
+
   try {
     const supabase = await serverSupabaseClient(event)
-    
+
+    // Rate limiting: Check recent payment sessions for this user
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString()
+    const { data: recentSessions, error: rateLimitError } = await supabase
+      .from('payment_sessions')
+      .select('id')
+      .eq('user_id', user.id)
+      .gte('created_at', fiveMinutesAgo)
+
+    if (rateLimitError) {
+      console.error('Rate limit check failed:', rateLimitError)
+    } else if (recentSessions && recentSessions.length >= 3) {
+      throw createError({
+        statusCode: 429,
+        statusMessage: 'Too many payment attempts. Please wait 5 minutes.'
+      })
+    }
+
+    // Generate temporary unique ID for payment session
+    const tempSessionId = `temp_${Date.now()}_${Math.random().toString(36).substring(2)}`
+
     // Create payment session record
     const { data: paymentSession, error: sessionError } = await supabase
       .from('payment_sessions')
@@ -59,7 +90,7 @@ export default defineEventHandler(async (event) => {
         user_id: user.id,
         package_id: packageId,
         provider: 'stripe',
-        provider_session_id: '', // Will be updated after Stripe session creation
+        provider_session_id: tempSessionId, // Temporary unique ID
         amount: selectedPackage.price / 100, // Convert cents to euros
         coins: selectedPackage.coins,
         status: 'created'
