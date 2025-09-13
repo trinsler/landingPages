@@ -1,0 +1,24 @@
+{
+  "name": "@monorepo/coin-boilerplate-app",
+  "version": "1.0.0",
+  "description": "Coin Boilerplate App - Nuxt 3 with OAuth, Coin Purchase System and Stripe Integration",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "clean": "rm -rf .nuxt .output dist",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@monorepo/shared": "workspace:*",
+    "@monorepo/ui": "workspace:*",
+    "@types/stripe": "^8.0.416",
+    "stripe": "^18.5.0"
+  },
+  "keywords": ["nuxt", "typescript", "supabase", "stripe", "oauth", "boilerplate"],
+  "author": "Niels",
+  "license": "MIT"
+}

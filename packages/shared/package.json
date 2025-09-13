@@ -1,0 +1,32 @@
+{
+  "name": "@monorepo/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities, types and constants for all apps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "stripe": "^18.5.0",
+    "@supabase/supabase-js": "^2.0.0"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@monorepo/ui",
+  "version": "1.0.0",
+  "description": "Shared UI components for all apps",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./style.css": "./src/style.css"
+  },
+  "scripts": {
+    "build": "tsup && tailwindcss -i ./src/style.css -o ./dist/style.css",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.9.2",
+    "vue-tsc": "^2.0.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "@monorepo/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.0",
+    "@headlessui/vue": "^1.7.0",
+    "@heroicons/vue": "^2.0.0"
+  }
+}

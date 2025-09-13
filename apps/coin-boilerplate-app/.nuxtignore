@@ -1,0 +1,2 @@
+# Supabase Edge Functions use Deno, not Node.js TypeScript
+supabase/functions/

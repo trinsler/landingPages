@@ -1,0 +1,49 @@
+{
+  "name": "landing-pages-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo für verschiedene Landing Pages mit geteilten Dependencies",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:packages": "npm run build --workspace=packages/*",
+    "clean:packages": "npm run clean --workspace=packages/* || true",
+    "typecheck": "npm run typecheck --workspace",
+    "create-new-app": "node scripts/create-new-app.js",
+    "list-apps": "ls -la apps/ | grep '^d'",
+    "dev:coin": "npm run dev --workspace=@monorepo/coin-boilerplate-app",
+    "build:coin": "npm run build --workspace=@monorepo/coin-boilerplate-app",
+    "generate:coin": "npm run generate --workspace=@monorepo/coin-boilerplate-app",
+    "typecheck:coin": "npm run typecheck --workspace=@monorepo/coin-boilerplate-app"
+  },
+  "devDependencies": {
+    "@nuxt/typescript-build": "^3.0.2",
+    "typescript": "^5.9.2",
+    "gh-pages": "^6.1.1",
+    "tsup": "^8.0.0",
+    "vue-tsc": "^2.0.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.2.0",
+    "@nuxtjs/supabase": "^1.6.2",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@pinia/nuxt": "^0.11.2",
+    "nuxt": "^4.1.1",
+    "pinia": "^3.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nielshen/landingPages.git"
+  },
+  "keywords": ["monorepo", "nuxt", "typescript", "supabase", "stripe", "oauth", "workspaces"],
+  "author": "Niels",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nielshen/landingPages/issues"
+  },
+  "homepage": "https://github.com/Nielshen/landingPages#readme"
+}
