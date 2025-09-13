@@ -227,18 +227,14 @@ jobs:
 
   notify-deployment:
     runs-on: ubuntu-latest
-    needs: [detect-changes, build-and-deploy]
-    if: always() && needs.detect-changes.outputs.has-changes == 'true'
+    needs: [build-and-deploy]
+    if: always()
     steps:
       - name: Deployment Status
         run: |
           if [ "${{ needs.build-and-deploy.result }}" = "success" ]; then
-            echo "✅ Successfully deployed: ${{ needs.detect-changes.outputs.changed-apps }}"
-            echo "🌐 Available at:"
-            IFS=',' read -ra APPS <<< "${{ needs.detect-changes.outputs.changed-apps }}"
-            for app in "${APPS[@]}"; do
-              echo "  - https://$app.dein-domain.com"
-            done
+            echo "✅ Successfully deployed: coin-boilerplate-app"
+            echo "🌐 Available at: https://nielshen.github.io/landingPages/"
           else
-            echo "❌ Deployment failed for: ${{ needs.detect-changes.outputs.changed-apps }}"
+            echo "❌ Deployment failed"
           fi
