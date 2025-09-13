@@ -18,7 +18,7 @@ const { toasts, dismiss } = useToast()
 useHead({
   title: 'CoinApp - Secure Digital Coin Platform',
   meta: [
-    { name: 'description', content: 'Buy digital coins securely with Google OAuth and Stripe payments. Modern Nuxt 3 application with real-time updates.' },
+    { name: 'description', content: 'Demo App to Buy digital coins securely with Google OAuth and Stripe payments. Modern Nuxt 3 application with real-time updates.' },
     { name: 'keywords', content: 'digital coins, stripe payments, oauth, nuxt, vue, typescript' },
     { name: 'author', content: 'Trinsler' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
