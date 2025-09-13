@@ -16,26 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build packages
-        run: pnpm run build:packages || echo "No build:packages script found"
+      - name: Install dependencies in app
+        run: |
+          cd apps/coin-boilerplate-app
+          npm install
 
       - name: Build Nuxt app
         run: |
           cd apps/coin-boilerplate-app
-          pnpm nuxt build --preset github_pages
+          npm run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
