@@ -1,242 +1,63 @@
-name: Smart Build & Deploy
+name: Deploy to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
-# Allow one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  # detect-changes:
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     changed-apps: ${{ steps.changes.outputs.changed-apps }}
-  #     has-changes: ${{ steps.changes.outputs.has-changes }}
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Detect changed apps
-  #       id: changes
-  #       run: |
-  #         # Get changed files between current commit and previous
-  #         if [ "${{ github.event_name }}" = "pull_request" ]; then
-  #           CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
-  #         else
-  #           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
-  #         fi
-
-  #         echo "Changed files:"
-  #         echo "$CHANGED_FILES"
-
-  #         # Extract changed apps
-  #         CHANGED_APPS=""
-
-  #         # Check for changes in apps/
-  #         for app_dir in apps/*/; do
-  #           if [ -d "$app_dir" ]; then
-  #             app_name=$(basename "$app_dir")
-  #             if echo "$CHANGED_FILES" | grep -q "^apps/$app_name/"; then
-  #               if [ -z "$CHANGED_APPS" ]; then
-  #                 CHANGED_APPS="$app_name"
-  #               else
-  #                 CHANGED_APPS="$CHANGED_APPS,$app_name"
-  #               fi
-  #             fi
-  #           fi
-  #         done
-
-  #         # Check for changes in packages/ (affects all apps)
-  #         if echo "$CHANGED_FILES" | grep -q "^packages/"; then
-  #           echo "Packages changed - will build all apps"
-  #           ALL_APPS=""
-  #           for app_dir in apps/*/; do
-  #             if [ -d "$app_dir" ]; then
-  #               app_name=$(basename "$app_dir")
-  #               if [ -z "$ALL_APPS" ]; then
-  #                 ALL_APPS="$app_name"
-  #               else
-  #                 ALL_APPS="$ALL_APPS,$app_name"
-  #               fi
-  #             fi
-  #           done
-  #           CHANGED_APPS="$ALL_APPS"
-  #         fi
-
-  #         # Check for root changes (package.json, etc.)
-  #         if echo "$CHANGED_FILES" | grep -q -E "^(package\.json|.*\.config\.(js|ts)|tsconfig\.json)$"; then
-  #           echo "Root config changed - will build all apps"
-  #           ALL_APPS=""
-  #           for app_dir in apps/*/; do
-  #             if [ -d "$app_dir" ]; then
-  #               app_name=$(basename "$app_dir")
-  #               if [ -z "$ALL_APPS" ]; then
-  #                 ALL_APPS="$app_name"
-  #               else
-  #                 ALL_APPS="$ALL_APPS,$app_name"
-  #               fi
-  #             fi
-  #           done
-  #           CHANGED_APPS="$ALL_APPS"
-  #         fi
-
-  #         echo "changed-apps=$CHANGED_APPS" >> $GITHUB_OUTPUT
-
-  #         if [ -n "$CHANGED_APPS" ]; then
-  #           echo "has-changes=true" >> $GITHUB_OUTPUT
-  #           echo "Will build: $CHANGED_APPS"
-  #         else
-  #           echo "has-changes=false" >> $GITHUB_OUTPUT
-  #           echo "No app changes detected"
-  #         fi
-
-  # lint-and-typecheck:
-  #   runs-on: ubuntu-latest
-  #   needs: detect-changes
-  #   if: needs.detect-changes.outputs.has-changes == 'true'
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20'
-  #         cache: 'npm'
-
-  #     - name: Install dependencies
-  #       run: npm ci
-
-  #     - name: Run ESLint
-  #       run: |
-  #         # Check if eslint is available globally or in workspace
-  #         if npm list eslint --depth=0 >/dev/null 2>&1 || npm list @nuxt/eslint-config >/dev/null 2>&1; then
-  #           echo "Running ESLint..."
-  #           npm run lint || echo "No lint script found, skipping ESLint"
-  #         else
-  #           echo "ESLint not configured, skipping..."
-  #         fi
-
-  #     - name: Run TypeScript check
-  #       run: |
-  #         if [ -f "tsconfig.json" ] || find . -name "tsconfig.json" -not -path "./node_modules/*" | grep -q .; then
-  #           echo "Running TypeScript check..."
-  #           npm run typecheck
-  #         else
-  #           echo "No TypeScript config found, skipping typecheck"
-  #         fi
-
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    #needs: [detect-changes, lint-and-typecheck]
-    #if: needs.detect-changes.outputs.has-changes == 'true'
-
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    strategy:
-      matrix:
-        #app: ${{ fromJson(format('[{0}]', needs.detect-changes.outputs.changed-apps)) }}
-        app: ['coin-boilerplate-app']
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20'
+          version: 9
 
-      - name: Update npm
-        run: npm install -g npm@latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      - name: Build packages first
+      - name: Build packages
+        run: pnpm run build:packages || echo "No build:packages script found"
+
+      - name: Build Nuxt app
         run: |
-          if [ -d "packages" ] && find packages -name "package.json" | grep -q .; then
-            echo "Building shared packages..."
-            npm run build:packages || echo "No build:packages script found"
-          fi
-
-      - name: Check if app exists
-        run: |
-          if [ ! -d "apps/${{ matrix.app }}" ]; then
-            echo "App directory apps/${{ matrix.app }} does not exist"
-            exit 1
-          fi
-
-          if [ ! -f "apps/${{ matrix.app }}/package.json" ]; then
-            echo "No package.json found in apps/${{ matrix.app }}"
-            exit 1
-          fi
-
-      - name: Build app
-        run: |
-          echo "Building app: ${{ matrix.app }}"
-          cd apps/${{ matrix.app }}
-
-          # Check which build command is available
-          if npm run | grep -q "generate"; then
-            echo "Using generate command for static site..."
-            npm run generate
-            BUILD_OUTPUT=".output/public"
-          elif npm run | grep -q "build"; then
-            echo "Using build command..."
-            npm run build
-            BUILD_OUTPUT=".output/public"
-          else
-            echo "No build or generate script found"
-            exit 1
-          fi
-
-          echo "BUILD_OUTPUT=$BUILD_OUTPUT" >> $GITHUB_ENV
+          cd apps/coin-boilerplate-app
+          pnpm nuxt build --preset github_pages
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          SITE_URL: ${{ secrets.SITE_URL }}
-
-      - name: Setup Pages
-        if: github.ref == 'refs/heads/main'
-        uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./apps/${{ matrix.app }}/${{ env.BUILD_OUTPUT }}
+          path: ./apps/coin-boilerplate-app/.output/public
 
+  deploy:
+    needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github_pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
-
-  notify-deployment:
-    runs-on: ubuntu-latest
-    needs: [build-and-deploy]
-    if: always()
-    steps:
-      - name: Deployment Status
-        run: |
-          if [ "${{ needs.build-and-deploy.result }}" = "success" ]; then
-            echo "✅ Successfully deployed: coin-boilerplate-app"
-            echo "🌐 Available at: https://nielshen.github.io/landingPages/"
-          else
-            echo "❌ Deployment failed"
-          fi
