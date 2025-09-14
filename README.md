@@ -13,12 +13,6 @@ All apps use:
 - **UI**: Headless UI, Heroicons
 - **Build**: Vite + tsup (for packages)
 
-### Centralized Dependency Management
-- **One `npm update`** → **All apps** updated
-- **One `npm install package`** → **Available for all apps**
-- **Consistent versions** everywhere
-- **Shared code** between apps
-
 ### Shared Packages
 - **`@monorepo/shared`** - Types, Utils, Constants
 - **`@monorepo/ui`** - Reusable UI Components
@@ -34,22 +28,22 @@ All apps use:
 git clone https://github.com/Nielshen/landingPages.git
 cd landingPages
 
-npm install
+pnpm install
 
-npm run build:packages
+pnpm run build:packages
 ```
 
 ### 2. Start existing app
 
 ```bash
-npm run dev:coin    # coin-boilerplate-app on localhost:3000
+pnpm dev:coin    # coin-boilerplate-app on localhost:3000
 ```
 
 ### 3. Create new app
 
 ```bash
 # New app based on coin-boilerplate-app
-npm run create-new-app my-landing-page
+pnpm run create-new-app my-landing-page
 
 # Configure app
 cd apps/my-landing-page
@@ -58,7 +52,7 @@ cp .env.example .env
 
 # Back to root and start
 cd ../..
-npm run dev:mylandingpage
+pnpm dev:mylandingpage
 ```
 
 ## 📦 Dependency Management
@@ -67,19 +61,19 @@ npm run dev:mylandingpage
 
 ```bash
 # Run ONCE → ALL apps benefit:
-npm update              # Nuxt, Tailwind, Vue, etc. for all apps
-npm install @vueuse/core # New package for all apps
-npm audit fix           # Security updates for all apps
+pnpm update              # Nuxt, Tailwind, Vue, etc. for all apps
+pnpm add @vueuse/core    # New package for all apps
+pnpm audit fix           # Security updates for all apps
 ```
 
 ### Add package
 
 ```bash
 # Add in root = Available for all apps
-npm install lucide-vue-next
+pnpm add lucide-vue-next
 
 # Development dependencies
-npm install -D vitest
+pnpm add -D vitest
 ```
 
 ### Per-app development
@@ -89,22 +83,22 @@ npm install -D vitest
 cd apps/my-app
 
 # Standard Nuxt commands work
-npm run dev          # localhost:3000
-npm run build        # Production build
-npm run generate     # Static generation
+pnpm dev             # localhost:3000
+pnpm build           # Production build
+pnpm generate        # Static generation
 
 # But better: Work from root
 cd ../..
-npm run dev:myapp    # Start from root
+pnpm dev:myapp       # Start from root
 ```
 
 ### Parallel development
 
 ```bash
 # Multiple apps simultaneously
-npm run dev:coin &                    # Port 3000
-NUXT_PORT=3001 npm run dev:myapp &    # Port 3001
-NUXT_PORT=3002 npm run dev:another &  # Port 3002
+pnpm dev:coin &                       # Port 3000
+NUXT_PORT=3001 pnpm dev:myapp &       # Port 3001
+NUXT_PORT=3002 pnpm dev:another &     # Port 3002
 ```
 
 ## Services Setup

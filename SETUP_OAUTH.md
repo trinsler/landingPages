@@ -16,7 +16,6 @@
 
 ### Step 4: Save Credentials
 - Copy **Client ID** → This is your `GOOGLE_CLIENT_ID`
-- Copy **Client Secret** → This is your `GOOGLE_CLIENT_SECRET`
 
 ### Step 5: Set OAuth Client Redirect URLs
 

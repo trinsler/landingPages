@@ -9,7 +9,6 @@
 4. Copy:
    - **Project URL** → This is your `SUPABASE_URL`
    - **anon public** key → This is your `SUPABASE_ANON_KEY`
-   - **service_role** key → This is your `SUPABASE_SERVICE_KEY` ⚠️ Keep secret!
 
 ## 2. Create Database Schema
 
@@ -33,9 +32,12 @@ supabase login
 
 supabase projects list
 
+supabase link --project-ref "replace with Project ID"
 supabase link --project-ref amilnmlymgtkefeizohj
 
 supabase functions deploy stripe-webhook --no-verify-jwt
+
+supabase functions deploy create_checkout
 ```
 
 ## 4. Stripe Setup:
@@ -43,6 +45,7 @@ supabase functions deploy stripe-webhook --no-verify-jwt
 ```bash
 stripe login
 
+stripe listen --forward-to https://"replace with Project ID".supabase.co/functions/v1/stripe-webhook
 stripe listen --forward-to https://amilnmlymgtkefeizohj.supabase.co/functions/v1/stripe-webhook
 ```
 

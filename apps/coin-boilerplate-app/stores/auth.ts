@@ -103,6 +103,12 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async refreshUser() {
+      if (this.user) {
+        await this.fetchUserProfile(this.user.id)
+      }
+    },
+
     setUser(user: User | null) {
       this.user = user
     },

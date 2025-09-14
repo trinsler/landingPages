@@ -35,7 +35,7 @@ CREATE TABLE public.payment_sessions (
   package_id TEXT NOT NULL,
   status TEXT CHECK (status IN ('created', 'processing', 'completed', 'failed')) DEFAULT 'created',
   provider TEXT CHECK (provider IN ('stripe', 'paypal')) NOT NULL,
-  provider_session_id TEXT UNIQUE NOT NULL,
+  provider_session_id TEXT UNIQUE,
   amount DECIMAL(10,2) NOT NULL,
   coins INTEGER NOT NULL,
   metadata JSONB DEFAULT '{}',

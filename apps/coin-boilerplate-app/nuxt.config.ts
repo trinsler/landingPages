@@ -1,5 +1,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  // Static site generation for GitHub Pages
+  ssr: false,
+  nitro: {
+    preset: 'github_pages'
+  },
   typescript: {
     strict: true,
     typeCheck: true
@@ -20,8 +25,6 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
-    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     public: {
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       supabaseUrl: process.env.SUPABASE_URL,
@@ -30,9 +33,5 @@ export default defineNuxtConfig({
       siteUrl: process.env.SITE_URL || 'http://localhost:3000'
     }
   },
-  nitro: {
-    experimental: {
-      wasm: true
-    }
-  }
+  compatibilityDate: '2025-09-13'
 })

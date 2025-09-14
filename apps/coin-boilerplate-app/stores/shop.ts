@@ -101,18 +101,33 @@ export const useShopStore = defineStore('shop', {
 
       this.processingPayment = true
       try {
-        const data = await $fetch('/api/payments/create-checkout', {
-          method: 'POST',
+        const supabase = useSupabaseClient()
+        const { data: { session } } = await supabase.auth.getSession()
+
+        if (!session) {
+          throw new Error('No active session')
+        }
+
+        // Call Supabase Edge Function
+        const { data, error } = await supabase.functions.invoke('create-checkout', {
           body: {
             packageId,
             provider
+          },
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
           }
         })
-        
-        if (provider === 'stripe' && data?.url) {
-          await navigateTo(data.url, { external: true })
+
+        if (error) {
+          console.error('Supabase function error:', error)
+          throw new Error(error.message || 'Failed to create checkout session')
         }
-        
+
+        if (provider === 'stripe' && data?.checkoutUrl) {
+          await navigateTo(data.checkoutUrl, { external: true })
+        }
+
         return data
       } catch (error) {
         console.error('Error creating payment session:', error)
@@ -124,18 +139,11 @@ export const useShopStore = defineStore('shop', {
 
     async handlePaymentSuccess(sessionId: string) {
       try {
-        const data = await $fetch('/api/payments/verify-session', {
-          method: 'POST',
-          body: { sessionId }
-        })
-        
         const authStore = useAuthStore()
-        if (authStore.user && data?.coins) {
-          await authStore.updateCoins(authStore.user.coins + data.coins)
-        }
-        
+        await authStore.refreshUser()
         await this.fetchTransactions()
-        return data
+
+        return { success: true, sessionId }
       } catch (error) {
         console.error('Error handling payment success:', error)
         throw error

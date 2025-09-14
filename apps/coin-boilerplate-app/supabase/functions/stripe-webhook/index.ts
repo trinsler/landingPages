@@ -1,4 +1,4 @@
-/// <reference lib="deno.ns" />
+/// <reference types="https://deno.land/types/deploy/stable/index.d.ts" />
 /// <reference types="https://esm.sh/@supabase/supabase-js@2" />
 /// <reference types="https://esm.sh/stripe@14.21.0" />
 

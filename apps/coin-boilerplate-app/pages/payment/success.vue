@@ -121,15 +121,17 @@ const handlePaymentSuccess = async () => {
     
     if (result.success) {
       success.value = true
-      coinsAdded.value = result.coins
-      transactionId.value = (result as any)?.transactionId || null
-      
+      await shopStore.fetchTransactions()
+      const latestTransaction = shopStore.recentTransactions[0]
+      coinsAdded.value = latestTransaction?.coins || 0
+      transactionId.value = latestTransaction?.id || null
+
       // Refresh user profile to get updated coin balance
       if (authStore.user) {
         await authStore.fetchUserProfile(authStore.user.id)
       }
     } else {
-      error.value = result.message || 'Payment verification failed'
+      error.value = 'Payment verification failed'
     }
   } catch (err) {
     console.error('Payment verification error:', err)
