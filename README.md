@@ -111,6 +111,10 @@ See SETUP_OAUTH.md
 
 See SETUP_SUPABASE.md
 
+### Github Pages deployment
+
+Set .env Secrets here: Settings → Secrets and variables → Actions → New repository secret
+
 ## 🔗 Useful Links
 
 - [NPM Workspaces Docs](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
