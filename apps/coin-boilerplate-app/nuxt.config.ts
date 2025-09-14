@@ -34,7 +34,7 @@ export default defineNuxtConfig({
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
       siteUrl: process.env.NODE_ENV === 'production'
-        ? 'https://YOUR_GITHUB_USERNAME.github.io/landingPages'
+        ? 'https://nielshen.github.io/landingPages'
         : 'http://localhost:3000'
     }
   },
