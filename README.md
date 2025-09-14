@@ -1,6 +1,6 @@
 # Monorepo
 
-An **NPM Workspace Monorepo** with shared packages for Landing Pages and Apps. **One `npm update` updates all apps**
+An **NPM Workspace Monorepo** with shared packages for Landing Pages and Apps. **One `pnpm update` updates all apps**
 
 ## Shared Tech Stack
 

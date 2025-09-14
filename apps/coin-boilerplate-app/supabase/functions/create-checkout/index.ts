@@ -135,8 +135,8 @@ serve(async (req: Request) => {
           }
         ],
         mode: 'payment',
-        success_url: `${req.headers.get('origin') || 'http://localhost:3000'}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${req.headers.get('origin') || 'http://localhost:3000'}/payment/cancelled`,
+        success_url: `${req.headers.get('origin') || 'http://localhost:3000'}${req.headers.get('origin')?.includes('github.io') ? '/landingPages' : ''}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.get('origin') || 'http://localhost:3000'}${req.headers.get('origin')?.includes('github.io') ? '/landingPages' : ''}/payment/cancelled`,
         customer_email: user.email || undefined,
         metadata: {
           user_id: user.id,

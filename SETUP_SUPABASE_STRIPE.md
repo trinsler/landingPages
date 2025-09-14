@@ -38,6 +38,9 @@ supabase link --project-ref amilnmlymgtkefeizohj
 supabase functions deploy stripe-webhook --no-verify-jwt
 
 supabase functions deploy create_checkout
+supabase functions deploy email-subscribe
+supabase functions deploy email-confirm
+supabase functions deploy email-unsubscribe
 ```
 
 ## 4. Stripe Setup:

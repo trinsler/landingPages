@@ -49,7 +49,7 @@
 
         <!-- Success Message -->
         <div v-if="success" class="text-sm text-green-600 text-center">
-          {{ successMessage }}
+          {{ displayMessage || successMessage }}
         </div>
       </form>
 
@@ -82,7 +82,7 @@ const props = withDefaults(defineProps<Props>(), {
   buttonText: 'Abonnieren',
   successMessage: 'Vielen Dank! Sie haben sich erfolgreich angemeldet.',
   privacyNote: 'Wir respektieren Ihre Privatsphäre. Keine Spam-Mails.',
-  apiEndpoint: '/api/email/subscribe'
+  apiEndpoint: '/functions/v1/email-subscribe'
 })
 
 interface Emits {
@@ -97,6 +97,7 @@ const email = ref('')
 const loading = ref(false)
 const error = ref('')
 const success = ref(false)
+const displayMessage = ref('')
 
 const isValidEmail = computed(() => {
   return email.value ? validateEmail(email.value) : false
@@ -121,13 +122,20 @@ const handleSubmit = async () => {
         email: email.value,
         tags: props.tags
       }
-    }) as { success: boolean; error?: string }
+    }) as { success: boolean; error?: string; message?: string; requiresConfirmation?: boolean }
 
     if (!response.success) {
       throw new Error(response.error || 'Subscription failed')
     }
 
     success.value = true
+    displayMessage.value = response.message || successMessage.value
+
+    // Show different message if confirmation is required
+    if (response.requiresConfirmation) {
+      displayMessage.value = response.message || 'Bitte bestätigen Sie Ihre E-Mail-Adresse über den Link, den wir Ihnen gesendet haben.'
+    }
+
     emit('success', email.value)
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten'

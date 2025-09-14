@@ -181,3 +181,74 @@ BEGIN
   END IF;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create email_subscriptions table
+CREATE TABLE IF NOT EXISTS email_subscriptions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'unsubscribed')),
+  confirmation_token UUID DEFAULT gen_random_uuid(),
+  tags TEXT[] DEFAULT ARRAY[]::TEXT[],
+  metadata JSONB DEFAULT '{}',
+
+  -- Timestamps
+  subscribed_at TIMESTAMP WITH TIME ZONE,
+  confirmed_at TIMESTAMP WITH TIME ZONE,
+  unsubscribed_at TIMESTAMP WITH TIME ZONE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+
+  -- Optional user linking
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL
+);
+
+-- Indexes for performance
+CREATE INDEX IF NOT EXISTS idx_email_subscriptions_email ON email_subscriptions(email);
+CREATE INDEX IF NOT EXISTS idx_email_subscriptions_status ON email_subscriptions(status);
+CREATE INDEX IF NOT EXISTS idx_email_subscriptions_tags ON email_subscriptions USING GIN(tags);
+CREATE INDEX IF NOT EXISTS idx_email_subscriptions_created_at ON email_subscriptions(created_at);
+CREATE INDEX IF NOT EXISTS idx_email_subscriptions_confirmation_token ON email_subscriptions(confirmation_token);
+
+-- Row Level Security
+ALTER TABLE email_subscriptions ENABLE ROW LEVEL SECURITY;
+
+-- Policies
+-- Public can subscribe (insert)
+CREATE POLICY "Anyone can subscribe to newsletter" ON email_subscriptions
+    FOR INSERT WITH CHECK (true);
+
+-- Public can confirm subscription (update with token)
+CREATE POLICY "Anyone can confirm subscription with token" ON email_subscriptions
+    FOR UPDATE USING (confirmation_token IS NOT NULL);
+
+-- Public can unsubscribe (update with email match)
+CREATE POLICY "Anyone can unsubscribe with email" ON email_subscriptions
+    FOR UPDATE USING (true);
+
+-- Only admins can view all subscriptions (assuming role-based access)
+CREATE POLICY "Admins can view all subscriptions" ON email_subscriptions
+    FOR SELECT USING (
+        EXISTS (
+            SELECT 1 FROM auth.users
+            WHERE auth.users.id = auth.uid()
+            AND auth.users.raw_user_meta_data->>'role' = 'admin'
+        )
+    );
+
+-- Users can view their own subscription
+CREATE POLICY "Users can view own subscription" ON email_subscriptions
+    FOR SELECT USING (user_id = auth.uid());
+
+-- Function to update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Trigger to auto-update updated_at
+CREATE TRIGGER update_email_subscriptions_updated_at
+    BEFORE UPDATE ON email_subscriptions
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
