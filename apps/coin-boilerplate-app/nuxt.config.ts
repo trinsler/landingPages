@@ -3,7 +3,10 @@ export default defineNuxtConfig({
   // Static site generation for GitHub Pages
   ssr: false,
   nitro: {
-    preset: 'github_pages'
+    preset: 'github_pages',
+    prerender: {
+      routes: ['/payment/success', '/payment/cancelled']
+    }
   },
   app: {
     baseURL: process.env.NODE_ENV === 'production' ? '/landingPages/' : '/'
