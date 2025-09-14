@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'github_pages'
   },
+  app: {
+    baseURL: process.env.NODE_ENV === 'production' ? '/landingPages/' : '/'
+  },
   typescript: {
     strict: true,
     typeCheck: true
