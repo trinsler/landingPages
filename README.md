@@ -43,7 +43,13 @@ pnpm dev:coin    # coin-boilerplate-app on localhost:3000
 
 ```bash
 # New app based on coin-boilerplate-app
-pnpm run create-new-app my-landing-page
+pnpm run create-new-app meine-neue-app
+
+✔ Initialize git repository?
+No
+
+✔ Would you like to install any of the official modules?
+No
 
 # Configure app
 cd apps/my-landing-page
