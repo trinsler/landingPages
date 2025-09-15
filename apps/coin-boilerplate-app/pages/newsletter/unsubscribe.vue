@@ -135,7 +135,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import LoadingSpinner from '@monorepo/ui/dist/components/LoadingSpinner.vue'
+import { LoadingSpinner } from '@monorepo/ui'
 
 const route = useRoute()
 const email = ref('')

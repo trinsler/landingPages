@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import LoadingSpinner from '@monorepo/ui/dist/components/LoadingSpinner.vue'
+import { LoadingSpinner } from '@monorepo/ui'
 
 const route = useRoute()
 const loading = ref(true)
@@ -89,16 +89,16 @@ const confirmSubscription = async () => {
       throw new Error('Bestätigungstoken fehlt')
     }
 
-    const { data } = await $fetch('/functions/v1/email-confirm', {
+    const response = await $fetch('/functions/v1/email-confirm', {
       method: 'GET',
       query: { token }
     }) as { success: boolean; message?: string; error?: string }
 
-    if (data.success) {
+    if (response.success) {
       success.value = true
-      message.value = data.message || 'Ihre E-Mail-Adresse wurde erfolgreich bestätigt.'
+      message.value = response.message || 'Ihre E-Mail-Adresse wurde erfolgreich bestätigt.'
     } else {
-      throw new Error(data.error || 'Bestätigung fehlgeschlagen')
+      throw new Error(response.error || 'Bestätigung fehlgeschlagen')
     }
   } catch (error) {
     success.value = false

@@ -129,7 +129,7 @@ const handleSubmit = async () => {
     }
 
     success.value = true
-    displayMessage.value = response.message || successMessage.value
+    displayMessage.value = response.message || props.successMessage
 
     // Show different message if confirmation is required
     if (response.requiresConfirmation) {
