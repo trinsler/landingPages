@@ -1,13 +1,13 @@
-name: Deploy to Production
+name: Deploy to Development
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - develop
 
 concurrency:
-  group: "pages"
+  group: "pages-develop"
   cancel-in-progress: true
 
 jobs:
@@ -32,18 +32,18 @@ jobs:
       - name: Build packages
         run: pnpm run build:packages || echo "No build:packages script found"
 
-      - name: Build Nuxt app for production
+      - name: Build Nuxt app for development
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
-          NODE_ENV: production
-          NUXT_APP_ENV: production
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL_DEV }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_DEV }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID_DEV }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY_DEV }}
+          NODE_ENV: development
+          NUXT_APP_ENV: develop
 
-      - name: Add CNAME for production
-        run: echo "coin.trinsler.com" > ./apps/coin-boilerplate-app/.output/public/CNAME
+      - name: Add CNAME for development
+        run: echo "coin-develop.trinsler.com" > ./apps/coin-boilerplate-app/.output/public/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -57,7 +57,7 @@ jobs:
       pages: write
       id-token: write
     environment:
-      name: github_pages
+      name: github_pages_develop
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:

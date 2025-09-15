@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/landingPages/' : '/'
+    baseURL: '/'
   },
   typescript: {
     strict: true,
@@ -36,8 +36,11 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
       googleClientId: process.env.GOOGLE_CLIENT_ID,
-      siteUrl: process.env.NODE_ENV === 'production'
-        ? 'https://nielshen.github.io/landingPages'
+      appEnv: process.env.NUXT_APP_ENV || 'local',
+      siteUrl: process.env.NUXT_APP_ENV === 'develop'
+        ? 'https://coin-develop.trinsler.com'
+        : process.env.NODE_ENV === 'production'
+        ? 'https://coin.trinsler.com'
         : 'http://localhost:3000'
     }
   },
