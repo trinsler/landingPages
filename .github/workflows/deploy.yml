@@ -1,17 +1,18 @@
-name: Deploy to Production
+name: Deploy Monorepo
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+      - develop
 
 concurrency:
-  group: "pages"
+  group: "deploy-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +33,9 @@ jobs:
       - name: Build packages
         run: pnpm run build:packages || echo "No build:packages script found"
 
+      # Production Build (main branch)
       - name: Build Nuxt app for production
+        if: github.ref == 'refs/heads/main'
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -42,25 +45,34 @@ jobs:
           NODE_ENV: production
           NUXT_APP_ENV: production
 
-      - name: Add CNAME for production
-        run: echo "coin.trinsler.com" > ./apps/coin-boilerplate-app/.output/public/CNAME
+      # Development Build (develop branch)
+      - name: Build Nuxt app for development
+        if: github.ref == 'refs/heads/develop'
+        run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL_DEV }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_DEV }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID_DEV }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY_DEV }}
+          NODE_ENV: development
+          NUXT_APP_ENV: develop
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # Deploy to Production (main branch)
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: ./apps/coin-boilerplate-app/.output/public
+          external_repository: trinsler/coin
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/coin-boilerplate-app/.output/public
+          cname: coin.trinsler.com
 
-  deploy:
-    needs: build
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github_pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # Deploy to Development (develop branch)
+      - name: Deploy to Development
+        if: github.ref == 'refs/heads/develop'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/coin-develop
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/coin-boilerplate-app/.output/public
+          cname: coin-develop.trinsler.com
