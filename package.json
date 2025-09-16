@@ -16,7 +16,11 @@
     "dev:trinsler": "npm run dev --workspace=@monorepo/trinsler",
     "build:trinsler": "npm run build --workspace=@monorepo/trinsler",
     "generate:trinsler": "npm run generate --workspace=@monorepo/trinsler",
-    "typecheck:trinsler": "npm run typecheck --workspace=@monorepo/trinsler"
+    "typecheck:trinsler": "npm run typecheck --workspace=@monorepo/trinsler",
+    "dev:betterclassroom": "npm run dev --workspace=@monorepo/betterclassroom",
+    "build:betterclassroom": "npm run build --workspace=@monorepo/betterclassroom",
+    "generate:betterclassroom": "npm run generate --workspace=@monorepo/betterclassroom",
+    "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^3.0.2",

@@ -1,0 +1,31 @@
+{
+  "name": "@monorepo/betterclassroom",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "clean": "rm -rf .nuxt .output dist",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@monorepo/shared": "workspace:*",
+    "@monorepo/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "tailwindcss": "^3.4.0"
+  },
+  "version": "1.0.0",
+  "description": "betterclassroom - Nuxt 3 App",
+  "author": "Niels",
+  "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "typescript",
+    "monorepo"
+  ]
+}
