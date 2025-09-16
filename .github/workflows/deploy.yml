@@ -33,8 +33,8 @@ jobs:
       - name: Build packages
         run: pnpm run build:packages || echo "No build:packages script found"
 
-      # Production Build (main branch)
-      - name: Build Nuxt app for production
+      # Production Build (main branch) - Coin App
+      - name: Build Coin app for production
         if: github.ref == 'refs/heads/main'
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
@@ -45,8 +45,16 @@ jobs:
           NODE_ENV: production
           NUXT_APP_ENV: production
 
-      # Development Build (develop branch)
-      - name: Build Nuxt app for development
+      # Production Build (main branch) - Trinsler App
+      - name: Build Trinsler app for production
+        if: github.ref == 'refs/heads/main'
+        run: pnpm --filter=@monorepo/trinsler run generate
+        env:
+          NODE_ENV: production
+          NUXT_APP_ENV: production
+
+      # Development Build (develop branch) - Coin App
+      - name: Build Coin app for development
         if: github.ref == 'refs/heads/develop'
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
@@ -57,8 +65,16 @@ jobs:
           NODE_ENV: development
           NUXT_APP_ENV: develop
 
-      # Deploy to Production (main branch)
-      - name: Deploy to Production
+      # Development Build (develop branch) - Trinsler App
+      - name: Build Trinsler app for development
+        if: github.ref == 'refs/heads/develop'
+        run: pnpm --filter=@monorepo/trinsler run generate
+        env:
+          NODE_ENV: development
+          NUXT_APP_ENV: develop
+
+      # Deploy to Production (main branch) - Coin App
+      - name: Deploy Coin app to Production
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -67,8 +83,18 @@ jobs:
           publish_dir: ./apps/coin-boilerplate-app/.output/public
           cname: coin.trinsler.com
 
-      # Deploy to Development (develop branch)
-      - name: Deploy to Development
+      # Deploy to Production (main branch) - Trinsler App
+      - name: Deploy Trinsler app to Production
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/trinsler
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/trinsler/.output/public
+          cname: trinsler.com
+
+      # Deploy to Development (develop branch) - Coin App
+      - name: Deploy Coin app to Development
         if: github.ref == 'refs/heads/develop'
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -76,3 +102,13 @@ jobs:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./apps/coin-boilerplate-app/.output/public
           cname: coin-develop.trinsler.com
+
+      # Deploy to Development (develop branch) - Trinsler App
+      - name: Deploy Trinsler app to Development
+        if: github.ref == 'refs/heads/develop'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/trinsler-develop
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/trinsler/.output/public
+          cname: trinsler-develop.trinsler.com

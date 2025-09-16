@@ -43,7 +43,13 @@ pnpm dev:coin    # coin-boilerplate-app on localhost:3000
 
 ```bash
 # New app based on coin-boilerplate-app
-pnpm run create-new-app my-landing-page
+pnpm run create-new-app meine-neue-app
+
+✔ Initialize git repository?
+No
+
+✔ Would you like to install any of the official modules?
+No
 
 # Configure app
 cd apps/my-landing-page
@@ -121,3 +127,5 @@ Set .env Secrets here: Settings → Secrets and variables → Actions → New re
 - [Nuxt 3 Docs](https://nuxt.com/docs)
 - [Supabase Docs](https://supabase.com/docs)
 - [TypeScript Monorepo Guide](https://www.typescriptlang.org/docs/handbook/project-references.html)
+
+test

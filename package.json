@@ -12,7 +12,11 @@
     "dev:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run dev",
     "build:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run build",
     "generate:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run generate",
-    "typecheck:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run typecheck"
+    "typecheck:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run typecheck",
+    "dev:trinsler": "npm run dev --workspace=@monorepo/trinsler",
+    "build:trinsler": "npm run build --workspace=@monorepo/trinsler",
+    "generate:trinsler": "npm run generate --workspace=@monorepo/trinsler",
+    "typecheck:trinsler": "npm run typecheck --workspace=@monorepo/trinsler"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^3.0.2",
@@ -35,7 +39,15 @@
     "type": "git",
     "url": "git+https://github.com/Nielshen/landingPages.git"
   },
-  "keywords": ["monorepo", "nuxt", "typescript", "supabase", "stripe", "oauth", "workspaces"],
+  "keywords": [
+    "monorepo",
+    "nuxt",
+    "typescript",
+    "supabase",
+    "stripe",
+    "oauth",
+    "workspaces"
+  ],
   "author": "Niels",
   "license": "MIT",
   "bugs": {

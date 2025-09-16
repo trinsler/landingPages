@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Critical CSS inline for better performance */
+.btn-primary {
+  background: linear-gradient(to right, #0ea5e9, #0369a1);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+.container-custom {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+body {
+  @apply bg-gray-50 text-gray-800;
+}
