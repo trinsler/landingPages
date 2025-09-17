@@ -1,86 +1,365 @@
 <template>
-  <div class="py-16">
-    <div class="container-custom">
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
-          Portfolio
-        </h1>
-        <p class="text-xl text-gray-600">
-          Erfolgsgeschichten unserer Kunden
-        </p>
-      </div>
+  <div class="min-h-screen matrix-bg relative overflow-hidden">
+    <!-- Cyber Grid Matrix -->
+    <div class="absolute inset-0 cyber-grid opacity-40"></div>
+    
+    <!-- Multiple Data Streams -->
+    <div class="absolute inset-0">
+      <div class="animate-data-stream absolute left-16 w-1 h-52 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-32 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.8s;"></div>
+      <div class="animate-data-stream absolute left-48 w-1 h-36 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.6s;"></div>
+      <div class="animate-data-stream absolute right-48 w-1 h-40 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 2.4s;"></div>
+      <div class="animate-data-stream absolute right-32 w-1 h-46 bg-gradient-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 3.2s;"></div>
+      <div class="animate-data-stream absolute right-16 w-1 h-38 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 4s;"></div>
+    </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="project in projects" :key="project.title" class="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div class="h-48 bg-gray-300"></div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">{{ project.title }}</h3>
-            <p class="text-gray-600 mb-4">{{ project.description }}</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span v-for="tag in project.tags" :key="tag" class="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">
-                {{ tag }}
-              </span>
+    <!-- Floating Code Matrix -->
+    <div class="absolute inset-0 data-points">
+      <div class="floating-element absolute top-20 left-24 code-font text-accent-neon text-xs opacity-70">startup.growth = 300%</div>
+      <div class="floating-element absolute top-32 right-28 code-font text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">portfolio.scale()</div>
+      <div class="floating-element absolute bottom-40 left-1/3 code-font text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">success.push(client)</div>
+      <div class="floating-element absolute top-2/3 right-1/3 code-font text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">revenue += 500k</div>
+      <div class="floating-element absolute top-1/4 left-2/3 code-font text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">[MISSION_SUCCESS]</div>
+    </div>
+
+    <div class="relative container-custom py-20">
+      <!-- Hacker Terminal Header -->
+      <div class="cyber-card rounded-3xl overflow-hidden max-w-5xl mx-auto mb-20 animate-glow-pulse">
+        <!-- Terminal Header -->
+        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-red-500"></div>
+            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="ml-4 code-font text-accent-cyan text-lg">~/growth-missions/portfolio-scan.sh</div>
+          </div>
+        </div>
+
+        <!-- Terminal Content -->
+        <div class="p-8 lg:p-12 code-pattern">
+          <!-- System Boot -->
+          <div class="mb-8">
+            <div class="code-font text-accent-neon text-sm mb-4 animate-slide-up-stagger">
+              <span class="text-accent-cyan">hacker@trinsler-hq:~$</span> scan --portfolio --success-stories
             </div>
-            <div class="text-sm text-gray-500">
-              <strong>Ergebnis:</strong> {{ project.result }}
+            <div class="neon-card rounded-xl px-6 py-3 inline-block animate-neon-flicker">
+              <span class="code-font text-accent-neon">[PORTFOLIO_SCAN_ACTIVE]</span>
+              <span class="text-white ml-2">SUCCESS_DATABASE.EXE</span>
+            </div>
+          </div>
+
+          <!-- ASCII Header -->
+          <div class="mb-12 text-center">
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6 animate-glitch">
+              <span class="code-font text-accent-neon">></span> GROWTH
+              <br />
+              <span class="gradient-text-neon">MISSIONS</span>
+              <br />
+              <span class="text-accent-cyan code-font">_ARCHIVE</span>
+            </h1>
+          </div>
+
+          <!-- Mission Brief -->
+          <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
+            <div class="code-font text-accent-purple text-sm mb-3">/* PORTFOLIO_DATABASE.md */</div>
+            <p class="text-xl text-white/90 leading-relaxed">
+              <span class="text-accent-cyan">KLASSIFIZIERT:</span> Unsere erfolgreichsten 
+              <span class="font-bold text-glow-green">Growth-Hacks und Startup-Revolutionen</span>. 
+              Jede Mission dokumentiert mit <span class="text-accent-neon">messbaren Ergebnissen</span>.
+            </p>
+            <div class="code-font text-accent-orange text-sm mt-4">
+              return portfolio.filter(mission => mission.success_rate > 0.9);
             </div>
           </div>
         </div>
       </div>
 
-      <div class="text-center mt-16">
-        <NuxtLink
-          to="/contact"
-          class="btn-primary"
-        >
-          Ihr Projekt besprechen
-        </NuxtLink>
+      <!-- Mission Files Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div v-for="(project, index) in projects" :key="project.title" 
+             class="group relative animate-slide-up-stagger"
+             :style="`animation-delay: ${index * 0.2}s`">
+          
+          <!-- Mission Terminal -->
+          <div class="cyber-card rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-glow-pulse">
+            <!-- Terminal Header -->
+            <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                <div class="code-font text-accent-cyan text-xs">MISSION_{{ String(index + 1).padStart(3, '0') }}.log</div>
+                <div class="ml-auto text-xs" :class="project.statusColor">{{ project.status }}</div>
+              </div>
+            </div>
+            
+            <!-- Mission Visual -->
+            <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+              <!-- Background Image with Matrix Overlay -->
+              <img 
+                :src="project.image" 
+                :alt="project.title" 
+                class="absolute inset-0 w-full h-full object-cover opacity-30"
+              />
+              <div class="absolute inset-0 bg-gradient-to-br from-surface-2/80 to-surface-1/80"></div>
+              
+              <!-- Matrix Code Rain -->
+              <div class="absolute inset-0 cyber-grid opacity-20"></div>
+              
+              <!-- Floating Mission Data -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                  <div :class="project.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker">
+                    <component :is="project.icon" class="w-8 h-8 text-white" />
+                  </div>
+                  <div class="code-font text-accent-cyan text-xs">{{ project.classification }}</div>
+                </div>
+              </div>
+              
+              <!-- Data Streams -->
+              <div class="absolute top-4 left-4 code-font text-xs text-accent-neon opacity-60">
+                {{ project.code }}
+              </div>
+            </div>
+            
+            <!-- Mission Report -->
+            <div class="p-6 code-pattern">
+              <!-- Mission ID -->
+              <div class="code-font text-accent-neon text-sm mb-3">
+                <span class="text-accent-cyan">mission@trinsler:~$</span> cat {{ project.filename }}
+              </div>
+              
+              <!-- Mission Title -->
+              <h3 class="text-xl font-bold text-white mb-3 code-font">
+                <span class="text-accent-neon">></span> {{ project.title.toUpperCase() }}
+              </h3>
+              
+              <!-- Mission Description -->
+              <div class="mb-4">
+                <div class="code-font text-accent-purple text-xs mb-2">/* MISSION_BRIEF */</div>
+                <p class="text-white/90 text-sm leading-relaxed">{{ project.description }}</p>
+              </div>
+              
+              <!-- Tech Stack as Array -->
+              <div class="mb-4">
+                <div class="code-font text-accent-cyan text-xs mb-2">TECH_STACK = [</div>
+                <div class="flex flex-wrap gap-1 ml-4 mb-2">
+                  <span v-for="(tag, idx) in project.tags" :key="tag" 
+                        class="neon-card px-2 py-1 text-xs code-font text-white/80">
+                    "{{ tag }}"{{ idx < project.tags.length - 1 ? ',' : '' }}
+                  </span>
+                </div>
+                <div class="code-font text-accent-cyan text-xs">]</div>
+              </div>
+              
+              <!-- Mission Result -->
+              <div class="neon-card rounded-xl p-4">
+                <div class="code-font text-accent-orange text-xs mb-2">MISSION_RESULT.json</div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-glow-green mb-1">{{ project.result }}</div>
+                  <div class="code-font text-white/60 text-xs">// Growth Achievement Unlocked</div>
+                </div>
+              </div>
+              
+              <!-- Mission Status -->
+              <div class="mt-4 pt-4 border-t border-accent-neon/20">
+                <div class="flex items-center justify-between code-font text-xs">
+                  <span class="text-white/60">Mission Status:</span>
+                  <span class="text-accent-neon animate-pulse">● {{ project.completion }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal CTA Section -->
+      <div class="cyber-card rounded-3xl overflow-hidden max-w-4xl mx-auto animate-glow-pulse">
+        <!-- Terminal Header -->
+        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-red-500"></div>
+            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="ml-4 code-font text-accent-cyan text-lg">~/new-mission/recruit.sh</div>
+          </div>
+        </div>
+        
+        <!-- Terminal Content -->
+        <div class="p-8 lg:p-12 text-center code-pattern">
+          <!-- Mission Prompt -->
+          <div class="code-font text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">recruitment@trinsler:~$</span> initialize --new-partnership
+          </div>
+          
+          <!-- ASCII Banner -->
+          <div class="code-font text-accent-neon text-xs mb-8">
+            <pre class="text-center animate-slide-up-stagger">
+  ╔══════════════════════════════════════╗
+  ║       NEW MISSION AVAILABLE        ║
+  ║     PARTNER RECRUITMENT ACTIVE     ║
+  ╚══════════════════════════════════════╝
+            </pre>
+          </div>
+          
+          <!-- Mission Brief -->
+          <div class="mb-8">
+            <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6 animate-glitch">
+              <span class="code-font text-accent-neon">></span> BEREIT FÜR IHRE 
+              <span class="gradient-text-neon">SUCCESS_STORY?</span>
+            </h3>
+            
+            <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
+              <div class="code-font text-accent-purple text-sm mb-3">/* NEXT_MISSION_BRIEF */</div>
+              <p class="text-lg text-white/90 leading-relaxed">
+                <span class="text-accent-cyan">MISSION:</span> Werden Sie die nächste Erfolgsgeschichte. 
+                <span class="font-bold text-glow-green">Equity-for-Growth</span> Revolution startet hier.
+              </p>
+              <div class="code-font text-accent-orange text-sm mt-4">
+                if (startup.ready) { mission.start(); }
+              </div>
+            </div>
+          </div>
+          
+          <!-- Execute Button -->
+          <NuxtLink
+            to="/contact"
+            class="btn-primary group code-font text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
+          >
+            <span class="flex items-center">
+              <RocketLaunchIcon class="w-6 h-6 mr-3" />
+              > EXECUTE_NEW_MISSION()
+              <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
+            </span>
+          </NuxtLink>
+          
+          <!-- System Status -->
+          <div class="mt-8 pt-6 border-t border-accent-neon/20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
+              <div class="text-center">
+                <div class="text-accent-cyan mb-1">ACTIVE_MISSIONS:</div>
+                <div class="text-accent-neon animate-pulse">● 12</div>
+              </div>
+              <div class="text-center">
+                <div class="text-accent-purple mb-1">SUCCESS_RATE:</div>
+                <div class="text-glow-green font-bold">89%</div>
+              </div>
+              <div class="text-center">
+                <div class="text-accent-orange mb-1">RECRUITMENT:</div>
+                <div class="text-white font-bold">OPEN</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { 
+  RocketLaunchIcon,
+  ArrowRightIcon,
+  ShoppingBagIcon,
+  BuildingStorefrontIcon,
+  CurrencyEuroIcon,
+  UserGroupIcon,
+  ComputerDesktopIcon,
+  BriefcaseIcon
+} from '@heroicons/vue/24/outline'
+
 useHead({
-  title: 'Portfolio - Trinsler Digital Marketing'
+  title: 'GROWTH MISSIONS ARCHIVE - Trinsler Hacker Terminal'
 })
 
 const projects = [
   {
-    title: 'Lokales Restaurant',
-    description: 'Social Media Marketing und lokale SEO für ein familiengeführtes Restaurant.',
-    tags: ['Social Media', 'SEO', 'Local Marketing'],
-    result: '+150% Reservierungen'
+    title: 'TechStart Revolution',
+    description: 'Complete growth-hacking operation for B2B SaaS startup. Implemented equity-for-growth model with explosive results.',
+    tags: ['Growth Hacking', 'SaaS', 'B2B'],
+    result: '+500% MRR',
+    filename: 'techstart_mission.log',
+    code: 'revenue.scale(5x)',
+    classification: 'TOP_SECRET',
+    icon: ComputerDesktopIcon,
+    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    status: 'CLASSIFIED',
+    statusColor: 'text-accent-neon',
+    completion: 'LEGENDARY',
+    image: '/images/gabriel-benois-qnWPjzewewA-unsplash.jpg'
   },
   {
-    title: 'Handwerksbetrieb',
-    description: 'Komplette Digitalisierung der Marketing-Aktivitäten eines Handwerksbetriebs.',
-    tags: ['Google Ads', 'Website', 'Lead Generation'],
-    result: '+200% Anfragen'
+    title: 'E-Commerce Takeover',
+    description: 'Strategic acquisition of market share through innovative digital marketing. Full-stack growth implementation.',
+    tags: ['E-Commerce', 'Market Domination', 'Digital'],
+    result: '+300% Revenue',
+    filename: 'ecommerce_hack.py',
+    code: 'conversion.optimize()',
+    classification: 'CONFIDENTIAL',
+    icon: ShoppingBagIcon,
+    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    status: 'ACTIVE',
+    statusColor: 'text-accent-purple',
+    completion: 'ELITE',
+    image: '/images/tim-mossholder-SZgVZPbQ7RE-unsplash.jpg'
   },
   {
-    title: 'E-Commerce Shop',
-    description: 'Optimierung der Conversion-Rate und Aufbau einer starken Social Media Präsenz.',
-    tags: ['E-Commerce', 'Conversion', 'Social Media'],
-    result: '+85% Umsatz'
+    title: 'FinTech Disruption',
+    description: 'Cryptocurrency and blockchain startup growth mission. Revolutionary marketing approach for next-gen finance.',
+    tags: ['FinTech', 'Blockchain', 'Disruption'],
+    result: '+800% Users',
+    filename: 'fintech_revolution.js',
+    code: 'blockchain.scale()',
+    classification: 'ULTRA_SECRET',
+    icon: CurrencyEuroIcon,
+    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    status: 'LEGENDARY',
+    statusColor: 'text-accent-orange',
+    completion: 'MYTHIC',
+    image: '/images/szabo-viktor-7hqEx1al0Fk-unsplash.jpg'
   },
   {
-    title: 'Dienstleistungsunternehmen',
-    description: 'Aufbau einer digitalen Marke und Implementierung von Lead-Generierung.',
-    tags: ['Branding', 'Content Marketing', 'Lead Gen'],
-    result: '+120% Leads'
+    title: 'Social Platform Hack',
+    description: 'Viral growth engineering for social media startup. Implemented network effects and growth loops.',
+    tags: ['Social Media', 'Viral Growth', 'Network Effects'],
+    result: '+1200% Users',
+    filename: 'social_viral.sh',
+    code: 'viral.spread(infinite)',
+    classification: 'COSMIC',
+    icon: UserGroupIcon,
+    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
+    status: 'VIRAL',
+    statusColor: 'text-accent-cyan',
+    completion: 'COSMIC',
+    image: '/images/georgia-de-lotz-hdQGAz1pQ_M-unsplash.jpg'
   },
   {
-    title: 'Einzelhandel',
-    description: 'Omnichannel Marketing-Strategie für lokalen Einzelhandel.',
-    tags: ['Omnichannel', 'Local SEO', 'Social Media'],
-    result: '+90% Footfall'
+    title: 'Local Business Empire',
+    description: 'Multi-location local business expansion through advanced digital presence and automation systems.',
+    tags: ['Local SEO', 'Automation', 'Multi-Location'],
+    result: '+400% Locations',
+    filename: 'local_empire.exe',
+    code: 'empire.expand()',
+    classification: 'RESTRICTED',
+    icon: BuildingStorefrontIcon,
+    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    status: 'EXPANDING',
+    statusColor: 'text-green-400',
+    completion: 'IMPERIAL',
+    image: '/images/nathana-reboucas-LIfRyiWWBZs-unsplash.jpg'
   },
   {
-    title: 'B2B Consulting',
-    description: 'LinkedIn Marketing und Content-Strategie für B2B Beratungsunternehmen.',
-    tags: ['LinkedIn', 'B2B', 'Content Strategy'],
-    result: '+300% LinkedIn Leads'
+    title: 'Consulting Domination',
+    description: 'B2B consulting firm transformed into industry leader. Thought leadership and premium positioning achieved.',
+    tags: ['B2B', 'Thought Leadership', 'Premium'],
+    result: '+600% Revenue',
+    filename: 'consulting_elite.py',
+    code: 'authority.establish()',
+    classification: 'ELITE_ONLY',
+    icon: BriefcaseIcon,
+    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
+    status: 'DOMINANT',
+    statusColor: 'text-blue-400',
+    completion: 'MASTER',
+    image: '/images/carol-magalhaes-dSsXm15D9hg-unsplash.jpg'
   }
 ]
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <AppNavbar />
-    <main class="min-h-screen">
+    <main>
       <slot />
     </main>
     <AppFooter />

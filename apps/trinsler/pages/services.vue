@@ -39,50 +39,107 @@
 </template>
 
 <script setup>
+import { 
+  RocketLaunchIcon,
+  ArrowRightIcon,
+  ChartBarIcon,
+  MagnifyingGlassIcon,
+  SpeakerWaveIcon,
+  ChartPieIcon
+} from '@heroicons/vue/24/outline'
+
 useHead({
-  title: 'Dienstleistungen - Trinsler Digital Marketing'
+  title: 'EQUITY-FOR-GROWTH SERVICES MATRIX - Trinsler Revolution'
 })
 
 const services = [
   {
-    title: 'Social Media Marketing',
-    description: 'Strategische Präsenz auf allen relevanten Plattformen mit messbaren Ergebnissen und authentischem Engagement.',
+    title: 'Growth-as-a-Service Revolution',
+    description: 'Complete operational growth takeover. We become your growth department and scale your startup through equity partnership.',
     features: [
-      'Content-Strategie & Planung',
-      'Community Management',
-      'Influencer Marketing',
-      'Performance Tracking'
-    ]
+      'Full-Stack Growth Operations',
+      'Viral Marketing Engineering', 
+      'Product-Market-Fit Optimization',
+      'Revenue Funnel Automation',
+      'Team Scaling & Hiring',
+      'Strategic Partnership Development'
+    ],
+    filename: 'growth_revolution.sh',
+    command: 'execute_growth_takeover',
+    module: 'CORE',
+    icon: RocketLaunchIcon,
+    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    status: 'REVOLUTIONARY',
+    statusColor: 'text-accent-neon',
+    equityRange: '8-20%',
+    monthlyFee: '€300-800',
+    processStatus: 'SCALING'
   },
   {
-    title: 'SEO & Content Marketing',
-    description: 'Organisches Wachstum durch suchmaschinenoptimierte Inhalte und nachhaltige SEO-Strategien.',
+    title: 'Digital Marketing Domination',
+    description: 'Advanced digital marketing operations with data-driven strategies. SEO, content, and paid advertising mastery.',
     features: [
-      'Keyword-Recherche & Analyse',
-      'Content-Erstellung',
-      'Technisches SEO',
-      'Link-Building'
-    ]
+      'SEO & Content Warfare',
+      'Social Media Amplification',
+      'Paid Ads Optimization Engine',
+      'Conversion Rate Hacking',
+      'Analytics & Attribution',
+      'Brand Authority Building'
+    ],
+    filename: 'marketing_domination.py',
+    command: 'initialize_marketing_stack',
+    module: 'MKT',
+    icon: ChartBarIcon,
+    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    status: 'DOMINATING',
+    statusColor: 'text-accent-purple',
+    equityRange: '5-15%',
+    monthlyFee: '€200-500',
+    processStatus: 'OPTIMIZING'
   },
   {
-    title: 'Paid Advertising',
-    description: 'Zielgerichtete Werbekampagnen auf Google, Facebook, Instagram und anderen Plattformen.',
+    title: 'Product Growth Engineering',
+    description: 'Product-led growth strategies and user acquisition funnels. We engineer viral loops and retention systems.',
     features: [
-      'Google Ads Management',
-      'Social Media Ads',
-      'Retargeting Kampagnen',
-      'Conversion Optimierung'
-    ]
+      'User Onboarding Optimization',
+      'Viral Growth Loop Creation',
+      'Retention & Engagement Hacks',
+      'A/B Testing Framework',
+      'User Journey Analytics',
+      'Feature Adoption Tracking'
+    ],
+    filename: 'product_growth.js',
+    command: 'deploy_growth_loops',
+    module: 'PLG',
+    icon: MagnifyingGlassIcon,
+    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-orange',
+    status: 'VIRAL',
+    statusColor: 'text-accent-cyan',
+    equityRange: '6-18%',
+    monthlyFee: '€250-600',
+    processStatus: 'VIRAL_SPREADING'
   },
   {
-    title: 'Analytics & Reporting',
-    description: 'Transparente Erfolgsmessung mit detaillierten Performance-Reports und Handlungsempfehlungen.',
+    title: 'Revenue Operations Matrix',
+    description: 'Complete revenue operations overhaul. Sales funnel automation, CRM optimization, and revenue intelligence.',
     features: [
-      'Performance Monitoring',
-      'Custom Dashboards',
-      'ROI-Tracking',
-      'Monatliche Reports'
-    ]
+      'Sales Funnel Automation',
+      'CRM & Pipeline Optimization',
+      'Revenue Attribution',
+      'Lead Scoring & Qualification',
+      'Sales Process Engineering',
+      'Revenue Forecasting AI'
+    ],
+    filename: 'revenue_matrix.exe',
+    command: 'scale_revenue_operations',
+    module: 'REV',
+    icon: ChartPieIcon,
+    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    status: 'SCALING',
+    statusColor: 'text-accent-orange',
+    equityRange: '7-16%',
+    monthlyFee: '€280-650',
+    processStatus: 'REVENUE_MAXIMIZED'
   }
 ]
 </script>
