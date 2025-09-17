@@ -198,6 +198,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Transaction } from '~/types'
+
 definePageMeta({
   layout: 'default',
   middleware: 'auth'
@@ -210,12 +212,12 @@ const loading = ref(false)
 
 const totalSpent = computed(() => {
   return shopStore.transactions
-    .filter(t => t.type === 'purchase' && t.status === 'completed')
-    .reduce((sum, t) => sum + t.amount, 0)
+    .filter((t: Transaction) => t.type === 'purchase' && t.status === 'completed')
+    .reduce((sum: number, t: Transaction) => sum + t.amount, 0)
 })
 
 const completedPurchases = computed(() => {
-  return shopStore.transactions.filter(t => t.type === 'purchase' && t.status === 'completed')
+  return shopStore.transactions.filter((t: Transaction) => t.type === 'purchase' && t.status === 'completed')
 })
 
 const refreshBalance = async () => {

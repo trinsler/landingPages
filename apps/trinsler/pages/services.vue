@@ -1,38 +1,240 @@
 <template>
-  <div class="py-16">
-    <div class="container-custom">
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
-          Unsere Dienstleistungen
-        </h1>
-        <p class="text-xl text-gray-600">
-          Umfassende Digital Marketing Lösungen für lokale Unternehmen
-        </p>
-      </div>
+  <div class="min-h-screen matrix-bg relative overflow-hidden">
+    <!-- Advanced Cyber Grid Matrix -->
+    <div class="absolute inset-0 cyber-grid opacity-40"></div>
+    
+    <!-- Complex Data Streams -->
+    <div class="absolute inset-0">
+      <div class="animate-data-stream absolute left-12 w-1 h-60 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-24 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.6s;"></div>
+      <div class="animate-data-stream absolute left-36 w-1 h-52 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.2s;"></div>
+      <div class="animate-data-stream absolute right-36 w-1 h-48 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 1.8s;"></div>
+      <div class="animate-data-stream absolute right-24 w-1 h-56 bg-gradient-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 2.4s;"></div>
+      <div class="animate-data-stream absolute right-12 w-1 h-40 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 3s;"></div>
+    </div>
 
-      <div class="grid lg:grid-cols-2 gap-12 mb-16">
-        <div v-for="service in services" :key="service.title" class="bg-white p-8 rounded-2xl shadow-lg">
-          <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-            <div class="w-8 h-8 bg-green-600 rounded"></div>
+    <!-- Floating Code Matrix -->
+    <div class="absolute inset-0 data-points">
+      <div class="floating-element absolute top-20 left-28 code-font text-accent-neon text-xs opacity-70">services.deploy()</div>
+      <div class="floating-element absolute top-40 right-32 code-font text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">growth.scale(infinite)</div>
+      <div class="floating-element absolute bottom-40 left-1/3 code-font text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">equity.calculate()</div>
+      <div class="floating-element absolute top-2/3 right-1/4 code-font text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">revenue += partnership</div>
+      <div class="floating-element absolute top-1/4 left-2/3 code-font text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">[MISSION_SUCCESS]</div>
+    </div>
+
+    <div class="relative container-custom py-20">
+      <!-- Services Terminal Header -->
+      <div class="cyber-card rounded-3xl overflow-hidden max-w-6xl mx-auto mb-20">
+        <!-- Terminal Header -->
+        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-red-500"></div>
+            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
+            <div class="ml-4 code-font text-accent-cyan text-lg">~/services/equity-growth-matrix.sh</div>
           </div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ service.title }}</h2>
-          <p class="text-gray-600 mb-6">{{ service.description }}</p>
-          <ul class="space-y-2">
-            <li v-for="feature in service.features" :key="feature" class="flex items-center text-gray-600">
-              <div class="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-              {{ feature }}
-            </li>
-          </ul>
+        </div>
+
+        <!-- Terminal Content -->
+        <div class="p-8 lg:p-12 code-pattern">
+          <!-- System Boot -->
+          <div class="mb-8">
+            <div class="code-font text-accent-neon text-sm mb-4">
+              <span class="text-accent-cyan">services@trinsler:~$</span> scan --equity-services --active
+            </div>
+            <div class="neon-card rounded-xl px-6 py-3 inline-block">
+              <span class="code-font text-accent-neon">[SERVICES_MATRIX_ONLINE]</span>
+              <span class="text-white ml-2">EQUITY_GROWTH.EXE</span>
+            </div>
+          </div>
+
+          <!-- ASCII Header -->
+          <div class="mb-12 text-center">
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
+              <span class="text-white">EQUITY</span>
+              <br />
+              <span class="gradient-text-neon">SERVICES</span>
+              <br />
+              <span class="text-accent-cyan">MATRIX</span>
+            </h1>
+          </div>
+
+          <!-- Services Brief -->
+          <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
+            <div class="text-accent-purple text-sm mb-3">Startup-Wachstum revolutioniert</div>
+            <p class="text-xl text-white/90 leading-relaxed">
+              <span class="text-accent-cyan">Transformation:</span> Anstatt teurer Agentur-Honorare arbeiten wir für 
+              <span class="font-bold text-glow-green">Unternehmensanteile</span>. Unser Erfolg = Ihr Erfolg. 
+              <span class="text-accent-neon">Messbare Ergebnisse</span> durch echte Partnerschaft.
+            </p>
+            <div class="text-accent-orange text-sm mt-4">
+              Alle Services kombinierbar für maximales Wachstum
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="text-center">
-        <NuxtLink
-          to="/contact"
-          class="btn-primary"
-        >
-          Beratungstermin vereinbaren
-        </NuxtLink>
+      <!-- Services Grid -->
+      <div class="grid lg:grid-cols-2 gap-8 mb-16">
+        <div v-for="(service, index) in services" :key="service.title" 
+             class="group relative"
+             :style="`animation-delay: ${index * 0.2}s`">
+          
+          <!-- Service Terminal -->
+          <div class="cyber-card rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+            <!-- Terminal Header -->
+            <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-accent-neon"></div>
+                <div class="code-font text-accent-cyan text-xs">{{ service.filename }}</div>
+                <div class="ml-auto text-xs" :class="service.statusColor">{{ service.status }}</div>
+              </div>
+            </div>
+            
+            <!-- Service Visual -->
+            <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+              <!-- Matrix Background -->
+              <div class="absolute inset-0 cyber-grid opacity-20"></div>
+              
+              <!-- Floating Service Data -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                  <div :class="service.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <component :is="service.icon" class="w-8 h-8 text-white" />
+                  </div>
+                  <div class="code-font text-accent-cyan text-xs">{{ service.module }}</div>
+                </div>
+              </div>
+              
+              <!-- Code Fragments -->
+              <div class="absolute top-4 left-4 code-font text-xs text-accent-neon opacity-60">
+                {{ service.command }}()
+              </div>
+              
+              <!-- Equity Badge -->
+              <div class="absolute top-4 right-4 neon-card px-2 py-1 text-xs code-font text-accent-orange">
+                {{ service.equityRange }}
+              </div>
+            </div>
+            
+            <!-- Service Content -->
+            <div class="p-6 code-pattern">
+              <!-- Service Command -->
+              <div class="text-accent-neon text-sm mb-3">
+                Service: {{ service.filename }}
+              </div>
+              
+              <!-- Service Title -->
+              <h3 class="text-xl font-bold text-white mb-3">
+                {{ service.title }}
+              </h3>
+              
+              <!-- Service Description -->
+              <div class="mb-4">
+                <div class="text-accent-purple text-xs mb-2">Beschreibung</div>
+                <p class="text-white/90 text-sm leading-relaxed">{{ service.description }}</p>
+              </div>
+              
+              <!-- Features Array -->
+              <div class="mb-4">
+                <div class="text-accent-cyan text-xs mb-2">FEATURES = [</div>
+                <div class="ml-4 space-y-1">
+                  <div v-for="(feature, idx) in service.features" :key="feature" 
+                       class="text-white/80 text-xs">
+                    "{{ feature }}"{{ idx < service.features.length - 1 ? ',' : '' }}
+                  </div>
+                </div>
+                <div class="text-accent-cyan text-xs">]</div>
+              </div>
+              
+              <!-- Pricing Info -->
+              <div class="neon-card rounded-xl p-4">
+                <div class="text-accent-orange text-xs mb-2">INVESTMENT_MODEL:</div>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <div class="text-glow-green font-bold">{{ service.equityRange }} Equity</div>
+                    <div class="text-white/60 text-xs">+ {{ service.monthlyFee }}/Monat</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-accent-neon text-xs">STATUS:</div>
+                    <div class="text-white font-bold text-xs">{{ service.processStatus }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Terminal -->
+      <div class="cyber-card rounded-3xl overflow-hidden max-w-4xl mx-auto">
+        <!-- Terminal Header -->
+        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-red-500"></div>
+            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
+            <div class="ml-4 code-font text-accent-cyan text-lg">~/partnership/initiate.sh</div>
+          </div>
+        </div>
+        
+        <!-- Terminal Content -->
+        <div class="p-8 lg:p-12 text-center code-pattern">
+          <!-- CTA Prompt -->
+          <div class="code-font text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">partnership@trinsler:~$</span> initialize --growth-partnership
+          </div>
+          
+          <!-- CTA Message -->
+          <div class="mb-8">
+            <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+              <span class="code-font text-accent-neon">></span> BEREIT FÜR 
+              <span class="gradient-text-neon">EQUITY_GROWTH?</span>
+            </h3>
+            
+            <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
+              <div class="code-font text-accent-purple text-sm mb-3">/* PARTNERSHIP_BRIEF */</div>
+              <p class="text-lg text-white/90 leading-relaxed">
+                <span class="text-accent-cyan">MISSION:</span> Starten Sie Ihre Wachstumsreise mit einem 
+                <span class="font-bold text-glow-green">kostenlosen Beratungsgespräch</span>. 
+                Erfahren Sie, wie Equity-for-Growth Ihr Startup transformieren kann.
+              </p>
+              <div class="code-font text-accent-orange text-sm mt-4">
+                if (startup.ready) { growth.revolution.start(); }
+              </div>
+            </div>
+          </div>
+          
+          <!-- Execute Button -->
+          <NuxtLink
+            to="/contact"
+            class="btn-primary group code-font text-xl transform hover:scale-110 transition-all duration-300"
+          >
+            <span class="flex items-center">
+              <RocketLaunchIcon class="w-6 h-6 mr-3" />
+              Kostenloses Wachstums-Audit
+              <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
+            </span>
+          </NuxtLink>
+          
+          <!-- Stats -->
+          <div class="mt-8 pt-6 border-t border-accent-neon/20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
+              <div class="text-center">
+                <div class="text-accent-cyan mb-1">ACTIVE_PARTNERSHIPS:</div>
+                <div class="text-accent-neon">● 15</div>
+              </div>
+              <div class="text-center">
+                <div class="text-accent-purple mb-1">AVG_GROWTH_RATE:</div>
+                <div class="text-glow-green font-bold">+420%</div>
+              </div>
+              <div class="text-center">
+                <div class="text-accent-orange mb-1">PARTNERSHIP_STATUS:</div>
+                <div class="text-white font-bold">ACCEPTING</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,92 +256,92 @@ useHead({
 
 const services = [
   {
-    title: 'Growth-as-a-Service Revolution',
-    description: 'Complete operational growth takeover. We become your growth department and scale your startup through equity partnership.',
+    title: 'Komplettes Wachstums-Management',
+    description: 'Wir übernehmen die gesamte Wachstumsstrategie Ihres Startups. Von der Kundengewinnung bis zur Skalierung - alles aus einer Hand.',
     features: [
-      'Full-Stack Growth Operations',
-      'Viral Marketing Engineering', 
-      'Product-Market-Fit Optimization',
-      'Revenue Funnel Automation',
-      'Team Scaling & Hiring',
-      'Strategic Partnership Development'
+      'Strategische Wachstumsplanung',
+      'Professionelle Marketing-Umsetzung', 
+      'Marktpositionierung & Zielgruppenanalyse',
+      'Automatisierte Verkaufsprozesse',
+      'Team-Aufbau & Personalentwicklung',
+      'Strategische Partnerschaften'
     ],
-    filename: 'growth_revolution.sh',
-    command: 'execute_growth_takeover',
+    filename: 'growth_complete.sh',
+    command: 'execute_growth_strategy',
     module: 'CORE',
     icon: RocketLaunchIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
-    status: 'REVOLUTIONARY',
+    status: 'PREMIUM',
     statusColor: 'text-accent-neon',
     equityRange: '8-20%',
     monthlyFee: '€300-800',
     processStatus: 'SCALING'
   },
   {
-    title: 'Digital Marketing Domination',
-    description: 'Advanced digital marketing operations with data-driven strategies. SEO, content, and paid advertising mastery.',
+    title: 'Digital Marketing Excellence',
+    description: 'Professionelle Digital Marketing Strategien mit messbaren Ergebnissen. SEO, Content Marketing und Online-Werbung perfekt aufeinander abgestimmt.',
     features: [
-      'SEO & Content Warfare',
-      'Social Media Amplification',
-      'Paid Ads Optimization Engine',
-      'Conversion Rate Hacking',
-      'Analytics & Attribution',
-      'Brand Authority Building'
+      'Suchmaschinenoptimierung (SEO)',
+      'Social Media Marketing',
+      'Google Ads & Facebook Werbung',
+      'Conversion-Optimierung',
+      'Analytics & Erfolgsmessung',
+      'Markenaufbau & Reputation'
     ],
-    filename: 'marketing_domination.py',
-    command: 'initialize_marketing_stack',
+    filename: 'marketing_excellence.py',
+    command: 'initialize_marketing',
     module: 'MKT',
     icon: ChartBarIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
-    status: 'DOMINATING',
+    status: 'AKTIV',
     statusColor: 'text-accent-purple',
     equityRange: '5-15%',
     monthlyFee: '€200-500',
     processStatus: 'OPTIMIZING'
   },
   {
-    title: 'Product Growth Engineering',
-    description: 'Product-led growth strategies and user acquisition funnels. We engineer viral loops and retention systems.',
+    title: 'Produkt-Wachstum & Nutzererfahrung',
+    description: 'Produkt-orientierte Wachstumsstrategien und Kundengewinnung. Wir optimieren Ihr Produkt für maximale Nutzerzufriedenheit und virales Wachstum.',
     features: [
-      'User Onboarding Optimization',
-      'Viral Growth Loop Creation',
-      'Retention & Engagement Hacks',
-      'A/B Testing Framework',
-      'User Journey Analytics',
-      'Feature Adoption Tracking'
+      'Benutzerfreundlichkeit optimieren',
+      'Empfehlungssysteme entwickeln',
+      'Kundenbindung & Engagement',
+      'A/B Testing & Datenanalyse',
+      'Customer Journey Optimierung',
+      'Feature-Entwicklung & Feedback'
     ],
     filename: 'product_growth.js',
-    command: 'deploy_growth_loops',
+    command: 'deploy_product_strategy',
     module: 'PLG',
     icon: MagnifyingGlassIcon,
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-orange',
-    status: 'VIRAL',
+    status: 'WACHSEND',
     statusColor: 'text-accent-cyan',
     equityRange: '6-18%',
     monthlyFee: '€250-600',
-    processStatus: 'VIRAL_SPREADING'
+    processStatus: 'EXPANDING'
   },
   {
-    title: 'Revenue Operations Matrix',
-    description: 'Complete revenue operations overhaul. Sales funnel automation, CRM optimization, and revenue intelligence.',
+    title: 'Umsatz-Optimierung & Vertrieb',
+    description: 'Komplette Überarbeitung Ihrer Verkaufsprozesse. CRM-Optimierung, Vertriebsautomatisierung und intelligente Umsatzprognosen.',
     features: [
-      'Sales Funnel Automation',
-      'CRM & Pipeline Optimization',
-      'Revenue Attribution',
-      'Lead Scoring & Qualification',
-      'Sales Process Engineering',
-      'Revenue Forecasting AI'
+      'Verkaufstrichter automatisieren',
+      'CRM & Pipeline optimieren',
+      'Umsatz-Zuordnung & Tracking',
+      'Lead-Bewertung & Qualifizierung',
+      'Verkaufsprozess verbessern',
+      'Umsatzprognosen & Planung'
     ],
-    filename: 'revenue_matrix.exe',
+    filename: 'revenue_optimization.exe',
     command: 'scale_revenue_operations',
     module: 'REV',
     icon: ChartPieIcon,
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
-    status: 'SCALING',
+    status: 'SKALIERT',
     statusColor: 'text-accent-orange',
     equityRange: '7-16%',
     monthlyFee: '€280-650',
-    processStatus: 'REVENUE_MAXIMIZED'
+    processStatus: 'MAXIMIZED'
   }
 ]
 </script>

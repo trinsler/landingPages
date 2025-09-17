@@ -33,7 +33,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/intelligence/growth-matrix.sh</div>
           </div>
         </div>
@@ -88,7 +88,7 @@
             <!-- Terminal Header ---->
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
                 <div class="code-font text-accent-cyan text-xs">{{ article.filename }}</div>
                 <div class="ml-auto text-xs" :class="article.classificationColor">{{ article.classification }}</div>
               </div>
@@ -172,7 +172,7 @@
               <div class="mt-4 pt-4 border-t border-accent-neon/20">
                 <div class="flex items-center justify-between code-font text-xs">
                   <span class="text-white/60">Access Level:</span>
-                  <span class="text-accent-neon animate-pulse">● {{ article.accessLevel }}</span>
+                  <span class="text-accent-neon ">● {{ article.accessLevel }}</span>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/subscribe/intelligence-feed.sh</div>
           </div>
         </div>
@@ -258,7 +258,7 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
             <div class="text-center">
               <div class="text-accent-cyan mb-1">INTEL_SUBSCRIBERS:</div>
-              <div class="text-accent-neon animate-pulse">● 1,247</div>
+              <div class="text-accent-neon ">● 1,247</div>
             </div>
             <div class="text-center">
               <div class="text-accent-purple mb-1">AVG_GROWTH_BOOST:</div>

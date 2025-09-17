@@ -26,37 +26,36 @@
           <!-- Status Badge -->
           <div class="mb-8 animate-slide-up-stagger">
             <div class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold animate-neon-flicker">
-              <div class="w-2 h-2 bg-accent-neon rounded-full animate-pulse mr-3"></div>
+              <div class="w-2 h-2 bg-accent-neon rounded-full  mr-3"></div>
               <span class="text-glow-green code-font">[SYSTEM_ACTIVE]</span>
               <span class="text-accent-cyan ml-2">EQUITY-FOR-GROWTH.EXE</span>
               <ChevronRightIcon class="ml-2 h-4 w-4 text-accent-neon" />
             </div>
           </div>
 
-          <!-- Terminal Headline -->
+          <!-- Main Headline -->
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-8 animate-slide-up-stagger" style="animation-delay: 0.2s;">
-            <span class="code-font text-accent-neon text-glow-green">></span>
-            <span class="text-white ml-2">GROWTH</span>
+            <span class="text-white">STARTUP</span>
             <br />
-            <span class="gradient-text-neon font-extrabold animate-glitch" style="font-family: 'Space Grotesk', sans-serif;">
-              REVOLUTION
+            <span class="gradient-text-neon font-extrabold" style="font-family: 'Space Grotesk', sans-serif;">
+              WACHSTUM
             </span>
             <br />
-            <span class="code-font text-accent-cyan text-glow-cyan">_INITIATED</span>
+            <span class="text-accent-cyan">NEU GEDACHT</span>
           </h1>
 
-          <!-- Cyber Description -->
+          <!-- Value Proposition -->
           <div class="mb-10 animate-slide-up-stagger" style="animation-delay: 0.4s;">
             <div class="cyber-card rounded-xl p-6">
-              <div class="code-font text-accent-neon text-sm mb-3">MISSION_STATEMENT.md</div>
+              <div class="code-font text-accent-neon text-sm mb-3">Unser Versprechen</div>
               <p class="text-lg leading-relaxed text-white/90 mb-4">
-                Wir revolutionieren Startup-Growth durch 
-                <span class="font-bold text-glow-green">Equity-Investment statt Agentur-Fees</span>. 
+                Wir sind keine klassische Marketing-Agentur. Statt monatlich 5.000€+ zu zahlen, 
+                <span class="font-bold text-glow-green">arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span>. 
               </p>
               <p class="text-white/80">
-                <span class="code-font text-accent-cyan">INPUT:</span> Operative Growth-Skills<br />
-                <span class="code-font text-accent-purple">OUTPUT:</span> 5x Startup-Wachstum<br />
-                <span class="code-font text-accent-neon">PAYMENT:</span> Equity-Beteiligung
+                <span class="text-accent-cyan">Was wir leisten:</span> Komplettes Marketing und Wachstums-Management<br />
+                <span class="text-accent-purple">Ihr Vorteil:</span> 80% weniger Kosten als herkömmliche Agenturen<br />
+                <span class="text-accent-neon">Unsere Vergütung:</span> 5-20% Firmenanteile plus 100-500€ monatlich
               </p>
             </div>
           </div>
@@ -67,7 +66,7 @@
               to="/contact"
               class="btn-primary group animate-glow-pulse code-font"
             >
-              <span>> INITIALIZE_GROWTH()</span>
+              <span>Kostenloses Wachstums-Audit</span>
               <ArrowRightIcon class="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
             <NuxtLink
@@ -75,26 +74,26 @@
               class="btn-secondary magnetic-hover code-font"
             >
               <PlayIcon class="mr-2 h-5 w-5" />
-              VIEW_PORTFOLIO.JSON
+              Erfolgsgeschichten ansehen
             </NuxtLink>
           </div>
 
-          <!-- Terminal Stats -->
+          <!-- Key Benefits -->
           <div class="grid grid-cols-3 gap-8 animate-slide-up-stagger" style="animation-delay: 0.8s;">
             <div class="neon-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="code-font text-xs text-accent-cyan mb-1">PORTFOLIO_VALUE</div>
-              <div class="text-3xl font-black text-glow-green mb-1">€2.4M</div>
-              <div class="text-xs text-white/60 code-font">CURRENT</div>
+              <div class="text-xs text-accent-cyan mb-1">Kostenersparnis</div>
+              <div class="text-3xl font-black text-glow-green mb-1">80%</div>
+              <div class="text-xs text-white/60">gegenüber Agenturen</div>
             </div>
             <div class="cyber-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="code-font text-xs text-accent-purple mb-1">EQUITY_RANGE</div>
+              <div class="text-xs text-accent-purple mb-1">Firmenanteile</div>
               <div class="text-3xl font-black text-glow-cyan mb-1">5-20%</div>
-              <div class="text-xs text-white/60 code-font">STANDARD</div>
+              <div class="text-xs text-white/60">je nach Projektumfang</div>
             </div>
             <div class="glass-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="code-font text-xs text-accent-neon mb-1">SUCCESS_RATE</div>
-              <div class="text-3xl font-black text-white mb-1 animate-glitch">89%</div>
-              <div class="text-xs text-white/60 code-font">VERIFIED</div>
+              <div class="text-xs text-accent-neon mb-1">Gründung</div>
+              <div class="text-3xl font-black text-white mb-1 animate-glitch">2025</div>
+              <div class="text-xs text-white/60">erste Partnerschaften</div>
             </div>
           </div>
         </div>
@@ -148,7 +147,7 @@
                 <!-- Live Terminal Log -->
                 <div class="border-t border-accent-neon/20 pt-4">
                   <div class="code-font text-accent-cyan text-sm mb-3">
-                    <span class="animate-pulse">●</span> LIVE_ACTIVITY_STREAM
+                    <span class="">●</span> LIVE_ACTIVITY_STREAM
                   </div>
                   <div class="space-y-2 code-font text-xs">
                     <div class="flex justify-between">

@@ -28,7 +28,7 @@ export const useToast = () => {
   }
 
   const dismiss = (id: string) => {
-    const index = toasts.value.findIndex(toast => toast.id === id)
+    const index = toasts.value.findIndex((toast: Toast) => toast.id === id)
     if (index > -1) {
       toasts.value.splice(index, 1)
     }

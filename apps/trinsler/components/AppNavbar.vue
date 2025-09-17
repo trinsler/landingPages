@@ -14,10 +14,10 @@
                 <img 
                   src="/logo.png" 
                   alt="Trinsler Logo" 
-                  class="w-8 h-8 lg:w-10 lg:h-10 object-contain filter brightness-0 invert"
+                  class="w-8 h-8 lg:w-10 lg:h-10 object-contain"
                 />
               </div>
-              <div class="absolute inset-0 rounded-xl bg-accent-neon animate-pulse-ring opacity-20"></div>
+              <div class="absolute inset-0 rounded-xl bg-accent-neon  opacity-20"></div>
             </div>
             <div class="hidden sm:block">
               <span class="text-xl lg:text-2xl font-black text-white" 
@@ -151,6 +151,7 @@ const navigation = [
   { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Insights', href: '/insights' },
+  { name: 'Trends 2025', href: '/trends-2025' },
   { name: 'Kontakt', href: '/contact' }
 ]
 

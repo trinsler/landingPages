@@ -72,7 +72,7 @@
             <!-- Terminal Header -->
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
                 <div class="code-font text-accent-cyan text-xs">METRIC_{{ index + 1 }}.exe</div>
               </div>
             </div>
@@ -84,7 +84,7 @@
                 <div :class="stat.iconBg" class="w-16 h-16 rounded-xl mx-auto flex items-center justify-center group-hover:scale-110 transition-transform duration-300 animate-neon-flicker">
                   <component :is="stat.icon" class="w-8 h-8 text-white" />
                 </div>
-                <div class="absolute -top-1 -right-1 w-3 h-3 bg-accent-neon rounded-full animate-pulse"></div>
+                <div class="absolute -top-1 -right-1 w-3 h-3 bg-accent-neon rounded-full "></div>
               </div>
 
               <!-- Variable Declaration -->
@@ -114,7 +114,7 @@
               <!-- Status -->
               <div class="mt-4 pt-4 border-t border-accent-neon/20">
                 <div class="flex items-center justify-center gap-2 code-font text-xs">
-                  <span class="text-accent-neon animate-pulse">●</span>
+                  <span class="text-accent-neon ">●</span>
                   <span class="text-white/60">{{ stat.status }}</span>
                 </div>
               </div>

@@ -13,7 +13,7 @@
       <!-- Cyber Section Header -->
       <div class="text-center max-w-4xl mx-auto mb-20">
         <div class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold mb-6 animate-neon-flicker">
-          <div class="w-2 h-2 bg-accent-neon rounded-full animate-pulse mr-3"></div>
+          <div class="w-2 h-2 bg-accent-neon rounded-full  mr-3"></div>
           <span class="code-font text-accent-cyan">[SERVICES_MODULE]</span>
           <span class="text-white ml-2">LOADING...</span>
         </div>
@@ -114,7 +114,7 @@
               <!-- Process Status -->
               <div class="mt-4 flex items-center justify-between code-font text-xs">
                 <span class="text-white/60">Process Status:</span>
-                <span class="text-accent-neon animate-pulse">● ACTIVE</span>
+                <span class="text-accent-neon ">● ACTIVE</span>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@
               <!-- Module Header -->
               <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
                 <div class="flex items-center gap-2">
-                  <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                  <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
                   <div class="code-font text-accent-cyan text-xs">MODULE_{{ index + 1 }}.js</div>
                 </div>
               </div>
@@ -161,7 +161,7 @@
                   <div :class="benefit.iconBg" class="w-16 h-16 rounded-xl mx-auto flex items-center justify-center group-hover:scale-110 transition-transform duration-300 animate-neon-flicker">
                     <component :is="benefit.icon" class="w-8 h-8 text-white" />
                   </div>
-                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-accent-neon rounded-full animate-pulse"></div>
+                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-accent-neon rounded-full "></div>
                 </div>
                 
                 <!-- Function Definition -->
@@ -174,7 +174,7 @@
                 <!-- Status -->
                 <div class="mt-4 pt-4 border-t border-accent-neon/20">
                   <div class="flex items-center justify-center gap-2 code-font text-xs">
-                    <span class="text-accent-neon animate-pulse">●</span>
+                    <span class="text-accent-neon ">●</span>
                     <span class="text-white/60">STATUS: OPTIMIZED</span>
                   </div>
                 </div>
@@ -250,7 +250,7 @@
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
                 <div class="text-center">
                   <div class="text-accent-cyan mb-1">SYSTEM_STATUS:</div>
-                  <div class="text-accent-neon animate-pulse">● ONLINE</div>
+                  <div class="text-accent-neon ">● ONLINE</div>
                 </div>
                 <div class="text-center">
                   <div class="text-accent-purple mb-1">ACTIVE_PARTNERSHIPS:</div>

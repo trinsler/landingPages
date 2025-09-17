@@ -27,7 +27,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/final-mission/execute_growth.sh</div>
           </div>
         </div>
@@ -65,27 +65,27 @@
           <!-- Dynamic Headline -->
           <div class="mb-12 animate-slide-up-stagger" style="animation-delay: 0.4s;">
             <h2 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
-              <span class="code-font text-accent-neon">></span> BEREIT FÜR
+              <span class="text-white">BEREIT FÜR</span>
               <br />
-              <span class="gradient-text-neon animate-glitch" style="font-family: 'Space Grotesk', sans-serif;">
-                EXPLOSIVES
+              <span class="gradient-text-neon" style="font-family: 'Space Grotesk', sans-serif;">
+                NACHHALTIGES
               </span>
               <br />
-              <span class="text-accent-cyan code-font">_WACHSTUM?</span>
+              <span class="text-accent-cyan">WACHSTUM?</span>
             </h2>
           </div>
 
           <!-- Mission Brief -->
           <div class="mb-12 animate-slide-up-stagger" style="animation-delay: 0.6s;">
             <div class="cyber-card rounded-2xl p-8 max-w-4xl mx-auto">
-              <div class="code-font text-accent-purple text-sm mb-4">/* MISSION_BRIEFING.md */</div>
+              <div class="text-accent-purple text-sm mb-4">Warum Trinsler anders ist</div>
               <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-6">
-                <span class="text-accent-cyan">PROTOKOLL:</span> Vergessen Sie teure Agenturen. 
-                <span class="font-bold text-glow-green">Wir investieren Skills gegen Equity</span> 
-                und wachsen mit Ihrem Startup.
+                <span class="text-accent-cyan">Unser Ansatz:</span> Anstatt monatlich 5.000€+ für Marketing zu zahlen, 
+                <span class="font-bold text-glow-green">arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span>. 
+                So sind wir direkt am Erfolg Ihres Startups beteiligt.
               </p>
-              <div class="code-font text-accent-orange text-lg">
-                if (startup.ready) { revolution.begin(); }
+              <div class="text-accent-orange text-lg">
+                Interessiert? Vereinbaren Sie ein kostenloses Erstgespräch
               </div>
             </div>
           </div>
@@ -99,12 +99,12 @@
                 <div :class="benefit.iconBg" class="w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker">
                   <component :is="benefit.icon" class="w-5 h-5 text-white" />
                 </div>
-                <div class="code-font text-accent-cyan text-xs">MODULE_{{ index + 1 }}</div>
+                <div class="text-accent-cyan text-xs">Vorteil {{ index + 1 }}</div>
               </div>
-              <h3 class="text-white font-bold text-lg mb-2 code-font">{{ benefit.title.toUpperCase() }}</h3>
+              <h3 class="text-white font-bold text-lg mb-2">{{ benefit.title }}</h3>
               <p class="text-white/80 text-sm mb-4">{{ benefit.description }}</p>
-              <div class="code-font text-accent-neon text-xs">
-                status: <span class="animate-pulse">● ACTIVE</span>
+              <div class="text-accent-neon text-xs">
+                <span class="">✓</span> Verfügbar
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@
             >
               <span class="relative z-10 flex items-center">
                 <FireIcon class="w-6 h-6 mr-3" />
-                > EXECUTE_GROWTH()
+                Kostenloses Wachstums-Audit
                 <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
               </span>
             </NuxtLink>
@@ -127,7 +127,7 @@
               class="btn-secondary group code-font text-lg hover:scale-105 transition-all duration-300"
             >
               <PlayIcon class="w-5 h-5 mr-3" />
-              LOAD_SUCCESS_STORIES.JSON
+              Erfolgsgeschichten ansehen
               <ChevronRightIcon class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
           </div>
@@ -138,7 +138,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div class="text-center">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                  <div class="w-3 h-3 bg-accent-neon rounded-full animate-pulse"></div>
+                  <div class="w-3 h-3 bg-accent-neon rounded-full "></div>
                   <span class="code-font text-accent-cyan text-sm">ACTIVE_PARTNERSHIPS</span>
                 </div>
                 <div class="text-2xl font-bold text-glow-green">12</div>

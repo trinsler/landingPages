@@ -30,7 +30,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/growth-missions/portfolio-scan.sh</div>
           </div>
         </div>
@@ -50,25 +50,25 @@
 
           <!-- ASCII Header -->
           <div class="mb-12 text-center">
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6 animate-glitch">
-              <span class="code-font text-accent-neon">></span> GROWTH
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
+              <span class="text-white">STARTUP</span>
               <br />
-              <span class="gradient-text-neon">MISSIONS</span>
+              <span class="gradient-text-neon">ERFOLGE</span>
               <br />
-              <span class="text-accent-cyan code-font">_ARCHIVE</span>
+              <span class="text-accent-cyan">IM DETAIL</span>
             </h1>
           </div>
 
-          <!-- Mission Brief -->
+          <!-- Portfolio Brief -->
           <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
-            <div class="code-font text-accent-purple text-sm mb-3">/* PORTFOLIO_DATABASE.md */</div>
+            <div class="text-accent-purple text-sm mb-3">Unsere Referenzen</div>
             <p class="text-xl text-white/90 leading-relaxed">
-              <span class="text-accent-cyan">KLASSIFIZIERT:</span> Unsere erfolgreichsten 
-              <span class="font-bold text-glow-green">Growth-Hacks und Startup-Revolutionen</span>. 
-              Jede Mission dokumentiert mit <span class="text-accent-neon">messbaren Ergebnissen</span>.
+              <span class="text-accent-cyan">Erfolgsbeispiele:</span> Unsere erfolgreichsten 
+              <span class="font-bold text-glow-green">Wachstums-Strategien und Startup-Partnerschaften</span>. 
+              Jedes Projekt dokumentiert mit <span class="text-accent-neon">messbaren Ergebnissen</span>.
             </p>
-            <div class="code-font text-accent-orange text-sm mt-4">
-              return portfolio.filter(mission => mission.success_rate > 0.9);
+            <div class="text-accent-orange text-sm mt-4">
+              Alle Zahlen basieren auf realen Projektergebnissen unserer Partner
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
             <!-- Terminal Header -->
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
                 <div class="code-font text-accent-cyan text-xs">MISSION_{{ String(index + 1).padStart(3, '0') }}.log</div>
                 <div class="ml-auto text-xs" :class="project.statusColor">{{ project.status }}</div>
               </div>
@@ -122,48 +122,47 @@
             
             <!-- Mission Report -->
             <div class="p-6 code-pattern">
-              <!-- Mission ID -->
-              <div class="code-font text-accent-neon text-sm mb-3">
-                <span class="text-accent-cyan">mission@trinsler:~$</span> cat {{ project.filename }}
+              <!-- Project ID -->
+              <div class="text-accent-neon text-sm mb-3">
+                Projektreferenz: {{ project.filename }}
               </div>
               
-              <!-- Mission Title -->
-              <h3 class="text-xl font-bold text-white mb-3 code-font">
-                <span class="text-accent-neon">></span> {{ project.title.toUpperCase() }}
+              <!-- Project Title -->
+              <h3 class="text-xl font-bold text-white mb-3">
+                {{ project.title }}
               </h3>
               
-              <!-- Mission Description -->
+              <!-- Project Description -->
               <div class="mb-4">
-                <div class="code-font text-accent-purple text-xs mb-2">/* MISSION_BRIEF */</div>
+                <div class="text-accent-purple text-xs mb-2">Projektbeschreibung</div>
                 <p class="text-white/90 text-sm leading-relaxed">{{ project.description }}</p>
               </div>
               
-              <!-- Tech Stack as Array -->
+              <!-- Services Used -->
               <div class="mb-4">
-                <div class="code-font text-accent-cyan text-xs mb-2">TECH_STACK = [</div>
+                <div class="text-accent-cyan text-xs mb-2">Eingesetzte Services:</div>
                 <div class="flex flex-wrap gap-1 ml-4 mb-2">
                   <span v-for="(tag, idx) in project.tags" :key="tag" 
-                        class="neon-card px-2 py-1 text-xs code-font text-white/80">
-                    "{{ tag }}"{{ idx < project.tags.length - 1 ? ',' : '' }}
+                        class="neon-card px-2 py-1 text-xs text-white/80">
+                    {{ tag }}{{ idx < project.tags.length - 1 ? ', ' : '' }}
                   </span>
                 </div>
-                <div class="code-font text-accent-cyan text-xs">]</div>
               </div>
               
-              <!-- Mission Result -->
+              <!-- Project Result -->
               <div class="neon-card rounded-xl p-4">
-                <div class="code-font text-accent-orange text-xs mb-2">MISSION_RESULT.json</div>
+                <div class="text-accent-orange text-xs mb-2">Projektergebnis</div>
                 <div class="text-center">
                   <div class="text-2xl font-bold text-glow-green mb-1">{{ project.result }}</div>
-                  <div class="code-font text-white/60 text-xs">// Growth Achievement Unlocked</div>
+                  <div class="text-white/60 text-xs">Wachstum erreicht</div>
                 </div>
               </div>
               
-              <!-- Mission Status -->
+              <!-- Project Status -->
               <div class="mt-4 pt-4 border-t border-accent-neon/20">
-                <div class="flex items-center justify-between code-font text-xs">
-                  <span class="text-white/60">Mission Status:</span>
-                  <span class="text-accent-neon animate-pulse">● {{ project.completion }}</span>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-white/60">Projektstatus:</span>
+                  <span class="text-accent-neon ">✓ {{ project.completion }}</span>
                 </div>
               </div>
             </div>
@@ -178,7 +177,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/new-mission/recruit.sh</div>
           </div>
         </div>
@@ -226,7 +225,7 @@
           >
             <span class="flex items-center">
               <RocketLaunchIcon class="w-6 h-6 mr-3" />
-              > EXECUTE_NEW_MISSION()
+              Jetzt Partnershaft starten
               <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
             </span>
           </NuxtLink>
@@ -236,7 +235,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
               <div class="text-center">
                 <div class="text-accent-cyan mb-1">ACTIVE_MISSIONS:</div>
-                <div class="text-accent-neon animate-pulse">● 12</div>
+                <div class="text-accent-neon ">● 12</div>
               </div>
               <div class="text-center">
                 <div class="text-accent-purple mb-1">SUCCESS_RATE:</div>

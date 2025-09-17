@@ -26,7 +26,7 @@
           <div class="flex items-center gap-3">
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon animate-pulse"></div>
+            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
             <div class="ml-4 code-font text-accent-cyan text-lg">~/contact/growth-partnership.sh</div>
           </div>
         </div>
@@ -62,7 +62,7 @@
               <div class="cyber-card rounded-2xl overflow-hidden mb-6">
                 <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
                   <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-accent-neon animate-pulse"></div>
+                    <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
                     <div class="code-font text-accent-cyan text-sm">partnership_form.js</div>
                   </div>
                 </div>
@@ -83,7 +83,7 @@
                           @focus="activeField = 'name'"
                           @blur="activeField = ''"
                         >
-                        <div v-if="activeField === 'name'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-neon animate-pulse">●</div>
+                        <div v-if="activeField === 'name'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-neon ">●</div>
                       </div>
                     </div>
 
@@ -101,7 +101,7 @@
                           @focus="activeField = 'email'"
                           @blur="activeField = ''"
                         >
-                        <div v-if="activeField === 'email'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-purple animate-pulse">●</div>
+                        <div v-if="activeField === 'email'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-purple ">●</div>
                       </div>
                     </div>
 
@@ -118,7 +118,7 @@
                           @focus="activeField = 'company'"
                           @blur="activeField = ''"
                         >
-                        <div v-if="activeField === 'company'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-orange animate-pulse">●</div>
+                        <div v-if="activeField === 'company'" class="absolute -right-2 top-1/2 transform -translate-y-1/2 text-accent-orange ">●</div>
                       </div>
                     </div>
 
@@ -136,7 +136,7 @@
                           @focus="activeField = 'message'"
                           @blur="activeField = ''"
                         ></textarea>
-                        <div v-if="activeField === 'message'" class="absolute -right-2 top-4 text-accent-cyan animate-pulse">●</div>
+                        <div v-if="activeField === 'message'" class="absolute -right-2 top-4 text-accent-cyan ">●</div>
                       </div>
                     </div>
 
@@ -158,7 +158,7 @@
               <div class="cyber-card rounded-2xl overflow-hidden">
                 <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
                   <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></div>
+                    <div class="w-2 h-2 rounded-full bg-accent-cyan "></div>
                     <div class="code-font text-accent-cyan text-sm">system_info.json</div>
                   </div>
                 </div>
@@ -206,7 +206,7 @@
                     <div class="grid grid-cols-2 gap-4 code-font text-sm">
                       <div class="text-center">
                         <div class="text-accent-cyan mb-1">SYSTEM_STATUS:</div>
-                        <div class="text-accent-neon animate-pulse">● ONLINE</div>
+                        <div class="text-accent-neon ">● ONLINE</div>
                       </div>
                       <div class="text-center">
                         <div class="text-accent-purple mb-1">PARTNERSHIPS:</div>

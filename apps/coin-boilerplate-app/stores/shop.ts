@@ -52,15 +52,15 @@ export const useShopStore = defineStore('shop', {
 
   getters: {
     getPackageById: (state) => (id: string) => 
-      state.packages.find(pkg => pkg.id === id),
+      state.packages.find((pkg: CoinPackage) => pkg.id === id),
     
     popularPackage: (state) => 
-      state.packages.find(pkg => pkg.popular),
+      state.packages.find((pkg: CoinPackage) => pkg.popular),
     
     recentTransactions: (state) => 
       state.transactions
-        .filter(t => t.type === 'purchase')
-        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        .filter((t: Transaction) => t.type === 'purchase')
+        .sort((a: Transaction, b: Transaction) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         .slice(0, 5)
   },
 
