@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen matrix-bg relative overflow-hidden">
+  <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
     <!-- Advanced Matrix Effects -->
     <div class="absolute inset-0 cyber-grid opacity-30"></div>
     
@@ -13,9 +13,9 @@
 
     <!-- Floating Code -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-20 code-font text-accent-primary text-xs opacity-60">connect.establish()</div>
-      <div class="floating-element absolute top-40 right-24 code-font text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">message.send()</div>
-      <div class="floating-element absolute bottom-32 left-1/4 code-font text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">partnership.init()</div>
+      <div class="floating-element absolute top-20 left-20 text-accent-primary text-xs opacity-60">Verbindung aufbauen</div>
+      <div class="floating-element absolute top-40 right-24 text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">Nachricht senden</div>
+      <div class="floating-element absolute bottom-32 left-1/4 text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">Partnerschaft starten</div>
     </div>
 
     <div class="relative container-custom py-20">

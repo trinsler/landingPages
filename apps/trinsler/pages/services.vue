@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen matrix-bg relative overflow-hidden">
+  <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
     <!-- Advanced Cyber Grid Matrix -->
     <div class="absolute inset-0 cyber-grid opacity-40"></div>
     
@@ -15,11 +15,11 @@
 
     <!-- Floating Code Matrix -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-28 code-font text-accent-neon text-xs opacity-70">services.deploy()</div>
-      <div class="floating-element absolute top-40 right-32 code-font text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">growth.scale(infinite)</div>
-      <div class="floating-element absolute bottom-40 left-1/3 code-font text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">equity.calculate()</div>
-      <div class="floating-element absolute top-2/3 right-1/4 code-font text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">revenue += partnership</div>
-      <div class="floating-element absolute top-1/4 left-2/3 code-font text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">[MISSION_SUCCESS]</div>
+      <div class="floating-element absolute top-20 left-28 text-accent-neon text-xs opacity-70">Services verfügbar</div>
+      <div class="floating-element absolute top-40 right-32 text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">Skalierung</div>
+      <div class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">Equity-Kalkulation</div>
+      <div class="floating-element absolute top-2/3 right-1/4 text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">Umsatz + Partnerschaft</div>
+      <div class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">Mission erfolgreich</div>
     </div>
 
     <div class="relative container-custom py-20">
@@ -31,7 +31,7 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
-            <div class="ml-4 code-font text-accent-cyan text-lg">~/services/equity-growth-matrix.sh</div>
+            <div class="ml-4 text-accent-cyan text-lg">Services - Equity-Growth-Matrix</div>
           </div>
         </div>
 
@@ -39,12 +39,12 @@
         <div class="p-8 lg:p-12 code-pattern">
           <!-- System Boot -->
           <div class="mb-8">
-            <div class="code-font text-accent-neon text-sm mb-4">
-              <span class="text-accent-cyan">services@trinsler:~$</span> scan --equity-services --active
+            <div class="text-accent-neon text-sm mb-4">
+              <span class="text-accent-cyan">Status:</span> Services werden geladen
             </div>
             <div class="neon-card rounded-xl px-6 py-3 inline-block">
-              <span class="code-font text-accent-neon">[SERVICES_MATRIX_ONLINE]</span>
-              <span class="text-white ml-2">EQUITY_GROWTH.EXE</span>
+              <span class="text-accent-neon">Services Matrix Online</span>
+              <span class="text-white ml-2">Equity-Growth</span>
             </div>
           </div>
 
@@ -86,7 +86,7 @@
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-accent-neon"></div>
-                <div class="code-font text-accent-cyan text-xs">{{ service.filename }}</div>
+                <div class="text-accent-cyan text-xs">{{ service.filename }}</div>
                 <div class="ml-auto text-xs" :class="service.statusColor">{{ service.status }}</div>
               </div>
             </div>
@@ -102,17 +102,17 @@
                   <div :class="service.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <component :is="service.icon" class="w-8 h-8 text-white" />
                   </div>
-                  <div class="code-font text-accent-cyan text-xs">{{ service.module }}</div>
+                  <div class="text-accent-cyan text-xs">{{ service.module }}</div>
                 </div>
               </div>
               
-              <!-- Code Fragments -->
-              <div class="absolute top-4 left-4 code-font text-xs text-accent-neon opacity-60">
-                {{ service.command }}()
+              <!-- Service Info -->
+              <div class="absolute top-4 left-4 text-xs text-accent-neon opacity-60">
+                {{ service.command }}
               </div>
               
               <!-- Equity Badge -->
-              <div class="absolute top-4 right-4 neon-card px-2 py-1 text-xs code-font text-accent-orange">
+              <div class="absolute top-4 right-4 neon-card px-2 py-1 text-xs text-accent-orange">
                 {{ service.equityRange }}
               </div>
             </div>
@@ -135,28 +135,27 @@
                 <p class="text-white/90 text-sm leading-relaxed">{{ service.description }}</p>
               </div>
               
-              <!-- Features Array -->
+              <!-- Features -->
               <div class="mb-4">
-                <div class="text-accent-cyan text-xs mb-2">FEATURES = [</div>
+                <div class="text-accent-cyan text-xs mb-2">Leistungen:</div>
                 <div class="ml-4 space-y-1">
                   <div v-for="(feature, idx) in service.features" :key="feature" 
                        class="text-white/80 text-xs">
-                    "{{ feature }}"{{ idx < service.features.length - 1 ? ',' : '' }}
+                    {{ feature }}
                   </div>
                 </div>
-                <div class="text-accent-cyan text-xs">]</div>
               </div>
               
               <!-- Pricing Info -->
               <div class="neon-card rounded-xl p-4">
-                <div class="text-accent-orange text-xs mb-2">INVESTMENT_MODEL:</div>
+                <div class="text-accent-orange text-xs mb-2">Konditionen:</div>
                 <div class="flex justify-between items-center">
                   <div>
                     <div class="text-glow-green font-bold">{{ service.equityRange }} Equity</div>
                     <div class="text-white/60 text-xs">+ {{ service.monthlyFee }}/Monat</div>
                   </div>
                   <div class="text-right">
-                    <div class="text-accent-neon text-xs">STATUS:</div>
+                    <div class="text-accent-neon text-xs">Status:</div>
                     <div class="text-white font-bold text-xs">{{ service.processStatus }}</div>
                   </div>
                 </div>
@@ -174,33 +173,33 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
-            <div class="ml-4 code-font text-accent-cyan text-lg">~/partnership/initiate.sh</div>
+            <div class="ml-4 text-accent-cyan text-lg">Partnerschaft starten</div>
           </div>
         </div>
         
         <!-- Terminal Content -->
         <div class="p-8 lg:p-12 text-center code-pattern">
-          <!-- CTA Prompt -->
-          <div class="code-font text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">partnership@trinsler:~$</span> initialize --growth-partnership
+          <!-- Call to Action -->
+          <div class="text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">Bereit für:</span> Wachstums-Partnerschaft
           </div>
           
           <!-- CTA Message -->
           <div class="mb-8">
             <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6">
-              <span class="code-font text-accent-neon">></span> BEREIT FÜR 
-              <span class="gradient-text-neon">EQUITY_GROWTH?</span>
+              Bereit für 
+              <span class="gradient-text-neon">Equity-Growth?</span>
             </h3>
             
             <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
-              <div class="code-font text-accent-purple text-sm mb-3">/* PARTNERSHIP_BRIEF */</div>
+              <div class="text-accent-purple text-sm mb-3">Ihre nächsten Schritte</div>
               <p class="text-lg text-white/90 leading-relaxed">
-                <span class="text-accent-cyan">MISSION:</span> Starten Sie Ihre Wachstumsreise mit einem 
+                <span class="text-accent-cyan">Mission:</span> Starten Sie Ihre Wachstumsreise mit einem 
                 <span class="font-bold text-glow-green">kostenlosen Beratungsgespräch</span>. 
                 Erfahren Sie, wie Equity-for-Growth Ihr Startup transformieren kann.
               </p>
-              <div class="code-font text-accent-orange text-sm mt-4">
-                if (startup.ready) { growth.revolution.start(); }
+              <div class="text-accent-orange text-sm mt-4">
+                Wenn Sie bereit sind, starten wir die Wachstums-Revolution!
               </div>
             </div>
           </div>
@@ -208,7 +207,7 @@
           <!-- Execute Button -->
           <NuxtLink
             to="/contact"
-            class="btn-primary group code-font text-xl transform hover:scale-110 transition-all duration-300"
+            class="btn-primary group text-xl transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
               <RocketLaunchIcon class="w-6 h-6 mr-3" />
@@ -219,18 +218,18 @@
           
           <!-- Stats -->
           <div class="mt-8 pt-6 border-t border-accent-neon/20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div class="text-center">
-                <div class="text-accent-cyan mb-1">ACTIVE_PARTNERSHIPS:</div>
+                <div class="text-accent-cyan mb-1">Aktive Partnerschaften:</div>
                 <div class="text-accent-neon">● 15</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-purple mb-1">AVG_GROWTH_RATE:</div>
+                <div class="text-accent-purple mb-1">Durchschn. Wachstum:</div>
                 <div class="text-glow-green font-bold">+420%</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-orange mb-1">PARTNERSHIP_STATUS:</div>
-                <div class="text-white font-bold">ACCEPTING</div>
+                <div class="text-accent-orange mb-1">Neue Partner:</div>
+                <div class="text-white font-bold">Willkommen</div>
               </div>
             </div>
           </div>
@@ -251,7 +250,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 useHead({
-  title: 'EQUITY-FOR-GROWTH SERVICES MATRIX - Trinsler Revolution'
+  title: 'Services - Trinsler Equity-for-Growth'
 })
 
 const services = [

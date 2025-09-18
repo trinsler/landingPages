@@ -24,8 +24,8 @@
                     style="font-family: 'Space Grotesk', sans-serif;">
                 <span class="text-accent-neon">TRINS</span><span class="text-accent-cyan">LER</span>
               </span>
-              <div class="text-xs font-medium code-font text-accent-cyan">
-                GROWTH_REVOLUTION.EXE
+              <div class="text-xs font-medium text-accent-cyan">
+                Wachstums-Revolution
               </div>
             </div>
           </NuxtLink>

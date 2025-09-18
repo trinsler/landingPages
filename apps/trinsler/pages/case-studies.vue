@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen matrix-bg relative overflow-hidden">
+  <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
     <!-- Cyber Grid Background -->
     <div class="absolute inset-0 cyber-grid opacity-30"></div>
     
@@ -17,23 +17,23 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
-            <div class="ml-4 code-font text-accent-cyan text-lg">~/success-stories/database.sh</div>
+            <div class="ml-4 text-accent-cyan text-lg">Erfolgsgeschichten - Datenbank</div>
           </div>
         </div>
 
         <div class="p-8 lg:p-12 code-pattern">
-          <div class="code-font text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">data@trinsler:~$</span> query --case-studies --verified
+          <div class="text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">Status:</span> Case Studies werden geladen
           </div>
           
           <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 text-center">
-            <span class="code-font text-accent-neon">></span> VERIFIED
+            Verifizierte
             <br />
-            <span class="gradient-text-neon">SUCCESS STORIES</span>
+            <span class="gradient-text-neon">Erfolgsgeschichten</span>
           </h1>
           
           <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto">
-            <div class="code-font text-accent-purple text-sm mb-3">/* VALIDATION_NOTE.md */</div>
+            <div class="text-accent-purple text-sm mb-3">Validierungshinweis</div>
             <p class="text-lg text-white/90 leading-relaxed text-center">
               Echte Ergebnisse unserer ersten <span class="text-accent-neon">Pilot-Partnerschaften</span> 
               mit messbaren KPIs und verifizierten Daten.
@@ -53,11 +53,11 @@
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-3 h-3 rounded-full bg-accent-neon"></div>
-                  <div class="code-font text-accent-cyan">case_study_001.json</div>
+                  <div class="text-accent-cyan">Fallstudie 001</div>
                 </div>
                 <div class="flex items-center gap-2">
-                  <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs code-font">VERIFIED</div>
-                  <div class="px-3 py-1 rounded-full bg-accent-neon/20 text-accent-neon text-xs code-font">6 MONATE</div>
+                  <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">Verifiziert</div>
+                  <div class="px-3 py-1 rounded-full bg-accent-neon/20 text-accent-neon text-xs">6 Monate</div>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@
                 <!-- Company Info -->
                 <div>
                   <div class="neon-card rounded-xl p-6 mb-6">
-                    <div class="code-font text-accent-cyan text-sm mb-3">"company_profile":</div>
+                    <div class="text-accent-cyan text-sm mb-3">Unternehmensprofil:</div>
                     <h3 class="text-2xl font-bold text-white mb-3">TechFlow SaaS</h3>
                     <p class="text-white/80 mb-4">
                       B2B Workflow-Automatisierung für KMUs. Pre-Series A Startup aus München.
@@ -81,7 +81,7 @@
 
                   <!-- Challenge -->
                   <div class="cyber-card rounded-xl p-6">
-                    <div class="code-font text-accent-purple text-sm mb-3">challenge.describe()</div>
+                    <div class="text-accent-purple text-sm mb-3">Herausforderung:</div>
                     <p class="text-white/90 leading-relaxed">
                       <strong>Problem:</strong> Stagnation bei 15K MRR seit 8 Monaten. 
                       Hohe Customer Acquisition Costs (€450 per Kunde) und keine systematische Growth-Strategie.
@@ -93,7 +93,7 @@
                 <div>
                   <!-- Metrics Dashboard -->
                   <div class="glass-card rounded-xl p-6 mb-6">
-                    <div class="code-font text-accent-neon text-sm mb-4">results.getData()</div>
+                    <div class="text-accent-neon text-sm mb-4">Ergebnisse:</div>
                     
                     <div class="grid grid-cols-2 gap-4 mb-6">
                       <div class="text-center">
@@ -124,7 +124,7 @@
 
                   <!-- What We Did -->
                   <div class="neon-card rounded-xl p-6">
-                    <div class="code-font text-accent-orange text-sm mb-3">solution.execute()</div>
+                    <div class="text-accent-orange text-sm mb-3">Unsere Lösung:</div>
                     <ul class="space-y-2 text-white/90 text-sm">
                       <li class="flex items-start gap-2">
                         <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
@@ -149,7 +149,7 @@
 
               <!-- Equity Deal Info -->
               <div class="mt-8 cyber-card rounded-xl p-6">
-                <div class="code-font text-accent-cyan text-sm mb-3">partnership_structure.json</div>
+                <div class="text-accent-cyan text-sm mb-3">Partnerschaftsstruktur:</div>
                 <div class="grid md:grid-cols-3 gap-6 text-center">
                   <div>
                     <div class="text-xl font-bold text-accent-neon mb-1">8%</div>
@@ -176,11 +176,11 @@
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                   <div class="w-3 h-3 rounded-full bg-accent-purple"></div>
-                  <div class="code-font text-accent-purple">case_study_002.json</div>
+                  <div class="text-accent-purple">Fallstudie 002</div>
                 </div>
                 <div class="flex items-center gap-2">
-                  <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs code-font">VERIFIED</div>
-                  <div class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs code-font">4 MONATE</div>
+                  <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">Verifiziert</div>
+                  <div class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs">4 Monate</div>
                 </div>
               </div>
             </div>
@@ -189,7 +189,7 @@
               <div class="grid lg:grid-cols-2 gap-8">
                 <div>
                   <div class="cyber-card rounded-xl p-6 mb-6">
-                    <div class="code-font text-accent-purple text-sm mb-3">"company_profile":</div>
+                    <div class="text-accent-purple text-sm mb-3">Unternehmensprofil:</div>
                     <h3 class="text-2xl font-bold text-white mb-3">EcoTech Store</h3>
                     <p class="text-white/80 mb-4">
                       Nachhaltiger Online-Shop für Smart Home Produkte. Bootstrap-Startup aus Hamburg.
@@ -202,7 +202,7 @@
                   </div>
 
                   <div class="glass-card rounded-xl p-6">
-                    <div class="code-font text-accent-cyan text-sm mb-3">challenge.analyze()</div>
+                    <div class="text-accent-cyan text-sm mb-3">Herausforderung:</div>
                     <p class="text-white/90 leading-relaxed">
                       <strong>Problem:</strong> Niedrige Conversion Rate (0.8%) und hohe Return Rate. 
                       Organischer Traffic vorhanden, aber schlechte User Experience.
@@ -212,7 +212,7 @@
 
                 <div>
                   <div class="neon-card rounded-xl p-6 mb-6">
-                    <div class="code-font text-accent-purple text-sm mb-4">performance.metrics()</div>
+                    <div class="text-accent-purple text-sm mb-4">Performance-Metriken:</div>
                     
                     <div class="grid grid-cols-2 gap-4 mb-6">
                       <div class="text-center">
@@ -242,7 +242,7 @@
                   </div>
 
                   <div class="cyber-card rounded-xl p-6">
-                    <div class="code-font text-accent-orange text-sm mb-3">optimization.stack()</div>
+                    <div class="text-accent-orange text-sm mb-3">Optimierungsmaßnahmen:</div>
                     <ul class="space-y-2 text-white/90 text-sm">
                       <li class="flex items-start gap-2">
                         <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
@@ -266,7 +266,7 @@
               </div>
 
               <div class="mt-8 glass-card rounded-xl p-6">
-                <div class="code-font text-accent-purple text-sm mb-3">deal_structure.summary()</div>
+                <div class="text-accent-purple text-sm mb-3">Deal-Struktur:</div>
                 <div class="grid md:grid-cols-3 gap-6 text-center">
                   <div>
                     <div class="text-xl font-bold text-accent-purple mb-1">12%</div>
@@ -289,13 +289,13 @@
         <!-- Coming Soon -->
         <div class="group animate-slide-up-stagger" style="animation-delay: 0.4s;">
           <div class="neon-card rounded-2xl p-8 text-center">
-            <div class="code-font text-accent-neon text-sm mb-4">
-              <span class="text-accent-cyan">pipeline@trinsler:~$</span> loading --new-cases
+            <div class="text-accent-neon text-sm mb-4">
+              <span class="text-accent-cyan">Status:</span> Neue Cases werden geladen
             </div>
             
             <h3 class="text-2xl font-bold text-white mb-4">
-              <span class="gradient-text-neon">WEITERE CASES</span> 
-              <span class="text-accent-cyan">IN ARBEIT</span>
+              <span class="gradient-text-neon">Weitere Cases</span> 
+              <span class="text-accent-cyan">in Arbeit</span>
             </h3>
             
             <p class="text-white/80 mb-6 max-w-2xl mx-auto">
@@ -319,14 +319,14 @@
       <!-- CTA Section -->
       <div class="text-center mt-20">
         <div class="cyber-card rounded-2xl max-w-4xl mx-auto p-8">
-          <div class="code-font text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">growth@trinsler:~$</span> start --your-success-story
+          <div class="text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">Bereit für:</span> Ihre Erfolgsgeschichte
           </div>
           
           <h3 class="text-3xl font-bold text-white mb-6">
-            <span class="text-accent-neon">IHR</span> 
-            <span class="gradient-text-neon">SUCCESS STORY</span>
-            <span class="text-accent-cyan"> WARTET</span>
+            <span class="text-accent-neon">Ihre</span> 
+            <span class="gradient-text-neon">Erfolgsgeschichte</span>
+            <span class="text-accent-cyan"> wartet</span>
           </h3>
           
           <p class="text-white/80 mb-8 max-w-2xl mx-auto">
@@ -335,8 +335,8 @@
           </p>
           
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink to="/contact" class="btn-primary code-font">
-              <span>> START_PARTNERSHIP()</span>
+            <NuxtLink to="/contact" class="btn-primary">
+              <span>Partnerschaft starten</span>
               <ArrowRightIcon class="ml-2 h-5 w-5" />
             </NuxtLink>
           </div>
