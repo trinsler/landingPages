@@ -100,7 +100,7 @@
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center">
                   <div :class="service.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <component :is="service.icon" class="w-8 h-8 text-white" />
+                    <div class="text-white text-2xl font-bold"></div>
                   </div>
                   <div class="text-accent-cyan text-xs">{{ service.module }}</div>
                 </div>
@@ -210,9 +210,7 @@
             class="btn-primary group text-xl transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
-              <RocketLaunchIcon class="w-6 h-6 mr-3" />
               Kostenloses Wachstums-Audit
-              <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
             </span>
           </NuxtLink>
           
@@ -240,14 +238,7 @@
 </template>
 
 <script setup>
-import { 
-  RocketLaunchIcon,
-  ArrowRightIcon,
-  ChartBarIcon,
-  MagnifyingGlassIcon,
-  SpeakerWaveIcon,
-  ChartPieIcon
-} from '@heroicons/vue/24/outline'
+// No icons or emojis needed
 
 useHead({
   title: 'Services - Trinsler Equity-for-Growth'
@@ -268,7 +259,6 @@ const services = [
     filename: 'growth_complete.sh',
     command: 'execute_growth_strategy',
     module: 'CORE',
-    icon: RocketLaunchIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     status: 'PREMIUM',
     statusColor: 'text-accent-neon',
@@ -290,7 +280,6 @@ const services = [
     filename: 'marketing_excellence.py',
     command: 'initialize_marketing',
     module: 'MKT',
-    icon: ChartBarIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     status: 'AKTIV',
     statusColor: 'text-accent-purple',
@@ -312,7 +301,6 @@ const services = [
     filename: 'product_growth.js',
     command: 'deploy_product_strategy',
     module: 'PLG',
-    icon: MagnifyingGlassIcon,
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-orange',
     status: 'WACHSEND',
     statusColor: 'text-accent-cyan',
@@ -334,7 +322,6 @@ const services = [
     filename: 'revenue_optimization.exe',
     command: 'scale_revenue_operations',
     module: 'REV',
-    icon: ChartPieIcon,
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
     status: 'SKALIERT',
     statusColor: 'text-accent-orange',

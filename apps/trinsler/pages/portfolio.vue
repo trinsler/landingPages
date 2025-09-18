@@ -108,7 +108,7 @@
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center">
                   <div :class="project.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker">
-                    <component :is="project.icon" class="w-8 h-8 text-white" />
+                    <div class="text-white text-2xl font-bold"></div>
                   </div>
                   <div class="text-accent-cyan text-xs">{{ project.classification }}</div>
                 </div>
@@ -224,9 +224,7 @@
             class="btn-primary group text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
-              <RocketLaunchIcon class="w-6 h-6 mr-3" />
               Jetzt Partnershaft starten
-              <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
             </span>
           </NuxtLink>
           
@@ -254,16 +252,7 @@
 </template>
 
 <script setup>
-import { 
-  RocketLaunchIcon,
-  ArrowRightIcon,
-  ShoppingBagIcon,
-  BuildingStorefrontIcon,
-  CurrencyEuroIcon,
-  UserGroupIcon,
-  ComputerDesktopIcon,
-  BriefcaseIcon
-} from '@heroicons/vue/24/outline'
+// No icons or emojis needed
 
 useHead({
   title: 'Portfolio - Trinsler Erfolgsgeschichten'
@@ -278,7 +267,6 @@ const projects = [
     filename: 'techstart_mission.log',
     code: 'revenue.scale(5x)',
     classification: 'TOP_SECRET',
-    icon: ComputerDesktopIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     status: 'CLASSIFIED',
     statusColor: 'text-accent-neon',
@@ -293,7 +281,6 @@ const projects = [
     filename: 'ecommerce_hack.py',
     code: 'conversion.optimize()',
     classification: 'CONFIDENTIAL',
-    icon: ShoppingBagIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     status: 'ACTIVE',
     statusColor: 'text-accent-purple',
@@ -308,7 +295,6 @@ const projects = [
     filename: 'fintech_revolution.js',
     code: 'blockchain.scale()',
     classification: 'ULTRA_SECRET',
-    icon: CurrencyEuroIcon,
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
     status: 'LEGENDARY',
     statusColor: 'text-accent-orange',
@@ -323,7 +309,6 @@ const projects = [
     filename: 'social_viral.sh',
     code: 'viral.spread(infinite)',
     classification: 'COSMIC',
-    icon: UserGroupIcon,
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
     status: 'VIRAL',
     statusColor: 'text-accent-cyan',
@@ -338,7 +323,6 @@ const projects = [
     filename: 'local_empire.exe',
     code: 'empire.expand()',
     classification: 'RESTRICTED',
-    icon: BuildingStorefrontIcon,
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
     status: 'EXPANDING',
     statusColor: 'text-green-400',
@@ -353,7 +337,6 @@ const projects = [
     filename: 'consulting_elite.py',
     code: 'authority.establish()',
     classification: 'ELITE_ONLY',
-    icon: BriefcaseIcon,
     iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
     status: 'DOMINANT',
     statusColor: 'text-blue-400',

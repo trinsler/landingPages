@@ -53,7 +53,6 @@
               class="btn-primary group relative overflow-hidden"
             >
               <span class="relative z-10">Growth starten</span>
-              <ArrowRightIcon class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10" />
             </NuxtLink>
           </div>
 
@@ -141,7 +140,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { ArrowRightIcon } from '@heroicons/vue/24/outline'
+// No icons needed
 
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)

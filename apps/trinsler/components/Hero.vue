@@ -29,7 +29,6 @@
               <div class="w-2 h-2 bg-accent-primary rounded-full  mr-3"></div>
               <span class="text-glow-blue">Aktiv</span>
               <span class="text-accent-cyan ml-2">Equity-for-Growth</span>
-              <ChevronRightIcon class="ml-2 h-4 w-4 text-accent-neon" />
             </div>
           </div>
 
@@ -67,13 +66,11 @@
               class="btn-primary group animate-glow-pulse"
             >
               <span>Kostenloses Wachstums-Audit</span>
-              <ArrowRightIcon class="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
             <NuxtLink
               to="/portfolio"
               class="btn-secondary magnetic-hover"
             >
-              <PlayIcon class="mr-2 h-5 w-5" />
               Erfolgsgeschichten ansehen
             </NuxtLink>
           </div>
@@ -199,5 +196,5 @@
 </template>
 
 <script setup>
-import { ChevronRightIcon, ArrowRightIcon, PlayIcon } from '@heroicons/vue/24/outline'
+// No icons needed
 </script>

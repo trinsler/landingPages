@@ -127,19 +127,19 @@
                     <div class="text-accent-orange text-sm mb-3">Unsere Lösung:</div>
                     <ul class="space-y-2 text-white/90 text-sm">
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Performance Marketing Optimierung (Google Ads, LinkedIn)</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Conversion Rate Optimierung der Landing Pages</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Email Marketing Automation & Lead Nurturing</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Product-Led Growth Features implementiert</span>
                       </li>
                     </ul>
@@ -245,19 +245,19 @@
                     <div class="text-accent-orange text-sm mb-3">Optimierungsmaßnahmen:</div>
                     <ul class="space-y-2 text-white/90 text-sm">
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>UX/UI Redesign der Product Pages</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Social Proof & Review-System Integration</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>A/B Testing für Checkout-Optimierung</span>
                       </li>
                       <li class="flex items-start gap-2">
-                        <CheckIcon class="w-4 h-4 text-accent-neon mt-0.5 flex-shrink-0" />
+                        <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
                         <span>Instagram & TikTok Marketing Setup</span>
                       </li>
                     </ul>
@@ -337,7 +337,6 @@
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <NuxtLink to="/contact" class="btn-primary">
               <span>Partnerschaft starten</span>
-              <ArrowRightIcon class="ml-2 h-5 w-5" />
             </NuxtLink>
           </div>
         </div>
@@ -347,7 +346,7 @@
 </template>
 
 <script setup>
-import { CheckIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
+// No icons or emojis needed
 
 useHead({
   title: 'Case Studies - Verified Success Stories | Trinsler',

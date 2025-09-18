@@ -60,10 +60,10 @@
                 <span class="text-accent-cyan">Status:</span> {{ service.status }}
               </div>
               
-              <!-- Service Icon as ASCII -->
+              <!-- Service Visual -->
               <div class="relative mb-6">
                 <div :class="service.iconBg" class="w-16 h-16 rounded-xl neon-card flex items-center justify-center group-hover:scale-110 transition-transform duration-300 animate-neon-flicker">
-                  <component :is="service.icon" class="w-8 h-8 text-white" />
+                  <div class="text-white text-2xl font-bold"></div>
                 </div>
                 <div class="absolute -top-2 -right-2 text-xs text-accent-cyan bg-surface-2 px-2 py-1 rounded">{{ service.status }}</div>
               </div>
@@ -155,10 +155,10 @@
               
               <!-- Module Content -->
               <div class="p-6 text-center">
-                <!-- Icon as Process -->
+                <!-- Visual Element -->
                 <div class="relative mb-6">
                   <div :class="benefit.iconBg" class="w-16 h-16 rounded-xl mx-auto flex items-center justify-center group-hover:scale-110 transition-transform duration-300 animate-neon-flicker">
-                    <component :is="benefit.icon" class="w-8 h-8 text-white" />
+                    <div class="text-white text-2xl font-bold"></div>
                   </div>
                   <div class="absolute -top-1 -right-1 w-3 h-3 bg-accent-neon rounded-full "></div>
                 </div>
@@ -234,10 +234,8 @@
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
               <NuxtLink to="/contact" class="btn-primary group animate-glow-pulse">
                 <span>Growth-Audit starten</span>
-                <ArrowRightIcon class="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </NuxtLink>
               <NuxtLink to="/portfolio" class="btn-secondary">
-                <PlayIcon class="mr-2 h-5 w-5" />
                 Erfolgsgeschichten ansehen
               </NuxtLink>
             </div>
@@ -267,23 +265,12 @@
 </template>
 
 <script setup>
-import { 
-  CheckIcon, 
-  ArrowRightIcon, 
-  PlayIcon,
-  RocketLaunchIcon,
-  ChartBarIcon,
-  CurrencyDollarIcon,
-  HeartIcon,
-  ShieldCheckIcon,
-  LightBulbIcon
-} from '@heroicons/vue/24/outline'
+// No icons or emojis needed
 
 const mainServices = [
   {
     title: 'Growth-as-a-Service',
     description: 'Vollständige operative Growth-Unterstützung für Ihr Startup. Wir übernehmen Marketing, Sales, Product Growth und mehr.',
-    icon: RocketLaunchIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     filename: 'growth_service.sh',
     command: 'start_growth_engine',
@@ -301,7 +288,6 @@ const mainServices = [
   {
     title: 'Equity-for-Marketing',
     description: 'Professionelles Digital Marketing gegen Equity-Beteiligung. Perfekt für Startups mit begrenztem Marketing-Budget.',
-    icon: ChartBarIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     filename: 'marketing_equity.py',
     command: 'execute_marketing_stack',
@@ -322,19 +308,16 @@ const benefits = [
   {
     title: 'Skin in the Game',
     description: 'Wir verdienen nur, wenn Ihr Startup erfolgreich ist. Unsere Interessen sind perfekt aligned.',
-    icon: HeartIcon,
     iconBg: 'bg-gradient-to-r from-red-500 to-pink-500'
   },
   {
     title: 'Niedriger Cash-Burn',
     description: 'Sparen Sie 80% der üblichen Agentur-Kosten. Mehr Runway für Product Development und Team.',
-    icon: CurrencyDollarIcon,
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500'
   },
   {
     title: 'Langfristige Partnerschaft',
     description: 'Keine kurzfristigen Projekte. Wir wachsen mit Ihnen über Jahre hinweg.',
-    icon: ShieldCheckIcon,
     iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500'
   }
 ]

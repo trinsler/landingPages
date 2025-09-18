@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen matrix-bg relative overflow-hidden">
+  <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
     <!-- Cyber Grid Background -->
     <div class="absolute inset-0 cyber-grid opacity-30"></div>
     
@@ -63,7 +63,7 @@
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                   />
                   <div class="w-full h-full bg-gradient-to-br from-accent-primary/20 to-accent-cyan/20 flex items-center justify-center" style="display:none">
-                    <UserIcon class="w-16 h-16 text-white" />
+                    <div class="w-16 h-16 text-white text-4xl flex items-center justify-center"></div>
                   </div>
                 </div>
                 <div class="absolute -top-2 -right-2 neon-card rounded-full p-2">
@@ -133,7 +133,7 @@
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                   />
                   <div class="w-full h-full bg-gradient-to-br from-accent-purple/20 to-accent-orange/20 flex items-center justify-center" style="display:none">
-                    <UserIcon class="w-16 h-16 text-white" />
+                    <div class="w-16 h-16 text-white text-4xl flex items-center justify-center"></div>
                   </div>
                 </div>
                 <div class="absolute -top-2 -right-2 cyber-card rounded-full p-2">
@@ -202,11 +202,9 @@
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <NuxtLink to="/contact" class="btn-primary">
               <span>Founders kontaktieren</span>
-              <ArrowRightIcon class="ml-2 h-5 w-5" />
             </NuxtLink>
             <a href="https://calendly.com/trinsler/growth-call" target="_blank" 
                class="btn-secondary">
-              <CalendarIcon class="mr-2 h-5 w-5" />
               Gespräch buchen
             </a>
           </div>
@@ -217,7 +215,7 @@
 </template>
 
 <script setup>
-import { UserIcon, ArrowRightIcon, CalendarIcon } from '@heroicons/vue/24/outline'
+// No icons or emojis needed
 
 useHead({
   title: 'Team - Trinsler Gründer',
