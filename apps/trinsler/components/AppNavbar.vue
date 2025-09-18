@@ -37,10 +37,10 @@
             v-for="item in navigation" 
             :key="item.name"
             :to="item.href" 
-            class="relative group font-medium transition-all duration-300 hover:scale-105 code-font text-white/90 hover:text-accent-neon"
+            class="relative group font-medium transition-all duration-300 hover:scale-105 text-white/90 hover:text-accent-primary"
           >
-            <span class="text-accent-cyan">></span> {{ item.name.toUpperCase() }}
-            <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-neon group-hover:w-full transition-all duration-300 shadow-[0_0_8px_var(--accent-neon)]"></div>
+            {{ item.name }}
+            <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-primary group-hover:w-full transition-all duration-300"></div>
           </NuxtLink>
         </div>
 
@@ -50,9 +50,9 @@
           <div class="hidden lg:flex items-center space-x-4">
             <NuxtLink
               to="/contact"
-              class="btn-primary group relative overflow-hidden code-font"
+              class="btn-primary group relative overflow-hidden"
             >
-              <span class="relative z-10">> INIT_GROWTH()</span>
+              <span class="relative z-10">Growth starten</span>
               <ArrowRightIcon class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10" />
             </NuxtLink>
           </div>
@@ -147,11 +147,9 @@ const mobileMenuOpen = ref(false)
 const scrolled = ref(false)
 
 const navigation = [
-  { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Insights', href: '/insights' },
-  { name: 'Trends 2025', href: '/trends-2025' },
+  { name: 'Team', href: '/team' },
   { name: 'Kontakt', href: '/contact' }
 ]
 

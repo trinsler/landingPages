@@ -114,7 +114,7 @@
           </div>
           <div class="md:flex md:items-center md:justify-between">
             <p class="text-xs leading-5 text-white/60 code-font">
-              &copy; 2025 Trinsler GmbH (in Gründung). Equity-for-Growth Revolution.
+              &copy; 2025 Trinsler GmbH. Equity-for-Growth Solutions.
             </p>
             <div class="mt-4 md:mt-0 flex items-center gap-4">
               <div class="flex items-center gap-2">
