@@ -1,7 +1,9 @@
 // Export all UI components
-export { default as BaseButton } from './components/BaseButton.vue'
-export { default as ToastContainer } from './components/ToastContainer.vue'
-export { default as LoadingSpinner } from './components/LoadingSpinner.vue'
+import BaseButton from './components/BaseButton.vue'
+import ToastContainer from './components/ToastContainer.vue'
+import LoadingSpinner from './components/LoadingSpinner.vue'
+
+export { BaseButton, ToastContainer, LoadingSpinner }
 
 // Export composables
 export { useToast } from './composables/useToast'

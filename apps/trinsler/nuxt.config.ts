@@ -37,6 +37,6 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: ['@headlessui/vue', '@heroicons/vue']
+    transpile: []
   }
 })

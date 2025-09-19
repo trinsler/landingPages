@@ -23,7 +23,6 @@
     "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^3.0.2",
     "typescript": "^5.9.2",
     "gh-pages": "^6.1.1",
     "tsup": "^8.0.0",

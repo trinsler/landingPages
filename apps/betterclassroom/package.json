@@ -16,8 +16,6 @@
     "@monorepo/ui": "workspace:*"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.1",
-    "tailwindcss": "^3.4.0"
   },
   "version": "1.0.0",
   "description": "betterclassroom - Nuxt 3 App",

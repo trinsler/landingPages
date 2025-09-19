@@ -100,7 +100,9 @@
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center">
                   <div :class="trend.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <component :is="trend.icon" class="w-8 h-8 text-white" />
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                   </div>
                   <div class="code-font text-accent-cyan text-xs">{{ trend.category }}</div>
                 </div>
@@ -211,9 +213,13 @@
             class="btn-primary group code-font text-xl transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
-              <RocketLaunchIcon class="w-6 h-6 mr-3" />
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
               Zukunfts-Marketing umsetzen
-              <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
+              <svg class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
             </span>
           </NuxtLink>
           
@@ -241,18 +247,6 @@
 </template>
 
 <script setup>
-import { 
-  RocketLaunchIcon,
-  ArrowRightIcon,
-  CpuChipIcon,
-  ShieldCheckIcon,
-  VideoCameraIcon,
-  ChatBubbleBottomCenterTextIcon,
-  DevicePhoneMobileIcon,
-  UserGroupIcon,
-  MegaphoneIcon,
-  ChartBarIcon
-} from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'DIGITAL MARKETING TRENDS 2025 - Trinsler Future Matrix'
@@ -414,7 +408,7 @@ const trends = [
     impactLevel: 'MITTEL',
     impactColor: 'text-accent-orange',
     codeSnippet: 'creativity.optimize()',
-    icon: ChartBarIcon,
+    icon: 'chart',
     iconBg: 'bg-gradient-to-r from-purple-500 to-pink-500',
     timeframe: 'Q3-Q4 2025',
     urgency: 'MITTEL'

@@ -139,8 +139,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-// No icons needed
 
 const mobileMenuOpen = ref(false)
 const scrolled = ref(false)

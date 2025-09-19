@@ -119,7 +119,9 @@
           <!-- Back Button -->
           <div class="text-center mt-12">
             <NuxtLink to="/" class="btn-secondary inline-flex items-center">
-              <ArrowLeftIcon class="mr-2 h-5 w-5" />
+              <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
               <span>Zurück zur Startseite</span>
             </NuxtLink>
           </div>
@@ -130,7 +132,6 @@
 </template>
 
 <script setup>
-import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
 
 useHead({
   title: 'Impressum - Trinsler GmbH',

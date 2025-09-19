@@ -116,9 +116,8 @@
               class="btn-primary group relative overflow-hidden code-font text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
             >
               <span class="relative z-10 flex items-center">
-                <FireIcon class="w-6 h-6 mr-3" />
                 Kostenloses Wachstums-Audit
-                <ArrowRightIcon class="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
               </span>
             </NuxtLink>
 
@@ -126,9 +125,7 @@
               to="/portfolio"
               class="btn-secondary group code-font text-lg hover:scale-105 transition-all duration-300"
             >
-              <PlayIcon class="w-5 h-5 mr-3" />
               Erfolgsgeschichten ansehen
-              <ChevronRightIcon class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </NuxtLink>
           </div>
 
@@ -145,14 +142,14 @@
               </div>
               <div class="text-center">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                  <ClockIcon class="w-4 h-4 text-accent-purple" />
+                  <!-- Icon removed -->
                   <span class="code-font text-accent-purple text-sm">AUDIT_AVAILABLE</span>
                 </div>
                 <div class="text-lg font-bold text-white">FREE</div>
               </div>
               <div class="text-center">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                  <StarIcon class="w-4 h-4 text-accent-orange" />
+                  <!-- Icon removed -->
                   <span class="code-font text-accent-orange text-sm">GROWTH_RATE</span>
                 </div>
                 <div class="text-2xl font-bold text-glow-cyan">5.2x</div>
@@ -176,36 +173,21 @@
 </template>
 
 <script setup>
-import { 
-  RocketLaunchIcon,
-  FireIcon,
-  ArrowRightIcon,
-  PlayIcon,
-  ChevronRightIcon,
-  ClockIcon,
-  StarIcon,
-  CurrencyDollarIcon,
-  HeartIcon,
-  LightBulbIcon
-} from '@heroicons/vue/24/outline'
 
 const benefits = [
   {
     title: 'Niedrige Kosten',
     description: '80% weniger als klassische Agenturen',
-    icon: CurrencyDollarIcon,
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-600'
   },
   {
     title: 'Aligned Interests',
     description: 'Wir verdienen nur, wenn Sie wachsen',
-    icon: HeartIcon,
     iconBg: 'bg-gradient-to-r from-red-500 to-pink-600'
   },
   {
     title: 'Operative Excellence',
     description: 'Echte Skills, keine Beratung',
-    icon: LightBulbIcon,
     iconBg: 'bg-gradient-to-r from-blue-500 to-purple-600'
   }
 ]
