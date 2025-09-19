@@ -13,23 +13,29 @@ All apps use:
 - **UI**: Headless UI, Heroicons
 - **Build**: Vite + tsup (for packages)
 
-### Git workflow
+### Git Workflow
 
-1. Feature Development:
+#### 1. Feature Development
+```bash
 git checkout main
 git pull origin main
 git checkout -b feature/newsletter-system
 # ... development work ...
 git push origin feature/newsletter-system
-2. Pull Request Process:
-- Create PR: feature/newsletter-system → main
+```
+
+#### 2. Pull Request Process
+- Create PR: `feature/newsletter-system` → `main`
 - Code Review
-- Merge to main → Auto-Deploy to Development
-3. Release Process:
+- Merge to `main` → Auto-Deploy to Development
+
+#### 3. Release Process
+```bash
 git checkout main
 git pull origin main
 git tag -a v1.2.3 -m "Release v1.2.3: Newsletter system"
 git push origin v1.2.3
+```
 - Tag Push → Auto-Deploy to Production
 
 ### Shared Packages
