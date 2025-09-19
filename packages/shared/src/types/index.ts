@@ -6,6 +6,7 @@ export interface User {
   full_name: string
   avatar_url: string
   coins: number
+  newsletter_subscribed: boolean
   created_at: string
   last_sign_in: string
 }
@@ -66,15 +67,6 @@ export interface PaymentSession {
   created_at: string
 }
 
-export interface EmailSubscription {
-  id: string
-  email: string
-  status: 'active' | 'unsubscribed' | 'pending'
-  tags?: string[]
-  metadata?: Record<string, any>
-  subscribed_at: string
-  unsubscribed_at?: string
-}
 
 // Toast types
 export interface ToastOptions {

@@ -13,6 +13,25 @@ All apps use:
 - **UI**: Headless UI, Heroicons
 - **Build**: Vite + tsup (for packages)
 
+### Git workflow
+
+1. Feature Development:
+git checkout main
+git pull origin main
+git checkout -b feature/newsletter-system
+# ... development work ...
+git push origin feature/newsletter-system
+2. Pull Request Process:
+- Create PR: feature/newsletter-system → main
+- Code Review
+- Merge to main → Auto-Deploy to Development
+3. Release Process:
+git checkout main
+git pull origin main
+git tag -a v1.2.3 -m "Release v1.2.3: Newsletter system"
+git push origin v1.2.3
+- Tag Push → Auto-Deploy to Production
+
 ### Shared Packages
 - **`@monorepo/shared`** - Types, Utils, Constants
 - **`@monorepo/ui`** - Reusable UI Components
