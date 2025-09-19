@@ -15,11 +15,11 @@
 
     <!-- Floating Code Matrix -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-24 text-accent-neon text-xs opacity-70">Wachstum: 300%</div>
-      <div class="floating-element absolute top-32 right-28 text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">Skalierung</div>
-      <div class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">Neuer Erfolg</div>
-      <div class="floating-element absolute top-2/3 right-1/3 text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">+500K Umsatz</div>
-      <div class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">Mission Erfolgreich</div>
+      <div class="floating-element absolute top-20 left-24 text-accent-neon text-xs opacity-70">Vue.js Apps</div>
+      <div class="floating-element absolute top-32 right-28 text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">Landing Pages</div>
+      <div class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">E-Commerce</div>
+      <div class="floating-element absolute top-2/3 right-1/3 text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">Websites</div>
+      <div class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">Portfolio Live</div>
     </div>
 
     <div class="relative container-custom py-20">
@@ -31,7 +31,7 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
-            <div class="ml-4 text-accent-cyan text-lg">Portfolio & Erfolgsgeschichten</div>
+            <div class="ml-4 text-accent-cyan text-lg">Portfolio & Web-Projekte</div>
           </div>
         </div>
 
@@ -40,22 +40,22 @@
           <!-- System Boot -->
           <div class="mb-8">
             <div class="text-accent-neon text-sm mb-4 animate-slide-up-stagger">
-              <span class="text-accent-cyan">Status:</span> Portfolio wird geladen
+              <span class="text-accent-cyan">Status:</span> Web-Projekte werden geladen
             </div>
             <div class="neon-card rounded-xl px-6 py-3 inline-block animate-neon-flicker">
               <span class="text-accent-neon">Portfolio Aktiv</span>
-              <span class="text-white ml-2">Erfolgsgeschichten</span>
+              <span class="text-white ml-2">Web-Projekte</span>
             </div>
           </div>
 
           <!-- ASCII Header -->
           <div class="mb-12 text-center">
             <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
-              <span class="text-white">STARTUP</span>
+              <span class="text-white">WEB</span>
               <br />
-              <span class="gradient-text-neon">ERFOLGE</span>
+              <span class="gradient-text-neon">PROJEKTE</span>
               <br />
-              <span class="text-accent-cyan">IM DETAIL</span>
+              <span class="text-accent-cyan">PORTFOLIO</span>
             </h1>
           </div>
 
@@ -63,12 +63,12 @@
           <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
             <div class="text-accent-purple text-sm mb-3">Unsere Referenzen</div>
             <p class="text-xl text-white/90 leading-relaxed">
-              <span class="text-accent-cyan">Erfolgsbeispiele:</span> Unsere erfolgreichsten 
-              <span class="font-bold text-glow-green">Wachstums-Strategien und Startup-Partnerschaften</span>. 
-              Jedes Projekt dokumentiert mit <span class="text-accent-neon">messbaren Ergebnissen</span>.
+              <span class="text-accent-cyan">Projektbeispiele:</span> Unsere erfolgreichsten 
+              <span class="font-bold text-glow-green">Web-Applikationen, Landing Pages und Websites</span>. 
+              Jedes Projekt dokumentiert mit <span class="text-accent-neon">konkreten Ergebnissen</span>.
             </p>
             <div class="text-accent-orange text-sm mt-4">
-              Alle Zahlen basieren auf realen Projektergebnissen unserer Partner
+              Alle Projekte wurden erfolgreich ausgeliefert und sind live
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@
                 <div class="text-accent-orange text-xs mb-2">Projektergebnis</div>
                 <div class="text-center">
                   <div class="text-2xl font-bold text-glow-green mb-1">{{ project.result }}</div>
-                  <div class="text-white/60 text-xs">Wachstum erreicht</div>
+                  <div class="text-white/60 text-xs">Entwicklungszeit</div>
                 </div>
               </div>
               
@@ -178,7 +178,7 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
-            <div class="ml-4 text-accent-cyan text-lg">Neue Partnerschaft starten</div>
+            <div class="ml-4 text-accent-cyan text-lg">Neues Web-Projekt starten</div>
           </div>
         </div>
         
@@ -186,15 +186,15 @@
         <div class="p-8 lg:p-12 text-center code-pattern">
           <!-- Call to Action -->
           <div class="text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">Bereit für:</span> Neue Partnerschaft
+            <span class="text-accent-cyan">Bereit für:</span> Neues Web-Projekt
           </div>
           
           <!-- ASCII Banner -->
           <div class="code-font text-accent-neon text-xs mb-8">
             <pre class="text-center animate-slide-up-stagger">
   ╔══════════════════════════════════════╗
-  ║       NEW MISSION AVAILABLE        ║
-  ║     PARTNER RECRUITMENT ACTIVE     ║
+  ║       NEW PROJECT AVAILABLE        ║
+  ║       WEB DEVELOPMENT READY       ║
   ╚══════════════════════════════════════╝
             </pre>
           </div>
@@ -202,18 +202,18 @@
           <!-- Mission Brief -->
           <div class="mb-8">
             <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6 animate-glitch">
-              Bereit für Ihre 
-              <span class="gradient-text-neon">Erfolgsgeschichte?</span>
+              Bereit für Ihr 
+              <span class="gradient-text-neon">Web-Projekt?</span>
             </h3>
             
             <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
               <div class="text-accent-purple text-sm mb-3">Ihr nächster Schritt</div>
               <p class="text-lg text-white/90 leading-relaxed">
-                <span class="text-accent-cyan">Ziel:</span> Werden Sie die nächste Erfolgsgeschichte. 
-                <span class="font-bold text-glow-green">Equity-for-Growth</span> Revolution startet hier.
+                <span class="text-accent-cyan">Ziel:</span> Bringen Sie Ihr Web-Projekt zum Leben. 
+                <span class="font-bold text-glow-green">Professionelle Web-Entwicklung</span> beginnt hier.
               </p>
               <div class="text-accent-orange text-sm mt-4">
-                Wenn Sie bereit sind, starten wir die Mission!
+                Bereit für Ihr Web-Projekt? Lassen Sie uns starten!
               </div>
             </div>
           </div>
@@ -224,7 +224,7 @@
             class="btn-primary group text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
-              Jetzt Partnershaft starten
+              Web-Projekt starten
             </span>
           </NuxtLink>
           
@@ -232,16 +232,16 @@
           <div class="mt-8 pt-6 border-t border-accent-neon/20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div class="text-center">
-                <div class="text-accent-cyan mb-1">Aktive Projekte:</div>
-                <div class="text-accent-neon ">● 12</div>
+                <div class="text-accent-cyan mb-1">Web-Projekte 2024:</div>
+                <div class="text-accent-neon ">● 25</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-purple mb-1">Erfolgsrate:</div>
-                <div class="text-glow-green font-bold">89%</div>
+                <div class="text-accent-purple mb-1">Pünktliche Lieferung:</div>
+                <div class="text-glow-green font-bold">100%</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-orange mb-1">Neue Partner:</div>
-                <div class="text-white font-bold">Gesucht</div>
+                <div class="text-accent-orange mb-1">Client Zufriedenheit:</div>
+                <div class="text-white font-bold">98%</div>
               </div>
             </div>
           </div>
@@ -255,92 +255,92 @@
 // No icons or emojis needed
 
 useHead({
-  title: 'Portfolio - Trinsler Erfolgsgeschichten'
+  title: 'Portfolio - Trinsler Web-Projekte'
 })
 
 const projects = [
   {
-    title: 'TechStart Revolution',
-    description: 'Complete growth-hacking operation for B2B SaaS startup. Implemented equity-for-growth model with explosive results.',
-    tags: ['Growth Hacking', 'SaaS', 'B2B'],
-    result: '+500% MRR',
-    filename: 'techstart_mission.log',
-    code: 'revenue.scale(5x)',
-    classification: 'TOP_SECRET',
+    title: 'SaaS Dashboard Platform',
+    description: 'Moderne Web-Applikation für B2B-SaaS Unternehmen. Vue.js Frontend mit Node.js Backend und real-time Analytics.',
+    tags: ['Vue.js', 'SaaS', 'Dashboard'],
+    result: '4 Wochen',
+    filename: 'saas_dashboard.vue',
+    code: 'app.deploy()',
+    classification: 'WEB_APP',
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
-    status: 'CLASSIFIED',
+    status: 'LIVE',
     statusColor: 'text-accent-neon',
-    completion: 'LEGENDARY',
+    completion: 'ERFOLGREICH',
     image: '/images/gabriel-benois-qnWPjzewewA-unsplash.jpg'
   },
   {
-    title: 'E-Commerce Takeover',
-    description: 'Strategic acquisition of market share through innovative digital marketing. Full-stack growth implementation.',
-    tags: ['E-Commerce', 'Market Domination', 'Digital'],
-    result: '+300% Revenue',
-    filename: 'ecommerce_hack.py',
-    code: 'conversion.optimize()',
-    classification: 'CONFIDENTIAL',
+    title: 'E-Commerce Shop',
+    description: 'Vollständiger Online-Shop mit Payment-Integration, Produktkatalog und Bestellverwaltung. Responsive Design für alle Geräte.',
+    tags: ['E-Commerce', 'Nuxt.js', 'Payment'],
+    result: '6 Wochen',
+    filename: 'ecommerce_shop.js',
+    code: 'shop.launch()',
+    classification: 'ONLINE_SHOP',
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
-    status: 'ACTIVE',
+    status: 'ONLINE',
     statusColor: 'text-accent-purple',
-    completion: 'ELITE',
+    completion: 'AUSGELIEFERT',
     image: '/images/tim-mossholder-SZgVZPbQ7RE-unsplash.jpg'
   },
   {
-    title: 'FinTech Disruption',
-    description: 'Cryptocurrency and blockchain startup growth mission. Revolutionary marketing approach for next-gen finance.',
-    tags: ['FinTech', 'Blockchain', 'Disruption'],
-    result: '+800% Users',
-    filename: 'fintech_revolution.js',
-    code: 'blockchain.scale()',
-    classification: 'ULTRA_SECRET',
+    title: 'Corporate Website',
+    description: 'Professionelle Unternehmenswebsite mit CMS, SEO-Optimierung und Contact-Formularen. Modern und responsive.',
+    tags: ['Corporate', 'CMS', 'SEO'],
+    result: '3 Wochen',
+    filename: 'corporate_site.html',
+    code: 'website.publish()',
+    classification: 'CORPORATE',
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
-    status: 'LEGENDARY',
+    status: 'VERÖFFENTLICHT',
     statusColor: 'text-accent-orange',
-    completion: 'MYTHIC',
+    completion: 'TERMINGERECHT',
     image: '/images/szabo-viktor-7hqEx1al0Fk-unsplash.jpg'
   },
   {
-    title: 'Social Platform Hack',
-    description: 'Viral growth engineering for social media startup. Implemented network effects and growth loops.',
-    tags: ['Social Media', 'Viral Growth', 'Network Effects'],
-    result: '+1200% Users',
-    filename: 'social_viral.sh',
-    code: 'viral.spread(infinite)',
-    classification: 'COSMIC',
+    title: 'Landing Page Serie',
+    description: 'Hochkonvertierende Landing Pages für Marketing-Kampagnen. A/B Testing und Conversion-Optimierung implementiert.',
+    tags: ['Landing Pages', 'Conversion', 'Marketing'],
+    result: '2 Wochen',
+    filename: 'landing_pages.vue',
+    code: 'convert.optimize()',
+    classification: 'MARKETING',
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
-    status: 'VIRAL',
+    status: 'CONVERTING',
     statusColor: 'text-accent-cyan',
-    completion: 'COSMIC',
+    completion: 'OPTIMIERT',
     image: '/images/georgia-de-lotz-hdQGAz1pQ_M-unsplash.jpg'
   },
   {
-    title: 'Local Business Empire',
-    description: 'Multi-location local business expansion through advanced digital presence and automation systems.',
-    tags: ['Local SEO', 'Automation', 'Multi-Location'],
-    result: '+400% Locations',
-    filename: 'local_empire.exe',
-    code: 'empire.expand()',
-    classification: 'RESTRICTED',
+    title: 'Booking System',
+    description: 'Online-Buchungssystem mit Kalender-Integration, Payment-Processing und automatischen E-Mail-Benachrichtigungen.',
+    tags: ['Booking', 'Calendar', 'Automation'],
+    result: '5 Wochen',
+    filename: 'booking_system.js',
+    code: 'booking.automate()',
+    classification: 'SYSTEM',
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
-    status: 'EXPANDING',
+    status: 'AUTOMATISIERT',
     statusColor: 'text-green-400',
-    completion: 'IMPERIAL',
+    completion: 'FUNKTIONAL',
     image: '/images/nathana-reboucas-LIfRyiWWBZs-unsplash.jpg'
   },
   {
-    title: 'Consulting Domination',
-    description: 'B2B consulting firm transformed into industry leader. Thought leadership and premium positioning achieved.',
-    tags: ['B2B', 'Thought Leadership', 'Premium'],
-    result: '+600% Revenue',
-    filename: 'consulting_elite.py',
-    code: 'authority.establish()',
-    classification: 'ELITE_ONLY',
+    title: 'Portfolio Website',
+    description: 'Kreative Portfolio-Website für Designer und Freelancer. Interaktive Galerie und Contact-Formulare.',
+    tags: ['Portfolio', 'Creative', 'Interactive'],
+    result: '2 Wochen',
+    filename: 'portfolio_site.css',
+    code: 'portfolio.showcase()',
+    classification: 'CREATIVE',
     iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
-    status: 'DOMINANT',
+    status: 'SHOWCASE',
     statusColor: 'text-blue-400',
-    completion: 'MASTER',
+    completion: 'KREATIV',
     image: '/images/carol-magalhaes-dSsXm15D9hg-unsplash.jpg'
   }
 ]

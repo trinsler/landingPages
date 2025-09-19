@@ -31,8 +31,8 @@
           
           <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto">
             <p class="text-lg text-white/90 leading-relaxed text-center">
-              Erfahrene Wachstums-Experten mit <span class="text-accent-primary">10+ Jahren</span> 
-              in Marketing, Produktentwicklung und Startup-Wachstum.
+              Erfahrene Web-Development-Experten mit <span class="text-accent-primary">5+ Jahren</span> 
+              in Vue.js, Nuxt.js und modernen Web-Technologien.
             </p>
           </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-primary/30">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-accent-primary"></div>
-                <div class="text-accent-cyan text-sm">Co-Founder & Growth Lead</div>
+                <div class="text-accent-cyan text-sm">Co-Founder & Frontend Lead</div>
                 <div class="ml-auto px-2 py-1 rounded bg-green-500/20 text-green-400 text-xs">Verifiziert</div>
               </div>
             </div>
@@ -74,8 +74,8 @@
               <!-- Name & Role -->
               <div class="text-center mb-6">
                 <h3 class="text-2xl font-bold text-white mb-2">Miréio Trinley</h3>
-                <div class="text-accent-cyan text-sm mb-1">Co-Founder & Growth Lead</div>
-                <div class="text-white/60 text-xs mb-3">Vertrieb • Marketing • Design</div>
+                <div class="text-accent-cyan text-sm mb-1">Co-Founder & Frontend Lead</div>
+                <div class="text-white/60 text-xs mb-3">UI/UX Design • Frontend • Project Management</div>
                 
                 <!-- Social Links -->
                 <div class="flex justify-center gap-4">
@@ -92,9 +92,9 @@
               <div class="neon-card rounded-xl p-4 mb-4">
                 <div class="text-accent-purple text-sm mb-2">Background</div>
                 <p class="text-white/90 text-sm leading-relaxed">
-                  Spezialisiert auf Wachstums-Marketing, Verkaufsstrategien und Design. 
-                  Erfahrung in Event-Marketing, Social Media und 
-                  internationaler Projektkoordination mit Fokus auf Startup-Wachstum.
+                  Spezialisiert auf Frontend-Entwicklung, UI/UX Design und Projektmanagement. 
+                  Erfahrung in Vue.js, Nuxt.js, responsivem Design und 
+                  der Umsetzung von Landing Pages und Web-Applikationen.
                 </p>
               </div>
 
@@ -102,10 +102,10 @@
               <div class="glass-card rounded-xl p-4">
                 <div class="text-accent-orange text-sm mb-3">Expertise</div>
                 <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 rounded-full bg-accent-primary/20 text-accent-primary text-xs">Vertrieb & Marketing</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-cyan/20 text-accent-cyan text-xs">Design</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs">Event Marketing</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-orange/20 text-accent-orange text-xs">Wachstums-Strategie</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-primary/20 text-accent-primary text-xs">Vue.js & Nuxt.js</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-cyan/20 text-accent-cyan text-xs">UI/UX Design</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs">Responsive Design</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-orange/20 text-accent-orange text-xs">Project Management</span>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-purple/30">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-accent-purple"></div>
-                <div class="text-accent-purple text-sm">Co-Founder & Tech Lead</div>
+                <div class="text-accent-purple text-sm">Co-Founder & Backend Lead</div>
                 <div class="ml-auto px-2 py-1 rounded bg-green-500/20 text-green-400 text-xs">Verifiziert</div>
               </div>
             </div>
@@ -143,8 +143,8 @@
 
               <div class="text-center mb-6">
                 <h3 class="text-2xl font-bold text-white mb-2">Niels Hensler</h3>
-                <div class="text-accent-purple text-sm mb-1">Co-Founder & Tech Lead</div>
-                <div class="text-white/60 text-xs mb-3">Künstliche Intelligenz • Software • Technologie</div>
+                <div class="text-accent-purple text-sm mb-1">Co-Founder & Backend Lead</div>
+                <div class="text-white/60 text-xs mb-3">Backend Development • APIs • Datenbanken</div>
                 
                 <div class="flex justify-center gap-4">
                   <a href="https://linkedin.com/in/niels-hensler" target="_blank" 
@@ -165,19 +165,19 @@
               <div class="cyber-card rounded-xl p-4 mb-4">
                 <div class="text-accent-cyan text-sm mb-2">Background</div>
                 <p class="text-white/90 text-sm leading-relaxed">
-                  Spezialist für intelligente Software-Lösungen und skalierbare Systeme. 
-                  Expertise in der Entwicklung smarter Anwendungen und leistungsstarker 
-                  Lösungen für komplexe Geschäfts-Herausforderungen.
+                  Spezialist für Backend-Entwicklung und skalierbare Web-Architekturen. 
+                  Expertise in Node.js, API-Development, Datenbank-Design und 
+                  der technischen Umsetzung von Web-Applikationen.
                 </p>
               </div>
 
               <div class="glass-card rounded-xl p-4">
                 <div class="text-accent-orange text-sm mb-3">Expertise</div>
                 <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs">Künstliche Intelligenz</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-cyan/20 text-accent-cyan text-xs">Software-Entwicklung</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-orange/20 text-accent-orange text-xs">Automatisierung</span>
-                  <span class="px-3 py-1 rounded-full bg-accent-primary/20 text-accent-primary text-xs">System-Optimierung</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-purple/20 text-accent-purple text-xs">Node.js & APIs</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-cyan/20 text-accent-cyan text-xs">Datenbank Design</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-orange/20 text-accent-orange text-xs">Web-Architektur</span>
+                  <span class="px-3 py-1 rounded-full bg-accent-primary/20 text-accent-primary text-xs">Performance</span>
                 </div>
               </div>
             </div>
@@ -190,22 +190,22 @@
         <div class="cyber-card rounded-2xl max-w-4xl mx-auto p-8">
           
           <h3 class="text-3xl font-bold text-white mb-6">
-            <span class="gradient-text-neon">Bereit für</span> 
-            <span class="text-accent-cyan">Partnership?</span>
+            <span class="gradient-text-neon">Bereit für Ihr</span> 
+            <span class="text-accent-cyan">Web-Projekt?</span>
           </h3>
           
           <p class="text-white/80 mb-8 max-w-2xl mx-auto">
-            Sprechen Sie direkt mit den Gründern über Ihre Wachstums-Herausforderungen 
-            und wie wir gemeinsam wachsen können.
+            Sprechen Sie direkt mit den Gründern über Ihr Web-Projekt 
+            und wie wir Ihre digitale Vision umsetzen können.
           </p>
           
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <NuxtLink to="/contact" class="btn-primary">
-              <span>Founders kontaktieren</span>
+              <span>Team kontaktieren</span>
             </NuxtLink>
-            <a href="https://calendly.com/trinsler/growth-call" target="_blank" 
+            <a href="https://calendly.com/trinsler/web-project-call" target="_blank" 
                class="btn-secondary">
-              Gespräch buchen
+              Projekt-Gespräch buchen
             </a>
           </div>
         </div>
@@ -218,9 +218,9 @@
 // No icons or emojis needed
 
 useHead({
-  title: 'Team - Trinsler Gründer',
+  title: 'Team - Trinsler Web-Development',
   meta: [
-    { name: 'description', content: 'Lernen Sie die erfahrenen Gründer von Trinsler kennen. 10+ Jahre Erfahrung in Marketing, Produktentwicklung und Startup-Wachstum.' }
+    { name: 'description', content: 'Lernen Sie das Trinsler Web-Development Team kennen. Expertise in Vue.js, Nuxt.js und modernen Web-Technologien.' }
   ]
 })
 </script>

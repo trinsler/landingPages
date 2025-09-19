@@ -13,9 +13,9 @@
 
     <!-- Floating Code -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-20 text-accent-primary text-xs opacity-60">Verbindung aufbauen</div>
-      <div class="floating-element absolute top-40 right-24 text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">Nachricht senden</div>
-      <div class="floating-element absolute bottom-32 left-1/4 text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">Partnerschaft starten</div>
+      <div class="floating-element absolute top-20 left-20 text-accent-primary text-xs opacity-60">Projekt starten</div>
+      <div class="floating-element absolute top-40 right-24 text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">Anfrage senden</div>
+      <div class="floating-element absolute bottom-32 left-1/4 text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">Web-Development</div>
     </div>
 
     <div class="relative container-custom py-20">
@@ -27,7 +27,7 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-primary"></div>
-            <div class="ml-4 text-accent-cyan text-lg">Kontakt - Growth Partnership</div>
+            <div class="ml-4 text-accent-cyan text-lg">Kontakt - Web-Development</div>
           </div>
         </div>
 
@@ -38,16 +38,16 @@
             <div class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold">
               <div class="w-2 h-2 bg-accent-primary rounded-full mr-3"></div>
               <span class="text-accent-cyan">Kontakt</span>
-              <span class="text-white ml-2">Growth Partnership</span>
+              <span class="text-white ml-2">Web-Development</span>
             </div>
           </div>
 
           <!-- ASCII Header -->
           <div class="mb-12 text-center">
             <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
-              <span class="text-accent-primary">Bereit für</span>
+              <span class="text-accent-primary">Bereit für Ihr</span>
               <br />
-              <span class="gradient-text-neon">Wachstum?</span>
+              <span class="gradient-text-neon">Web-Projekt?</span>
             </h1>
           </div>
 
@@ -64,7 +64,7 @@
                 </div>
                 
                 <div class="p-6 code-pattern">
-                  <form @submit.prevent="submitForm" class="space-y-6">
+                  <form @submit.prevent="submitForm" class="space-y-6" ref="contactForm">
                     <!-- Name Input -->
                     <div>
                       <label class="text-accent-cyan text-sm mb-2 block">Ihr Name</label>
@@ -127,8 +127,8 @@
                           v-model="form.message"
                           rows="5"
                           required
-                          placeholder="Beschreiben Sie Ihr Startup und Ihre Wachstums-Herausforderungen..."
-                          class="w-full bg-surface-2 border border-accent-cyan/30 rounded-xl px-4 py-3 text-white focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 transition-all resize-none"
+                          placeholder="Beschreiben Sie Ihr Web-Projekt und Ihre Anforderungen..."
+                          class="w-full bg-surface-2 border border-accent-cyan/30 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/20 transition-all resize-none"
                           @focus="activeField = 'message'"
                           @blur="activeField = ''"
                         ></textarea>
@@ -139,9 +139,11 @@
                     <!-- Submit Button -->
                     <button
                       type="submit"
-                      class="btn-primary w-full text-lg hover:scale-105 transition-all duration-300"
+                      :disabled="isSubmitting"
+                      class="btn-primary w-full text-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <span>Nachricht senden</span>
+                      <span v-if="!isSubmitting">Nachricht senden</span>
+                      <span v-else>Wird gesendet...</span>
                     </button>
                   </form>
                 </div>
@@ -165,7 +167,7 @@
                     <div class="neon-card rounded-xl p-4">
                       <div class="text-accent-cyan text-sm mb-2">E-Mail</div>
                       <div class="text-white font-bold text-lg mb-1">hello@trinsler.de</div>
-                      <div class="text-white/60 text-xs">Direkte Startup-Kommunikation</div>
+                      <div class="text-white/60 text-xs">Direkte Projekt-Kommunikation</div>
                     </div>
 
                     <!-- Response Time -->
@@ -178,8 +180,8 @@
                     <!-- Availability -->
                     <div class="glass-card rounded-xl p-4">
                       <div class="text-accent-orange text-sm mb-2">Verfügbarkeit</div>
-                      <div class="text-white font-bold text-lg mb-1">24/7 Growth Support</div>
-                      <div class="text-white/60 text-xs">Kontinuierliche Partnerschaft</div>
+                      <div class="text-white font-bold text-lg mb-1">Flexible Projektbetreuung</div>
+                      <div class="text-white/60 text-xs">Kontinuierlicher Support</div>
                     </div>
 
                     <!-- Location -->
@@ -189,7 +191,7 @@
                         Berlin, Deutschland<br>
                         EU Startup Hub
                       </div>
-                      <div class="text-white/60 text-xs">Zentrale europäische Operationen</div>
+                      <div class="text-white/60 text-xs">Lokale Web-Development Expertise</div>
                     </div>
                   </div>
 
@@ -201,7 +203,7 @@
                         <div class="text-accent-primary">● Online</div>
                       </div>
                       <div class="text-center">
-                        <div class="text-accent-purple mb-1">Partnerschaften</div>
+                        <div class="text-accent-purple mb-1">Neue Projekte</div>
                         <div class="text-white font-bold">Verfügbar</div>
                       </div>
                     </div>
@@ -215,7 +217,7 @@
           <div v-if="submitted" class="mt-8 cyber-card rounded-2xl p-6 animate-slide-up-stagger">
             <div class="neon-card rounded-xl p-4 text-center">
               <div class="text-2xl text-glow-blue mb-2">✓ Nachricht gesendet</div>
-              <div class="text-white mb-2">Growth Partnership Anfrage erhalten!</div>
+              <div class="text-white mb-2">Web-Projekt Anfrage erhalten!</div>
               <div class="text-accent-cyan text-sm">Wir melden uns binnen 24 Stunden...</div>
             </div>
           </div>
@@ -227,7 +229,7 @@
 
 <script setup>
 useHead({
-  title: 'Kontakt - Trinsler Growth Protocol'
+  title: 'Kontakt - Trinsler Web-Development'
 })
 
 const form = ref({
@@ -239,21 +241,52 @@ const form = ref({
 
 const activeField = ref('')
 const submitted = ref(false)
+const isSubmitting = ref(false)
 
-const submitForm = () => {
-  // Simulate form submission
-  console.log('Partnership request:', form.value)
-  submitted.value = true
+const submitForm = async () => {
+  isSubmitting.value = true
   
-  // Reset form after successful submission
-  setTimeout(() => {
-    form.value = {
-      name: '',
-      email: '',
-      company: '',
-      message: ''
+  try {
+    // Send email via Formspree
+    const response = await fetch('https://formspree.io/f/xpwavvke', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: form.value.name,
+        email: form.value.email,
+        company: form.value.company,
+        message: form.value.message,
+        _replyto: form.value.email,
+        _subject: `Web-Projekt Anfrage von ${form.value.name}`
+      })
+    })
+
+    if (response.ok) {
+      // Show success message
+      submitted.value = true
+      
+      // Reset form
+      form.value = {
+        name: '',
+        email: '',
+        company: '',
+        message: ''
+      }
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        submitted.value = false
+      }, 5000)
+    } else {
+      throw new Error('Network response was not ok')
     }
-    submitted.value = false
-  }, 5000)
+  } catch (error) {
+    console.error('Error:', error)
+    alert('Fehler beim Senden der Nachricht. Bitte versuchen Sie es später erneut.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>

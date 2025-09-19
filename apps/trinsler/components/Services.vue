@@ -20,17 +20,17 @@
         
         <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6">
           Warum 
-          <span class="gradient-text-neon animate-glitch">Equity-for-Growth</span>
+          <span class="gradient-text-neon animate-glitch">Web-Development</span>
           <br />
-          <span class="text-accent-cyan">die Zukunft ist</span>
+          <span class="text-accent-cyan">mit Trinsler</span>
         </h2>
         
         <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto">
           <div class="text-accent-cyan text-sm mb-3">Unser Ansatz</div>
           <p class="text-lg text-white/90 leading-relaxed">
-            <span class="text-accent-neon">Prinzip:</span> Vergessen Sie teure Agenturen. 
-            Wir investieren <span class="font-bold text-glow-green">operative Skills gegen Equity</span>. 
-            So sind wir am Erfolg Ihres Startups beteiligt – nicht nur am Budget.
+            <span class="text-accent-neon">Spezialisierung:</span> Moderne Web-Applikationen, Landing Pages und Websites. 
+            Wir entwickeln <span class="font-bold text-glow-green">professionelle Web-Lösungen</span> – 
+            einfach, praktisch und zu fairen Festpreisen.
           </p>
         </div>
       </div>
@@ -97,14 +97,14 @@
 
               <!-- Pricing -->
               <div class="neon-card rounded-xl p-4">
-                <div class="text-accent-orange text-sm mb-2">Konditionen</div>
+                <div class="text-accent-orange text-sm mb-2">Investment</div>
                 <div class="grid grid-cols-2 gap-4">
                   <div>
-                    <div class="text-xs text-accent-cyan mb-1">Equity-Anteil:</div>
+                    <div class="text-xs text-accent-cyan mb-1">Timeline:</div>
                     <div class="font-bold text-glow-green text-lg">{{ service.equityRange }}</div>
                   </div>
                   <div>
-                    <div class="text-xs text-accent-purple mb-1">Monatliche Gebühr:</div>
+                    <div class="text-xs text-accent-purple mb-1">Pricing:</div>
                     <div class="font-bold text-glow-cyan text-lg">{{ service.monthlyFee }}</div>
                   </div>
                 </div>
@@ -126,14 +126,14 @@
         <div class="text-center mb-16">
           <div class="cyber-card rounded-2xl p-6 max-w-4xl mx-auto">
             <div class="text-accent-cyan text-sm mb-4">
-              Warum Equity statt hohe Gebühren?
+              Warum Web-Development mit Trinsler?
             </div>
             <h3 class="text-3xl lg:text-4xl font-bold text-white mb-4">
               Warum 
-              <span class="gradient-text-neon">Equity</span> 
-              <span class="text-accent-cyan">statt Fees?</span>
+              <span class="gradient-text-neon">Trinsler</span> 
+              <span class="text-accent-cyan">wählen?</span>
             </h3>
-            <div class="text-accent-cyan text-sm">Die Antworten finden Sie hier ✓</div>
+            <div class="text-accent-cyan text-sm">Die Vorteile auf einen Blick ✓</div>
           </div>
         </div>
 
@@ -222,10 +222,10 @@
               <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
                 <div class="text-accent-purple text-sm mb-3">Mission</div>
                 <p class="text-lg text-white/90 leading-relaxed mb-4">
-                  <span class="text-accent-cyan">Formel:</span> Equity + operative Skills = nachhaltiges Wachstum
+                  <span class="text-accent-cyan">Formel:</span> Ihre Idee + Trinsler Web-Development = Digitaler Erfolg
                 </p>
                 <div class="text-accent-orange text-sm">
-                  Wenn Sie bereit sind, starten wir durch!
+                  Bereit für Ihr Web-Projekt? Lassen Sie uns starten!
                 </div>
               </div>
             </div>
@@ -233,10 +233,10 @@
             <!-- Command Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
               <NuxtLink to="/contact" class="btn-primary group animate-glow-pulse">
-                <span>Growth-Audit starten</span>
+                <span>Strategy Call buchen</span>
               </NuxtLink>
               <NuxtLink to="/portfolio" class="btn-secondary">
-                Erfolgsgeschichten ansehen
+                Web-Projekt Portfolio
               </NuxtLink>
             </div>
             
@@ -248,12 +248,12 @@
                   <div class="text-accent-neon ">● Verfügbar</div>
                 </div>
                 <div class="text-center">
-                  <div class="text-accent-purple mb-1">Partnerschaften:</div>
-                  <div class="text-white font-bold">12</div>
+                  <div class="text-accent-purple mb-1">Web-Projekte:</div>
+                  <div class="text-white font-bold">50+</div>
                 </div>
                 <div class="text-center">
-                  <div class="text-accent-orange mb-1">Erfolgsrate:</div>
-                  <div class="text-glow-green font-bold">89%</div>
+                  <div class="text-accent-orange mb-1">Client Zufriedenheit:</div>
+                  <div class="text-glow-green font-bold">98%</div>
                 </div>
               </div>
             </div>
@@ -269,55 +269,55 @@
 
 const mainServices = [
   {
-    title: 'Growth-as-a-Service',
-    description: 'Vollständige operative Growth-Unterstützung für Ihr Startup. Wir übernehmen Marketing, Sales, Product Growth und mehr.',
+    title: 'Web-Applikationen',
+    description: 'Professionelle Web-Apps für Unternehmen und Startups. Von einfachen Dashboards bis hin zu komplexen SaaS-Plattformen.',
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
-    filename: 'growth_service.sh',
-    command: 'start_growth_engine',
+    filename: 'web_app_dev.sh',
+    command: 'create_web_app',
     status: 'ONLINE',
-    equityRange: '5-15%',
-    monthlyFee: '€200-500',
+    equityRange: '4-12 Wochen',
+    monthlyFee: 'Custom Quote',
     features: [
-      'Komplette Marketing-Strategie & Umsetzung',
-      'Sales Funnel Optimierung & Automation', 
-      'Product-Market-Fit Entwicklung',
-      'KPI-Tracking & Growth Analytics',
-      'Team-Scaling & Hiring Support'
+      'Vue.js / Nuxt.js Entwicklung',
+      'Responsive Design für alle Geräte',
+      'Datenbank & Backend Integration',
+      'User Authentication & Security',
+      'Performance-Optimierung'
     ]
   },
   {
-    title: 'Equity-for-Marketing',
-    description: 'Professionelles Digital Marketing gegen Equity-Beteiligung. Perfekt für Startups mit begrenztem Marketing-Budget.',
+    title: 'Landing Pages & Websites',
+    description: 'Hochkonvertierende Landing Pages und professionelle Unternehmenswebsites. Optimiert für SEO und Conversions.',
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
-    filename: 'marketing_equity.py',
-    command: 'execute_marketing_stack',
+    filename: 'landing_pages.py',
+    command: 'build_landing_page',
     status: 'RUNNING',
-    equityRange: '3-10%',
-    monthlyFee: '€100-300',
+    equityRange: '2-6 Wochen',
+    monthlyFee: 'Premium Pricing',
     features: [
-      'Social Media Management & Content',
-      'Paid Advertising (Google, Meta, LinkedIn)',
-      'SEO & Content Marketing',
-      'Email Marketing Automation',
-      'Performance Tracking & Reporting'
+      'Conversion-optimierte Landing Pages',
+      'Corporate Websites & Portfolios',
+      'SEO & Performance Optimierung',
+      'Content Management System',
+      'Analytics & Tracking Setup'
     ]
   }
 ]
 
 const benefits = [
   {
-    title: 'Skin in the Game',
-    description: 'Wir verdienen nur, wenn Ihr Startup erfolgreich ist. Unsere Interessen sind perfekt aligned.',
+    title: 'Einfach & Praktisch',
+    description: 'Wir entwickeln Web-Lösungen, die funktionieren. Keine überkomplizierten Features, sondern solide Ergebnisse.',
     iconBg: 'bg-gradient-to-r from-red-500 to-pink-500'
   },
   {
-    title: 'Niedriger Cash-Burn',
-    description: 'Sparen Sie 80% der üblichen Agentur-Kosten. Mehr Runway für Product Development und Team.',
+    title: 'Schnelle Lieferung',
+    description: '2-12 Wochen je nach Projekt. Effiziente Entwicklungsprozesse für zügige Umsetzung.',
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500'
   },
   {
-    title: 'Langfristige Partnerschaft',
-    description: 'Keine kurzfristigen Projekte. Wir wachsen mit Ihnen über Jahre hinweg.',
+    title: 'Premium Quality',
+    description: 'Hochwertige Web-Lösungen mit custom pricing basierend auf Ihren spezifischen Anforderungen.',
     iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500'
   }
 ]

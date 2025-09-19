@@ -12,7 +12,7 @@
             <div class="relative">
               <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl neon-card flex items-center justify-center group-hover:scale-110 transition-transform duration-300 animate-neon-flicker overflow-hidden">
                 <img 
-                  src="/logo.png" 
+                  src="/assets/pictures/trinslerLogo.png" 
                   alt="Trinsler Logo" 
                   class="w-8 h-8 lg:w-10 lg:h-10 object-contain"
                 />
@@ -25,7 +25,7 @@
                 <span class="text-accent-neon">TRINS</span><span class="text-accent-cyan">LER</span>
               </span>
               <div class="text-xs font-medium text-accent-cyan">
-                Wachstums-Revolution
+                Web Development
               </div>
             </div>
           </NuxtLink>
@@ -52,7 +52,7 @@
               to="/contact"
               class="btn-primary group relative overflow-hidden"
             >
-              <span class="relative z-10">Growth starten</span>
+              <span class="relative z-10">Projekt starten</span>
             </NuxtLink>
           </div>
 
@@ -121,14 +121,14 @@
                 @click="mobileMenuOpen = false"
                 class="btn-primary w-full text-center"
               >
-                Growth-Audit vereinbaren
+                Strategy Call buchen
               </NuxtLink>
               <NuxtLink 
                 to="/portfolio" 
                 @click="mobileMenuOpen = false"
                 class="btn-secondary w-full text-center"
               >
-                Portfolio ansehen
+                Web-Projekte ansehen
               </NuxtLink>
             </div>
           </div>

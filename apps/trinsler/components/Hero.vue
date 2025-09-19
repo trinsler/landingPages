@@ -13,10 +13,10 @@
 
     <!-- Floating Code Elements -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-16 text-accent-primary text-xs opacity-60">Wachstum</div>
-      <div class="floating-element absolute top-40 right-24 text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">Skalierung</div>
-      <div class="floating-element absolute bottom-32 left-1/4 text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">Equity+</div>
-      <div class="floating-element absolute top-1/3 right-1/3 text-accent-primary text-xs opacity-60" style="animation-delay: 3s;">Investment</div>
+      <div class="floating-element absolute top-20 left-16 text-accent-primary text-xs opacity-60">Web Apps</div>
+      <div class="floating-element absolute top-40 right-24 text-accent-cyan text-xs opacity-60" style="animation-delay: 1s;">Landing Pages</div>
+      <div class="floating-element absolute bottom-32 left-1/4 text-accent-purple text-xs opacity-60" style="animation-delay: 2s;">Websites</div>
+      <div class="floating-element absolute top-1/3 right-1/3 text-accent-primary text-xs opacity-60" style="animation-delay: 3s;">4-8 Wochen</div>
     </div>
 
     <div class="relative container-custom py-20 lg:py-32">
@@ -27,20 +27,20 @@
           <div class="mb-8 animate-slide-up-stagger">
             <div class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold animate-neon-flicker">
               <div class="w-2 h-2 bg-accent-primary rounded-full  mr-3"></div>
-              <span class="text-glow-blue">Aktiv</span>
-              <span class="text-accent-cyan ml-2">Equity-for-Growth</span>
+              <span class="text-glow-blue">Verfügbar</span>
+              <span class="text-accent-cyan ml-2">Web Development</span>
             </div>
           </div>
 
           <!-- Main Headline -->
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-8 animate-slide-up-stagger" style="animation-delay: 0.2s;">
-            <span class="text-white">STARTUP</span>
+            <span class="text-white">WEB</span>
             <br />
             <span class="gradient-text-neon font-extrabold" style="font-family: 'Space Grotesk', sans-serif;">
-              WACHSTUM
+              SOLUTIONS
             </span>
             <br />
-            <span class="text-accent-cyan">NEU GEDACHT</span>
+            <span class="text-accent-cyan">EINFACH GUT</span>
           </h1>
 
           <!-- Value Proposition -->
@@ -48,13 +48,13 @@
             <div class="cyber-card rounded-xl p-6">
               <div class="text-accent-primary text-sm mb-3">Unser Versprechen</div>
               <p class="text-lg leading-relaxed text-white/90 mb-4">
-                Wir sind keine klassische Marketing-Agentur. Statt monatlich 5.000€+ zu zahlen, 
-                <span class="font-bold text-glow-blue">arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span>. 
+                Wir entwickeln professionelle Web-Applikationen, Landing Pages und Websites. 
+                <span class="font-bold text-glow-blue">Moderne Technologien, faire Preise, schnelle Lieferung</span>. 
               </p>
               <p class="text-white/80">
-                <span class="text-accent-cyan">Was wir leisten:</span> Komplettes Marketing und Wachstums-Management<br />
-                <span class="text-accent-purple">Ihr Vorteil:</span> 80% weniger Kosten als herkömmliche Agenturen<br />
-                <span class="text-accent-primary">Unsere Vergütung:</span> 5-20% Firmenanteile plus 100-500€ monatlich
+                <span class="text-accent-cyan">Services:</span> Web Apps, Landing Pages, Websites<br />
+                <span class="text-accent-purple">Timeline:</span> 2-8 Wochen je nach Projekt<br />
+                <span class="text-accent-primary">Pricing:</span> Custom quotes based on requirements
               </p>
             </div>
           </div>
@@ -65,27 +65,27 @@
               to="/contact"
               class="btn-primary group animate-glow-pulse"
             >
-              <span>Kostenloses Wachstums-Audit</span>
+              <span>Kostenloses Strategy-Gespräch</span>
             </NuxtLink>
             <NuxtLink
               to="/portfolio"
               class="btn-secondary magnetic-hover"
             >
-              Erfolgsgeschichten ansehen
+              Projekt-Portfolio ansehen
             </NuxtLink>
           </div>
 
           <!-- Key Benefits -->
           <div class="grid grid-cols-3 gap-8 animate-slide-up-stagger" style="animation-delay: 0.8s;">
             <div class="neon-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="text-xs text-accent-cyan mb-1">Kostenersparnis</div>
-              <div class="text-3xl font-black text-glow-blue mb-1">80%</div>
-              <div class="text-xs text-white/60">gegenüber Agenturen</div>
+              <div class="text-xs text-accent-cyan mb-1">Entwicklungszeit</div>
+              <div class="text-3xl font-black text-glow-blue mb-1">4-8</div>
+              <div class="text-xs text-white/60">Wochen Standard</div>
             </div>
             <div class="cyber-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="text-xs text-accent-purple mb-1">Firmenanteile</div>
-              <div class="text-3xl font-black text-glow-cyan mb-1">5-20%</div>
-              <div class="text-xs text-white/60">je nach Projektumfang</div>
+              <div class="text-xs text-accent-purple mb-1">Ansatz</div>
+              <div class="text-3xl font-black text-glow-cyan mb-1">Custom</div>
+              <div class="text-xs text-white/60">Requirements</div>
             </div>
             <div class="glass-card rounded-xl p-4 text-center magnetic-hover">
               <div class="text-xs text-accent-primary mb-1">Gründung</div>
@@ -114,30 +114,30 @@
               <!-- Terminal Content -->
               <div class="p-6 code-pattern">
                 <div class="text-accent-primary text-sm mb-4">
-                  Portfolio Übersicht
+                  Web-Projekte Übersicht
                 </div>
                 
                 <!-- JSON Output -->
                 <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
                   <div class="neon-card rounded-xl p-4">
-                    <div class="text-accent-cyan mb-2">Portfolio Wert:</div>
-                    <div class="text-2xl font-bold text-glow-blue mb-1">€2.4M</div>
-                    <div class="text-accent-primary text-xs">+127% jährlich</div>
+                    <div class="text-accent-cyan mb-2">Projekte 2024:</div>
+                    <div class="text-2xl font-bold text-glow-blue mb-1">15</div>
+                    <div class="text-accent-primary text-xs">Web-Projekte</div>
                   </div>
                   <div class="cyber-card rounded-xl p-4">
-                    <div class="text-accent-purple mb-2">Aktive Startups:</div>
-                    <div class="text-2xl font-bold text-glow-cyan mb-1">12</div>
-                    <div class="text-accent-cyan text-xs">+300% Wachstum</div>
+                    <div class="text-accent-purple mb-2">Durchschnitt:</div>
+                    <div class="text-2xl font-bold text-glow-cyan mb-1">4</div>
+                    <div class="text-accent-cyan text-xs">Wochen bis Live</div>
                   </div>
                   <div class="glass-card rounded-xl p-4">
-                    <div class="text-accent-primary mb-2">Erfolgsrate:</div>
-                    <div class="text-2xl font-bold text-white mb-1 animate-glitch">89%</div>
-                    <div class="text-accent-purple text-xs">Branchenführend</div>
+                    <div class="text-accent-primary mb-2">Kundenzufriedenheit:</div>
+                    <div class="text-2xl font-bold text-white mb-1 animate-glitch">98%</div>
+                    <div class="text-accent-purple text-xs">Client Rating</div>
                   </div>
                   <div class="neon-card rounded-xl p-4">
-                    <div class="text-accent-orange mb-2">Ø Bewertung:</div>
-                    <div class="text-2xl font-bold text-glow-blue mb-1">€500K</div>
-                    <div class="text-accent-primary text-xs">+400% Exit</div>
+                    <div class="text-accent-orange mb-2">Technologie:</div>
+                    <div class="text-2xl font-bold text-glow-blue mb-1">Vue</div>
+                    <div class="text-accent-primary text-xs">Modern Stack</div>
                   </div>
                 </div>
                 
@@ -148,16 +148,16 @@
                   </div>
                   <div class="space-y-2 text-xs">
                     <div class="flex justify-between">
-                      <span class="text-white/70">Startup X</span>
-                      <span class="text-accent-primary">Umsatz +12%</span>
+                      <span class="text-white/70">E-Commerce Site</span>
+                      <span class="text-accent-primary">Live & Running</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-white/70">SaaS Scale</span>
-                      <span class="text-accent-cyan">Nutzer +2.1K</span>
+                      <span class="text-white/70">SaaS Dashboard</span>
+                      <span class="text-accent-cyan">Web App Live</span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-white/70">Growth Rocket</span>
-                      <span class="text-accent-purple">Einnahmen +45%</span>
+                      <span class="text-white/70">Landing Page</span>
+                      <span class="text-accent-purple">2 Wochen Done</span>
                     </div>
                   </div>
                 </div>
@@ -167,22 +167,22 @@
             <!-- Floating Metrics -->
             <div class="absolute -top-6 -left-6 neon-card rounded-xl p-4 floating-element animate-neon-flicker">
               <div class="text-center">
-                <div class="text-xs text-accent-cyan mb-1">Wachstumsrate</div>
-                <div class="text-xl font-bold text-glow-blue">5.2x</div>
+                <div class="text-xs text-accent-cyan mb-1">Avg. Time</div>
+                <div class="text-xl font-bold text-glow-blue">4W</div>
               </div>
             </div>
 
             <div class="absolute -bottom-6 -right-6 cyber-card rounded-xl p-4 floating-element" style="animation-delay: 1s;">
               <div class="text-center">
-                <div class="text-xs text-accent-purple mb-1">Exits gesamt</div>
-                <div class="text-xl font-bold text-glow-cyan">€50M+</div>
+                <div class="text-xs text-accent-purple mb-1">Web-Projekte</div>
+                <div class="text-xl font-bold text-glow-cyan">50+</div>
               </div>
             </div>
 
             <div class="absolute top-1/2 -right-4 glass-card rounded-xl p-3 floating-element" style="animation-delay: 2s;">
               <div class="text-center">
-                <div class="text-xs text-accent-primary mb-1">Verfügbarkeit</div>
-                <div class="text-lg font-bold text-white">24/7</div>
+                <div class="text-xs text-accent-primary mb-1">Framework</div>
+                <div class="text-lg font-bold text-white">Vue</div>
               </div>
             </div>
           </div>

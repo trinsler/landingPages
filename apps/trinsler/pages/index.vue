@@ -10,6 +10,6 @@
 
 <script setup>
 useHead({
-  title: 'Trinsler - Social Media & Digital Marketing für lokale Unternehmen'
+  title: 'Trinsler - Web-Applikationen, Landing Pages & Websites'
 })
 </script>

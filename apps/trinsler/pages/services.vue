@@ -31,7 +31,7 @@
             <div class="w-4 h-4 rounded-full bg-red-500"></div>
             <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
             <div class="w-4 h-4 rounded-full bg-accent-neon"></div>
-            <div class="ml-4 text-accent-cyan text-lg">Services - Equity-Growth-Matrix</div>
+            <div class="ml-4 text-accent-cyan text-lg">Services - Web Development</div>
           </div>
         </div>
 
@@ -40,35 +40,35 @@
           <!-- System Boot -->
           <div class="mb-8">
             <div class="text-accent-neon text-sm mb-4">
-              <span class="text-accent-cyan">Status:</span> Services werden geladen
+              <span class="text-accent-cyan">Status:</span> Web Services verfügbar
             </div>
             <div class="neon-card rounded-xl px-6 py-3 inline-block">
-              <span class="text-accent-neon">Services Matrix Online</span>
-              <span class="text-white ml-2">Equity-Growth</span>
+              <span class="text-accent-neon">Web Development Online</span>
+              <span class="text-white ml-2">Vue.js & Nuxt</span>
             </div>
           </div>
 
           <!-- ASCII Header -->
           <div class="mb-12 text-center">
             <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
-              <span class="text-white">EQUITY</span>
+              <span class="text-white">WEB</span>
               <br />
-              <span class="gradient-text-neon">SERVICES</span>
+              <span class="gradient-text-neon">DEVELOPMENT</span>
               <br />
-              <span class="text-accent-cyan">MATRIX</span>
+              <span class="text-accent-cyan">SERVICES</span>
             </h1>
           </div>
 
           <!-- Services Brief -->
           <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
-            <div class="text-accent-purple text-sm mb-3">Startup-Wachstum revolutioniert</div>
+            <div class="text-accent-purple text-sm mb-3">Web-Entwicklung & Landing Pages</div>
             <p class="text-xl text-white/90 leading-relaxed">
-              <span class="text-accent-cyan">Transformation:</span> Anstatt teurer Agentur-Honorare arbeiten wir für 
-              <span class="font-bold text-glow-green">Unternehmensanteile</span>. Unser Erfolg = Ihr Erfolg. 
-              <span class="text-accent-neon">Messbare Ergebnisse</span> durch echte Partnerschaft.
+              <span class="text-accent-cyan">Spezialisierung:</span> Wir entwickeln moderne 
+              <span class="font-bold text-glow-green">Web-Applikationen, Landing Pages und Websites</span>. Einfach, praktisch und zu fairen Preisen. 
+              <span class="text-accent-neon">Festpreis-Garantie</span> und transparente Prozesse.
             </p>
             <div class="text-accent-orange text-sm mt-4">
-              Alle Services kombinierbar für maximales Wachstum
+              Von einfachen Landing Pages bis zu komplexen Web-Apps
             </div>
           </div>
         </div>
@@ -151,8 +151,8 @@
                 <div class="text-accent-orange text-xs mb-2">Konditionen:</div>
                 <div class="flex justify-between items-center">
                   <div>
-                    <div class="text-glow-green font-bold">{{ service.equityRange }} Equity</div>
-                    <div class="text-white/60 text-xs">+ {{ service.monthlyFee }}/Monat</div>
+                    <div class="text-glow-green font-bold">{{ service.equityRange }}</div>
+                    <div class="text-white/60 text-xs">Investment: {{ service.monthlyFee }}</div>
                   </div>
                   <div class="text-right">
                     <div class="text-accent-neon text-xs">Status:</div>
@@ -181,25 +181,25 @@
         <div class="p-8 lg:p-12 text-center code-pattern">
           <!-- Call to Action -->
           <div class="text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">Bereit für:</span> Wachstums-Partnerschaft
+            <span class="text-accent-cyan">Bereit für:</span> Web Development
           </div>
           
           <!-- CTA Message -->
           <div class="mb-8">
             <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Bereit für 
-              <span class="gradient-text-neon">Equity-Growth?</span>
+              Bereit für Ihr 
+              <span class="gradient-text-neon">Web-Projekt?</span>
             </h3>
             
             <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
               <div class="text-accent-purple text-sm mb-3">Ihre nächsten Schritte</div>
               <p class="text-lg text-white/90 leading-relaxed">
-                <span class="text-accent-cyan">Mission:</span> Starten Sie Ihre Wachstumsreise mit einem 
+                <span class="text-accent-cyan">Mission:</span> Starten Sie Ihr Web-Projekt mit einem 
                 <span class="font-bold text-glow-green">kostenlosen Beratungsgespräch</span>. 
-                Erfahren Sie, wie Equity-for-Growth Ihr Startup transformieren kann.
+                Erfahren Sie, wie wir Ihre digitale Vision umsetzen.
               </p>
               <div class="text-accent-orange text-sm mt-4">
-                Wenn Sie bereit sind, starten wir die Wachstums-Revolution!
+                Bereit für den nächsten Schritt? Lassen Sie uns Ihr Projekt besprechen!
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@
             class="btn-primary group text-xl transform hover:scale-110 transition-all duration-300"
           >
             <span class="flex items-center">
-              Kostenloses Wachstums-Audit
+              Strategy Call buchen
             </span>
           </NuxtLink>
           
@@ -218,16 +218,16 @@
           <div class="mt-8 pt-6 border-t border-accent-neon/20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div class="text-center">
-                <div class="text-accent-cyan mb-1">Aktive Partnerschaften:</div>
-                <div class="text-accent-neon">● 15</div>
+                <div class="text-accent-cyan mb-1">Projekte 2024:</div>
+                <div class="text-accent-neon">● 25</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-purple mb-1">Durchschn. Wachstum:</div>
-                <div class="text-glow-green font-bold">+420%</div>
+                <div class="text-accent-purple mb-1">Ø Entwicklungszeit:</div>
+                <div class="text-glow-green font-bold">4 Wochen</div>
               </div>
               <div class="text-center">
-                <div class="text-accent-orange mb-1">Neue Partner:</div>
-                <div class="text-white font-bold">Willkommen</div>
+                <div class="text-accent-orange mb-1">Client Zufriedenheit:</div>
+                <div class="text-white font-bold">100%</div>
               </div>
             </div>
           </div>
@@ -241,93 +241,93 @@
 // No icons or emojis needed
 
 useHead({
-  title: 'Services - Trinsler Equity-for-Growth'
+  title: 'Services - Trinsler Web-Development & Landing Pages'
 })
 
 const services = [
   {
-    title: 'Komplettes Wachstums-Management',
-    description: 'Wir übernehmen die gesamte Wachstumsstrategie Ihres Startups. Von der Kundengewinnung bis zur Skalierung - alles aus einer Hand.',
+    title: 'Landing Pages & Websites',
+    description: 'Professionelle Landing Pages und Unternehmenswebsites. Conversion-optimiert und SEO-freundlich für maximale Reichweite.',
     features: [
-      'Strategische Wachstumsplanung',
-      'Professionelle Marketing-Umsetzung', 
-      'Marktpositionierung & Zielgruppenanalyse',
-      'Automatisierte Verkaufsprozesse',
-      'Team-Aufbau & Personalentwicklung',
-      'Strategische Partnerschaften'
+      'Hochkonvertierende Landing Pages',
+      'Corporate Websites & Portfolios',
+      'Responsive Design für alle Geräte',
+      'SEO & Performance Optimierung',
+      'Content Management System',
+      'Analytics & Tracking Setup'
     ],
-    filename: 'growth_complete.sh',
-    command: 'execute_growth_strategy',
-    module: 'CORE',
+    filename: 'landing_pages.sh',
+    command: 'create_landing_page',
+    module: 'WEB',
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
-    status: 'PREMIUM',
+    status: 'VERFÜGBAR',
     statusColor: 'text-accent-neon',
-    equityRange: '8-20%',
-    monthlyFee: '€300-800',
-    processStatus: 'SCALING'
+    equityRange: '2-6 Wochen',
+    monthlyFee: 'Custom Quote',
+    processStatus: 'READY'
   },
   {
-    title: 'Digital Marketing Excellence',
-    description: 'Professionelle Digital Marketing Strategien mit messbaren Ergebnissen. SEO, Content Marketing und Online-Werbung perfekt aufeinander abgestimmt.',
+    title: 'Web-Applikationen',
+    description: 'Moderne Web-Apps für Unternehmen und Startups. Von einfachen Dashboards bis hin zu komplexen SaaS-Plattformen.',
     features: [
-      'Suchmaschinenoptimierung (SEO)',
-      'Social Media Marketing',
-      'Google Ads & Facebook Werbung',
-      'Conversion-Optimierung',
-      'Analytics & Erfolgsmessung',
-      'Markenaufbau & Reputation'
+      'Vue.js / Nuxt.js Entwicklung',
+      'User Authentication & Security',
+      'Datenbank & Backend Integration',
+      'Real-time Features & APIs',
+      'Admin Dashboards & CMS',
+      'Performance & Skalierung'
     ],
-    filename: 'marketing_excellence.py',
-    command: 'initialize_marketing',
-    module: 'MKT',
+    filename: 'web_applications.py',
+    command: 'build_web_app',
+    module: 'APP',
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
-    status: 'AKTIV',
+    status: 'PREMIUM',
     statusColor: 'text-accent-purple',
-    equityRange: '5-15%',
-    monthlyFee: '€200-500',
-    processStatus: 'OPTIMIZING'
+    equityRange: '4-12 Wochen',
+    monthlyFee: 'Enterprise Pricing',
+    processStatus: 'DEVELOPMENT'
   },
   {
-    title: 'Produkt-Wachstum & Nutzererfahrung',
-    description: 'Produkt-orientierte Wachstumsstrategien und Kundengewinnung. Wir optimieren Ihr Produkt für maximale Nutzerzufriedenheit und virales Wachstum.',
+    title: 'E-Commerce Solutions',
+    description: 'Online-Shops und E-Commerce Plattformen. Payment-Integration, Produktkataloge und Bestellsysteme.',
     features: [
-      'Benutzerfreundlichkeit optimieren',
-      'Empfehlungssysteme entwickeln',
-      'Kundenbindung & Engagement',
-      'A/B Testing & Datenanalyse',
-      'Customer Journey Optimierung',
-      'Feature-Entwicklung & Feedback'
+      'Online-Shop Entwicklung',
+      'Payment Gateway Integration',
+      'Produktkatalog & Inventar',
+      'Bestellverwaltung & CRM',
+      'SEO & Marketing Integration',
+      'Mobile-optimierte Shops'
     ],
-    filename: 'product_growth.js',
-    command: 'deploy_product_strategy',
-    module: 'PLG',
+    filename: 'ecommerce_solutions.js',
+    command: 'deploy_shop_platform',
+    module: 'SHOP',
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-orange',
-    status: 'WACHSEND',
+    status: 'AKTIV',
     statusColor: 'text-accent-cyan',
-    equityRange: '6-18%',
-    monthlyFee: '€250-600',
-    processStatus: 'EXPANDING'
+    equityRange: '6-16 Wochen',
+    monthlyFee: 'Premium Investment',
+    processStatus: 'COMMERCE'
   },
   {
-    title: 'Umsatz-Optimierung & Vertrieb',
-    description: 'Komplette Überarbeitung Ihrer Verkaufsprozesse. CRM-Optimierung, Vertriebsautomatisierung und intelligente Umsatzprognosen.',
+    title: 'Technical Consulting & Strategy',
+    description: 'Strategische Beratung für Web-Technologie-Entscheidungen. Architecture Reviews, Team Training und Technical Roadmaps.',
     features: [
-      'Verkaufstrichter automatisieren',
-      'CRM & Pipeline optimieren',
-      'Umsatz-Zuordnung & Tracking',
-      'Lead-Bewertung & Qualifizierung',
-      'Verkaufsprozess verbessern',
-      'Umsatzprognosen & Planung'
+      'Web Architecture Review',
+      'Technology Stack Consulting',
+      'Team Training & Workshops',
+      'Performance Optimization',
+      'Security & Compliance Audit',
+      'Long-term Technical Strategy'
     ],
-    filename: 'revenue_optimization.exe',
-    command: 'scale_revenue_operations',
-    module: 'REV',
+    filename: 'tech_consulting.exe',
+    command: 'provide_strategic_guidance',
+    module: 'CON',
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
-    status: 'SKALIERT',
+    status: 'BERATUNG',
     statusColor: 'text-accent-orange',
-    equityRange: '7-16%',
-    monthlyFee: '€280-650',
-    processStatus: 'MAXIMIZED'
+    equityRange: '2-8 Wochen',
+    monthlyFee: 'Consulting Rates',
+    processStatus: 'ADVISORY'
   }
 ]
 </script>
