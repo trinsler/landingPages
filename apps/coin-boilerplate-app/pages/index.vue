@@ -61,16 +61,43 @@
       </div>
     </div>
 
-    <!-- Email Newsletter Section -->
+    <!-- Newsletter Section -->
     <div class="mx-auto max-w-2xl px-6 lg:px-8 pb-16">
-      <EmailSubscription
-        title="Stay updated!"
-        description="Get notified about new features, coin packages, and exclusive offers."
-        button-text="Subscribe to Newsletter"
-        :tags="['newsletter', 'coin-updates']"
-        @success="handleEmailSuccess"
-        @error="handleEmailError"
-      />
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            Bleiben Sie auf dem Laufenden!
+          </h3>
+          <p class="text-gray-600 mb-6">
+            Informationen über neue Features, Coin-Pakete und exklusive Angebote.
+          </p>
+
+          <template v-if="authStore.isAuthenticated">
+            <div class="flex flex-col items-center gap-4">
+              <p class="text-sm text-gray-600">
+                Newsletter-Status:
+                <span :class="authStore.user?.newsletter_subscribed ? 'text-green-600 font-medium' : 'text-gray-500'">
+                  {{ authStore.user?.newsletter_subscribed ? 'Abonniert' : 'Nicht abonniert' }}
+                </span>
+              </p>
+              <button
+                @click="toggleNewsletter"
+                :disabled="newsletterLoading"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              >
+                {{ authStore.user?.newsletter_subscribed ? 'Newsletter abbestellen' : 'Newsletter abonnieren' }}
+              </button>
+            </div>
+          </template>
+
+          <template v-else>
+            <div class="text-sm text-gray-500">
+              <p>Newsletter-Abonnement ist Teil der Registrierung.</p>
+              <p class="mt-2">Melden Sie sich mit Google an, um den Newsletter zu abonnieren.</p>
+            </div>
+          </template>
+        </div>
+      </div>
     </div>
 
     <!-- Features Section -->
@@ -154,7 +181,7 @@
 </template>
 
 <script setup lang="ts">
-import { EmailSubscription, useToast } from '@monorepo/ui'
+import { useToast } from '@monorepo/ui'
 
 definePageMeta({
   layout: 'default'
@@ -162,6 +189,7 @@ definePageMeta({
 
 const authStore = useAuthStore()
 const { success: showSuccess, error: showError } = useToast()
+const newsletterLoading = ref(false)
 
 const handleSignIn = async () => {
   try {
@@ -171,12 +199,25 @@ const handleSignIn = async () => {
   }
 }
 
-const handleEmailSuccess = (email: string) => {
-  showSuccess('Successfully subscribed to newsletter!', 'Welcome!')
-}
+const toggleNewsletter = async () => {
+  if (!authStore.user) return
 
-const handleEmailError = (error: string) => {
-  showError(error, 'Subscription Failed')
+  newsletterLoading.value = true
+  try {
+    const newState = !authStore.user.newsletter_subscribed
+    await authStore.updateNewsletterSubscription(newState)
+
+    showSuccess(
+      newState
+        ? 'Sie haben den Newsletter erfolgreich abonniert!'
+        : 'Sie haben den Newsletter erfolgreich abbestellt!',
+      'Newsletter'
+    )
+  } catch (error: any) {
+    showError(error.message || 'Ein Fehler ist aufgetreten', 'Fehler')
+  } finally {
+    newsletterLoading.value = false
+  }
 }
 
 onMounted(() => {

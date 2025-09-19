@@ -103,6 +103,26 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async updateNewsletterSubscription(subscribed: boolean) {
+      if (!this.user) throw new Error('User not authenticated')
+
+      try {
+        const supabase = useSupabaseClient<any>()
+        const { error } = await supabase
+          .from('users')
+          .update({ newsletter_subscribed: subscribed })
+          .eq('id', this.user.id)
+
+        if (error) throw error
+
+        // Update local state
+        this.user.newsletter_subscribed = subscribed
+      } catch (error) {
+        console.error('Error updating newsletter subscription:', error)
+        throw error
+      }
+    },
+
     async refreshUser() {
       if (this.user) {
         await this.fetchUserProfile(this.user.id)

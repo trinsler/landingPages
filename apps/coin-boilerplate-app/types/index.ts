@@ -4,7 +4,6 @@ export type {
   Transaction,
   CoinPackage,
   PaymentSession,
-  EmailSubscription,
   Toast,
   ToastOptions,
   ApiResponse,
