@@ -2,8 +2,8 @@ name: 🔍 Pull Request Checks
 
 on:
   pull_request:
-    # Trigger on ALL pull requests (including feature branches)
-    branches: ['**']
+    # Trigger on ALL pull requests to main (from any feature branch)
+    branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
 
 # Ensure PRs can't run in parallel for the same branch
