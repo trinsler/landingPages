@@ -28,12 +28,14 @@
     "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^3.14.0",
     "@tailwindcss/postcss": "^4.1.13",
     "gh-pages": "^6.1.1",
     "husky": "^9.0.0",
     "tailwindcss": "^4.1.13",
     "tsup": "^8.0.0",
     "typescript": "^5.9.2",
+    "vitest": "^3.2.0",
     "vue-tsc": "^3.0.7"
   },
   "dependencies": {
