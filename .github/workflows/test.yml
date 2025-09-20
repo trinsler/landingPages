@@ -4,7 +4,15 @@ on:
   push:
     branches: [main, develop]
   pull_request:
+    # Test ALL pull requests to main and develop
     branches: [main, develop]
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    # Also handle external PRs (like Renovate from forks)
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    # Allow manual triggering
   schedule:
     # Run weekly dependency checks on Sundays at 2 AM UTC
     - cron: '0 2 * * 0'

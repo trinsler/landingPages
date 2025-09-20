@@ -101,16 +101,28 @@ If any check fails, the commit will be blocked. Fix the issues and try again.
 
 ### CI/CD Pipeline
 
-The GitHub Actions pipeline runs on every push and PR:
+**🎉 UPDATED**: Jetzt werden **ALLE** Pull Requests automatisch getestet!
 
-1. **Multi-Node Testing**: Tests on Node.js 20 & 22
-2. **TypeScript Compilation**: `pnpm run typecheck`
-3. **Linting & Formatting**: `pnpm run lint` + `pnpm run format:check`
-4. **Build Health Tests**: `pnpm run test:build`
-5. **Component Tests**: Vitest tests in `packages/ui` and `packages/shared`
-6. **App Builds**: All three apps must build successfully
-7. **Dependency Security Audit**: Checks for vulnerabilities
-8. **Lighthouse Performance**: Performance testing on PRs
+**Main Test Pipeline** (`.github/workflows/test.yml`):
+
+- **Triggers**: Push zu main/develop + ALL Pull Requests
+- **Multi-Node Testing**: Tests auf Node.js 20 & 22
+- **TypeScript Compilation**: `pnpm run typecheck`
+- **Linting & Formatting**: `pnpm run lint` + `pnpm run format:check`
+- **Build Health Tests**: `pnpm run test:build`
+- **Component Tests**: Vitest tests in `packages/ui` und `packages/shared`
+- **App Builds**: Alle drei Apps müssen erfolgreich builden
+- **Dependency Security Audit**: Prüft auf Vulnerabilities
+- **Lighthouse Performance**: Performance-Tests bei PRs
+
+**NEW: PR Validation Pipeline** (`.github/workflows/pr-checks.yml`):
+
+- **Triggers**: **ALLE** Pull Requests (auch Feature-Branches zu main!)
+- **Quick Validation**: TypeScript, Lint, Format, Tests, Build
+- **Security Scan**: Dependency Audit und Vulnerability Check
+- **Bundle Size Check**: Vergleich zwischen Base- und PR-Branch
+- **PR Summary**: Detaillierter Status-Report in GitHub
+- **Draft PR Support**: Läuft nur bei ready-for-review PRs
 
 ## 🚨 Common Issues & Solutions
 

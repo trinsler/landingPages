@@ -25,6 +25,8 @@ This document describes the automated dependency management setup using Renovate
 4. Select "Selected repositories" → Choose `landingPages`
 5. Click "Install & Authorize"
 
+Renovate UI: https://developer.mend.io/github/trinsler
+
 ### 2. Repository Configuration
 
 The repository is already configured with `renovate.json` in the root directory with:
