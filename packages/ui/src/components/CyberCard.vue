@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import BaseCard from './BaseCard.vue'
 
 interface Props {
@@ -27,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   hover: false,
   glow: false,
   size: 'md',
-  rounded: '2xl'
+  rounded: '2xl',
 })
 
 // Convert size prop to padding for BaseCard
@@ -35,7 +36,7 @@ const paddingSize = computed(() => {
   const mapping = {
     sm: 'sm' as const,
     md: 'md' as const,
-    lg: 'lg' as const
+    lg: 'lg' as const,
   }
   return mapping[props.size]
 })

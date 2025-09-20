@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, watch, type Ref } from 'vue'
+import { ref, onUnmounted, type Ref } from 'vue'
 import type { AnimationConfig } from '@monorepo/shared'
 
 export interface AnimationState {
@@ -42,8 +42,8 @@ export function useAnimation(config: Partial<AnimationConfig> = {}): AnimationSt
 
   const setupIntersectionObserver = (element: Element) => {
     observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setTimeout(() => {
               isVisible.value = true
@@ -71,17 +71,20 @@ export function useAnimation(config: Partial<AnimationConfig> = {}): AnimationSt
     isVisible,
     isAnimating,
     progress,
-    setupIntersectionObserver
+    setupIntersectionObserver,
   }
 }
 
-export function useStaggeredAnimation(items: any[], baseDelay = 0, staggerDelay = 200) {
+export function useStaggeredAnimation<T>(items: T[], baseDelay = 0, staggerDelay = 200) {
   const visibleItems = ref<Set<number>>(new Set())
 
   const showItem = (index: number) => {
-    setTimeout(() => {
-      visibleItems.value.add(index)
-    }, baseDelay + (index * staggerDelay))
+    setTimeout(
+      () => {
+        visibleItems.value.add(index)
+      },
+      baseDelay + index * staggerDelay
+    )
   }
 
   const showAllItems = () => {
@@ -96,7 +99,7 @@ export function useStaggeredAnimation(items: any[], baseDelay = 0, staggerDelay 
     visibleItems,
     showItem,
     showAllItems,
-    isItemVisible
+    isItemVisible,
   }
 }
 
@@ -134,6 +137,6 @@ export function useMatrixEffect() {
     columns,
     drops,
     initMatrix,
-    updateMatrix
+    updateMatrix,
   }
 }

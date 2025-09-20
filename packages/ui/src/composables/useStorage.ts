@@ -1,10 +1,6 @@
-import { ref, computed, watch, type Ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 
-export function useLocalStorage<T>(
-  key: string,
-  defaultValue: T,
-  serializer = JSON
-): Ref<T> {
+export function useLocalStorage<T>(key: string, defaultValue: T, serializer = JSON): Ref<T> {
   const storedValue = ref<T>(defaultValue) as Ref<T>
 
   try {
@@ -20,7 +16,7 @@ export function useLocalStorage<T>(
 
   watch(
     storedValue,
-    (newValue) => {
+    newValue => {
       try {
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, serializer.stringify(newValue))
@@ -35,11 +31,7 @@ export function useLocalStorage<T>(
   return storedValue
 }
 
-export function useSessionStorage<T>(
-  key: string,
-  defaultValue: T,
-  serializer = JSON
-): Ref<T> {
+export function useSessionStorage<T>(key: string, defaultValue: T, serializer = JSON): Ref<T> {
   const storedValue = ref<T>(defaultValue) as Ref<T>
 
   try {
@@ -55,7 +47,7 @@ export function useSessionStorage<T>(
 
   watch(
     storedValue,
-    (newValue) => {
+    newValue => {
       try {
         if (typeof window !== 'undefined') {
           window.sessionStorage.setItem(key, serializer.stringify(newValue))

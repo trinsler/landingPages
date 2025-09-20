@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 import type { User } from '~/types'
 
 interface AuthState {
@@ -11,13 +12,13 @@ export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
     loading: false,
-    initialized: false
+    initialized: false,
   }),
 
   getters: {
-    isAuthenticated: (state) => !!state.user,
-    hasCoins: (state) => state.user ? state.user.coins > 0 : false,
-    coinBalance: (state) => state.user?.coins || 0
+    isAuthenticated: state => !!state.user,
+    hasCoins: state => (state.user ? state.user.coins > 0 : false),
+    coinBalance: state => state.user?.coins || 0,
   },
 
   actions: {
@@ -27,12 +28,14 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       try {
         const supabase = useSupabaseClient()
-        const { data: { session } } = await supabase.auth.getSession()
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
+
         if (session?.user) {
           await this.fetchUserProfile(session.user.id)
         }
-        
+
         this.initialized = true
       } catch (error) {
         console.error('Error initializing auth store:', error)
@@ -44,14 +47,10 @@ export const useAuthStore = defineStore('auth', {
     async fetchUserProfile(userId: string) {
       try {
         const supabase = useSupabaseClient()
-        const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', userId)
-          .single()
+        const { data, error } = await supabase.from('users').select('*').eq('id', userId).single()
 
         if (error) throw error
-        
+
         this.user = data
       } catch (error) {
         console.error('Error fetching user profile:', error)
@@ -66,10 +65,10 @@ export const useAuthStore = defineStore('auth', {
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: `${useRuntimeConfig().public.siteUrl}/auth/callback`
-          }
+            redirectTo: `${useRuntimeConfig().public.siteUrl}/auth/callback`,
+          },
         })
-        
+
         if (error) throw error
       } catch (error) {
         console.error('Error signing in with Google:', error)
@@ -84,9 +83,9 @@ export const useAuthStore = defineStore('auth', {
       try {
         const supabase = useSupabaseClient()
         const { error } = await supabase.auth.signOut()
-        
+
         if (error) throw error
-        
+
         this.user = null
         await navigateTo('/')
       } catch (error) {
@@ -135,6 +134,6 @@ export const useAuthStore = defineStore('auth', {
 
     setLoading(loading: boolean) {
       this.loading = loading
-    }
-  }
+    },
+  },
 })

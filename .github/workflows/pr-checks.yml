@@ -1,0 +1,195 @@
+name: 🔍 Pull Request Checks
+
+on:
+  pull_request:
+    # Trigger on ALL pull requests to main (from any feature branch)
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+# Ensure PRs can't run in parallel for the same branch
+concurrency:
+  group: pr-checks-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pr-validation:
+    name: 🧪 PR Validation
+    runs-on: ubuntu-latest
+
+    # Skip draft PRs unless they're ready for review
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: 📥 Checkout PR
+        uses: actions/checkout@v4
+        with:
+          # Checkout the PR head (not the merge commit)
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🔍 TypeScript Check
+        run: pnpm run typecheck
+
+      - name: 🧹 Lint Check
+        run: pnpm run lint
+
+      - name: 📝 Format Check
+        run: pnpm run format:check
+
+      - name: 🧪 Run Tests
+        run: |
+          pnpm run test:build
+          pnpm test:run
+
+      - name: 🏗️ Build Check
+        run: |
+          echo "Testing builds for all apps..."
+          pnpm --filter=@monorepo/trinsler run build
+          pnpm --filter=@monorepo/betterclassroom run build
+          pnpm --filter=@monorepo/coin-boilerplate-app run build
+
+      - name: 📊 PR Summary
+        if: always()
+        run: |
+          echo "## 🔍 PR Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: \`${{ github.head_ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target**: \`${{ github.base_ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.event.pull_request.head.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ **All checks passed!** This PR is ready for review." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Some checks failed.** Please fix the issues before requesting review." >> $GITHUB_STEP_SUMMARY
+          fi
+
+  security-check:
+    name: 🛡️ Security Scan
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: 📥 Checkout PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🛡️ Security Audit
+        run: |
+          echo "## 🛡️ Security Audit Results" >> $GITHUB_STEP_SUMMARY
+          if pnpm audit --audit-level high; then
+            echo "✅ No high or critical security vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Security vulnerabilities detected:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            pnpm audit --audit-level high || true >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Action required**: Please run \`pnpm audit fix\` to resolve vulnerabilities." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 🔍 Dependency Check
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📦 Dependency Status" >> $GITHUB_STEP_SUMMARY
+          if pnpm outdated --format json > /dev/null 2>&1; then
+            echo "✅ All dependencies are up to date!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ Some dependencies have updates available (handled by Renovate)." >> $GITHUB_STEP_SUMMARY
+          fi
+
+  size-check:
+    name: 📏 Bundle Size Check
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: 📥 Checkout Base (main)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+
+      - name: 📥 Checkout PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📥 Install dependencies (Base)
+        run: |
+          cd base
+          pnpm install --frozen-lockfile
+
+      - name: 📥 Install dependencies (PR)
+        run: |
+          cd pr
+          pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build Apps (Base)
+        run: |
+          cd base
+          pnpm --filter=@monorepo/trinsler run build
+          pnpm --filter=@monorepo/betterclassroom run build
+          pnpm --filter=@monorepo/coin-boilerplate-app run build
+
+      - name: 🏗️ Build Apps (PR)
+        run: |
+          cd pr
+          pnpm --filter=@monorepo/trinsler run build
+          pnpm --filter=@monorepo/betterclassroom run build
+          pnpm --filter=@monorepo/coin-boilerplate-app run build
+
+      - name: 📏 Compare Bundle Sizes
+        run: |
+          echo "## 📏 Bundle Size Comparison" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| App | Base Size | PR Size | Diff |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|-----------|---------|------|" >> $GITHUB_STEP_SUMMARY
+
+          # Check each app's build size
+          for app in trinsler betterclassroom coin-boilerplate-app; do
+            base_size=$(du -sh base/apps/$app/dist 2>/dev/null | cut -f1 || echo "N/A")
+            pr_size=$(du -sh pr/apps/$app/dist 2>/dev/null | cut -f1 || echo "N/A")
+            echo "| $app | $base_size | $pr_size | TBD |" >> $GITHUB_STEP_SUMMARY
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 **Note**: Detailed bundle analysis available in build artifacts." >> $GITHUB_STEP_SUMMARY

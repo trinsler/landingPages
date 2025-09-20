@@ -1,4 +1,4 @@
-import { ref, readonly } from 'vue'
+import { ref } from 'vue'
 import type { ToastOptions, Toast } from '@monorepo/shared'
 import { generateId } from '@monorepo/shared'
 
@@ -13,7 +13,7 @@ export const useToast = () => {
       type: options.type || 'info',
       duration: options.duration || 5000,
       persistent: options.persistent || false,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     }
 
     toasts.value.push(toast)
@@ -43,7 +43,7 @@ export const useToast = () => {
       ...options,
       title,
       message,
-      type: 'success'
+      type: 'success',
     })
   }
 
@@ -53,7 +53,7 @@ export const useToast = () => {
       title,
       message,
       type: 'error',
-      duration: options?.duration || 7000 // Longer duration for errors
+      duration: options?.duration || 7000, // Longer duration for errors
     })
   }
 
@@ -62,7 +62,7 @@ export const useToast = () => {
       ...options,
       title,
       message,
-      type: 'warning'
+      type: 'warning',
     })
   }
 
@@ -71,7 +71,7 @@ export const useToast = () => {
       ...options,
       title,
       message,
-      type: 'info'
+      type: 'info',
     })
   }
 
@@ -83,6 +83,6 @@ export const useToast = () => {
     success,
     error,
     warning,
-    info
+    info,
   }
 }

@@ -3,7 +3,7 @@
 export const formatCurrency = (amount: number, currency: string = 'EUR'): string => {
   return new Intl.NumberFormat('de-DE', {
     style: 'currency',
-    currency
+    currency,
   }).format(amount)
 }
 
@@ -21,7 +21,7 @@ export const formatRelativeTime = (date: string | Date): string => {
   if (diffInSeconds < 3600) return `vor ${Math.floor(diffInSeconds / 60)} Minuten`
   if (diffInSeconds < 86400) return `vor ${Math.floor(diffInSeconds / 3600)} Stunden`
   if (diffInSeconds < 604800) return `vor ${Math.floor(diffInSeconds / 86400)} Tagen`
-  
+
   return formatDate(d)
 }
 
@@ -32,7 +32,7 @@ export const generateId = (): string => {
 export const slugify = (text: string): string => {
   return text
     .toLowerCase()
-    .replace(/[äöüß]/g, (char) => ({ ä: 'ae', ö: 'oe', ü: 'ue', ß: 'ss' }[char] || char))
+    .replace(/[äöüß]/g, char => ({ ä: 'ae', ö: 'oe', ü: 'ue', ß: 'ss' })[char] || char)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
 }
@@ -47,7 +47,7 @@ export const truncateText = (text: string, maxLength: number): string => {
   return text.slice(0, maxLength - 3) + '...'
 }
 
-export const debounce = <T extends (...args: any[]) => void>(
+export const debounce = <T extends (...args: never[]) => void>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {

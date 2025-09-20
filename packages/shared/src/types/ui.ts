@@ -43,7 +43,7 @@ export interface PageSection {
   title: string
   description?: string
   component?: string
-  props?: Record<string, any>
+  props?: Record<string, string | number | boolean | object>
   background?: BackgroundTheme
   animation?: AnimationConfig
 }

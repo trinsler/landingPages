@@ -1,7 +1,7 @@
 <template>
   <section class="w-full py-20 md:py-32 relative overflow-hidden">
     <!-- Background gradient -->
-    <div class="absolute inset-0 gradient-bg opacity-50"></div>
+    <div class="absolute inset-0 gradient-bg opacity-50" />
 
     <div class="container mx-auto px-4 relative z-10">
       <div class="text-center mb-16">
@@ -19,8 +19,18 @@
           class="absolute -left-6 md:-left-12 top-1/2 -translate-y-1/2 z-20 glass-card p-4 rounded-2xl hover:scale-125 transition-all duration-300 pulse-glow group shadow-2xl"
           @click="prevSlide"
         >
-          <svg class="h-8 w-8 text-primary group-hover:text-primary/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+          <svg
+            class="h-8 w-8 text-primary group-hover:text-primary/80"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
 
@@ -43,8 +53,18 @@
                 <div class="p-6 pb-4">
                   <div class="flex items-center justify-center space-x-3 mb-6">
                     <div class="gradient-border rounded-2xl p-3">
-                      <svg class="h-8 w-8 text-primary relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                      <svg
+                        class="h-8 w-8 text-primary relative z-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        />
                       </svg>
                     </div>
                     <h3 class="text-2xl font-bold gradient-text">Lehrenden-Perspektive</h3>
@@ -60,7 +80,9 @@
                   </div>
                   <!-- Separate text overlay for better readability -->
                   <div class="mt-4 glass-card p-4 rounded-xl">
-                    <p class="text-sm text-foreground leading-relaxed font-medium">{{ images[currentIndex].profDescription }}</p>
+                    <p class="text-sm text-foreground leading-relaxed font-medium">
+                      {{ images[currentIndex].profDescription }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -72,8 +94,18 @@
                 <div class="p-6 pb-4">
                   <div class="flex items-center justify-center space-x-3 mb-6">
                     <div class="gradient-border rounded-2xl p-3">
-                      <svg class="h-8 w-8 text-primary relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                      <svg
+                        class="h-8 w-8 text-primary relative z-10"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                        />
                       </svg>
                     </div>
                     <h3 class="text-2xl font-bold gradient-text">Lernenden-Perspektive</h3>
@@ -89,7 +121,9 @@
                   </div>
                   <!-- Separate text overlay for better readability -->
                   <div class="mt-4 glass-card p-4 rounded-xl">
-                    <p class="text-sm text-foreground leading-relaxed font-medium">{{ images[currentIndex].studentDescription }}</p>
+                    <p class="text-sm text-foreground leading-relaxed font-medium">
+                      {{ images[currentIndex].studentDescription }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -101,8 +135,18 @@
           class="absolute -right-6 md:-right-12 top-1/2 -translate-y-1/2 z-20 glass-card p-4 rounded-2xl hover:scale-125 transition-all duration-300 pulse-glow group shadow-2xl"
           @click="nextSlide"
         >
-          <svg class="h-8 w-8 text-primary group-hover:text-primary/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+          <svg
+            class="h-8 w-8 text-primary group-hover:text-primary/80"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
       </div>
@@ -113,11 +157,13 @@
           <button
             v-for="(image, index) in images"
             :key="index"
-            @click="currentIndex = index"
             class="w-3 h-3 rounded-full transition-all duration-300"
-            :class="index === currentIndex
-              ? 'bg-primary shadow-lg scale-125'
-              : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'"
+            :class="
+              index === currentIndex
+                ? 'bg-primary shadow-lg scale-125'
+                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+            "
+            @click="currentIndex = index"
           />
         </div>
         <div class="glass-card px-6 py-3 rounded-2xl">
@@ -142,20 +188,21 @@ const images = [
     professor: '/assets/kurs.png',
     student: '/assets/studentSitz.png',
     profDescription: 'Anlegen von einem Kurs/Fach und Aufgaben für die Lernenden erstellen',
-    studentDescription: 'Sitzplatz im digitalen Klassenzimmer wählen'
+    studentDescription: 'Sitzplatz im digitalen Klassenzimmer wählen',
   },
   {
     professor: '/assets/fortschritt.png',
     student: '/assets/studentAufgabe.png',
-    profDescription: 'Das Dashboard zeigt die belegten Sitzplätze und den Fortschritt der Lernenden',
-    studentDescription: 'Sieht seine Aufgaben'
+    profDescription:
+      'Das Dashboard zeigt die belegten Sitzplätze und den Fortschritt der Lernenden',
+    studentDescription: 'Sieht seine Aufgaben',
   },
   {
     professor: '/assets/fortschrittFrageName.png',
     student: '/assets/studentAufgabeFrage.png',
     profDescription: 'Das Dashboard zeigt eine Übersicht der offenen Fragen',
-    studentDescription: 'Der Lernende hat die Möglichkeit, die Hand digital zu heben'
-  }
+    studentDescription: 'Der Lernende hat die Möglichkeit, die Hand digital zu heben',
+  },
 ]
 
 const nextSlide = () => {

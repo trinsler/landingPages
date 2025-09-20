@@ -1,36 +1,78 @@
 <template>
   <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
     <!-- Cyber Grid Matrix -->
-    <div class="absolute inset-0 cyber-grid opacity-40"></div>
-    
+    <div class="absolute inset-0 cyber-grid opacity-40" />
+
     <!-- Multiple Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-16 w-1 h-52 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-32 w-1 h-44 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.8s;"></div>
-      <div class="animate-data-stream absolute left-48 w-1 h-36 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.6s;"></div>
-      <div class="animate-data-stream absolute right-48 w-1 h-40 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 2.4s;"></div>
-      <div class="animate-data-stream absolute right-32 w-1 h-46 bg-linear-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 3.2s;"></div>
-      <div class="animate-data-stream absolute right-16 w-1 h-38 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 4s;"></div>
+      <div
+        class="animate-data-stream absolute left-16 w-1 h-52 bg-gradient-to-b from-transparent via-accent-neon to-transparent"
+        style="animation-delay: 0s"
+      />
+      <div
+        class="animate-data-stream absolute left-32 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent"
+        style="animation-delay: 0.8s"
+      />
+      <div
+        class="animate-data-stream absolute left-48 w-1 h-36 bg-gradient-to-b from-transparent via-accent-purple to-transparent"
+        style="animation-delay: 1.6s"
+      />
+      <div
+        class="animate-data-stream absolute right-48 w-1 h-40 bg-gradient-to-b from-transparent via-accent-orange to-transparent"
+        style="animation-delay: 2.4s"
+      />
+      <div
+        class="animate-data-stream absolute right-32 w-1 h-46 bg-gradient-to-b from-transparent via-accent-pink to-transparent"
+        style="animation-delay: 3.2s"
+      />
+      <div
+        class="animate-data-stream absolute right-16 w-1 h-38 bg-gradient-to-b from-transparent via-accent-neon to-transparent"
+        style="animation-delay: 4s"
+      />
     </div>
 
     <!-- Floating Code Matrix -->
     <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-24 text-accent-neon text-xs opacity-70">Vue.js Apps</div>
-      <div class="floating-element absolute top-32 right-28 text-accent-cyan text-xs opacity-70" style="animation-delay: 1s;">Landing Pages</div>
-      <div class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70" style="animation-delay: 2s;">E-Commerce</div>
-      <div class="floating-element absolute top-2/3 right-1/3 text-accent-orange text-xs opacity-70" style="animation-delay: 3s;">Websites</div>
-      <div class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70" style="animation-delay: 4s;">Portfolio Live</div>
+      <div class="floating-element absolute top-20 left-24 text-accent-neon text-xs opacity-70">
+        Vue.js Apps
+      </div>
+      <div
+        class="floating-element absolute top-32 right-28 text-accent-cyan text-xs opacity-70"
+        style="animation-delay: 1s"
+      >
+        Landing Pages
+      </div>
+      <div
+        class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70"
+        style="animation-delay: 2s"
+      >
+        E-Commerce
+      </div>
+      <div
+        class="floating-element absolute top-2/3 right-1/3 text-accent-orange text-xs opacity-70"
+        style="animation-delay: 3s"
+      >
+        Websites
+      </div>
+      <div
+        class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70"
+        style="animation-delay: 4s"
+      >
+        Portfolio Live
+      </div>
     </div>
 
     <div class="relative container-custom py-20">
       <!-- Hacker Terminal Header -->
-      <div class="cyber-card rounded-3xl overflow-hidden max-w-5xl mx-auto mb-20 animate-glow-pulse">
+      <div
+        class="cyber-card rounded-3xl overflow-hidden max-w-5xl mx-auto mb-20 animate-glow-pulse"
+      >
         <!-- Terminal Header -->
         <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-red-500"></div>
-            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
+            <div class="w-4 h-4 rounded-full bg-red-500" />
+            <div class="w-4 h-4 rounded-full bg-yellow-500" />
+            <div class="w-4 h-4 rounded-full bg-accent-neon" />
             <div class="ml-4 text-accent-cyan text-lg">Portfolio & Web-Projekte</div>
           </div>
         </div>
@@ -63,9 +105,11 @@
           <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
             <div class="text-accent-purple text-sm mb-3">Unsere Referenzen</div>
             <p class="text-xl text-white/90 leading-relaxed">
-              <span class="text-accent-cyan">Projektbeispiele:</span> Unsere erfolgreichsten 
-              <span class="font-bold text-glow-green">Web-Applikationen, Landing Pages und Websites</span>. 
-              Jedes Projekt dokumentiert mit <span class="text-accent-neon">konkreten Ergebnissen</span>.
+              <span class="text-accent-cyan">Projektbeispiele:</span> Unsere erfolgreichsten
+              <span class="font-bold text-glow-green"
+                >Web-Applikationen, Landing Pages und Websites</span
+              >. Jedes Projekt dokumentiert mit
+              <span class="text-accent-neon">konkreten Ergebnissen</span>.
             </p>
             <div class="text-accent-orange text-sm mt-4">
               Alle Projekte wurden erfolgreich ausgeliefert und sind live
@@ -76,79 +120,93 @@
 
       <!-- Mission Files Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-        <div v-for="(project, index) in projects" :key="project.title" 
-             class="group relative animate-slide-up-stagger"
-             :style="`animation-delay: ${index * 0.2}s`">
-          
+        <div
+          v-for="(project, index) in projects"
+          :key="project.title"
+          class="group relative animate-slide-up-stagger"
+          :style="`animation-delay: ${index * 0.2}s`"
+        >
           <!-- Mission Terminal -->
-          <div class="cyber-card rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-glow-pulse">
+          <div
+            class="cyber-card rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-glow-pulse"
+          >
             <!-- Terminal Header -->
             <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-accent-neon "></div>
-                <div class="text-accent-cyan text-xs">Projekt {{ String(index + 1).padStart(3, '0') }}</div>
+                <div class="w-2 h-2 rounded-full bg-accent-neon" />
+                <div class="text-accent-cyan text-xs">
+                  Projekt {{ String(index + 1).padStart(3, '0') }}
+                </div>
                 <div class="ml-auto text-xs" :class="project.statusColor">{{ project.status }}</div>
               </div>
             </div>
-            
+
             <!-- Mission Visual -->
-            <div class="relative h-48 bg-linear-to-br from-surface-2 to-surface-1 overflow-hidden">
+            <div
+              class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden"
+            >
               <!-- Background Image with Matrix Overlay -->
-              <img 
-                :src="project.image" 
-                :alt="project.title" 
+              <img
+                :src="project.image"
+                :alt="project.title"
                 class="absolute inset-0 w-full h-full object-cover opacity-30"
               />
-              <div class="absolute inset-0 bg-linear-to-br from-surface-2/80 to-surface-1/80"></div>
-              
+              <div class="absolute inset-0 bg-gradient-to-br from-surface-2/80 to-surface-1/80" />
+
               <!-- Matrix Code Rain -->
-              <div class="absolute inset-0 cyber-grid opacity-20"></div>
-              
+              <div class="absolute inset-0 cyber-grid opacity-20" />
+
               <!-- Floating Mission Data -->
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="text-center">
-                  <div :class="project.iconBg" class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker">
-                    <div class="text-white text-2xl font-bold"></div>
+                  <div
+                    :class="project.iconBg"
+                    class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker"
+                  >
+                    <div class="text-white text-2xl font-bold" />
                   </div>
                   <div class="text-accent-cyan text-xs">{{ project.classification }}</div>
                 </div>
               </div>
-              
+
               <!-- Project Info -->
               <div class="absolute top-4 left-4 text-xs text-accent-neon opacity-60">
                 {{ project.code }}
               </div>
             </div>
-            
+
             <!-- Mission Report -->
             <div class="p-6 code-pattern">
               <!-- Project ID -->
               <div class="text-accent-neon text-sm mb-3">
                 Projektreferenz: {{ project.filename }}
               </div>
-              
+
               <!-- Project Title -->
               <h3 class="text-xl font-bold text-white mb-3">
                 {{ project.title }}
               </h3>
-              
+
               <!-- Project Description -->
               <div class="mb-4">
                 <div class="text-accent-purple text-xs mb-2">Projektbeschreibung</div>
                 <p class="text-white/90 text-sm leading-relaxed">{{ project.description }}</p>
               </div>
-              
+
               <!-- Services Used -->
               <div class="mb-4">
                 <div class="text-accent-cyan text-xs mb-2">Eingesetzte Services:</div>
                 <div class="flex flex-wrap gap-1 ml-4 mb-2">
-                  <span v-for="(tag, idx) in project.tags" :key="tag" 
-                        class="neon-card px-2 py-1 text-xs text-white/80">
+                  <span
+                    v-for="(tag, idx) in project.tags"
+                    :key="tag"
+                    class="neon-card px-2 py-1 text-xs text-white/80"
+                  >
                     {{ tag }}{{ idx < project.tags.length - 1 ? ', ' : '' }}
                   </span>
                 </div>
               </div>
-              
+
               <!-- Project Result -->
               <div class="neon-card rounded-xl p-4">
                 <div class="text-accent-orange text-xs mb-2">Projektergebnis</div>
@@ -157,12 +215,12 @@
                   <div class="text-white/60 text-xs">Entwicklungszeit</div>
                 </div>
               </div>
-              
+
               <!-- Project Status -->
               <div class="mt-4 pt-4 border-t border-accent-neon/20">
                 <div class="flex items-center justify-between text-xs">
                   <span class="text-white/60">Projektstatus:</span>
-                  <span class="text-accent-neon ">✓ {{ project.completion }}</span>
+                  <span class="text-accent-neon">✓ {{ project.completion }}</span>
                 </div>
               </div>
             </div>
@@ -175,20 +233,20 @@
         <!-- Terminal Header -->
         <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-red-500"></div>
-            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-neon "></div>
+            <div class="w-4 h-4 rounded-full bg-red-500" />
+            <div class="w-4 h-4 rounded-full bg-yellow-500" />
+            <div class="w-4 h-4 rounded-full bg-accent-neon" />
             <div class="ml-4 text-accent-cyan text-lg">Neues Web-Projekt starten</div>
           </div>
         </div>
-        
+
         <!-- Terminal Content -->
         <div class="p-8 lg:p-12 text-center code-pattern">
           <!-- Call to Action -->
           <div class="text-accent-neon text-sm mb-6">
             <span class="text-accent-cyan">Bereit für:</span> Neues Web-Projekt
           </div>
-          
+
           <!-- ASCII Banner -->
           <div class="code-font text-accent-neon text-xs mb-8">
             <pre class="text-center animate-slide-up-stagger">
@@ -198,42 +256,41 @@
   ╚══════════════════════════════════════╝
             </pre>
           </div>
-          
+
           <!-- Mission Brief -->
           <div class="mb-8">
             <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6 animate-glitch">
-              Bereit für Ihr 
+              Bereit für Ihr
               <span class="gradient-text-neon">Web-Projekt?</span>
             </h3>
-            
+
             <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
               <div class="text-accent-purple text-sm mb-3">Ihr nächster Schritt</div>
               <p class="text-lg text-white/90 leading-relaxed">
-                <span class="text-accent-cyan">Ziel:</span> Bringen Sie Ihr Web-Projekt zum Leben. 
-                <span class="font-bold text-glow-green">Professionelle Web-Entwicklung</span> beginnt hier.
+                <span class="text-accent-cyan">Ziel:</span> Bringen Sie Ihr Web-Projekt zum Leben.
+                <span class="font-bold text-glow-green">Professionelle Web-Entwicklung</span>
+                beginnt hier.
               </p>
               <div class="text-accent-orange text-sm mt-4">
                 Bereit für Ihr Web-Projekt? Lassen Sie uns starten!
               </div>
             </div>
           </div>
-          
+
           <!-- Execute Button -->
           <NuxtLink
             to="/contact"
             class="btn-primary group text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
           >
-            <span class="flex items-center">
-              Web-Projekt starten
-            </span>
+            <span class="flex items-center"> Web-Projekt starten </span>
           </NuxtLink>
-          
+
           <!-- System Status -->
           <div class="mt-8 pt-6 border-t border-accent-neon/20">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div class="text-center">
                 <div class="text-accent-cyan mb-1">Web-Projekte 2024:</div>
-                <div class="text-accent-neon ">● 25</div>
+                <div class="text-accent-neon">● 25</div>
               </div>
               <div class="text-center">
                 <div class="text-accent-purple mb-1">Pünktliche Lieferung:</div>
@@ -255,93 +312,99 @@
 // No icons or emojis needed
 
 useHead({
-  title: 'Portfolio - Trinsler Web-Projekte'
+  title: 'Portfolio - Trinsler Web-Projekte',
 })
 
 const projects = [
   {
     title: 'SaaS Dashboard Platform',
-    description: 'Moderne Web-Applikation für B2B-SaaS Unternehmen. Vue.js Frontend mit Node.js Backend und real-time Analytics.',
+    description:
+      'Moderne Web-Applikation für B2B-SaaS Unternehmen. Vue.js Frontend mit Node.js Backend und real-time Analytics.',
     tags: ['Vue.js', 'SaaS', 'Dashboard'],
     result: '4 Wochen',
     filename: 'saas_dashboard.vue',
     code: 'app.deploy()',
     classification: 'WEB_APP',
-    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     status: 'LIVE',
     statusColor: 'text-accent-neon',
     completion: 'ERFOLGREICH',
-    image: '/images/gabriel-benois-qnWPjzewewA-unsplash.jpg'
+    image: '/images/gabriel-benois-qnWPjzewewA-unsplash.jpg',
   },
   {
     title: 'E-Commerce Shop',
-    description: 'Vollständiger Online-Shop mit Payment-Integration, Produktkatalog und Bestellverwaltung. Responsive Design für alle Geräte.',
+    description:
+      'Vollständiger Online-Shop mit Payment-Integration, Produktkatalog und Bestellverwaltung. Responsive Design für alle Geräte.',
     tags: ['E-Commerce', 'Nuxt.js', 'Payment'],
     result: '6 Wochen',
     filename: 'ecommerce_shop.js',
     code: 'shop.launch()',
     classification: 'ONLINE_SHOP',
-    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     status: 'ONLINE',
     statusColor: 'text-accent-purple',
     completion: 'AUSGELIEFERT',
-    image: '/images/tim-mossholder-SZgVZPbQ7RE-unsplash.jpg'
+    image: '/images/tim-mossholder-SZgVZPbQ7RE-unsplash.jpg',
   },
   {
     title: 'Corporate Website',
-    description: 'Professionelle Unternehmenswebsite mit CMS, SEO-Optimierung und Contact-Formularen. Modern und responsive.',
+    description:
+      'Professionelle Unternehmenswebsite mit CMS, SEO-Optimierung und Contact-Formularen. Modern und responsive.',
     tags: ['Corporate', 'CMS', 'SEO'],
     result: '3 Wochen',
     filename: 'corporate_site.html',
     code: 'website.publish()',
     classification: 'CORPORATE',
-    iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
+    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
     status: 'VERÖFFENTLICHT',
     statusColor: 'text-accent-orange',
     completion: 'TERMINGERECHT',
-    image: '/images/szabo-viktor-7hqEx1al0Fk-unsplash.jpg'
+    image: '/images/szabo-viktor-7hqEx1al0Fk-unsplash.jpg',
   },
   {
     title: 'Landing Page Serie',
-    description: 'Hochkonvertierende Landing Pages für Marketing-Kampagnen. A/B Testing und Conversion-Optimierung implementiert.',
+    description:
+      'Hochkonvertierende Landing Pages für Marketing-Kampagnen. A/B Testing und Conversion-Optimierung implementiert.',
     tags: ['Landing Pages', 'Conversion', 'Marketing'],
     result: '2 Wochen',
     filename: 'landing_pages.vue',
     code: 'convert.optimize()',
     classification: 'MARKETING',
-    iconBg: 'bg-linear-to-r from-accent-cyan to-accent-purple',
+    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
     status: 'CONVERTING',
     statusColor: 'text-accent-cyan',
     completion: 'OPTIMIERT',
-    image: '/images/georgia-de-lotz-hdQGAz1pQ_M-unsplash.jpg'
+    image: '/images/georgia-de-lotz-hdQGAz1pQ_M-unsplash.jpg',
   },
   {
     title: 'Booking System',
-    description: 'Online-Buchungssystem mit Kalender-Integration, Payment-Processing und automatischen E-Mail-Benachrichtigungen.',
+    description:
+      'Online-Buchungssystem mit Kalender-Integration, Payment-Processing und automatischen E-Mail-Benachrichtigungen.',
     tags: ['Booking', 'Calendar', 'Automation'],
     result: '5 Wochen',
     filename: 'booking_system.js',
     code: 'booking.automate()',
     classification: 'SYSTEM',
-    iconBg: 'bg-linear-to-r from-green-500 to-emerald-500',
+    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
     status: 'AUTOMATISIERT',
     statusColor: 'text-green-400',
     completion: 'FUNKTIONAL',
-    image: '/images/nathana-reboucas-LIfRyiWWBZs-unsplash.jpg'
+    image: '/images/nathana-reboucas-LIfRyiWWBZs-unsplash.jpg',
   },
   {
     title: 'Portfolio Website',
-    description: 'Kreative Portfolio-Website für Designer und Freelancer. Interaktive Galerie und Contact-Formulare.',
+    description:
+      'Kreative Portfolio-Website für Designer und Freelancer. Interaktive Galerie und Contact-Formulare.',
     tags: ['Portfolio', 'Creative', 'Interactive'],
     result: '2 Wochen',
     filename: 'portfolio_site.css',
     code: 'portfolio.showcase()',
     classification: 'CREATIVE',
-    iconBg: 'bg-linear-to-r from-blue-500 to-indigo-500',
+    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
     status: 'SHOWCASE',
     statusColor: 'text-blue-400',
     completion: 'KREATIV',
-    image: '/images/carol-magalhaes-dSsXm15D9hg-unsplash.jpg'
-  }
+    image: '/images/carol-magalhaes-dSsXm15D9hg-unsplash.jpg',
+  },
 ]
 </script>

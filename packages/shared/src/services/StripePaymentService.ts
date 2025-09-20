@@ -1,4 +1,5 @@
 import Stripe from 'stripe'
+
 import type { PaymentItem, PaymentConfig } from '../types'
 
 export class StripePaymentService {
@@ -12,7 +13,7 @@ export class StripePaymentService {
 
     this.config = config
     this.stripe = new Stripe(config.stripe.secretKey, {
-      apiVersion: '2024-06-20' as any
+      apiVersion: '2024-06-20' as Stripe.LatestApiVersion,
     })
   }
 
@@ -38,12 +39,12 @@ export class StripePaymentService {
           metadata: {
             type: item.type,
             item_id: item.id,
-            ...(item.coins && { coins: item.coins.toString() })
-          }
+            ...(item.coins && { coins: item.coins.toString() }),
+          },
         },
-        unit_amount: Math.round(item.price * 100) // Convert to cents
+        unit_amount: Math.round(item.price * 100), // Convert to cents
       },
-      quantity: item.quantity || 1
+      quantity: item.quantity || 1,
     }
 
     const session = await this.stripe.checkout.sessions.create({
@@ -58,9 +59,9 @@ export class StripePaymentService {
         item_id: item.id,
         item_type: item.type,
         ...(item.coins && { coins: item.coins.toString() }),
-        ...metadata
+        ...metadata,
       },
-      expires_at: Math.floor(Date.now() / 1000) + (expiresInMinutes * 60)
+      expires_at: Math.floor(Date.now() / 1000) + expiresInMinutes * 60,
     })
 
     if (!session.url) {
@@ -69,7 +70,7 @@ export class StripePaymentService {
 
     return {
       url: session.url,
-      sessionId: session.id
+      sessionId: session.id,
     }
   }
 
@@ -77,19 +78,12 @@ export class StripePaymentService {
     return await this.stripe.checkout.sessions.retrieve(sessionId)
   }
 
-  async verifyWebhook(
-    payload: string,
-    signature: string
-  ): Promise<Stripe.Event> {
+  async verifyWebhook(payload: string, signature: string): Promise<Stripe.Event> {
     if (!this.config.stripe?.webhookSecret) {
       throw new Error('Stripe webhook secret is required')
     }
 
-    return this.stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      this.config.stripe.webhookSecret
-    )
+    return this.stripe.webhooks.constructEvent(payload, signature, this.config.stripe.webhookSecret)
   }
 
   async createPaymentIntent(
@@ -100,7 +94,7 @@ export class StripePaymentService {
     return await this.stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency: currency.toLowerCase(),
-      metadata
+      metadata,
     })
   }
 
@@ -110,7 +104,7 @@ export class StripePaymentService {
     reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer'
   ): Promise<Stripe.Refund> {
     const params: Stripe.RefundCreateParams = {
-      payment_intent: paymentIntentId
+      payment_intent: paymentIntentId,
     }
 
     if (amount) {
@@ -130,9 +124,9 @@ export class StripePaymentService {
   ): Promise<Stripe.Checkout.Session[]> {
     const sessions = await this.stripe.checkout.sessions.list({
       customer_details: {
-        email: customerEmail
+        email: customerEmail,
       },
-      limit
+      limit,
     })
 
     return sessions.data

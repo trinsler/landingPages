@@ -1,4 +1,4 @@
-import { ref, computed, watch, type Ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 
 export interface ApiState<T> {
   data: Ref<T | null>
@@ -17,10 +17,7 @@ export interface ApiConfig {
   retries?: number
 }
 
-export function useApi<T>(
-  fetcher: () => Promise<T>,
-  config: ApiConfig = {}
-): ApiState<T> {
+export function useApi<T>(fetcher: () => Promise<T>, config: ApiConfig = {}): ApiState<T> {
   const data = ref<T | null>(null) as Ref<T | null>
   const loading = ref(false)
   const error = ref<Error | null>(null)
@@ -73,15 +70,11 @@ export function useApi<T>(
     isSuccess,
     isError,
     refetch: () => execute(),
-    mutate
+    mutate,
   }
 }
 
-export function useAsyncData<T>(
-  key: string,
-  fetcher: () => Promise<T>,
-  config: ApiConfig = {}
-) {
+export function useAsyncData<T>(key: string, fetcher: () => Promise<T>, config: ApiConfig = {}) {
   const cache = new Map<string, T>()
 
   const wrappedFetcher = async () => {

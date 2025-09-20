@@ -1,0 +1,167 @@
+name: 🧪 Tests & Quality Checks
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    # Test ALL pull requests to main (from any branch)
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    # Also handle external PRs (like Renovate from forks)
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    # Allow manual triggering
+  schedule:
+    # Run weekly dependency checks on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test & Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22]
+      fail-fast: false
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🔍 TypeScript Check
+        run: pnpm run typecheck
+
+      - name: 🧹 Lint & Format Check
+        run: |
+          pnpm run lint
+          pnpm run format:check
+
+      - name: 🧪 Run Build Tests
+        run: pnpm run test:build
+
+      - name: 🧩 Run Component Tests
+        run: |
+          cd packages/ui && pnpm vitest run
+          cd ../shared && pnpm vitest run
+
+      - name: 🏗️ Build All Apps
+        run: |
+          pnpm --filter=@monorepo/trinsler run build
+          pnpm --filter=@monorepo/betterclassroom run build
+          pnpm --filter=@monorepo/coin-boilerplate-app run build
+
+      - name: 📊 Upload Build Artifacts
+        if: matrix.node-version == 20
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-outputs
+          path: |
+            apps/*/dist
+            apps/*/.output
+          retention-days: 7
+
+  dependency-check:
+    name: 🔄 Dependency Health Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🔍 Check for outdated dependencies
+        run: |
+          echo "## 📦 Dependency Status" >> $GITHUB_STEP_SUMMARY
+          if pnpm outdated --format json > outdated.json 2>/dev/null; then
+            echo "✅ All dependencies are up to date!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Some dependencies have updates available:" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            pnpm outdated || true >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 🛡️ Security Audit
+        run: |
+          echo "## 🛡️ Security Audit" >> $GITHUB_STEP_SUMMARY
+          if pnpm audit --audit-level high; then
+            echo "✅ No high or critical security vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Security vulnerabilities found - please review!" >> $GITHUB_STEP_SUMMARY
+            pnpm audit --audit-level high || true
+          fi
+
+  lighthouse:
+    name: 🏠 Lighthouse Performance Check
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🏗️ Build Trinsler App (for Lighthouse)
+        run: pnpm --filter=@monorepo/trinsler run build
+
+      - name: 🚀 Start server for Lighthouse
+        run: |
+          cd apps/trinsler
+          node .output/server/index.mjs &
+          sleep 10
+
+      - name: 🏠 Run Lighthouse CI
+        run: |
+          npm install -g lighthouse
+          lighthouse http://localhost:3000 --output json --output-path lighthouse-report.json --chrome-flags="--headless --no-sandbox" || true
+
+      - name: 📊 Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lighthouse-report.json
+          retention-days: 30

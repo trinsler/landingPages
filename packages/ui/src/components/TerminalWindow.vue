@@ -4,7 +4,7 @@
       'ui-terminal overflow-hidden transition-all duration-300',
       roundedClass,
       maxWidthClass,
-      glowClass
+      glowClass,
     ]"
   >
     <!-- Terminal Header -->
@@ -14,30 +14,25 @@
         <div
           :class="[
             'w-3 h-3 rounded-full transition-all',
-            theme === 'minimal' ? 'bg-gray-400' : 'bg-red-500'
+            theme === 'minimal' ? 'bg-gray-400' : 'bg-red-500',
           ]"
-        ></div>
+        />
         <div
           :class="[
             'w-3 h-3 rounded-full transition-all',
-            theme === 'minimal' ? 'bg-gray-400' : 'bg-yellow-500'
+            theme === 'minimal' ? 'bg-gray-400' : 'bg-yellow-500',
           ]"
-        ></div>
+        />
         <div
           :class="[
             'w-3 h-3 rounded-full transition-all',
-            theme === 'minimal' ? 'bg-gray-400' : themeAccentClass
+            theme === 'minimal' ? 'bg-gray-400' : themeAccentClass,
           ]"
-        ></div>
+        />
       </div>
 
       <!-- Terminal Title -->
-      <div
-        :class="[
-          'ml-2 font-mono text-lg transition-colors',
-          titleColorClass
-        ]"
-      >
+      <div :class="['ml-2 font-mono text-lg transition-colors', titleColorClass]">
         {{ displayTitle }}
       </div>
 
@@ -48,13 +43,7 @@
     </div>
 
     <!-- Terminal Content -->
-    <div
-      :class="[
-        'transition-all',
-        paddingClass,
-        contentBgClass
-      ]"
-    >
+    <div :class="['transition-all', paddingClass, contentBgClass]">
       <slot />
     </div>
   </div>
@@ -62,6 +51,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { useTheme, type ThemeName } from '../composables/useTheme'
 
 interface Props {
@@ -79,14 +69,14 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   rounded: '2xl',
   glow: false,
-  maxWidth: '6xl'
+  maxWidth: '6xl',
 })
 
 const { currentTheme } = useTheme()
 
 // Use current theme if 'auto', otherwise use specified theme
 const theme = computed(() =>
-  props.theme === 'auto' ? currentTheme.value : props.theme as ThemeName
+  props.theme === 'auto' ? currentTheme.value : (props.theme as ThemeName)
 )
 
 // Dynamic classes based on theme and props
@@ -95,7 +85,7 @@ const titleColorClass = computed(() => {
     cyber: 'ui-text-accent',
     glass: 'ui-text-accent',
     minimal: 'ui-text-primary',
-    dark: 'ui-text-accent'
+    dark: 'ui-text-accent',
   }
   return classes[theme.value]
 })
@@ -105,7 +95,7 @@ const themeAccentClass = computed(() => {
     cyber: 'bg-green-400',
     glass: 'bg-indigo-500',
     minimal: 'bg-gray-600',
-    dark: 'bg-amber-400'
+    dark: 'bg-amber-400',
   }
   return classes[theme.value]
 })
@@ -118,7 +108,7 @@ const roundedClass = computed(() => {
     lg: 'rounded-lg',
     xl: 'rounded-xl',
     '2xl': 'rounded-2xl',
-    '3xl': 'rounded-3xl'
+    '3xl': 'rounded-3xl',
   }
   return classes[props.rounded]
 })
@@ -128,7 +118,7 @@ const paddingClass = computed(() => {
     sm: 'p-4 lg:p-6',
     md: 'p-6 lg:p-8',
     lg: 'p-8 lg:p-12',
-    full: 'p-6 lg:p-8'
+    full: 'p-6 lg:p-8',
   }
   return classes[props.size]
 })
@@ -144,7 +134,7 @@ const maxWidthClass = computed(() => {
     '2xl': 'max-w-2xl mx-auto',
     '4xl': 'max-w-4xl mx-auto',
     '6xl': 'max-w-6xl mx-auto',
-    full: 'w-full'
+    full: 'w-full',
   }
   return classes[props.maxWidth]
 })
@@ -156,7 +146,7 @@ const glowClass = computed(() => {
     cyber: 'animate-pulse shadow-[0_0_30px_rgba(0,255,159,0.3)]',
     glass: 'shadow-lg',
     minimal: '',
-    dark: 'shadow-[0_0_20px_rgba(251,191,36,0.2)]'
+    dark: 'shadow-[0_0_20px_rgba(251,191,36,0.2)]',
   }
   return classes[theme.value]
 })
@@ -166,7 +156,7 @@ const contentBgClass = computed(() => {
     cyber: 'bg-linear-to-br from-gray-900/50 to-gray-800/50',
     glass: 'bg-white/5 backdrop-blur-sm',
     minimal: 'bg-gray-50',
-    dark: 'bg-gray-800/50'
+    dark: 'bg-gray-800/50',
   }
   return classes[theme.value]
 })
@@ -177,7 +167,7 @@ const displayTitle = computed(() => {
     cyber: '~/cyber/',
     glass: '🏠 ',
     minimal: '',
-    dark: '$ '
+    dark: '$ ',
   }
 
   const prefix = prefixes[theme.value]

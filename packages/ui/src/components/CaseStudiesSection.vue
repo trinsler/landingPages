@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
 import CaseStudyCard from './CaseStudyCard.vue'
+
 import { TerminalWindow } from './index'
 
 interface CaseStudyMetric {

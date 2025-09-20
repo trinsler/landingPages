@@ -46,7 +46,7 @@ export interface PaymentItem {
   currency: string
   quantity?: number
   coins?: number // for coin packages
-  metadata?: Record<string, any>
+  metadata?: Record<string, string | number | boolean>
 }
 
 export interface PaymentConfig {
@@ -70,7 +70,6 @@ export interface PaymentSession {
   created_at: string
 }
 
-
 // Toast types
 export interface ToastOptions {
   title?: string
@@ -91,7 +90,7 @@ export interface Toast {
 }
 
 // API Response types
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = Record<string, string | number | boolean | null>> {
   success: boolean
   data?: T
   error?: string
@@ -112,7 +111,7 @@ export interface EmailSubscription {
   email: string
   status: 'active' | 'unsubscribed' | 'pending'
   tags?: string[]
-  metadata?: Record<string, any>
+  metadata?: Record<string, string | number | boolean>
   subscribed_at: string
   unsubscribed_at?: string
   created_at: string
