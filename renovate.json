@@ -165,7 +165,7 @@
 
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 6am on first day of month"],
+    "schedule": ["before 6am"],
     "commitMessageAction": "refresh",
     "commitMessageTopic": "lock file",
     "prTitle": "chore(deps): refresh lock file",
