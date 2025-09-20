@@ -89,16 +89,6 @@ pnpm run build:packages
 
 ## 🤖 Automated Checks
 
-### Pre-commit Hooks (Husky)
-
-The following checks run automatically on every `git commit`:
-
-- **Lint-staged**: Runs ESLint and Prettier on staged files only
-- **TypeScript check**: Ensures no type errors
-- **Format check**: Ensures consistent code formatting
-
-If any check fails, the commit will be blocked. Fix the issues and try again.
-
 ### CI/CD Pipeline
 
 **🎉 UPDATED**: Jetzt werden **ALLE** Pull Requests automatisch getestet!

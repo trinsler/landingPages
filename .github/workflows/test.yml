@@ -78,6 +78,29 @@ jobs:
             apps/*/.output
           retention-days: 7
 
+  # Trigger deployment after successful tests
+  trigger-deployment:
+    name: 🚀 Trigger Deployment
+    runs-on: ubuntu-latest
+    needs: [test, dependency-check, lighthouse]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Trigger Deploy Workflow
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const result = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy.yml',
+              ref: 'main'
+            });
+            console.log('Deployment triggered:', result);
+
   dependency-check:
     name: 🔄 Dependency Health Check
     runs-on: ubuntu-latest
@@ -157,6 +180,41 @@ jobs:
         run: |
           npm install -g lighthouse
           lighthouse http://localhost:3000 --output json --output-path lighthouse-report.json --chrome-flags="--headless --no-sandbox" || true
+
+      - name: 📊 Parse Lighthouse Results
+        run: |
+          if [ -f lighthouse-report.json ]; then
+            echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            # Extract scores using node
+            node -e "
+              const fs = require('fs');
+              try {
+                const report = JSON.parse(fs.readFileSync('lighthouse-report.json', 'utf8'));
+                const categories = report.lhr.categories;
+
+                console.log('| Metric | Score | Status |');
+                console.log('|--------|-------|--------|');
+
+                Object.entries(categories).forEach(([key, category]) => {
+                  const score = Math.round(category.score * 100);
+                  const status = score >= 90 ? '🟢' : score >= 70 ? '🟡' : '🔴';
+                  console.log(\`| \${category.title} | \${score} | \${status} |\`);
+                });
+              } catch (e) {
+                console.log('| Error | - | 🔴 |');
+                console.log('| Failed to parse | lighthouse report | - |');
+              }
+            " >> $GITHUB_STEP_SUMMARY
+
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "📝 **Full report available in artifacts**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "❌ **Lighthouse report not generated**" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: 📊 Upload Lighthouse Report
         uses: actions/upload-artifact@v4
