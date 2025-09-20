@@ -49,6 +49,22 @@ importers:
         specifier: ^2.0.0
         version: 2.2.12(typescript@5.9.2)
 
+  apps/betterclassroom:
+    dependencies:
+      '@monorepo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      '@monorepo/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+    devDependencies:
+      '@nuxtjs/tailwindcss':
+        specifier: ^6.12.1
+        version: 6.14.0(magicast@0.3.5)
+      tailwindcss:
+        specifier: ^3.4.0
+        version: 3.4.17
+
   apps/coin-boilerplate-app:
     dependencies:
       '@monorepo/shared':
