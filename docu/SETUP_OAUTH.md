@@ -45,4 +45,20 @@
    https://your-project.supabase.co/auth/v1/callback
    ```
 
+### Authentication/URL Configuration Site URL (Default Redirect):
+```
+https://coin.trinsler.com
+```
 
+### Redirect URLs (Allowed URLs):
+```
+http://localhost:3000/auth/callback
+https://coin.trinsler.com/auth/callback
+https://coin.trinsler.com/payment/success
+https://coin.trinsler.com/payment/cancelled
+```
+
+### Wildcard Alternative:
+```
+https://*.trinsler.com/auth/callback
+https://*.trinsler.com/payment/*

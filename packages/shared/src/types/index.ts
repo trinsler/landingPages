@@ -106,3 +106,15 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
     totalPages: number
   }
 }
+
+export interface EmailSubscription {
+  id: string
+  email: string
+  status: 'active' | 'unsubscribed' | 'pending'
+  tags?: string[]
+  metadata?: Record<string, any>
+  subscribed_at: string
+  unsubscribed_at?: string
+  created_at: string
+  updated_at: string
+}
