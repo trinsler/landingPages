@@ -27,9 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 22]
-      fail-fast: false
-      max-parallel: 2
+        node-version: [22]
 
     steps:
       - name: 📥 Checkout code
