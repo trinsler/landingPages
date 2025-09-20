@@ -57,7 +57,7 @@ const maxWidthClass = computed(() => {
     '6xl': 'max-w-6xl',
     '7xl': 'max-w-7xl',
     full: 'max-w-full',
-    screen: 'max-w-screen-xl'
+    screen: 'max-w-(--breakpoint-xl)'
   }
   return classes[props.maxWidth]
 })

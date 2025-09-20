@@ -9,7 +9,7 @@
         v-for="(stream, index) in streams"
         :key="index"
         :class="[
-          'animate-data-stream absolute w-1 bg-gradient-to-b from-transparent to-transparent',
+          'animate-data-stream absolute w-1 bg-linear-to-b from-transparent to-transparent',
           stream.height,
           stream.position,
           stream.color,

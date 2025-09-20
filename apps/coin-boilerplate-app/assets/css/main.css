@@ -1,16 +1,14 @@
 /* Import universal theme system */
-@import '@monorepo/ui/src/styles/themes.css';
+@import '@monorepo/ui/src/styles/themes.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   html {
-    @apply h-full;
+    height: 100%;
   }
   body {
-    @apply h-full;
+    height: 100%;
     background: var(--ui-bg-primary);
     color: var(--ui-text-primary);
   }

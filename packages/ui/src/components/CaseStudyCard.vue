@@ -89,7 +89,7 @@
                   :key="solution"
                   class="flex items-start gap-2"
                 >
-                  <span class="text-accent-neon mt-0.5 flex-shrink-0">✓</span>
+                  <span class="text-accent-neon mt-0.5 shrink-0">✓</span>
                   <span>{{ solution }}</span>
                 </li>
               </ul>

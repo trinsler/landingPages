@@ -14,7 +14,7 @@
       </div>
 
       <!-- Trend Visual -->
-      <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+      <div class="relative h-48 bg-linear-to-br from-surface-2 to-surface-1 overflow-hidden">
         <!-- Matrix Background -->
         <div class="absolute inset-0 cyber-grid opacity-20" />
 
