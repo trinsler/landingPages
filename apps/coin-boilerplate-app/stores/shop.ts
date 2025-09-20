@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 import type { CoinPackage, Transaction } from '~/types'
 
 interface ShopState {
@@ -17,7 +18,7 @@ export const useShopStore = defineStore('shop', {
         coins: 100,
         price: 0.99,
         currency: 'EUR',
-        description: 'Perfect starter pack'
+        description: 'Perfect starter pack',
       },
       {
         id: 'coin_pack_1000',
@@ -26,7 +27,7 @@ export const useShopStore = defineStore('shop', {
         price: 4.99,
         currency: 'EUR',
         popular: true,
-        description: 'Most popular choice'
+        description: 'Most popular choice',
       },
       {
         id: 'coin_pack_5000',
@@ -34,7 +35,7 @@ export const useShopStore = defineStore('shop', {
         coins: 5000,
         price: 19.99,
         currency: 'EUR',
-        description: 'Best value pack'
+        description: 'Best value pack',
       },
       {
         id: 'coin_pack_10000',
@@ -42,26 +43,28 @@ export const useShopStore = defineStore('shop', {
         coins: 10000,
         price: 34.99,
         currency: 'EUR',
-        description: 'Ultimate coin pack'
-      }
+        description: 'Ultimate coin pack',
+      },
     ],
     transactions: [],
     loading: false,
-    processingPayment: false
+    processingPayment: false,
   }),
 
   getters: {
-    getPackageById: (state) => (id: string) => 
+    getPackageById: state => (id: string) =>
       state.packages.find((pkg: CoinPackage) => pkg.id === id),
-    
-    popularPackage: (state) => 
-      state.packages.find((pkg: CoinPackage) => pkg.popular),
-    
-    recentTransactions: (state) => 
+
+    popularPackage: state => state.packages.find((pkg: CoinPackage) => pkg.popular),
+
+    recentTransactions: state =>
       state.transactions
         .filter((t: Transaction) => t.type === 'purchase')
-        .sort((a: Transaction, b: Transaction) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        .slice(0, 5)
+        .sort(
+          (a: Transaction, b: Transaction) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
+        .slice(0, 5),
   },
 
   actions: {
@@ -79,7 +82,7 @@ export const useShopStore = defineStore('shop', {
           .order('created_at', { ascending: false })
 
         if (error) throw error
-        
+
         this.transactions = data || []
       } catch (error) {
         console.error('Error fetching transactions:', error)
@@ -102,7 +105,9 @@ export const useShopStore = defineStore('shop', {
       this.processingPayment = true
       try {
         const supabase = useSupabaseClient()
-        const { data: { session } } = await supabase.auth.getSession()
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
 
         if (!session) {
           throw new Error('No active session')
@@ -112,11 +117,11 @@ export const useShopStore = defineStore('shop', {
         const { data, error } = await supabase.functions.invoke('create-checkout', {
           body: {
             packageId,
-            provider
+            provider,
           },
           headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          }
+            Authorization: `Bearer ${session.access_token}`,
+          },
         })
 
         if (error) {
@@ -156,6 +161,6 @@ export const useShopStore = defineStore('shop', {
 
     setProcessingPayment(processing: boolean) {
       this.processingPayment = processing
-    }
-  }
+    },
+  },
 })

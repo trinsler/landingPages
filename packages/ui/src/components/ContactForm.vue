@@ -1,11 +1,5 @@
 <template>
-  <form
-    @submit.prevent="handleSubmit"
-    :class="[
-      'w-full space-y-6',
-      containerClass
-    ]"
-  >
+  <form :class="['w-full space-y-6', containerClass]" @submit.prevent="handleSubmit">
     <!-- Titel und Beschreibung -->
     <div v-if="title || subtitle" class="text-center mb-8">
       <h2 v-if="title" class="text-2xl font-bold ui-text-primary mb-2">
@@ -18,9 +12,7 @@
 
     <!-- Name -->
     <div class="space-y-2">
-      <label for="name" class="block text-sm font-medium ui-text-primary">
-        Name *
-      </label>
+      <label for="name" class="block text-sm font-medium ui-text-primary"> Name * </label>
       <input
         id="name"
         v-model="formData.name"
@@ -34,9 +26,7 @@
 
     <!-- Email -->
     <div class="space-y-2">
-      <label for="email" class="block text-sm font-medium ui-text-primary">
-        E-Mail *
-      </label>
+      <label for="email" class="block text-sm font-medium ui-text-primary"> E-Mail * </label>
       <input
         id="email"
         v-model="formData.email"
@@ -50,9 +40,7 @@
 
     <!-- Firma (optional) -->
     <div v-if="showCompany" class="space-y-2">
-      <label for="company" class="block text-sm font-medium ui-text-primary">
-        Firma
-      </label>
+      <label for="company" class="block text-sm font-medium ui-text-primary"> Firma </label>
       <input
         id="company"
         v-model="formData.company"
@@ -64,14 +52,8 @@
 
     <!-- Budget (optional) -->
     <div v-if="showBudget" class="space-y-2">
-      <label for="budget" class="block text-sm font-medium ui-text-primary">
-        Budget
-      </label>
-      <select
-        id="budget"
-        v-model="formData.budget"
-        :class="inputClass"
-      >
+      <label for="budget" class="block text-sm font-medium ui-text-primary"> Budget </label>
+      <select id="budget" v-model="formData.budget" :class="inputClass">
         <option value="">Budget auswählen</option>
         <option value="5k-10k">5.000€ - 10.000€</option>
         <option value="10k-25k">10.000€ - 25.000€</option>
@@ -82,9 +64,7 @@
 
     <!-- Services (optional) -->
     <div v-if="showServices && services.length > 0" class="space-y-2">
-      <label class="block text-sm font-medium ui-text-primary">
-        Interessante Services
-      </label>
+      <label class="block text-sm font-medium ui-text-primary"> Interessante Services </label>
       <div class="grid grid-cols-2 gap-2">
         <label
           v-for="service in services"
@@ -92,9 +72,9 @@
           class="flex items-center space-x-2 cursor-pointer"
         >
           <input
+            v-model="formData.services"
             type="checkbox"
             :value="service.value"
-            v-model="formData.services"
             class="rounded border-ui-border ui-text-accent focus:ring-ui-accent"
           />
           <span class="text-sm ui-text-secondary">{{ service.label }}</span>
@@ -107,11 +87,7 @@
       <label for="timeline" class="block text-sm font-medium ui-text-primary">
         Gewünschter Zeitrahmen
       </label>
-      <select
-        id="timeline"
-        v-model="formData.timeline"
-        :class="inputClass"
-      >
+      <select id="timeline" v-model="formData.timeline" :class="inputClass">
         <option value="">Zeitrahmen auswählen</option>
         <option value="asap">So schnell wie möglich</option>
         <option value="1-3-months">1-3 Monate</option>
@@ -122,9 +98,7 @@
 
     <!-- Message -->
     <div class="space-y-2">
-      <label for="message" class="block text-sm font-medium ui-text-primary">
-        Nachricht *
-      </label>
+      <label for="message" class="block text-sm font-medium ui-text-primary"> Nachricht * </label>
       <textarea
         id="message"
         v-model="formData.message"
@@ -132,7 +106,7 @@
         required
         :class="inputClass"
         :placeholder="placeholders.message"
-      ></textarea>
+      />
       <p v-if="errors.message" class="text-sm text-red-500">{{ errors.message }}</p>
     </div>
 
@@ -159,9 +133,25 @@
     >
       <span v-if="!isSubmitting">{{ submitText }}</span>
       <span v-else class="flex items-center justify-center">
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <svg
+          class="animate-spin -ml-1 mr-3 h-5 w-5"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          />
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          />
         </svg>
         {{ loadingText }}
       </span>
@@ -181,6 +171,8 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, watch } from 'vue'
+import type { ContactForm } from '@monorepo/shared'
+
 import { BaseButton } from './index'
 
 interface ServiceOption {
@@ -209,7 +201,7 @@ interface Props {
     company?: string
     message?: string
   }
-  onSubmit?: (data: any) => Promise<void>
+  onSubmit?: (data: ContactForm) => Promise<void>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -231,14 +223,14 @@ const props = withDefaults(defineProps<Props>(), {
     name: 'Ihr Name',
     email: 'ihre.email@beispiel.com',
     company: 'Ihr Unternehmen',
-    message: 'Beschreiben Sie Ihr Projekt oder Ihre Anfrage...'
-  })
+    message: 'Beschreiben Sie Ihr Projekt oder Ihre Anfrage...',
+  }),
 })
 
 const emit = defineEmits<{
-  submit: [data: any]
-  success: [data: any]
-  error: [error: any]
+  submit: [data: ContactForm]
+  success: [data: ContactForm]
+  error: [error: Error]
 }>()
 
 // Form data
@@ -250,7 +242,7 @@ const formData = reactive({
   timeline: '',
   services: [] as string[],
   message: '',
-  newsletter: false
+  newsletter: false,
 })
 
 // Form state
@@ -259,7 +251,7 @@ const submitStatus = ref<'success' | 'error' | null>(null)
 const errors = reactive({
   name: '',
   email: '',
-  message: ''
+  message: '',
 })
 
 // Computed styles
@@ -267,7 +259,7 @@ const containerClass = computed(() => {
   const variants = {
     default: '',
     minimal: 'bg-transparent',
-    card: 'ui-bg-secondary p-6 rounded-lg border border-ui-border'
+    card: 'ui-bg-secondary p-6 rounded-lg border border-ui-border',
   }
   return variants[props.variant]
 })
@@ -277,7 +269,7 @@ const inputClass = computed(() => {
     'w-full px-4 py-3 rounded-lg border transition-colors duration-200',
     'ui-bg-secondary ui-text-primary border-ui-border',
     'focus:border-ui-accent focus:ring-2 focus:ring-ui-accent/20 focus:outline-none',
-    'placeholder:ui-text-muted'
+    'placeholder:ui-text-muted',
   ].join(' ')
 })
 
@@ -344,14 +336,15 @@ const handleSubmit = async () => {
     formData.newsletter = false
   } catch (error) {
     submitStatus.value = 'error'
-    emit('error', error)
+    const errorObj = error instanceof Error ? error : new Error('Unknown error occurred')
+    emit('error', errorObj)
   } finally {
     isSubmitting.value = false
   }
 }
 
 // Reset status after 5 seconds
-watch(submitStatus, (newStatus) => {
+watch(submitStatus, newStatus => {
   if (newStatus) {
     setTimeout(() => {
       submitStatus.value = null

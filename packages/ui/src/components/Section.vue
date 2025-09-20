@@ -2,12 +2,7 @@
   <component
     :is="tag"
     :id="id"
-    :class="[
-      'transition-all duration-300',
-      spacingClass,
-      backgroundClass,
-      textAlignClass
-    ]"
+    :class="['transition-all duration-300', spacingClass, backgroundClass, textAlignClass]"
     :style="customStyles"
   >
     <!-- Background Effects Slot -->
@@ -54,7 +49,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { useTheme, type ThemeName } from '../composables/useTheme'
+
 import Container from './Container.vue'
 
 interface Props {
@@ -97,14 +94,14 @@ const props = withDefaults(defineProps<Props>(), {
   textAlign: 'left',
   theme: 'auto',
   headerSpacing: 'md',
-  footerSpacing: 'md'
+  footerSpacing: 'md',
 })
 
 const { currentTheme } = useTheme()
 
 // Use current theme if 'auto', otherwise use specified theme
 const theme = computed(() =>
-  props.theme === 'auto' ? currentTheme.value : props.theme as ThemeName
+  props.theme === 'auto' ? currentTheme.value : (props.theme as ThemeName)
 )
 
 // Spacing classes
@@ -120,7 +117,7 @@ const spacingClass = computed(() => {
       lg: 'py-20 md:py-24',
       xl: 'py-24 md:py-32',
       '2xl': 'py-32 md:py-40',
-      '3xl': 'py-40 md:py-48'
+      '3xl': 'py-40 md:py-48',
     }
     classes.push(pyClasses[props.paddingY])
   }
@@ -133,7 +130,7 @@ const spacingClass = computed(() => {
       md: 'px-8',
       lg: 'px-12',
       xl: 'px-16',
-      '2xl': 'px-20'
+      '2xl': 'px-20',
     }
     const className = pxClasses[props.paddingX as keyof typeof pxClasses]
     if (className) {
@@ -150,7 +147,7 @@ const spacingClass = computed(() => {
       lg: 'my-20',
       xl: 'my-24',
       '2xl': 'my-32',
-      '3xl': 'my-40'
+      '3xl': 'my-40',
     }
     const className = myClasses[props.marginY as keyof typeof myClasses]
     if (className) {
@@ -175,26 +172,26 @@ const backgroundClass = computed(() => {
       primary: 'bg-gray-900',
       secondary: 'bg-gray-800',
       accent: 'bg-gradient-to-r from-green-900 to-blue-900',
-      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-green-900'
+      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-green-900',
     },
     glass: {
       primary: 'bg-white',
       secondary: 'bg-gray-50',
       accent: 'bg-gradient-to-r from-indigo-50 to-purple-50',
-      gradient: 'bg-gradient-to-br from-white via-indigo-50 to-purple-100'
+      gradient: 'bg-gradient-to-br from-white via-indigo-50 to-purple-100',
     },
     minimal: {
       primary: 'bg-white',
       secondary: 'bg-gray-50',
       accent: 'bg-gray-100',
-      gradient: 'bg-gradient-to-br from-white to-gray-100'
+      gradient: 'bg-gradient-to-br from-white to-gray-100',
     },
     dark: {
       primary: 'bg-gray-900',
       secondary: 'bg-gray-800',
       accent: 'bg-gradient-to-r from-amber-900 to-orange-900',
-      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-amber-900'
-    }
+      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-amber-900',
+    },
   }
 
   return themeBackgrounds[theme.value][props.background]
@@ -205,7 +202,7 @@ const textAlignClass = computed(() => {
   const classes = {
     left: 'text-left',
     center: 'text-center',
-    right: 'text-right'
+    right: 'text-right',
   }
   return classes[props.textAlign]
 })
@@ -215,7 +212,7 @@ const headerClass = computed(() => {
   const spacing = {
     sm: 'mb-8',
     md: 'mb-12',
-    lg: 'mb-16'
+    lg: 'mb-16',
   }
   return spacing[props.headerSpacing]
 })
@@ -230,7 +227,7 @@ const footerClass = computed(() => {
   const spacing = {
     sm: 'mt-8',
     md: 'mt-12',
-    lg: 'mt-16'
+    lg: 'mt-16',
   }
   return spacing[props.footerSpacing]
 })

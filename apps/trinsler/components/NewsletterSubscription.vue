@@ -33,10 +33,8 @@
 
     <!-- Subscribe Form -->
     <CyberCard class="max-w-md mx-auto mb-8">
-      <div class="code-font text-accent-cyan text-sm mb-4">
-        SUBSCRIBE_PROTOCOL.init()
-      </div>
-      <form @submit.prevent="subscribeIntel" class="space-y-4">
+      <div class="code-font text-accent-cyan text-sm mb-4">SUBSCRIBE_PROTOCOL.init()</div>
+      <form class="space-y-4" @submit.prevent="subscribeIntel">
         <div class="relative">
           <input
             v-model="emailIntel"
@@ -44,7 +42,7 @@
             required
             placeholder="founder@startup.com"
             class="w-full bg-surface-2 border border-accent-neon/30 rounded-xl px-4 py-3 text-white code-font focus:border-accent-neon focus:ring-2 focus:ring-accent-neon/20 transition-all"
-          >
+          />
         </div>
         <button
           type="submit"
@@ -79,7 +77,7 @@ import { CyberCard } from '@monorepo/ui'
 const emailIntel = ref('')
 
 const subscribeIntel = () => {
-  console.log('> INTEL_SUBSCRIPTION_ACTIVATED:', emailIntel.value)
+  console.warn('> INTEL_SUBSCRIPTION_ACTIVATED:', emailIntel.value)
   emailIntel.value = ''
   // Add subscription logic here
 }

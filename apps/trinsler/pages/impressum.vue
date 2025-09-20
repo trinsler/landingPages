@@ -1,16 +1,16 @@
 <template>
   <div class="min-h-screen matrix-bg relative overflow-hidden">
     <!-- Cyber Grid Background -->
-    <div class="absolute inset-0 cyber-grid opacity-30"></div>
+    <div class="absolute inset-0 cyber-grid opacity-30" />
 
     <div class="relative container-custom py-20">
       <!-- Terminal Header -->
       <div class="cyber-card rounded-3xl overflow-hidden max-w-4xl mx-auto mb-12">
         <div class="bg-surface-1 px-6 py-4 border-b border-accent-primary/30">
           <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-red-500"></div>
-            <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <div class="w-4 h-4 rounded-full bg-accent-primary"></div>
+            <div class="w-4 h-4 rounded-full bg-red-500" />
+            <div class="w-4 h-4 rounded-full bg-yellow-500" />
+            <div class="w-4 h-4 rounded-full bg-accent-primary" />
             <div class="ml-4 text-accent-cyan text-lg">Impressum</div>
           </div>
         </div>
@@ -54,11 +54,15 @@
 
             <!-- Editorial Responsibility -->
             <div class="neon-card rounded-xl p-6">
-              <h2 class="text-xl font-bold text-white mb-4">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+              <h2 class="text-xl font-bold text-white mb-4">
+                Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
+              </h2>
               <div class="space-y-3 text-white/90">
-                <p>Max Mustermann<br />
-                Musterstraße 123<br />
-                10115 Berlin</p>
+                <p>
+                  Max Mustermann<br />
+                  Musterstraße 123<br />
+                  10115 Berlin
+                </p>
               </div>
             </div>
 
@@ -67,14 +71,20 @@
               <h2 class="text-xl font-bold text-white mb-4">Streitschlichtung</h2>
               <div class="text-white/90">
                 <p>
-                  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
-                  <a href="https://ec.europa.eu/consumers/odr/" target="_blank" class="text-accent-primary underline">
+                  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS)
+                  bereit:
+                  <a
+                    href="https://ec.europa.eu/consumers/odr/"
+                    target="_blank"
+                    class="text-accent-primary underline"
+                  >
                     https://ec.europa.eu/consumers/odr/
                   </a>
                 </p>
                 <p class="mt-3">
-                  Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet, 
-                  an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+                  Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder
+                  verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
+                  teilzunehmen.
                 </p>
               </div>
             </div>
@@ -84,15 +94,17 @@
               <h2 class="text-xl font-bold text-white mb-4">Haftung für Inhalte</h2>
               <div class="text-white/90 space-y-3">
                 <p>
-                  Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den 
-                  allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht 
-                  unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach 
-                  Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+                  Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen
+                  Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir
+                  als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder
+                  gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen,
+                  die auf eine rechtswidrige Tätigkeit hinweisen.
                 </p>
                 <p>
-                  Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen 
-                  Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt 
-                  der Kenntnis einer konkreten Rechtsverletzung möglich.
+                  Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach
+                  den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung
+                  ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung
+                  möglich.
                 </p>
               </div>
             </div>
@@ -102,15 +114,15 @@
               <h2 class="text-xl font-bold text-white mb-4">Urheberrecht</h2>
               <div class="text-white/90 space-y-3">
                 <p>
-                  Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem 
-                  deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung 
-                  außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen 
-                  Autors bzw. Erstellers.
+                  Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten
+                  unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung,
+                  Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes
+                  bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
                 </p>
                 <p>
-                  Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. 
-                  Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte 
-                  Dritter beachtet.
+                  Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen
+                  Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber
+                  erstellt wurden, werden die Urheberrechte Dritter beachtet.
                 </p>
               </div>
             </div>
@@ -120,7 +132,12 @@
           <div class="text-center mt-12">
             <NuxtLink to="/" class="btn-secondary inline-flex items-center">
               <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               <span>Zurück zur Startseite</span>
             </NuxtLink>
@@ -132,11 +149,10 @@
 </template>
 
 <script setup>
-
 useHead({
   title: 'Impressum - Trinsler GmbH',
   meta: [
-    { name: 'description', content: 'Impressum und rechtliche Informationen der Trinsler GmbH' }
-  ]
+    { name: 'description', content: 'Impressum und rechtliche Informationen der Trinsler GmbH' },
+  ],
 })
 </script>

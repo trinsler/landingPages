@@ -1,6 +1,6 @@
 import { ref, computed, watch, type Ref } from 'vue'
 
-export interface ValidationRule<T = any> {
+export interface ValidationRule<T = string | number | boolean> {
   required?: boolean
   minLength?: number
   maxLength?: number
@@ -9,14 +9,14 @@ export interface ValidationRule<T = any> {
   message?: string
 }
 
-export interface FieldConfig<T = any> {
+export interface FieldConfig<T = string | number | boolean> {
   value: T
   rules?: ValidationRule<T>[]
   touched?: boolean
   dirty?: boolean
 }
 
-export interface FormField<T = any> {
+export interface FormField<T = string | number | boolean> {
   value: Ref<T>
   error: Ref<string | null>
   touched: Ref<boolean>
@@ -55,7 +55,10 @@ export function useField<T>(config: FieldConfig<T>): FormField<T> {
 
     for (const rule of config.rules) {
       // Required validation
-      if (rule.required && (!value.value || (typeof value.value === 'string' && value.value.trim() === ''))) {
+      if (
+        rule.required &&
+        (!value.value || (typeof value.value === 'string' && value.value.trim() === ''))
+      ) {
         error.value = rule.message || 'This field is required'
         return false
       }
@@ -123,7 +126,7 @@ export function useField<T>(config: FieldConfig<T>): FormField<T> {
     isValid,
     validate,
     touch,
-    reset
+    reset,
   }
 }
 
@@ -191,7 +194,7 @@ export function useForm(fields: Record<string, FormField>): FormState {
     errors,
     validate,
     reset,
-    submit
+    submit,
   }
 }
 
@@ -199,21 +202,22 @@ export function useForm(fields: Record<string, FormField>): FormState {
 export const validators = {
   email: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Please enter a valid email address'
+    message: 'Please enter a valid email address',
   },
 
   phone: {
-    pattern: /^[\+]?[\d\s\-\(\)]+$/,
-    message: 'Please enter a valid phone number'
+    pattern: /^[+]?[\d\s\-()]+$/,
+    message: 'Please enter a valid phone number',
   },
 
   url: {
     pattern: /^https?:\/\/.+/,
-    message: 'Please enter a valid URL'
+    message: 'Please enter a valid URL',
   },
 
   strongPassword: {
     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    message: 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character'
-  }
+    message:
+      'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character',
+  },
 }

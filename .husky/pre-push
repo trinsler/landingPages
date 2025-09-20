@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-push checks..."
+
+# Run TypeScript check
+echo "📋 TypeScript check..."
+npm run typecheck
+
+# Run build tests
+echo "🧪 Running build tests..."
+npm run test:build
+
+echo "✅ Pre-push checks passed!"

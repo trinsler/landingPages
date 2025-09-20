@@ -6,12 +6,12 @@
         <!-- Theme Switcher -->
         <div class="mb-8 flex flex-wrap gap-4 justify-center">
           <BaseButton
-            v-for="theme in availableThemes"
-            :key="theme.name"
-            :variant="currentTheme === theme.name ? 'primary' : 'outline'"
-            @click="setTheme(theme.name)"
+            v-for="themeOption in availableThemes"
+            :key="themeOption.name"
+            :variant="currentTheme === themeOption.name ? 'primary' : 'outline'"
+            @click="setTheme(themeOption.name)"
           >
-            {{ theme.displayName }}
+            {{ themeOption.displayName }}
           </BaseButton>
         </div>
 
@@ -73,18 +73,12 @@ import {
   BaseCard,
   BaseButton,
   TerminalWindow,
-  useTheme
+  useTheme,
 } from '@monorepo/ui'
 
 useHead({
-  title: 'Theme System Test - Trinsler'
+  title: 'Theme System Test - Trinsler',
 })
 
-const {
-  currentTheme,
-  theme,
-  isDark,
-  availableThemes,
-  setTheme
-} = useTheme()
+const { currentTheme, theme, isDark, availableThemes, setTheme } = useTheme()
 </script>

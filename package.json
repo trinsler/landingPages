@@ -2,6 +2,7 @@
   "name": "landing-pages-monorepo",
   "version": "1.0.0",
   "description": "Monorepo für verschiedene Landing Pages mit geteilten Dependencies",
+  "type": "module",
   "private": true,
   "scripts": {
     "build:packages": "pnpm -r --filter=./packages/* run build",
@@ -20,14 +21,40 @@
     "dev:betterclassroom": "npm run dev --workspace=@monorepo/betterclassroom",
     "build:betterclassroom": "npm run build --workspace=@monorepo/betterclassroom",
     "generate:betterclassroom": "npm run generate --workspace=@monorepo/betterclassroom",
-    "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom"
+    "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:build": "vitest run tests/build.test.ts",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
+    "@nuxt/eslint-config": "^1.9.0",
+    "@nuxt/test-utils": "^3.19.2",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.36.0",
+    "eslint-plugin-vue": "^10.4.0",
     "gh-pages": "^6.1.1",
+    "husky": "^9.1.7",
+    "jsdom": "^27.0.0",
+    "lint-staged": "^16.1.6",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^3.4.0",
     "tsup": "^8.0.0",
-    "vue-tsc": "^2.0.0",
-    "tailwindcss": "^3.4.0"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^2.0.0"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -37,6 +64,18 @@
     "@pinia/nuxt": "^0.11.2",
     "nuxt": "^4.1.1",
     "pinia": "^3.0.3"
+  },
+  "lint-staged": {
+    "*.{vue,ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,html,md,json}": [
+      "prettier --write"
+    ],
+    "packages/ui/src/**/*.vue": [
+      "vitest related --run"
+    ]
   },
   "repository": {
     "type": "git",

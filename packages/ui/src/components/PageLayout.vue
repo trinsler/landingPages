@@ -6,10 +6,7 @@
       :stream-count="streamCount"
       :grid-opacity="gridOpacity"
     />
-    <FloatingCodeElements
-      v-if="background?.theme"
-      :theme="background.theme"
-    />
+    <FloatingCodeElements v-if="background?.theme" :theme="background.theme" />
 
     <!-- Page Content -->
     <div class="relative container-custom py-20">
@@ -19,7 +16,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { BackgroundTheme, BackgroundThemeName } from '@monorepo/shared'
+
 import { DataStreamBackground, FloatingCodeElements } from './index'
 
 interface Props {
@@ -28,7 +27,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  container: 'normal'
+  container: 'normal',
 })
 
 const backgroundClass = computed(() => {
@@ -36,7 +35,7 @@ const backgroundClass = computed(() => {
     tech: 'tech-bg',
     growth: 'growth-bg',
     matrix: 'matrix-bg',
-    cyber: 'cyber-bg'
+    cyber: 'cyber-bg',
   }
 
   return props.background?.theme ? themes[props.background.theme] : 'matrix-bg'
@@ -47,7 +46,7 @@ const streamCount = computed(() => {
   const counts: Record<string, number> = {
     low: 4,
     medium: 6,
-    high: 8
+    high: 8,
   }
   return counts[intensity]
 })
@@ -57,7 +56,7 @@ const gridOpacity = computed(() => {
   const opacities: Record<string, string> = {
     low: 'opacity-20',
     medium: 'opacity-40',
-    high: 'opacity-60'
+    high: 'opacity-60',
   }
   return opacities[intensity]
 })

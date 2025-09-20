@@ -3,22 +3,34 @@
     <div class="max-w-md w-full space-y-8">
       <div class="text-center">
         <div v-if="loading" class="space-y-4">
-          <div class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent"></div>
+          <div
+            class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent"
+          />
           <h2 class="text-xl font-semibold text-gray-900">Completing sign in...</h2>
           <p class="text-gray-600">Please wait while we set up your account.</p>
         </div>
 
         <div v-else-if="error" class="space-y-4">
           <div class="mx-auto h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
-            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            <svg
+              class="h-6 w-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+              />
             </svg>
           </div>
           <h2 class="text-xl font-semibold text-gray-900">Authentication failed</h2>
           <p class="text-gray-600">{{ error }}</p>
           <button
-            @click="handleRetry"
             class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            @click="handleRetry"
           >
             Try again
           </button>
@@ -26,7 +38,13 @@
 
         <div v-else class="space-y-4">
           <div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
-            <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg
+              class="h-6 w-6 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
@@ -40,7 +58,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default'
+  layout: 'default',
 })
 
 const authStore = useAuthStore()
@@ -53,11 +71,11 @@ const handleAuthCallback = async () => {
   try {
     // Wait for auth state to be determined
     await nextTick()
-    
+
     if (user.value) {
       // Fetch user profile to update store
       await authStore.fetchUserProfile(user.value.id)
-      
+
       // Redirect to dashboard or intended page
       await navigateTo('/dashboard')
     } else {
@@ -83,9 +101,13 @@ onMounted(async () => {
 })
 
 // Watch for user changes
-watch(user, (newUser) => {
-  if (newUser && !loading.value) {
-    navigateTo('/dashboard')
-  }
-}, { immediate: true })
+watch(
+  user,
+  newUser => {
+    if (newUser && !loading.value) {
+      navigateTo('/dashboard')
+    }
+  },
+  { immediate: true }
+)
 </script>

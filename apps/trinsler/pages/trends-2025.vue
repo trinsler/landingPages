@@ -6,9 +6,14 @@
       :elements="[
         { text: 'trends.analyze(2025)', class: 'top-24 left-24', color: 'accent-neon', delay: 0 },
         { text: 'ai.marketing.future()', class: 'top-40 right-28', color: 'accent-cyan', delay: 1 },
-        { text: 'privacy.first.strategy', class: 'bottom-48 left-1/4', color: 'accent-purple', delay: 2 },
+        {
+          text: 'privacy.first.strategy',
+          class: 'bottom-48 left-1/4',
+          color: 'accent-purple',
+          delay: 2,
+        },
         { text: 'personalization++', class: 'top-3/4 right-1/3', color: 'accent-orange', delay: 3 },
-        { text: '[FUTURE_READY]', class: 'top-1/3 left-3/4', color: 'accent-pink', delay: 4 }
+        { text: '[FUTURE_READY]', class: 'top-1/3 left-3/4', color: 'accent-pink', delay: 4 },
       ]"
     />
 
@@ -18,7 +23,8 @@
         <!-- System Boot -->
         <div class="mb-8">
           <div class="code-font text-accent-neon text-sm mb-4">
-            <span class="text-accent-cyan">trends@trinsler:~$</span> scan --digital-marketing --year=2025 --active
+            <span class="text-accent-cyan">trends@trinsler:~$</span> scan --digital-marketing
+            --year=2025 --active
           </div>
           <div class="neon-card rounded-xl px-6 py-3 inline-block">
             <span class="code-font text-accent-neon">[TREND_ANALYSIS_ACTIVE]</span>
@@ -43,7 +49,8 @@
           <p class="text-xl text-white/90 leading-relaxed">
             <span class="text-accent-cyan">Revolutionäre Trends:</span> Die wichtigsten
             <span class="font-bold text-glow-green">Digital Marketing Entwicklungen für 2025</span>.
-            Bleiben Sie der Konkurrenz voraus mit <span class="text-accent-neon">zukunftsweisenden Strategien</span>.
+            Bleiben Sie der Konkurrenz voraus mit
+            <span class="text-accent-neon">zukunftsweisenden Strategien</span>.
           </p>
           <div class="text-accent-orange text-sm mt-4">
             Alle Trends basieren auf aktueller Marktanalyse und Expertenbewertungen
@@ -59,7 +66,8 @@
         <div class="text-center">
           <!-- Action Prompt -->
           <div class="code-font text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">future@trinsler:~$</span> implement --marketing-trends --startup-ready
+            <span class="text-accent-cyan">future@trinsler:~$</span> implement --marketing-trends
+            --startup-ready
           </div>
 
           <!-- Action Message -->
@@ -70,7 +78,9 @@
             </h3>
 
             <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
-              <div class="code-font text-accent-purple text-sm mb-3">/* FUTURE_IMPLEMENTATION */</div>
+              <div class="code-font text-accent-purple text-sm mb-3">
+                /* FUTURE_IMPLEMENTATION */
+              </div>
               <p class="text-lg text-white/90 leading-relaxed">
                 <span class="text-accent-cyan">MISSION:</span> Implementieren Sie diese
                 <span class="font-bold text-glow-green">zukunftsweisenden Marketing-Trends</span>
@@ -89,7 +99,12 @@
           >
             <span class="flex items-center">
               <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
               </svg>
               Zukunfts-Marketing umsetzen
               <ArrowRightIcon size="md" :animated="true" class="ml-3" />
@@ -120,20 +135,27 @@
 </template>
 
 <script setup>
-import { TerminalWindow, DataStreamBackground, FloatingCodeElements, TrendGrid, ArrowRightIcon } from '@monorepo/ui'
+import {
+  TerminalWindow,
+  DataStreamBackground,
+  FloatingCodeElements,
+  TrendGrid,
+  ArrowRightIcon,
+} from '@monorepo/ui'
 
 useHead({
-  title: 'DIGITAL MARKETING TRENDS 2025 - Trinsler Future Matrix'
+  title: 'DIGITAL MARKETING TRENDS 2025 - Trinsler Future Matrix',
 })
 
 const trends = [
   {
     title: 'KI-gesteuerte Personalisierung',
-    description: 'Künstliche Intelligenz revolutioniert die Personalisierung von Marketing-Inhalten. Hyper-personalisierte Erlebnisse für jeden einzelnen Kunden in Echtzeit.',
+    description:
+      'Künstliche Intelligenz revolutioniert die Personalisierung von Marketing-Inhalten. Hyper-personalisierte Erlebnisse für jeden einzelnen Kunden in Echtzeit.',
     keyPoints: [
       'Echtzeit-Personalisierung durch Machine Learning',
       'Dynamische Content-Anpassung',
-      'Predictive Customer Journey Mapping'
+      'Predictive Customer Journey Mapping',
     ],
     filename: 'ai_personalization.py',
     category: 'AI_MARKETING',
@@ -145,15 +167,16 @@ const trends = [
     icon: CpuChipIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     timeframe: 'Q1-Q2 2025',
-    urgency: 'SOFORT'
+    urgency: 'SOFORT',
   },
   {
     title: 'Privacy-First Marketing',
-    description: 'Mit dem Ende der Third-Party Cookies steht datenschutzfreundliches Marketing im Vordergrund. Zero-Party Data und Consent-Management werden entscheidend.',
+    description:
+      'Mit dem Ende der Third-Party Cookies steht datenschutzfreundliches Marketing im Vordergrund. Zero-Party Data und Consent-Management werden entscheidend.',
     keyPoints: [
       'Zero-Party Data Strategien',
       'Cookieless Tracking Solutions',
-      'Transparente Datennutzung'
+      'Transparente Datennutzung',
     ],
     filename: 'privacy_first.js',
     category: 'DATA_PRIVACY',
@@ -165,15 +188,16 @@ const trends = [
     icon: ShieldCheckIcon,
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
     timeframe: 'Q1 2025',
-    urgency: 'KRITISCH'
+    urgency: 'KRITISCH',
   },
   {
     title: 'Short-Form Video Dominanz',
-    description: 'Kurze, fesselnde Videos dominieren alle Plattformen. TikTok, Instagram Reels und YouTube Shorts werden zum Hauptkanal für Markeninteraktion.',
+    description:
+      'Kurze, fesselnde Videos dominieren alle Plattformen. TikTok, Instagram Reels und YouTube Shorts werden zum Hauptkanal für Markeninteraktion.',
     keyPoints: [
       'Vertikal-optimierte Inhalte',
       'Interactive Video Features',
-      'Creator Economy Integration'
+      'Creator Economy Integration',
     ],
     filename: 'video_marketing.mp4',
     category: 'VIDEO_CONTENT',
@@ -185,15 +209,16 @@ const trends = [
     icon: VideoCameraIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     timeframe: 'Q2 2025',
-    urgency: 'MITTEL'
+    urgency: 'MITTEL',
   },
   {
     title: 'Conversational AI Marketing',
-    description: 'Chatbots und Sprachassistenten werden zu intelligenten Marketing-Partnern. Natürliche Gespräche ersetzen traditionelle Werbeformen.',
+    description:
+      'Chatbots und Sprachassistenten werden zu intelligenten Marketing-Partnern. Natürliche Gespräche ersetzen traditionelle Werbeformen.',
     keyPoints: [
       'Advanced Chatbot Integration',
       'Voice Search Optimization',
-      'Conversational Commerce'
+      'Conversational Commerce',
     ],
     filename: 'conversational_ai.bot',
     category: 'AI_CONVERSATION',
@@ -205,15 +230,16 @@ const trends = [
     icon: ChatBubbleBottomCenterTextIcon,
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
     timeframe: 'Q2-Q3 2025',
-    urgency: 'HOCH'
+    urgency: 'HOCH',
   },
   {
     title: 'Mobile-First Commerce',
-    description: 'Smartphones werden zur primären Einkaufsplattform. Social Commerce und In-App Purchases revolutionieren den Verkaufsprozess.',
+    description:
+      'Smartphones werden zur primären Einkaufsplattform. Social Commerce und In-App Purchases revolutionieren den Verkaufsprozess.',
     keyPoints: [
       'Progressive Web Apps (PWA)',
       'Social Commerce Integration',
-      'One-Click Mobile Checkout'
+      'One-Click Mobile Checkout',
     ],
     filename: 'mobile_commerce.app',
     category: 'MOBILE_STRATEGY',
@@ -225,15 +251,16 @@ const trends = [
     icon: DevicePhoneMobileIcon,
     iconBg: 'bg-gradient-to-r from-accent-pink to-accent-cyan',
     timeframe: 'Q1-Q4 2025',
-    urgency: 'MITTEL'
+    urgency: 'MITTEL',
   },
   {
     title: 'Community-Driven Marketing',
-    description: 'Starke Online-Communities werden zur wertvollsten Marketing-Ressource. Authentische Beziehungen ersetzen traditionelle Werbung.',
+    description:
+      'Starke Online-Communities werden zur wertvollsten Marketing-Ressource. Authentische Beziehungen ersetzen traditionelle Werbung.',
     keyPoints: [
       'Community Building Strategies',
       'User-Generated Content Campaigns',
-      'Brand Ambassador Programs'
+      'Brand Ambassador Programs',
     ],
     filename: 'community_marketing.social',
     category: 'COMMUNITY_BUILD',
@@ -245,15 +272,16 @@ const trends = [
     icon: UserGroupIcon,
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
     timeframe: 'Q2-Q4 2025',
-    urgency: 'NIEDRIG'
+    urgency: 'NIEDRIG',
   },
   {
     title: 'Omnichannel Erlebnisse',
-    description: 'Nahtlose Kundenreisen über alle Kanäle hinweg. Online und Offline verschmelzen zu einer einheitlichen Markenerfahrung.',
+    description:
+      'Nahtlose Kundenreisen über alle Kanäle hinweg. Online und Offline verschmelzen zu einer einheitlichen Markenerfahrung.',
     keyPoints: [
       'Unified Customer Profiles',
       'Cross-Channel Attribution',
-      'Seamless Experience Design'
+      'Seamless Experience Design',
     ],
     filename: 'omnichannel.exp',
     category: 'EXPERIENCE_DESIGN',
@@ -265,15 +293,16 @@ const trends = [
     icon: MegaphoneIcon,
     iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
     timeframe: 'Q1-Q3 2025',
-    urgency: 'HOCH'
+    urgency: 'HOCH',
   },
   {
     title: 'Datengesteuerte Kreativität',
-    description: 'Analytics und Kreativität verschmelzen. Datenbasierte Insights steuern kreative Entscheidungen für maximale Wirkung.',
+    description:
+      'Analytics und Kreativität verschmelzen. Datenbasierte Insights steuern kreative Entscheidungen für maximale Wirkung.',
     keyPoints: [
       'Creative Performance Analytics',
       'Dynamic Creative Optimization',
-      'Real-time A/B Testing'
+      'Real-time A/B Testing',
     ],
     filename: 'data_creativity.algo',
     category: 'CREATIVE_ANALYTICS',
@@ -285,7 +314,7 @@ const trends = [
     icon: 'chart',
     iconBg: 'bg-gradient-to-r from-purple-500 to-pink-500',
     timeframe: 'Q3-Q4 2025',
-    urgency: 'MITTEL'
-  }
+    urgency: 'MITTEL',
+  },
 ]
 </script>

@@ -1,12 +1,18 @@
 <template>
   <footer class="relative matrix-bg overflow-hidden">
     <!-- Cyber Grid Background -->
-    <div class="absolute inset-0 cyber-grid opacity-20"></div>
-    
+    <div class="absolute inset-0 cyber-grid opacity-20" />
+
     <!-- Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 2s;"></div>
+      <div
+        class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-neon to-transparent"
+        style="animation-delay: 0s"
+      />
+      <div
+        class="animate-data-stream absolute right-1/3 w-1 h-28 bg-gradient-to-b from-transparent via-accent-cyan to-transparent"
+        style="animation-delay: 2s"
+      />
     </div>
 
     <div class="relative container-custom py-16">
@@ -15,17 +21,18 @@
           <!-- Cyber Logo -->
           <div class="flex items-center space-x-3">
             <div class="relative">
-              <div class="w-12 h-12 rounded-xl neon-card flex items-center justify-center animate-neon-flicker">
-                <img 
-                  src="/logo.png" 
-                  alt="Trinsler Logo" 
-                  class="w-8 h-8 object-contain"
-                />
+              <div
+                class="w-12 h-12 rounded-xl neon-card flex items-center justify-center animate-neon-flicker"
+              >
+                <img src="/logo.png" alt="Trinsler Logo" class="w-8 h-8 object-contain" />
               </div>
-              <div class="absolute inset-0 rounded-xl bg-accent-neon  opacity-20"></div>
+              <div class="absolute inset-0 rounded-xl bg-accent-neon opacity-20" />
             </div>
             <div>
-              <span class="text-2xl font-black text-white" style="font-family: 'Space Grotesk', sans-serif;">
+              <span
+                class="text-2xl font-black text-white"
+                style="font-family: 'Space Grotesk', sans-serif"
+              >
                 <span class="text-accent-neon">TRINS</span><span class="text-accent-cyan">LER</span>
               </span>
               <div class="text-xs font-medium code-font text-accent-cyan">
@@ -33,12 +40,12 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Mission Statement -->
           <div class="cyber-card rounded-xl p-4 max-w-md">
             <div class="code-font text-accent-purple text-xs mb-2">/* FOOTER_MISSION.md */</div>
             <p class="text-white/80 text-sm leading-6">
-              Wir revolutionieren Startup-Wachstum durch 
+              Wir revolutionieren Startup-Wachstum durch
               <span class="text-accent-neon">Equity-for-Growth</span> statt teurer Agentur-Honorare.
             </p>
           </div>
@@ -51,7 +58,7 @@
             >
               <span class="sr-only">{{ item.name }}</span>
               <div class="h-6 w-6">
-                <div class="h-6 w-6 bg-gray-400 rounded"></div>
+                <div class="h-6 w-6 bg-gray-400 rounded" />
               </div>
             </NuxtLink>
           </div>
@@ -60,7 +67,9 @@
         <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-white code-font"><span class="text-accent-cyan">></span> NAVIGATION</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white code-font">
+                <span class="text-accent-cyan">></span> NAVIGATION
+              </h3>
               <ul class="mt-6 space-y-4">
                 <li v-for="item in navigation.main" :key="item.name">
                   <NuxtLink
@@ -74,7 +83,9 @@
             </div>
 
             <div class="mt-10 md:mt-0">
-              <h3 class="text-sm font-semibold leading-6 text-white code-font"><span class="text-accent-cyan">></span> SERVICES</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white code-font">
+                <span class="text-accent-cyan">></span> SERVICES
+              </h3>
               <ul class="mt-6 space-y-4">
                 <li v-for="item in navigation.services" :key="item.name">
                   <NuxtLink
@@ -90,7 +101,9 @@
 
           <div class="md:grid md:grid-cols-1">
             <div>
-              <h3 class="text-sm font-semibold leading-6 text-white code-font"><span class="text-accent-cyan">></span> SYSTEM</h3>
+              <h3 class="text-sm font-semibold leading-6 text-white code-font">
+                <span class="text-accent-cyan">></span> SYSTEM
+              </h3>
               <ul class="mt-6 space-y-4">
                 <li v-for="item in navigation.legal" :key="item.name">
                   <NuxtLink
@@ -118,12 +131,10 @@
             </p>
             <div class="mt-4 md:mt-0 flex items-center gap-4">
               <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-accent-neon rounded-full "></div>
+                <div class="w-2 h-2 bg-accent-neon rounded-full" />
                 <span class="text-xs text-white/60 code-font">SYSTEM_ONLINE</span>
               </div>
-              <p class="text-xs leading-5 text-accent-cyan code-font">
-                Ihr Erfolg = unser Erfolg
-              </p>
+              <p class="text-xs leading-5 text-accent-cyan code-font">Ihr Erfolg = unser Erfolg</p>
             </div>
           </div>
         </div>

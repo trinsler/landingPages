@@ -1,4 +1,4 @@
-import { ref, computed, watch, onMounted, type Ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 export type ThemeName = 'cyber' | 'glass' | 'minimal' | 'dark'
 
@@ -16,29 +16,29 @@ const themes: Record<ThemeName, ThemeConfig> = {
     displayName: 'Cyber',
     description: 'Futuristic neon-themed design (Trinsler)',
     primaryColor: '#3b82f6',
-    isDark: true
+    isDark: true,
   },
   glass: {
     name: 'glass',
     displayName: 'Glass',
     description: 'Clean glassmorphism design (BetterClassroom)',
     primaryColor: '#6366f1',
-    isDark: false
+    isDark: false,
   },
   minimal: {
     name: 'minimal',
     displayName: 'Minimal',
     description: 'Clean and simple design system',
     primaryColor: '#111827',
-    isDark: false
+    isDark: false,
   },
   dark: {
     name: 'dark',
     displayName: 'Dark',
     description: 'Professional dark theme',
     primaryColor: '#fbbf24',
-    isDark: true
-  }
+    isDark: true,
+  },
 }
 
 // Global theme state
@@ -93,7 +93,7 @@ export function useTheme() {
   const updateDOMTheme = (themeName: ThemeName) => {
     if (typeof document !== 'undefined') {
       // Remove all theme classes
-      Object.keys(themes).forEach(theme => {
+      Object.keys(themes).forEach(_theme => {
         document.documentElement.removeAttribute(`data-theme`)
       })
 
@@ -132,7 +132,7 @@ export function useTheme() {
   // Watch for system theme changes
   if (typeof window !== 'undefined') {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', (e) => {
+    mediaQuery.addEventListener('change', e => {
       // Only auto-switch if no theme is stored in localStorage
       if (!localStorage.getItem('ui-theme')) {
         setTheme(e.matches ? 'dark' : 'glass')
@@ -155,7 +155,7 @@ export function useTheme() {
 
     // Utils
     isTheme: (themeName: ThemeName) => currentTheme.value === themeName,
-    getThemeConfig: (themeName: ThemeName) => themes[themeName]
+    getThemeConfig: (themeName: ThemeName) => themes[themeName],
   }
 }
 
@@ -163,9 +163,7 @@ export function useTheme() {
 export function getThemeValue(property: string): string {
   if (typeof window === 'undefined') return ''
 
-  return getComputedStyle(document.documentElement)
-    .getPropertyValue(property)
-    .trim()
+  return getComputedStyle(document.documentElement).getPropertyValue(property).trim()
 }
 
 export function setThemeValue(property: string, value: string): void {

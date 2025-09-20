@@ -1,11 +1,6 @@
 <template>
-  <div
-    :class="[
-      'neon-card px-2 py-1 text-xs code-font flex items-center gap-1',
-      difficultyClass
-    ]"
-  >
-    <div :class="['w-2 h-2 rounded-full', dotClass]"></div>
+  <div :class="['neon-card px-2 py-1 text-xs code-font flex items-center gap-1', difficultyClass]">
+    <div :class="['w-2 h-2 rounded-full', dotClass]" />
     {{ label }}
   </div>
 </template>
@@ -23,7 +18,7 @@ const difficultyClass = computed(() => {
   const styles = {
     beginner: 'text-accent-neon',
     intermediate: 'text-accent-orange',
-    advanced: 'text-accent-pink'
+    advanced: 'text-accent-pink',
   }
   return styles[props.level]
 })
@@ -32,7 +27,7 @@ const dotClass = computed(() => {
   const styles = {
     beginner: 'bg-accent-neon',
     intermediate: 'bg-accent-orange',
-    advanced: 'bg-accent-pink'
+    advanced: 'bg-accent-pink',
   }
   return styles[props.level]
 })
@@ -41,7 +36,7 @@ const label = computed(() => {
   const labels = {
     beginner: 'BASIC',
     intermediate: 'PRO',
-    advanced: 'EXPERT'
+    advanced: 'EXPERT',
   }
   return labels[props.level]
 })

@@ -5,12 +5,16 @@
       <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-3 h-3 rounded-full bg-accent-neon"></div>
+            <div class="w-3 h-3 rounded-full bg-accent-neon" />
             <div :class="caseStudy.titleColor">{{ caseStudy.caseId }}</div>
           </div>
           <div class="flex items-center gap-2">
-            <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">{{ caseStudy.status }}</div>
-            <div class="px-3 py-1 rounded-full bg-accent-neon/20 text-accent-neon text-xs">{{ caseStudy.duration }}</div>
+            <div class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">
+              {{ caseStudy.status }}
+            </div>
+            <div class="px-3 py-1 rounded-full bg-accent-neon/20 text-accent-neon text-xs">
+              {{ caseStudy.duration }}
+            </div>
           </div>
         </div>
       </div>
@@ -55,7 +59,9 @@
                   :key="metric.label"
                   class="text-center"
                 >
-                  <div :class="['text-3xl font-bold mb-1', metric.valueClass]">{{ metric.value }}</div>
+                  <div :class="['text-3xl font-bold mb-1', metric.valueClass]">
+                    {{ metric.value }}
+                  </div>
                   <div class="text-sm text-accent-cyan">{{ metric.label }}</div>
                   <div class="text-xs text-accent-neon">{{ metric.change }}</div>
                 </div>
