@@ -34,9 +34,17 @@ jobs:
       - name: Build packages
         run: pnpm run build:packages || echo "No build:packages script found"
 
-      # Production Build (tags) - Coin App
-      - name: Build Coin app for production
+      # Production Build (tags) - Trinsler App
+      - name: Build Trinsler app for production
         if: github.ref_type == 'tag'
+        run: pnpm --filter=@monorepo/trinsler run generate
+        env:
+          NODE_ENV: production
+          NUXT_APP_ENV: production
+
+      # Production Build (main branch) - Coin App
+      - name: Build Coin app for production/development
+        if: github.ref == 'refs/heads/main'
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -46,26 +54,6 @@ jobs:
           NODE_ENV: production
           NUXT_APP_ENV: production
 
-      # Production Build (tags) - Trinsler App
-      - name: Build Trinsler app for production
-        if: github.ref_type == 'tag'
-        run: pnpm --filter=@monorepo/trinsler run generate
-        env:
-          NODE_ENV: production
-          NUXT_APP_ENV: production
-
-      # Development Build (main branch) - Coin App
-      - name: Build Coin app for development
-        if: github.ref == 'refs/heads/main'
-        run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL_DEV }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_DEV }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID_DEV }}
-          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY_DEV }}
-          NODE_ENV: development
-          NUXT_APP_ENV: develop
-
       # Development Build (main branch) - Trinsler App
       - name: Build Trinsler app for development
         if: github.ref == 'refs/heads/main'
@@ -73,16 +61,6 @@ jobs:
         env:
           NODE_ENV: development
           NUXT_APP_ENV: develop
-
-      # Deploy to Production (tags) - Coin App
-      - name: Deploy Coin app to Production
-        if: github.ref_type == 'tag'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          external_repository: trinsler/coin
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          publish_dir: ./apps/coin-boilerplate-app/.output/public
-          cname: coin.trinsler.com
 
       # Deploy to Production (tags) - Trinsler App
       - name: Deploy Trinsler app to Production
@@ -94,15 +72,15 @@ jobs:
           publish_dir: ./apps/trinsler/.output/public
           cname: trinsler.com
 
-      # Deploy to Development (main branch) - Coin App
+      # Deploy to Production (main branch) - Coin App
       - name: Deploy Coin app to Development
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: trinsler/coin-develop
+          external_repository: trinsler/coin
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./apps/coin-boilerplate-app/.output/public
-          cname: coin-develop.trinsler.com
+          cname: coin.trinsler.com
 
       # Deploy to Development (main branch) - Trinsler App
       - name: Deploy Trinsler app to Development
