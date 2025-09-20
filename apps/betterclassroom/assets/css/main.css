@@ -1,3 +1,6 @@
+/* Import universal theme system */
+@import '@monorepo/ui/src/styles/themes.css';
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';

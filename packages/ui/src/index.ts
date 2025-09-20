@@ -1,9 +1,8 @@
-// Export all UI components
-import BaseButton from './components/BaseButton.vue'
-import ToastContainer from './components/ToastContainer.vue'
-import LoadingSpinner from './components/LoadingSpinner.vue'
+// Export all components and composables
+export * from './components'
 
-export { BaseButton, ToastContainer, LoadingSpinner }
+// Export types
+export type { ThemeName, ThemeConfig } from './composables/useTheme'
 
-// Export composables
-export { useToast } from './composables/useToast'
+// Export theme styles for apps that need to include them
+export const themeStylesPath = './styles/themes.css'

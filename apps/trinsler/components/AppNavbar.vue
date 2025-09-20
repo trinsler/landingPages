@@ -48,6 +48,17 @@
         <div class="flex items-center space-x-4">
           <!-- Cyber CTA -->
           <div class="hidden lg:flex items-center space-x-4">
+            <!-- Theme Tester Button -->
+            <NuxtLink
+              to="/theme-test"
+              class="group relative px-4 py-2 rounded-xl border border-accent-cyan/30 text-accent-cyan hover:bg-accent-cyan/10 transition-all duration-300 hover:scale-105"
+            >
+              <span class="relative z-10 text-sm font-medium code-font">
+                🎨 Theme Test
+              </span>
+              <div class="absolute inset-0 rounded-xl bg-accent-cyan/5 group-hover:bg-accent-cyan/10 transition-colors duration-300"></div>
+            </NuxtLink>
+            
             <NuxtLink
               to="/contact"
               class="btn-primary group relative overflow-hidden"
@@ -116,6 +127,13 @@
             </div>
             
             <div class="space-y-3">
+              <NuxtLink 
+                to="/theme-test" 
+                @click="mobileMenuOpen = false"
+                class="w-full text-center px-4 py-3 rounded-xl border border-accent-cyan/30 text-accent-cyan hover:bg-accent-cyan/10 transition-all duration-300 code-font"
+              >
+                🎨 Theme Test
+              </NuxtLink>
               <NuxtLink 
                 to="/contact" 
                 @click="mobileMenuOpen = false"

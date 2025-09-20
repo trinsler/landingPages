@@ -10,7 +10,8 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts"
     },
-    "./style.css": "./src/style.css"
+    "./style.css": "./src/style.css",
+    "./src/styles/themes.css": "./src/styles/themes.css"
   },
   "scripts": {
     "typecheck": "vue-tsc --noEmit"
@@ -26,8 +27,6 @@
     "@monorepo/shared": "workspace:*"
   },
   "peerDependencies": {
-    "vue": "^3.4.0",
-    "@headlessui/vue": "^1.7.0",
-    "@heroicons/vue": "^2.0.0"
+    "vue": "^3.4.0"
   }
 }
