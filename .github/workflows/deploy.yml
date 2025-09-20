@@ -1,10 +1,12 @@
-name: Deploy Monorepo
+name: 🚀 Deploy Monorepo
 
 on:
+  workflow_run:
+    workflows: ["🧪 Tests & Quality Checks"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 
@@ -13,29 +15,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    # Only deploy if tests passed (for workflow_run) or manual/tag trigger
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
 
-      - name: Install pnpm
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          # For workflow_run, we need to checkout the SHA that triggered the original workflow
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+      - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - uses: actions/setup-node@v4
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: 📥 Install dependencies
         run: pnpm install
 
-      - name: Build packages
-        run: pnpm run build:packages || echo "No build:packages script found"
+      - name: 🏗️ Build packages
+        run: pnpm run build:packages
 
       # Production Build (tags) - Trinsler App
-      - name: Build Trinsler app for production
+      - name: 🏗️ Build Trinsler app for production
         if: github.ref_type == 'tag'
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
@@ -43,8 +56,8 @@ jobs:
           NUXT_APP_ENV: production
 
       # Production Build (main branch) - Coin App
-      - name: Build Coin app for production/development
-        if: github.ref == 'refs/heads/main'
+      - name: 🏗️ Build Coin app for production/development
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_run'
         run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -55,15 +68,15 @@ jobs:
           NUXT_APP_ENV: production
 
       # Development Build (main branch) - Trinsler App
-      - name: Build Trinsler app for development
-        if: github.ref == 'refs/heads/main'
+      - name: 🏗️ Build Trinsler app for development
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_run'
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
           NODE_ENV: development
           NUXT_APP_ENV: develop
 
       # Deploy to Production (tags) - Trinsler App
-      - name: Deploy Trinsler app to Production
+      - name: 🚀 Deploy Trinsler app to Production
         if: github.ref_type == 'tag'
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -73,8 +86,8 @@ jobs:
           cname: trinsler.com
 
       # Deploy to Production (main branch) - Coin App
-      - name: Deploy Coin app to Development
-        if: github.ref == 'refs/heads/main'
+      - name: 🚀 Deploy Coin app to Development
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_run'
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: trinsler/coin
@@ -83,11 +96,27 @@ jobs:
           cname: coin.trinsler.com
 
       # Deploy to Development (main branch) - Trinsler App
-      - name: Deploy Trinsler app to Development
-        if: github.ref == 'refs/heads/main'
+      - name: 🚀 Deploy Trinsler app to Development
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_run'
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: trinsler/trinsler-develop
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./apps/trinsler/.output/public
           cname: trinsler-develop.trinsler.com
+
+      - name: 📊 Deployment Summary
+        if: always()
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch/Tag**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ **Deployment successful!**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Deployment failed!**" >> $GITHUB_STEP_SUMMARY
+          fi
