@@ -5,8 +5,8 @@
     
     <!-- Data Stream Effects -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
+      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
     </div>
 
     <div class="relative container-custom">
@@ -271,7 +271,7 @@ const mainServices = [
   {
     title: 'Web-Applikationen',
     description: 'Professionelle Web-Apps für Unternehmen und Startups. Von einfachen Dashboards bis hin zu komplexen SaaS-Plattformen.',
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     filename: 'web_app_dev.sh',
     command: 'create_web_app',
     status: 'ONLINE',
@@ -288,7 +288,7 @@ const mainServices = [
   {
     title: 'Landing Pages & Websites',
     description: 'Hochkonvertierende Landing Pages und professionelle Unternehmenswebsites. Optimiert für SEO und Conversions.',
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     filename: 'landing_pages.py',
     command: 'build_landing_page',
     status: 'RUNNING',
@@ -308,17 +308,17 @@ const benefits = [
   {
     title: 'Einfach & Praktisch',
     description: 'Wir entwickeln Web-Lösungen, die funktionieren. Keine überkomplizierten Features, sondern solide Ergebnisse.',
-    iconBg: 'bg-gradient-to-r from-red-500 to-pink-500'
+    iconBg: 'bg-linear-to-r from-red-500 to-pink-500'
   },
   {
     title: 'Schnelle Lieferung',
     description: '2-12 Wochen je nach Projekt. Effiziente Entwicklungsprozesse für zügige Umsetzung.',
-    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500'
+    iconBg: 'bg-linear-to-r from-green-500 to-emerald-500'
   },
   {
     title: 'Premium Quality',
     description: 'Hochwertige Web-Lösungen mit custom pricing basierend auf Ihren spezifischen Anforderungen.',
-    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500'
+    iconBg: 'bg-linear-to-r from-blue-500 to-indigo-500'
   }
 ]
 </script>

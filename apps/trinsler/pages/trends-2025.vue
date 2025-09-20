@@ -143,7 +143,7 @@ const trends = [
     impactColor: 'text-accent-neon',
     codeSnippet: 'ai.personalize(user)',
     icon: CpuChipIcon,
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     timeframe: 'Q1-Q2 2025',
     urgency: 'SOFORT'
   },
@@ -163,7 +163,7 @@ const trends = [
     impactColor: 'text-red-400',
     codeSnippet: 'privacy.comply(gdpr)',
     icon: ShieldCheckIcon,
-    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
+    iconBg: 'bg-linear-to-r from-accent-cyan to-accent-purple',
     timeframe: 'Q1 2025',
     urgency: 'KRITISCH'
   },
@@ -183,7 +183,7 @@ const trends = [
     impactColor: 'text-accent-neon',
     codeSnippet: 'video.create(short)',
     icon: VideoCameraIcon,
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     timeframe: 'Q2 2025',
     urgency: 'MITTEL'
   },
@@ -203,7 +203,7 @@ const trends = [
     impactColor: 'text-accent-orange',
     codeSnippet: 'chatbot.engage(user)',
     icon: ChatBubbleBottomCenterTextIcon,
-    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
     timeframe: 'Q2-Q3 2025',
     urgency: 'HOCH'
   },
@@ -223,7 +223,7 @@ const trends = [
     impactColor: 'text-accent-cyan',
     codeSnippet: 'mobile.optimize(ux)',
     icon: DevicePhoneMobileIcon,
-    iconBg: 'bg-gradient-to-r from-accent-pink to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-pink to-accent-cyan',
     timeframe: 'Q1-Q4 2025',
     urgency: 'MITTEL'
   },
@@ -243,7 +243,7 @@ const trends = [
     impactColor: 'text-accent-purple',
     codeSnippet: 'community.engage()',
     icon: UserGroupIcon,
-    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    iconBg: 'bg-linear-to-r from-green-500 to-emerald-500',
     timeframe: 'Q2-Q4 2025',
     urgency: 'NIEDRIG'
   },
@@ -263,7 +263,7 @@ const trends = [
     impactColor: 'text-red-400',
     codeSnippet: 'channels.unify()',
     icon: MegaphoneIcon,
-    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
+    iconBg: 'bg-linear-to-r from-blue-500 to-indigo-500',
     timeframe: 'Q1-Q3 2025',
     urgency: 'HOCH'
   },
@@ -283,7 +283,7 @@ const trends = [
     impactColor: 'text-accent-orange',
     codeSnippet: 'creativity.optimize()',
     icon: 'chart',
-    iconBg: 'bg-gradient-to-r from-purple-500 to-pink-500',
+    iconBg: 'bg-linear-to-r from-purple-500 to-pink-500',
     timeframe: 'Q3-Q4 2025',
     urgency: 'MITTEL'
   }

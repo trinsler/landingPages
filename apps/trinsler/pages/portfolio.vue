@@ -5,12 +5,12 @@
     
     <!-- Multiple Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-16 w-1 h-52 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-32 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.8s;"></div>
-      <div class="animate-data-stream absolute left-48 w-1 h-36 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.6s;"></div>
-      <div class="animate-data-stream absolute right-48 w-1 h-40 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 2.4s;"></div>
-      <div class="animate-data-stream absolute right-32 w-1 h-46 bg-gradient-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 3.2s;"></div>
-      <div class="animate-data-stream absolute right-16 w-1 h-38 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 4s;"></div>
+      <div class="animate-data-stream absolute left-16 w-1 h-52 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-32 w-1 h-44 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.8s;"></div>
+      <div class="animate-data-stream absolute left-48 w-1 h-36 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.6s;"></div>
+      <div class="animate-data-stream absolute right-48 w-1 h-40 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 2.4s;"></div>
+      <div class="animate-data-stream absolute right-32 w-1 h-46 bg-linear-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 3.2s;"></div>
+      <div class="animate-data-stream absolute right-16 w-1 h-38 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 4s;"></div>
     </div>
 
     <!-- Floating Code Matrix -->
@@ -92,14 +92,14 @@
             </div>
             
             <!-- Mission Visual -->
-            <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+            <div class="relative h-48 bg-linear-to-br from-surface-2 to-surface-1 overflow-hidden">
               <!-- Background Image with Matrix Overlay -->
               <img 
                 :src="project.image" 
                 :alt="project.title" 
                 class="absolute inset-0 w-full h-full object-cover opacity-30"
               />
-              <div class="absolute inset-0 bg-gradient-to-br from-surface-2/80 to-surface-1/80"></div>
+              <div class="absolute inset-0 bg-linear-to-br from-surface-2/80 to-surface-1/80"></div>
               
               <!-- Matrix Code Rain -->
               <div class="absolute inset-0 cyber-grid opacity-20"></div>
@@ -267,7 +267,7 @@ const projects = [
     filename: 'saas_dashboard.vue',
     code: 'app.deploy()',
     classification: 'WEB_APP',
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     status: 'LIVE',
     statusColor: 'text-accent-neon',
     completion: 'ERFOLGREICH',
@@ -281,7 +281,7 @@ const projects = [
     filename: 'ecommerce_shop.js',
     code: 'shop.launch()',
     classification: 'ONLINE_SHOP',
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     status: 'ONLINE',
     statusColor: 'text-accent-purple',
     completion: 'AUSGELIEFERT',
@@ -295,7 +295,7 @@ const projects = [
     filename: 'corporate_site.html',
     code: 'website.publish()',
     classification: 'CORPORATE',
-    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
     status: 'VERÖFFENTLICHT',
     statusColor: 'text-accent-orange',
     completion: 'TERMINGERECHT',
@@ -309,7 +309,7 @@ const projects = [
     filename: 'landing_pages.vue',
     code: 'convert.optimize()',
     classification: 'MARKETING',
-    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
+    iconBg: 'bg-linear-to-r from-accent-cyan to-accent-purple',
     status: 'CONVERTING',
     statusColor: 'text-accent-cyan',
     completion: 'OPTIMIERT',
@@ -323,7 +323,7 @@ const projects = [
     filename: 'booking_system.js',
     code: 'booking.automate()',
     classification: 'SYSTEM',
-    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    iconBg: 'bg-linear-to-r from-green-500 to-emerald-500',
     status: 'AUTOMATISIERT',
     statusColor: 'text-green-400',
     completion: 'FUNKTIONAL',
@@ -337,7 +337,7 @@ const projects = [
     filename: 'portfolio_site.css',
     code: 'portfolio.showcase()',
     classification: 'CREATIVE',
-    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
+    iconBg: 'bg-linear-to-r from-blue-500 to-indigo-500',
     status: 'SHOWCASE',
     statusColor: 'text-blue-400',
     completion: 'KREATIV',

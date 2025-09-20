@@ -5,12 +5,12 @@
     
     <!-- Complex Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-8 w-1 h-48 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-24 w-1 h-36 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.5s;"></div>
-      <div class="animate-data-stream absolute left-40 w-1 h-42 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1s;"></div>
-      <div class="animate-data-stream absolute right-40 w-1 h-38 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 1.5s;"></div>
-      <div class="animate-data-stream absolute right-24 w-1 h-44 bg-gradient-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 2s;"></div>
-      <div class="animate-data-stream absolute right-8 w-1 h-32 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 2.5s;"></div>
+      <div class="animate-data-stream absolute left-8 w-1 h-48 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-24 w-1 h-36 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.5s;"></div>
+      <div class="animate-data-stream absolute left-40 w-1 h-42 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1s;"></div>
+      <div class="animate-data-stream absolute right-40 w-1 h-38 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 1.5s;"></div>
+      <div class="animate-data-stream absolute right-24 w-1 h-44 bg-linear-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 2s;"></div>
+      <div class="animate-data-stream absolute right-8 w-1 h-32 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 2.5s;"></div>
     </div>
 
     <!-- Floating Code Matrix -->
@@ -181,9 +181,9 @@ const stats = [
     label: 'Portfolio Value',
     description: 'Aktuelle Bewertung',
     variable: 'portfolio_value',
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     glowClass: 'text-glow-green',
-    progressColor: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    progressColor: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     progress: 85,
     status: 'GROWING'
   },
@@ -192,9 +192,9 @@ const stats = [
     label: 'Active Startups',
     description: 'Partner-Unternehmen',
     variable: 'active_startups',
-    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
+    iconBg: 'bg-linear-to-r from-accent-cyan to-accent-purple',
     glowClass: 'text-glow-cyan',
-    progressColor: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
+    progressColor: 'bg-linear-to-r from-accent-cyan to-accent-purple',
     progress: 75,
     status: 'SCALING'
   },
@@ -203,9 +203,9 @@ const stats = [
     label: 'Avg. Growth',
     description: 'Durchschnittliche Steigerung',
     variable: 'growth_multiplier',
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     glowClass: 'text-white',
-    progressColor: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    progressColor: 'bg-linear-to-r from-accent-purple to-accent-pink',
     progress: 92,
     status: 'OPTIMIZED'
   },
@@ -214,9 +214,9 @@ const stats = [
     label: 'Success Rate',
     description: 'Erfolgreiche Partnerships',
     variable: 'success_percentage',
-    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
     glowClass: 'text-glow-green',
-    progressColor: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    progressColor: 'bg-linear-to-r from-accent-orange to-accent-neon',
     progress: 89,
     status: 'VERIFIED'
   }

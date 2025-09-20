@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { BackgroundTheme, BackgroundThemeName } from '@monorepo/shared'
 import { DataStreamBackground, FloatingCodeElements } from './index'
 

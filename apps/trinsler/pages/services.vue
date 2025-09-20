@@ -5,12 +5,12 @@
     
     <!-- Complex Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-12 w-1 h-60 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-24 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.6s;"></div>
-      <div class="animate-data-stream absolute left-36 w-1 h-52 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.2s;"></div>
-      <div class="animate-data-stream absolute right-36 w-1 h-48 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 1.8s;"></div>
-      <div class="animate-data-stream absolute right-24 w-1 h-56 bg-gradient-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 2.4s;"></div>
-      <div class="animate-data-stream absolute right-12 w-1 h-40 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 3s;"></div>
+      <div class="animate-data-stream absolute left-12 w-1 h-60 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-24 w-1 h-44 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0.6s;"></div>
+      <div class="animate-data-stream absolute left-36 w-1 h-52 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.2s;"></div>
+      <div class="animate-data-stream absolute right-36 w-1 h-48 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 1.8s;"></div>
+      <div class="animate-data-stream absolute right-24 w-1 h-56 bg-linear-to-b from-transparent via-accent-pink to-transparent" style="animation-delay: 2.4s;"></div>
+      <div class="animate-data-stream absolute right-12 w-1 h-40 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 3s;"></div>
     </div>
 
     <!-- Floating Code Matrix -->
@@ -92,7 +92,7 @@
             </div>
             
             <!-- Service Visual -->
-            <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+            <div class="relative h-48 bg-linear-to-br from-surface-2 to-surface-1 overflow-hidden">
               <!-- Matrix Background -->
               <div class="absolute inset-0 cyber-grid opacity-20"></div>
               
@@ -259,7 +259,7 @@ const services = [
     filename: 'landing_pages.sh',
     command: 'create_landing_page',
     module: 'WEB',
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
+    iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     status: 'VERFÜGBAR',
     statusColor: 'text-accent-neon',
     equityRange: '2-6 Wochen',
@@ -280,7 +280,7 @@ const services = [
     filename: 'web_applications.py',
     command: 'build_web_app',
     module: 'APP',
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
+    iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     status: 'PREMIUM',
     statusColor: 'text-accent-purple',
     equityRange: '4-12 Wochen',
@@ -301,7 +301,7 @@ const services = [
     filename: 'ecommerce_solutions.js',
     command: 'deploy_shop_platform',
     module: 'SHOP',
-    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-orange',
+    iconBg: 'bg-linear-to-r from-accent-cyan to-accent-orange',
     status: 'AKTIV',
     statusColor: 'text-accent-cyan',
     equityRange: '6-16 Wochen',
@@ -322,7 +322,7 @@ const services = [
     filename: 'tech_consulting.exe',
     command: 'provide_strategic_guidance',
     module: 'CON',
-    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
+    iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
     status: 'BERATUNG',
     statusColor: 'text-accent-orange',
     equityRange: '2-8 Wochen',
