@@ -78,32 +78,12 @@ jobs:
             apps/*/.output
           retention-days: 7
 
-  # Trigger deployment after successful tests
-  trigger-deployment:
-    name: 🚀 Trigger Deployment
+  # Deploy after successful tests (only on main branch)
+  deploy:
+    name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
-    needs: [test, dependency-check, lighthouse]
+    needs: [test, lighthouse]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 🚀 Trigger Deploy Workflow
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const result = await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'deploy.yml',
-              ref: 'main'
-            });
-            console.log('Deployment triggered:', result);
-
-  dependency-check:
-    name: 🔄 Dependency Health Check
-    runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -116,32 +96,63 @@ jobs:
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
+          node-version: 22
 
       - name: 📥 Install dependencies
         run: pnpm install
 
-      - name: 🔍 Check for outdated dependencies
-        run: |
-          echo "## 📦 Dependency Status" >> $GITHUB_STEP_SUMMARY
-          if pnpm outdated --format json > outdated.json 2>/dev/null; then
-            echo "✅ All dependencies are up to date!" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ Some dependencies have updates available:" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            pnpm outdated || true >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          fi
+      - name: 🏗️ Build packages
+        run: pnpm run build:packages
 
-      - name: 🛡️ Security Audit
+      - name: 🏗️ Build Coin app for production
+        run: pnpm --filter=@monorepo/coin-boilerplate-app run generate
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          NODE_ENV: production
+          NUXT_APP_ENV: production
+
+      - name: 🏗️ Build Trinsler app for development
+        run: pnpm --filter=@monorepo/trinsler run generate
+        env:
+          NODE_ENV: development
+          NUXT_APP_ENV: develop
+
+      - name: 🚀 Deploy Coin app
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/coin
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/coin-boilerplate-app/.output/public
+          cname: coin.trinsler.com
+
+      - name: 🚀 Deploy Trinsler app to Development
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/trinsler-develop
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/trinsler/.output/public
+          cname: trinsler-develop.trinsler.com
+
+      - name: 📊 Deployment Summary
+        if: always()
         run: |
-          echo "## 🛡️ Security Audit" >> $GITHUB_STEP_SUMMARY
-          if pnpm audit --audit-level high; then
-            echo "✅ No high or critical security vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: main" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ **Deployment successful!**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🌐 **Live URLs:**" >> $GITHUB_STEP_SUMMARY
+            echo "- [Coin App](https://coin.trinsler.com)" >> $GITHUB_STEP_SUMMARY
+            echo "- [Trinsler Dev](https://trinsler-develop.trinsler.com)" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠️ Security vulnerabilities found - please review!" >> $GITHUB_STEP_SUMMARY
-            pnpm audit --audit-level high || true
+            echo "❌ **Deployment failed!**" >> $GITHUB_STEP_SUMMARY
           fi
 
   lighthouse:
@@ -183,36 +194,37 @@ jobs:
 
       - name: 📊 Parse Lighthouse Results
         run: |
+          echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           if [ -f lighthouse-report.json ]; then
-            echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Metric | Score | Status |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|--------|" >> $GITHUB_STEP_SUMMARY
 
-            # Extract scores using node
-            node -e "
-              const fs = require('fs');
-              try {
-                const report = JSON.parse(fs.readFileSync('lighthouse-report.json', 'utf8'));
-                const categories = report.lhr.categories;
+            # Parse JSON with jq or python
+            python3 -c "
+import json
+import sys
 
-                console.log('| Metric | Score | Status |');
-                console.log('|--------|-------|--------|');
+try:
+    with open('lighthouse-report.json', 'r') as f:
+        report = json.load(f)
 
-                Object.entries(categories).forEach(([key, category]) => {
-                  const score = Math.round(category.score * 100);
-                  const status = score >= 90 ? '🟢' : score >= 70 ? '🟡' : '🔴';
-                  console.log(\`| \${category.title} | \${score} | \${status} |\`);
-                });
-              } catch (e) {
-                console.log('| Error | - | 🔴 |');
-                console.log('| Failed to parse | lighthouse report | - |');
-              }
+    categories = report['lhr']['categories']
+
+    for key, category in categories.items():
+        score = round(category['score'] * 100)
+        status = '🟢' if score >= 90 else '🟡' if score >= 70 else '🔴'
+        print(f\"| {category['title']} | {score} | {status} |\")
+
+except Exception as e:
+    print('| Error | - | 🔴 |')
+    print(f'| Failed to parse: {e} | - | - |')
             " >> $GITHUB_STEP_SUMMARY
 
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "📝 **Full report available in artifacts**" >> $GITHUB_STEP_SUMMARY
           else
-            echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
             echo "❌ **Lighthouse report not generated**" >> $GITHUB_STEP_SUMMARY
           fi
 
