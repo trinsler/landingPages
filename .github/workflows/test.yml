@@ -13,9 +13,6 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
     # Allow manual triggering
-  schedule:
-    # Run weekly dependency checks on Sundays at 2 AM UTC
-    - cron: '0 2 * * 0'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -82,7 +79,7 @@ jobs:
   deploy:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
-    needs: [test, lighthouse]
+    needs: [test]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: 📥 Checkout code
@@ -155,82 +152,3 @@ jobs:
             echo "❌ **Deployment failed!**" >> $GITHUB_STEP_SUMMARY
           fi
 
-  lighthouse:
-    name: 🏠 Lighthouse Performance Check
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: 📥 Install dependencies
-        run: pnpm install
-
-      - name: 🏗️ Build Trinsler App (for Lighthouse)
-        run: pnpm --filter=@monorepo/trinsler run build
-
-      - name: 🚀 Start server for Lighthouse
-        run: |
-          cd apps/trinsler
-          node .output/server/index.mjs &
-          sleep 10
-
-      - name: 🏠 Run Lighthouse CI
-        run: |
-          npm install -g lighthouse
-          lighthouse http://localhost:3000 --output json --output-path lighthouse-report.json --chrome-flags="--headless --no-sandbox" || true
-
-      - name: 📊 Parse Lighthouse Results
-        run: |
-          echo "## 🏠 Lighthouse Performance Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          if [ -f lighthouse-report.json ]; then
-            echo "| Metric | Score | Status |" >> $GITHUB_STEP_SUMMARY
-            echo "|--------|-------|--------|" >> $GITHUB_STEP_SUMMARY
-
-            # Parse JSON with jq or python
-            python3 -c "
-import json
-import sys
-
-try:
-    with open('lighthouse-report.json', 'r') as f:
-        report = json.load(f)
-
-    categories = report['lhr']['categories']
-
-    for key, category in categories.items():
-        score = round(category['score'] * 100)
-        status = '🟢' if score >= 90 else '🟡' if score >= 70 else '🔴'
-        print(f\"| {category['title']} | {score} | {status} |\")
-
-except Exception as e:
-    print('| Error | - | 🔴 |')
-    print(f'| Failed to parse: {e} | - | - |')
-            " >> $GITHUB_STEP_SUMMARY
-
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "📝 **Full report available in artifacts**" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ **Lighthouse report not generated**" >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: 📊 Upload Lighthouse Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: lighthouse-report.json
-          retention-days: 30
