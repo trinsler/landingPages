@@ -160,10 +160,10 @@
           <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
             <NuxtLink to="/contact" class="btn-primary group">
               <span>Jetzt Partnership starten</span>
-              <ArrowRightIcon class="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
             </NuxtLink>
             <NuxtLink to="/portfolio" class="btn-secondary">
-              <ChartBarIcon class="mr-2 h-5 w-5" />
+              <!-- Icon removed -->
               Alle Case Studies
             </NuxtLink>
           </div>
@@ -174,13 +174,6 @@
 </template>
 
 <script setup>
-import { 
-  RocketLaunchIcon, 
-  ChartBarIcon, 
-  CurrencyEuroIcon, 
-  TrophyIcon,
-  ArrowRightIcon
-} from '@heroicons/vue/24/outline'
 
 const stats = [
   { 
@@ -188,7 +181,6 @@ const stats = [
     label: 'Portfolio Value',
     description: 'Aktuelle Bewertung',
     variable: 'portfolio_value',
-    icon: CurrencyEuroIcon,
     iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
     glowClass: 'text-glow-green',
     progressColor: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
@@ -200,7 +192,6 @@ const stats = [
     label: 'Active Startups',
     description: 'Partner-Unternehmen',
     variable: 'active_startups',
-    icon: RocketLaunchIcon,
     iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
     glowClass: 'text-glow-cyan',
     progressColor: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
@@ -212,7 +203,6 @@ const stats = [
     label: 'Avg. Growth',
     description: 'Durchschnittliche Steigerung',
     variable: 'growth_multiplier',
-    icon: ChartBarIcon,
     iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
     glowClass: 'text-white',
     progressColor: 'bg-gradient-to-r from-accent-purple to-accent-pink',
@@ -224,7 +214,6 @@ const stats = [
     label: 'Success Rate',
     description: 'Erfolgreiche Partnerships',
     variable: 'success_percentage',
-    icon: TrophyIcon,
     iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
     glowClass: 'text-glow-green',
     progressColor: 'bg-gradient-to-r from-accent-orange to-accent-neon',

@@ -1,3 +1,6 @@
+/* Import universal theme system */
+@import '@monorepo/ui/src/styles/themes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +10,8 @@
     @apply h-full;
   }
   body {
-    @apply h-full bg-gray-50;
+    @apply h-full;
+    background: var(--ui-bg-primary);
+    color: var(--ui-text-primary);
   }
 }

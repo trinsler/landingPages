@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Shared utilities, types and constants for all apps",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./styles/*": "./src/styles/*"
   },
   "scripts": {
     "build": "tsup",
@@ -18,7 +19,7 @@
     "typecheck": "tsc --noEmit"
   },
   "files": [
-    "dist"
+    "src"
   ],
   "devDependencies": {
     "tsup": "^8.0.0",

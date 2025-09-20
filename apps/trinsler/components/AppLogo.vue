@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from 'vue'
 
 interface Props {
   className?: string

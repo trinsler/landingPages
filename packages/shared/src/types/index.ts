@@ -1,3 +1,6 @@
+// Re-export all types from ui
+export * from './ui'
+
 // Common types used across all apps
 
 export interface User {

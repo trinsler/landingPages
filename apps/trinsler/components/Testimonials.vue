@@ -58,7 +58,6 @@
               <!-- Client Info -->
               <div class="flex items-center gap-4">
                 <div class="w-16 h-16 rounded-xl neon-card flex items-center justify-center bg-gradient-to-br from-accent-primary/20 to-accent-cyan/20">
-                  <UserIcon class="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Marcus Weber</div>
@@ -108,7 +107,6 @@
 
               <div class="flex items-center gap-4">
                 <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20">
-                  <UserIcon class="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Sarah Chen</div>
@@ -156,7 +154,6 @@
 
               <div class="flex items-center gap-4">
                 <div class="w-16 h-16 rounded-xl glass-card flex items-center justify-center bg-gradient-to-br from-accent-purple/20 to-accent-orange/20">
-                  <UserIcon class="w-8 h-8 text-white" />
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Alex Müller</div>
@@ -197,7 +194,6 @@
             <div class="p-8 text-center">
               <div class="mb-6">
                 <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-gradient-to-br from-accent-neutral/20 to-accent-cyan/20 mx-auto mb-4">
-                  <PlusIcon class="w-8 h-8 text-accent-neutral" />
                 </div>
                 <h4 class="text-xl font-bold text-white mb-2">Ihr Testimonial?</h4>
                 <p class="text-white/70 text-sm">
@@ -207,7 +203,7 @@
 
               <NuxtLink to="/init-growth" class="btn-secondary inline-flex items-center">
                 <span>Partnerschaft starten</span>
-                <ArrowRightIcon class="ml-2 h-4 w-4" />
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
               </NuxtLink>
             </div>
           </div>
@@ -252,5 +248,4 @@
 </template>
 
 <script setup>
-import { UserIcon, PlusIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
 </script>

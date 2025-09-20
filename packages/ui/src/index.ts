@@ -1,7 +1,8 @@
-// Export all UI components
-export { default as BaseButton } from './components/BaseButton.vue'
-export { default as ToastContainer } from './components/ToastContainer.vue'
-export { default as LoadingSpinner } from './components/LoadingSpinner.vue'
+// Export all components and composables
+export * from './components'
 
-// Export composables
-export { useToast } from './composables/useToast'
+// Export types
+export type { ThemeName, ThemeConfig } from './composables/useTheme'
+
+// Export theme styles for apps that need to include them
+export const themeStylesPath = './styles/themes.css'

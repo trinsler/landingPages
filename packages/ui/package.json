@@ -10,29 +10,23 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts"
     },
-    "./style.css": "./src/style.css"
+    "./style.css": "./src/style.css",
+    "./src/styles/themes.css": "./src/styles/themes.css"
   },
   "scripts": {
-    "build": "tsup && tailwindcss -i ./src/style.css -o ./dist/style.css",
-    "dev": "tsup --watch",
-    "clean": "rm -rf dist",
     "typecheck": "vue-tsc --noEmit"
   },
   "files": [
-    "dist"
+    "src"
   ],
   "devDependencies": {
-    "tsup": "^8.0.0",
     "typescript": "^5.9.2",
-    "vue-tsc": "^2.0.0",
-    "tailwindcss": "^3.4.0"
+    "vue-tsc": "^2.0.0"
   },
   "dependencies": {
     "@monorepo/shared": "workspace:*"
   },
   "peerDependencies": {
-    "vue": "^3.4.0",
-    "@headlessui/vue": "^1.7.0",
-    "@heroicons/vue": "^2.0.0"
+    "vue": "^3.4.0"
   }
 }
