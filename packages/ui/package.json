@@ -19,10 +19,6 @@
   "files": [
     "src"
   ],
-  "devDependencies": {
-    "typescript": "^5.9.2",
-    "vue-tsc": "^2.0.0"
-  },
   "dependencies": {
     "@monorepo/shared": "workspace:*"
   },

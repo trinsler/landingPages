@@ -21,10 +21,6 @@
   "files": [
     "src"
   ],
-  "devDependencies": {
-    "tsup": "^8.0.0",
-    "typescript": "^5.9.2"
-  },
   "peerDependencies": {
     "vue": "^3.4.0",
     "stripe": "^18.5.0",
