@@ -16,8 +16,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rm -rf dist",
-    "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "src"
