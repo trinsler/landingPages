@@ -7,6 +7,7 @@
     "build:packages": "pnpm -r --filter=./packages/* run build",
     "clean:packages": "pnpm -r --filter=./packages/* run clean || true",
     "typecheck": "pnpm -r run typecheck",
+    "test:build": "pnpm run build:packages",
     "create-new-app": "node scripts/create-new-app.js",
     "list-apps": "ls -la apps/ | grep '^d'",
     "dev:coin": "pnpm --filter=@monorepo/coin-boilerplate-app run dev",
