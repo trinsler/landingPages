@@ -5,10 +5,10 @@
     
     <!-- Data Stream Particles -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-10 w-1 h-20 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-32 w-1 h-16 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
-      <div class="animate-data-stream absolute right-20 w-1 h-24 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
-      <div class="animate-data-stream absolute right-40 w-1 h-12 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 3s;"></div>
+      <div class="animate-data-stream absolute left-10 w-1 h-20 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-32 w-1 h-16 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
+      <div class="animate-data-stream absolute right-20 w-1 h-24 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
+      <div class="animate-data-stream absolute right-40 w-1 h-12 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 3s;"></div>
     </div>
 
     <!-- Floating Code Elements -->
@@ -191,7 +191,7 @@
     </div>
 
     <!-- Bottom Gradient Fade -->
-    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-base-bg to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-base-bg to-transparent"></div>
   </section>
 </template>
 

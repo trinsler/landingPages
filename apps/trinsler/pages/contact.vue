@@ -5,10 +5,10 @@
     
     <!-- Multiple Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-12 w-1 h-56 bg-gradient-to-b from-transparent via-accent-primary to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-28 w-1 h-40 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
-      <div class="animate-data-stream absolute right-28 w-1 h-48 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
-      <div class="animate-data-stream absolute right-12 w-1 h-36 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 3s;"></div>
+      <div class="animate-data-stream absolute left-12 w-1 h-56 bg-linear-to-b from-transparent via-accent-primary to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-28 w-1 h-40 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
+      <div class="animate-data-stream absolute right-28 w-1 h-48 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
+      <div class="animate-data-stream absolute right-12 w-1 h-36 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 3s;"></div>
     </div>
 
     <!-- Floating Code -->

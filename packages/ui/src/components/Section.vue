@@ -174,26 +174,26 @@ const backgroundClass = computed(() => {
     cyber: {
       primary: 'bg-gray-900',
       secondary: 'bg-gray-800',
-      accent: 'bg-gradient-to-r from-green-900 to-blue-900',
-      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-green-900'
+      accent: 'bg-linear-to-r from-green-900 to-blue-900',
+      gradient: 'bg-linear-to-br from-gray-900 via-gray-800 to-green-900'
     },
     glass: {
       primary: 'bg-white',
       secondary: 'bg-gray-50',
-      accent: 'bg-gradient-to-r from-indigo-50 to-purple-50',
-      gradient: 'bg-gradient-to-br from-white via-indigo-50 to-purple-100'
+      accent: 'bg-linear-to-r from-indigo-50 to-purple-50',
+      gradient: 'bg-linear-to-br from-white via-indigo-50 to-purple-100'
     },
     minimal: {
       primary: 'bg-white',
       secondary: 'bg-gray-50',
       accent: 'bg-gray-100',
-      gradient: 'bg-gradient-to-br from-white to-gray-100'
+      gradient: 'bg-linear-to-br from-white to-gray-100'
     },
     dark: {
       primary: 'bg-gray-900',
       secondary: 'bg-gray-800',
-      accent: 'bg-gradient-to-r from-amber-900 to-orange-900',
-      gradient: 'bg-gradient-to-br from-gray-900 via-gray-800 to-amber-900'
+      accent: 'bg-linear-to-r from-amber-900 to-orange-900',
+      gradient: 'bg-linear-to-br from-gray-900 via-gray-800 to-amber-900'
     }
   }
 

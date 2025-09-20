@@ -15,14 +15,14 @@
       </div>
 
       <!-- Article Visual -->
-      <div class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden">
+      <div class="relative h-48 bg-linear-to-br from-surface-2 to-surface-1 overflow-hidden">
         <!-- Matrix Background -->
         <div class="absolute inset-0 cyber-grid opacity-20"></div>
 
         <!-- Icon -->
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="text-center">
-            <div class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker bg-gradient-to-r from-accent-neon to-accent-cyan">
+            <div class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker bg-linear-to-r from-accent-neon to-accent-cyan">
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path v-if="article.icon === 'rocket'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 <path v-else-if="article.icon === 'chart'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />

@@ -5,8 +5,8 @@
     
     <!-- Data Stream Effects -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
+      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
     </div>
 
     <div class="relative container-custom">
@@ -57,7 +57,7 @@
 
               <!-- Client Info -->
               <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl neon-card flex items-center justify-center bg-gradient-to-br from-accent-primary/20 to-accent-cyan/20">
+                <div class="w-16 h-16 rounded-xl neon-card flex items-center justify-center bg-linear-to-br from-accent-primary/20 to-accent-cyan/20">
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Marcus Weber</div>
@@ -106,7 +106,7 @@
               </div>
 
               <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20">
+                <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-linear-to-br from-accent-cyan/20 to-accent-purple/20">
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Sarah Chen</div>
@@ -153,7 +153,7 @@
               </div>
 
               <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl glass-card flex items-center justify-center bg-gradient-to-br from-accent-purple/20 to-accent-orange/20">
+                <div class="w-16 h-16 rounded-xl glass-card flex items-center justify-center bg-linear-to-br from-accent-purple/20 to-accent-orange/20">
                 </div>
                 <div>
                   <div class="font-bold text-white mb-1">Alex Müller</div>
@@ -193,7 +193,7 @@
             
             <div class="p-8 text-center">
               <div class="mb-6">
-                <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-gradient-to-br from-accent-neutral/20 to-accent-cyan/20 mx-auto mb-4">
+                <div class="w-16 h-16 rounded-xl cyber-card flex items-center justify-center bg-linear-to-br from-accent-neutral/20 to-accent-cyan/20 mx-auto mb-4">
                 </div>
                 <h4 class="text-xl font-bold text-white mb-2">Ihr Testimonial?</h4>
                 <p class="text-white/70 text-sm">

@@ -5,8 +5,8 @@
     
     <!-- Data Stream Effects -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
+      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute right-1/3 w-1 h-28 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 1.5s;"></div>
     </div>
 
     <div class="relative container-custom py-20">
@@ -62,7 +62,7 @@
                     class="w-full h-full object-cover"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                   />
-                  <div class="w-full h-full bg-gradient-to-br from-accent-primary/20 to-accent-cyan/20 flex items-center justify-center" style="display:none">
+                  <div class="w-full h-full bg-linear-to-br from-accent-primary/20 to-accent-cyan/20 flex items-center justify-center" style="display:none">
                     <div class="w-16 h-16 text-white text-4xl flex items-center justify-center"></div>
                   </div>
                 </div>
@@ -132,7 +132,7 @@
                     class="w-full h-full object-cover"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                   />
-                  <div class="w-full h-full bg-gradient-to-br from-accent-purple/20 to-accent-orange/20 flex items-center justify-center" style="display:none">
+                  <div class="w-full h-full bg-linear-to-br from-accent-purple/20 to-accent-orange/20 flex items-center justify-center" style="display:none">
                     <div class="w-16 h-16 text-white text-4xl flex items-center justify-center"></div>
                   </div>
                 </div>

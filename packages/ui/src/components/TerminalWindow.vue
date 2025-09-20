@@ -163,7 +163,7 @@ const glowClass = computed(() => {
 
 const contentBgClass = computed(() => {
   const classes = {
-    cyber: 'bg-gradient-to-br from-gray-900/50 to-gray-800/50',
+    cyber: 'bg-linear-to-br from-gray-900/50 to-gray-800/50',
     glass: 'bg-white/5 backdrop-blur-sm',
     minimal: 'bg-gray-50',
     dark: 'bg-gray-800/50'

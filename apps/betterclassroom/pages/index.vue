@@ -5,9 +5,9 @@
       <div class="container mx-auto px-4 md:px-6">
         <!-- Floating background elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div class="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl floating-animation"></div>
-          <div class="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl floating-animation" style="animation-delay: -3s;"></div>
-          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-300/10 to-indigo-500/10 rounded-full blur-3xl floating-animation" style="animation-delay: -1.5s;"></div>
+          <div class="absolute top-20 left-10 w-64 h-64 bg-linear-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl floating-animation"></div>
+          <div class="absolute bottom-20 right-10 w-80 h-80 bg-linear-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl floating-animation" style="animation-delay: -3s;"></div>
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-linear-to-r from-blue-300/10 to-indigo-500/10 rounded-full blur-3xl floating-animation" style="animation-delay: -1.5s;"></div>
         </div>
 
         <div class="relative z-10 flex flex-col items-center space-y-8 text-center" :class="{ 'opacity-100 translate-y-0': isVisible, 'opacity-0 translate-y-10': !isVisible }" style="transition: all 1s ease-out;">

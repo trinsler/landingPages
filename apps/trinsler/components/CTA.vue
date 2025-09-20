@@ -5,10 +5,10 @@
     
     <!-- Multiple Data Streams -->
     <div class="absolute inset-0">
-      <div class="animate-data-stream absolute left-10 w-1 h-40 bg-gradient-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
-      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
-      <div class="animate-data-stream absolute right-1/4 w-1 h-36 bg-gradient-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
-      <div class="animate-data-stream absolute right-10 w-1 h-28 bg-gradient-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 3s;"></div>
+      <div class="animate-data-stream absolute left-10 w-1 h-40 bg-linear-to-b from-transparent via-accent-neon to-transparent" style="animation-delay: 0s;"></div>
+      <div class="animate-data-stream absolute left-1/4 w-1 h-32 bg-linear-to-b from-transparent via-accent-cyan to-transparent" style="animation-delay: 1s;"></div>
+      <div class="animate-data-stream absolute right-1/4 w-1 h-36 bg-linear-to-b from-transparent via-accent-purple to-transparent" style="animation-delay: 2s;"></div>
+      <div class="animate-data-stream absolute right-10 w-1 h-28 bg-linear-to-b from-transparent via-accent-orange to-transparent" style="animation-delay: 3s;"></div>
     </div>
 
     <!-- Floating Code Fragments -->
@@ -178,17 +178,17 @@ const benefits = [
   {
     title: 'Niedrige Kosten',
     description: '80% weniger als klassische Agenturen',
-    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-600'
+    iconBg: 'bg-linear-to-r from-green-500 to-emerald-600'
   },
   {
     title: 'Aligned Interests',
     description: 'Wir verdienen nur, wenn Sie wachsen',
-    iconBg: 'bg-gradient-to-r from-red-500 to-pink-600'
+    iconBg: 'bg-linear-to-r from-red-500 to-pink-600'
   },
   {
     title: 'Operative Excellence',
     description: 'Echte Skills, keine Beratung',
-    iconBg: 'bg-gradient-to-r from-blue-500 to-purple-600'
+    iconBg: 'bg-linear-to-r from-blue-500 to-purple-600'
   }
 ]
 </script>
