@@ -1,6 +1,6 @@
 {
   "name": "landing-pages-monorepo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Monorepo für verschiedene Landing Pages mit geteilten Dependencies",
   "private": true,
   "scripts": {
@@ -43,7 +43,7 @@
     "@heroicons/vue": "^2.2.0",
     "@nuxtjs/supabase": "^1.6.2",
     "@pinia/nuxt": "^0.11.2",
-    "nuxt": "^4.1.1",
+    "nuxt": "^4.1.2",
     "pinia": "^3.0.3"
   },
   "repository": {
