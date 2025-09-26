@@ -66,5 +66,5 @@ export function getAppNames(): string[] {
  * Get all package names from monorepo
  */
 export function getPackageNames(): string[] {
-  return ['@monorepo/ui', '@monorepo/shared']
+  return ['@monorepo/shared']
 }

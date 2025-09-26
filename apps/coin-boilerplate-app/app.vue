@@ -5,14 +5,10 @@
         <NuxtPage />
       </NuxtLayout>
     </ErrorBoundary>
-    <ToastContainer :toasts="toasts" @dismiss="dismiss" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ToastContainer, useToast } from '@monorepo/ui'
-
-const { toasts, dismiss } = useToast()
 
 // Global app configuration
 useHead({

@@ -22,7 +22,6 @@ pnpm test:run
 
 # 5. Build all apps (to catch build errors)
 pnpm --filter=@monorepo/trinsler run build
-pnpm --filter=@monorepo/betterclassroom run build
 pnpm --filter=@monorepo/coin-boilerplate-app run build
 ```
 
@@ -80,7 +79,6 @@ pnpm run typecheck
 ```bash
 # Build specific app
 pnpm --filter=@monorepo/trinsler run build
-pnpm --filter=@monorepo/betterclassroom run build
 pnpm --filter=@monorepo/coin-boilerplate-app run build
 
 # Build packages

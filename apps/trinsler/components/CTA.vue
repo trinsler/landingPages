@@ -110,19 +110,21 @@
 
           <!-- Mission Brief -->
           <div class="mb-12 animate-slide-up-stagger" style="animation-delay: 0.6s">
-            <div class="cyber-card rounded-2xl p-8 max-w-4xl mx-auto">
-              <div class="text-accent-purple text-sm mb-4">Warum Trinsler anders ist</div>
-              <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-6">
-                <span class="text-accent-cyan">Unser Ansatz:</span> Anstatt monatlich 5.000€+ für
-                Marketing zu zahlen,
-                <span class="font-bold text-glow-green"
-                  >arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span
-                >. So sind wir direkt am Erfolg Ihres Startups beteiligt.
-              </p>
-              <div class="text-accent-orange text-lg">
-                Interessiert? Vereinbaren Sie ein kostenloses Erstgespräch
-              </div>
-            </div>
+            <Card class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/30 transition-colors max-w-4xl mx-auto">
+              <CardContent class="p-8">
+                <Badge variant="secondary" class="text-purple-400 bg-card/50 text-sm mb-4">Warum Trinsler anders ist</Badge>
+                <p class="text-xl lg:text-2xl text-foreground/90 leading-relaxed mb-6">
+                  <span class="text-cyan-400">Unser Ansatz:</span> Anstatt monatlich 5.000€+ für
+                  Marketing zu zahlen,
+                  <span class="font-bold text-glow-green"
+                    >arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span
+                  >. So sind wir direkt am Erfolg Ihres Startups beteiligt.
+                </p>
+                <div class="text-orange-400 text-lg">
+                  Interessiert? Vereinbaren Sie ein kostenloses Erstgespräch
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           <!-- System Modules -->
@@ -130,25 +132,29 @@
             class="grid md:grid-cols-3 gap-6 mb-16 animate-slide-up-stagger"
             style="animation-delay: 0.8s"
           >
-            <div
+            <Card
               v-for="(benefit, index) in benefits"
               :key="benefit.title"
-              class="neon-card rounded-2xl p-6 group magnetic-hover"
+              class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors group magnetic-hover"
               :style="`animation-delay: ${index * 0.3}s`"
             >
-              <div class="flex items-center gap-3 mb-4">
-                <div
-                  :class="benefit.iconBg"
-                  class="w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker"
-                >
-                  <component :is="benefit.icon" class="w-5 h-5 text-white" />
+              <CardContent class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div
+                    :class="benefit.iconBg"
+                    class="w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker"
+                  >
+                    <div class="w-5 h-5 text-white" />
+                  </div>
+                  <Badge variant="secondary" class="text-cyan-400 text-xs bg-card/50">Vorteil {{ index + 1 }}</Badge>
                 </div>
-                <div class="text-accent-cyan text-xs">Vorteil {{ index + 1 }}</div>
-              </div>
-              <h3 class="text-white font-bold text-lg mb-2">{{ benefit.title }}</h3>
-              <p class="text-white/80 text-sm mb-4">{{ benefit.description }}</p>
-              <div class="text-accent-neon text-xs"><span class="">✓</span> Verfügbar</div>
-            </div>
+                <CardTitle class="text-foreground font-bold text-lg mb-2">{{ benefit.title }}</CardTitle>
+                <p class="text-muted-foreground text-sm mb-4">{{ benefit.description }}</p>
+                <div class="text-primary text-xs flex items-center gap-1">
+                  <span class="text-green-400">✓</span> Verfügbar
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           <!-- Execute Buttons -->
@@ -156,12 +162,11 @@
             class="flex flex-col lg:flex-row items-center justify-center gap-8 mb-12 animate-slide-up-stagger"
             style="animation-delay: 1s"
           >
-            <NuxtLink
-              to="/contact"
-              class="btn-primary group relative overflow-hidden code-font text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
-            >
-              <span class="relative z-10 flex items-center">
-                Kostenloses Wachstums-Audit
+            <Button asChild size="lg" class="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-4 text-xl rounded-xl border border-primary/20 code-font animate-glow-pulse transform hover:scale-110" style="box-shadow: 0 4px 14px var(--glow-blue);">
+              <NuxtLink to="/contact" class="group relative overflow-hidden flex items-center">
+                <span class="relative z-10">
+                  Kostenloses Wachstums-Audit
+                </span>
                 <svg
                   class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -175,47 +180,48 @@
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </span>
-            </NuxtLink>
+              </NuxtLink>
+            </Button>
 
-            <NuxtLink
-              to="/portfolio"
-              class="btn-secondary group code-font text-lg hover:scale-105 transition-all duration-300"
-            >
-              Erfolgsgeschichten ansehen
-            </NuxtLink>
+            <Button asChild variant="secondary" size="lg" class="bg-secondary hover:bg-accent text-secondary-foreground border border-border hover:border-primary/50 px-8 py-4 text-lg rounded-xl code-font hover:scale-105 transition-all duration-300">
+              <NuxtLink to="/portfolio" class="group">
+                Erfolgsgeschichten ansehen
+              </NuxtLink>
+            </Button>
           </div>
 
           <!-- System Status Dashboard -->
-          <div
-            class="cyber-card rounded-2xl p-8 animate-slide-up-stagger"
+          <Card
+            class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/30 transition-colors animate-slide-up-stagger"
             style="animation-delay: 1.2s"
           >
-            <div class="code-font text-accent-cyan text-sm mb-4">SYSTEM_STATUS.json</div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div class="text-center">
-                <div class="flex items-center justify-center gap-2 mb-2">
-                  <div class="w-3 h-3 bg-accent-neon rounded-full" />
-                  <span class="code-font text-accent-cyan text-sm">ACTIVE_PARTNERSHIPS</span>
+            <CardHeader class="pb-4">
+              <div class="code-font text-cyan-400 text-sm">SYSTEM_STATUS.json</div>
+            </CardHeader>
+            <CardContent class="pt-0">
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="text-center">
+                  <div class="flex items-center justify-center gap-2 mb-2">
+                    <div class="w-3 h-3 bg-primary rounded-full" />
+                    <span class="code-font text-cyan-400 text-sm">ACTIVE_PARTNERSHIPS</span>
+                  </div>
+                  <div class="text-2xl font-bold text-glow-green">12</div>
                 </div>
-                <div class="text-2xl font-bold text-glow-green">12</div>
-              </div>
-              <div class="text-center">
-                <div class="flex items-center justify-center gap-2 mb-2">
-                  <!-- Icon removed -->
-                  <span class="code-font text-accent-purple text-sm">AUDIT_AVAILABLE</span>
+                <div class="text-center">
+                  <div class="flex items-center justify-center gap-2 mb-2">
+                    <span class="code-font text-purple-400 text-sm">AUDIT_AVAILABLE</span>
+                  </div>
+                  <div class="text-lg font-bold text-foreground">FREE</div>
                 </div>
-                <div class="text-lg font-bold text-white">FREE</div>
-              </div>
-              <div class="text-center">
-                <div class="flex items-center justify-center gap-2 mb-2">
-                  <!-- Icon removed -->
-                  <span class="code-font text-accent-orange text-sm">GROWTH_RATE</span>
+                <div class="text-center">
+                  <div class="flex items-center justify-center gap-2 mb-2">
+                    <span class="code-font text-orange-400 text-sm">GROWTH_RATE</span>
+                  </div>
+                  <div class="text-2xl font-bold text-glow-cyan">5.2x</div>
                 </div>
-                <div class="text-2xl font-bold text-glow-cyan">5.2x</div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           <!-- Final System Message -->
           <div class="mt-8 animate-slide-up-stagger" style="animation-delay: 1.4s">
@@ -235,6 +241,13 @@
 </template>
 
 <script setup>
+import Button from '~/components/ui/Button.vue'
+import Card from '~/components/ui/Card.vue'
+import CardContent from '~/components/ui/CardContent.vue'
+import CardHeader from '~/components/ui/CardHeader.vue'
+import CardTitle from '~/components/ui/CardTitle.vue'
+import Badge from '~/components/ui/Badge.vue'
+
 const benefits = [
   {
     title: 'Niedrige Kosten',

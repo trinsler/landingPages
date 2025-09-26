@@ -10,7 +10,6 @@ All apps use:
 - **Backend**: Supabase (Auth + DB + Edge Functions)
 - **Payments**: Stripe
 - **State**: Pinia
-- **UI**: Headless UI, Heroicons
 - **Build**: Vite + tsup (for packages)
 
 ### Git Workflow
@@ -40,7 +39,6 @@ git push origin v1.2.3
 
 ### Shared Packages
 - **`@monorepo/shared`** - Types, Utils, Constants
-- **`@monorepo/ui`** - Reusable UI Components
 
 ### 📱 Apps
 - **`coin-boilerplate-app`** - Complete boilerplate with OAuth, Payments, Email subscription

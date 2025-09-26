@@ -1,5 +1,4 @@
 /* Import universal theme system */
-@import '@monorepo/ui/src/styles/themes.css';
 
 @import "tailwindcss";
 
@@ -30,61 +29,95 @@ body {
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 210 40% 8%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 210 40% 8%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 91% 65%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --popover-foreground: 210 40% 8%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 210 40% 12%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 40% 45%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 210 40% 12%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 91% 65%;
-    --radius: 1rem;
-    --glass-bg: 240 100% 99%;
-    --glass-border: 240 15% 92%;
-    --accent-blue: 220 90% 56%;
-    --accent-purple: 270 91% 65%;
-    --accent-pink: 330 81% 60%;
-    --text-light: 240 5% 84%;
-    --text-dark: 240 10% 3.9%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 210 40% 92%;
+    --input: 210 40% 92%;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
+
+    /* Education-themed colors */
+    --education-blue: 217 91% 60%;
+    --education-indigo: 238 84% 67%;
+    --education-purple: 262 83% 58%;
+    --education-pink: 346 77% 49%;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --info: 199 89% 48%;
+
+    /* Modern glass effects */
+    --glass-bg: 210 40% 99%;
+    --glass-border: 210 40% 94%;
+    --glass-shadow: 0 8px 32px -8px rgb(210 40% 8% / 0.1);
+
+    /* Typography scale */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+
+    /* Spacing scale */
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 2.5rem;
+    --space-3xl: 3rem;
+    --space-4xl: 4rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 240 91% 70%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 222 84% 5%;
+    --foreground: 210 20% 98%;
+    --card: 222 84% 6%;
+    --card-foreground: 210 20% 98%;
+    --popover: 222 84% 6%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 217 91% 76%;
+    --primary-foreground: 222 84% 5%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 91% 70%;
-    --glass-bg: 240 10% 8%;
-    --glass-border: 240 15% 20%;
-    --accent-blue: 220 90% 56%;
-    --accent-purple: 270 91% 65%;
-    --accent-pink: 330 81% 60%;
-    --text-light: 240 5% 84%;
-    --text-dark: 0 0% 98%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 217 91% 76%;
+    --glass-bg: 222 84% 8%;
+    --glass-border: 217 32% 20%;
+    --glass-shadow: 0 8px 32px -8px rgb(210 20% 98% / 0.1);
+
+    /* Education-themed colors - dark mode */
+    --education-blue: 217 91% 76%;
+    --education-indigo: 238 84% 75%;
+    --education-purple: 262 83% 68%;
+    --education-pink: 346 77% 59%;
+    --success: 142 76% 46%;
+    --warning: 38 92% 60%;
+    --info: 199 89% 58%;
   }
 }
 
@@ -98,7 +131,7 @@ body {
   }
 }
 
-/* Custom utility classes */
+/* Modern utility classes */
 .text-primary {
   color: hsl(var(--primary));
 }
@@ -123,6 +156,31 @@ body {
   --tw-ring-color: hsl(var(--ring));
 }
 
+/* Education color utilities */
+.text-education-blue {
+  color: hsl(var(--education-blue));
+}
+
+.text-education-indigo {
+  color: hsl(var(--education-indigo));
+}
+
+.text-education-purple {
+  color: hsl(var(--education-purple));
+}
+
+.bg-education-blue {
+  background-color: hsl(var(--education-blue));
+}
+
+.bg-education-indigo {
+  background-color: hsl(var(--education-indigo));
+}
+
+.bg-education-purple {
+  background-color: hsl(var(--education-purple));
+}
+
 /* Apple-style Liquid Glass Effects */
 .glass-card {
   background: hsl(var(--glass-bg) / 0.8);
@@ -145,9 +203,9 @@ body {
 
 .gradient-text {
   background: linear-gradient(135deg,
-    hsl(var(--accent-blue)),
-    hsl(var(--accent-purple)),
-    hsl(var(--accent-pink)));
+    hsl(var(--education-blue)),
+    hsl(var(--education-indigo)),
+    hsl(var(--education-purple)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -155,17 +213,24 @@ body {
 
 .gradient-bg {
   background: linear-gradient(135deg,
-    hsl(var(--accent-blue) / 0.1) 0%,
-    hsl(var(--accent-purple) / 0.1) 50%,
-    hsl(var(--accent-pink) / 0.1) 100%);
+    hsl(var(--education-blue) / 0.08) 0%,
+    hsl(var(--education-indigo) / 0.08) 50%,
+    hsl(var(--education-purple) / 0.08) 100%);
+}
+
+.gradient-bg-strong {
+  background: linear-gradient(135deg,
+    hsl(var(--education-blue) / 0.12) 0%,
+    hsl(var(--education-indigo) / 0.12) 50%,
+    hsl(var(--education-purple) / 0.12) 100%);
 }
 
 .gradient-border {
   position: relative;
   background: linear-gradient(135deg,
-    hsl(var(--accent-blue) / 0.3),
-    hsl(var(--accent-purple) / 0.3),
-    hsl(var(--accent-pink) / 0.3));
+    hsl(var(--education-blue) / 0.3),
+    hsl(var(--education-indigo) / 0.3),
+    hsl(var(--education-purple) / 0.3));
   padding: 1px;
   border-radius: inherit;
 }
@@ -198,4 +263,95 @@ body {
   to {
     box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
   }
+}
+
+/* Modern animations */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+/* Modern hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Feature cards */
+.feature-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: hsl(var(--primary) / 0.2);
+  box-shadow: 0 12px 24px -8px hsl(var(--primary) / 0.15);
+}
+
+/* Modern button styles */
+.btn-modern {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-modern::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: hsl(var(--primary) / 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-modern:hover::before {
+  width: 300px;
+  height: 300px;
 }

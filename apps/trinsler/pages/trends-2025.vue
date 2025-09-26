@@ -1,69 +1,79 @@
 <template>
   <div class="min-h-screen matrix-bg relative overflow-hidden">
-    <!-- Background Effects -->
-    <DataStreamBackground />
-    <FloatingCodeElements
-      :elements="[
-        { text: 'trends.analyze(2025)', class: 'top-24 left-24', color: 'accent-neon', delay: 0 },
-        { text: 'ai.marketing.future()', class: 'top-40 right-28', color: 'accent-cyan', delay: 1 },
-        {
-          text: 'privacy.first.strategy',
-          class: 'bottom-48 left-1/4',
-          color: 'accent-purple',
-          delay: 2,
-        },
-        { text: 'personalization++', class: 'top-3/4 right-1/3', color: 'accent-orange', delay: 3 },
-        { text: '[FUTURE_READY]', class: 'top-1/3 left-3/4', color: 'accent-pink', delay: 4 },
-      ]"
-    />
-
     <div class="relative container-custom py-20">
       <!-- Trends Terminal Header -->
-      <TerminalWindow title="~/trends/digital-marketing-2025.sh" class="mb-20">
-        <!-- System Boot -->
-        <div class="mb-8">
-          <div class="code-font text-accent-neon text-sm mb-4">
-            <span class="text-accent-cyan">trends@trinsler:~$</span> scan --digital-marketing
-            --year=2025 --active
+      <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm mb-20">
+        <CardContent class="p-8">
+          <!-- System Boot -->
+          <div class="mb-8">
+            <div class="code-font text-accent-neon text-sm mb-4">
+              <span class="text-accent-cyan">trends@trinsler:~$</span> scan --digital-marketing
+              --year=2025 --active
+            </div>
+            <div class="border border-accent-neon/20 rounded-xl px-6 py-3 inline-block">
+              <span class="code-font text-accent-neon">[TREND_ANALYSIS_ACTIVE]</span>
+              <span class="text-white ml-2">FUTURE_MARKETING.EXE</span>
+            </div>
           </div>
-          <div class="neon-card rounded-xl px-6 py-3 inline-block">
-            <span class="code-font text-accent-neon">[TREND_ANALYSIS_ACTIVE]</span>
-            <span class="text-white ml-2">FUTURE_MARKETING.EXE</span>
-          </div>
-        </div>
 
-        <!-- ASCII Header -->
-        <div class="mb-12 text-center">
-          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
-            <span class="text-white">DIGITAL</span>
-            <br />
-            <span class="gradient-text-neon">MARKETING</span>
-            <br />
-            <span class="text-accent-cyan">TRENDS 2025</span>
-          </h1>
-        </div>
-
-        <!-- Trends Brief -->
-        <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
-          <div class="text-accent-purple text-sm mb-3">Zukunft des Digital Marketing</div>
-          <p class="text-xl text-white/90 leading-relaxed">
-            <span class="text-accent-cyan">Revolutionäre Trends:</span> Die wichtigsten
-            <span class="font-bold text-glow-green">Digital Marketing Entwicklungen für 2025</span>.
-            Bleiben Sie der Konkurrenz voraus mit
-            <span class="text-accent-neon">zukunftsweisenden Strategien</span>.
-          </p>
-          <div class="text-accent-orange text-sm mt-4">
-            Alle Trends basieren auf aktueller Marktanalyse und Expertenbewertungen
+          <!-- ASCII Header -->
+          <div class="mb-12 text-center">
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
+              <span class="text-white">DIGITAL</span>
+              <br />
+              <span class="gradient-text-neon">MARKETING</span>
+              <br />
+              <span class="text-accent-cyan">TRENDS 2025</span>
+            </h1>
           </div>
-        </div>
-      </TerminalWindow>
+
+          <!-- Trends Brief -->
+          <div class="border border-accent-neon/20 rounded-xl p-6 max-w-4xl mx-auto">
+            <div class="text-accent-purple text-sm mb-3">Zukunft des Digital Marketing</div>
+            <p class="text-xl text-white/90 leading-relaxed">
+              <span class="text-accent-cyan">Revolutionäre Trends:</span> Die wichtigsten
+              <span class="font-bold text-glow-green">Digital Marketing Entwicklungen für 2025</span>.
+              Bleiben Sie der Konkurrenz voraus mit
+              <span class="text-accent-neon">zukunftsweisenden Strategien</span>.
+            </p>
+            <div class="text-accent-orange text-sm mt-4">
+              Alle Trends basieren auf aktueller Marktanalyse und Expertenbewertungen
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <!-- Trends Grid -->
-      <TrendGrid :trends="trends" class="mb-16" />
+      <div class="grid lg:grid-cols-2 gap-8 mb-16">
+        <Card v-for="trend in trends" :key="trend.title" class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle class="flex items-center gap-3">
+              <div :class="trend.iconBg" class="w-12 h-12 rounded-lg flex items-center justify-center">
+                <component :is="trend.icon" class="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div class="text-sm" :class="trend.priorityColor">{{ trend.priority }}</div>
+                <h3 class="text-xl font-bold text-white">{{ trend.title }}</h3>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p class="text-white/80 mb-4">{{ trend.description }}</p>
+            <div class="space-y-2 mb-4">
+              <div v-for="point in trend.keyPoints" :key="point" class="text-sm text-white/70 flex items-center gap-2">
+                <div class="w-1 h-1 bg-accent-neon rounded-full"></div>
+                {{ point }}
+              </div>
+            </div>
+            <div class="text-xs text-accent-purple font-mono">{{ trend.codeSnippet }}</div>
+          </CardContent>
+        </Card>
+      </div>
 
       <!-- Action Terminal -->
-      <TerminalWindow title="~/implementation/future-ready.sh">
-        <div class="text-center">
+      <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+        <CardContent class="p-8">
+          <div class="text-center">
           <!-- Action Prompt -->
           <div class="code-font text-accent-neon text-sm mb-6">
             <span class="text-accent-cyan">future@trinsler:~$</span> implement --marketing-trends
@@ -77,7 +87,7 @@
               <span class="gradient-text-neon">MARKETING_ZUKUNFT?</span>
             </h3>
 
-            <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
+            <div class="border border-accent-neon/20 rounded-xl p-6 max-w-3xl mx-auto mb-8">
               <div class="code-font text-accent-purple text-sm mb-3">
                 /* FUTURE_IMPLEMENTATION */
               </div>
@@ -107,7 +117,7 @@
                 />
               </svg>
               Zukunfts-Marketing umsetzen
-              <ArrowRightIcon size="md" :animated="true" class="ml-3" />
+              <ArrowRight class="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
             </span>
           </NuxtLink>
 
@@ -128,20 +138,25 @@
               </div>
             </div>
           </div>
-        </div>
-      </TerminalWindow>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup>
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui'
 import {
-  TerminalWindow,
-  DataStreamBackground,
-  FloatingCodeElements,
-  TrendGrid,
-  ArrowRightIcon,
-} from '@monorepo/ui'
+  ArrowRight,
+  Cpu,
+  Shield,
+  Video,
+  MessageSquare,
+  Smartphone,
+  Users,
+  Globe
+} from 'lucide-vue-next' 
 
 useHead({
   title: 'DIGITAL MARKETING TRENDS 2025 - Trinsler Future Matrix',
@@ -164,7 +179,7 @@ const trends = [
     impactLevel: 'HOCH',
     impactColor: 'text-accent-neon',
     codeSnippet: 'ai.personalize(user)',
-    icon: CpuChipIcon,
+    icon: Cpu,
     iconBg: 'bg-linear-to-r from-accent-neon to-accent-cyan',
     timeframe: 'Q1-Q2 2025',
     urgency: 'SOFORT',
@@ -185,7 +200,7 @@ const trends = [
     impactLevel: 'KRITISCH',
     impactColor: 'text-red-400',
     codeSnippet: 'privacy.comply(gdpr)',
-    icon: ShieldCheckIcon,
+    icon: Shield,
     iconBg: 'bg-linear-to-r from-accent-cyan to-accent-purple',
     timeframe: 'Q1 2025',
     urgency: 'KRITISCH',
@@ -206,7 +221,7 @@ const trends = [
     impactLevel: 'HOCH',
     impactColor: 'text-accent-neon',
     codeSnippet: 'video.create(short)',
-    icon: VideoCameraIcon,
+    icon: Video,
     iconBg: 'bg-linear-to-r from-accent-purple to-accent-pink',
     timeframe: 'Q2 2025',
     urgency: 'MITTEL',
@@ -227,7 +242,7 @@ const trends = [
     impactLevel: 'MITTEL',
     impactColor: 'text-accent-orange',
     codeSnippet: 'chatbot.engage(user)',
-    icon: ChatBubbleBottomCenterTextIcon,
+    icon: MessageSquare,
     iconBg: 'bg-linear-to-r from-accent-orange to-accent-neon',
     timeframe: 'Q2-Q3 2025',
     urgency: 'HOCH',
@@ -248,7 +263,7 @@ const trends = [
     impactLevel: 'HOCH',
     impactColor: 'text-accent-cyan',
     codeSnippet: 'mobile.optimize(ux)',
-    icon: DevicePhoneMobileIcon,
+    icon: Smartphone,
     iconBg: 'bg-linear-to-r from-accent-pink to-accent-cyan',
     timeframe: 'Q1-Q4 2025',
     urgency: 'MITTEL',
@@ -269,7 +284,7 @@ const trends = [
     impactLevel: 'MITTEL',
     impactColor: 'text-accent-purple',
     codeSnippet: 'community.engage()',
-    icon: UserGroupIcon,
+    icon: Users,
     iconBg: 'bg-linear-to-r from-green-500 to-emerald-500',
     timeframe: 'Q2-Q4 2025',
     urgency: 'NIEDRIG',

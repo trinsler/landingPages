@@ -12,8 +12,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@monorepo/shared": "workspace:*",
-    "@monorepo/ui": "workspace:*"
+    "@monorepo/shared": "workspace:*"
   },
   "version": "1.0.0",
   "description": "trinsler - Nuxt 3 App",

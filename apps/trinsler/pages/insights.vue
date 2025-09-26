@@ -1,12 +1,8 @@
 <template>
   <div class="min-h-screen matrix-bg relative overflow-hidden">
-    <!-- Background Effects -->
-    <DataStreamBackground theme="matrix" />
-    <FloatingCodeElements theme="matrix" />
-
     <div class="relative container-custom py-20">
       <!-- Intelligence Terminal Header -->
-      <TerminalWindow title="~/intelligence/growth-matrix.sh" class="mb-20">
+      <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm mb-20">
         <!-- System Boot -->
         <div class="mb-8">
           <div class="code-font text-accent-neon text-sm mb-4 animate-slide-up-stagger">
@@ -31,7 +27,7 @@
         </div>
 
         <!-- Intelligence Brief -->
-        <CyberCard>
+        <CardContent>
           <div class="code-font text-accent-purple text-sm mb-3">/* CLASSIFIED_INTEL.md */</div>
           <p class="text-xl text-white/90 leading-relaxed">
             <span class="text-accent-cyan">ZUGANG_GEWÄHRT:</span> Exklusive Growth-Strategien und
@@ -42,8 +38,8 @@
           <div class="code-font text-accent-orange text-sm mt-4">
             if (founder.readyLevel > 9000) { insights.unlock(); }
           </div>
-        </CyberCard>
-      </TerminalWindow>
+        </CardContent>
+      </Card>
 
       <!-- Intelligence Articles Grid -->
       <div class="grid lg:grid-cols-3 gap-8 mb-16">
@@ -56,25 +52,27 @@
       </div>
 
       <!-- Newsletter Intelligence Terminal -->
-      <TerminalWindow title="~/subscribe/intelligence-feed.sh">
-        <!-- Subscribe Content -->
-        <div class="text-center">
-          <div class="code-font text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">intelligence@trinsler:~$</span> subscribe --growth-intel
-            --exclusive
-          </div>
+      <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+        <CardContent class="p-8">
+          <!-- Subscribe Content -->
+          <div class="text-center">
+            <div class="code-font text-accent-neon text-sm mb-6">
+              <span class="text-accent-cyan">intelligence@trinsler:~$</span> subscribe --growth-intel
+              --exclusive
+            </div>
 
-          <NewsletterSubscription />
-        </div>
-      </TerminalWindow>
+            <NewsletterSubscription />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup>
-import { TerminalWindow, CyberCard, DataStreamBackground, FloatingCodeElements } from '@monorepo/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui'
 
-// Child Components (to be created)
+// Child Components
 import IntelligenceArticle from '~/components/IntelligenceArticle.vue'
 import NewsletterSubscription from '~/components/NewsletterSubscription.vue'
 

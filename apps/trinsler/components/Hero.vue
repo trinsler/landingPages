@@ -54,13 +54,11 @@
         <div class="max-w-2xl">
           <!-- Status Badge -->
           <div class="mb-8 animate-slide-up-stagger">
-            <div
-              class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold animate-neon-flicker"
-            >
-              <div class="w-2 h-2 bg-accent-primary rounded-full mr-3" />
+            <Badge variant="secondary" class="inline-flex items-center bg-card/80 backdrop-blur-sm border-primary/20 text-foreground rounded-full px-6 py-3 text-sm font-semibold animate-neon-flicker hover:border-primary/40 transition-colors">
+              <div class="w-2 h-2 bg-primary rounded-full mr-3" />
               <span class="text-glow-blue">Verfügbar</span>
-              <span class="text-accent-cyan ml-2">Web Development</span>
-            </div>
+              <span class="text-cyan-400 ml-2">Web Development</span>
+            </Badge>
           </div>
 
           <!-- Main Headline -->
@@ -82,21 +80,23 @@
 
           <!-- Value Proposition -->
           <div class="mb-10 animate-slide-up-stagger" style="animation-delay: 0.4s">
-            <div class="cyber-card rounded-xl p-6">
-              <div class="text-accent-primary text-sm mb-3">Unser Versprechen</div>
-              <p class="text-lg leading-relaxed text-white/90 mb-4">
-                Wir entwickeln professionelle Web-Applikationen, Landing Pages und Websites.
-                <span class="font-bold text-glow-blue"
-                  >Moderne Technologien, faire Preise, schnelle Lieferung</span
-                >.
-              </p>
-              <p class="text-white/80">
-                <span class="text-accent-cyan">Services:</span> Web Apps, Landing Pages, Websites<br />
-                <span class="text-accent-purple">Timeline:</span> 2-8 Wochen je nach Projekt<br />
-                <span class="text-accent-primary">Pricing:</span> Custom quotes based on
-                requirements
-              </p>
-            </div>
+            <Card class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/30 transition-colors">
+              <CardContent class="p-6">
+                <div class="text-primary text-sm mb-3">Unser Versprechen</div>
+                <p class="text-lg leading-relaxed text-foreground/90 mb-4">
+                  Wir entwickeln professionelle Web-Applikationen, Landing Pages und Websites.
+                  <span class="font-bold text-glow-blue"
+                    >Moderne Technologien, faire Preise, schnelle Lieferung</span
+                  >.
+                </p>
+                <p class="text-muted-foreground">
+                  <span class="text-cyan-400">Services:</span> Web Apps, Landing Pages, Websites<br />
+                  <span class="text-purple-400">Timeline:</span> 2-8 Wochen je nach Projekt<br />
+                  <span class="text-primary">Pricing:</span> Custom quotes based on
+                  requirements
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           <!-- Cyber CTAs -->
@@ -104,12 +104,16 @@
             class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-12 animate-slide-up-stagger"
             style="animation-delay: 0.6s"
           >
-            <NuxtLink to="/contact" class="btn-primary group animate-glow-pulse">
-              <span>Kostenloses Strategy-Gespräch</span>
-            </NuxtLink>
-            <NuxtLink to="/portfolio" class="btn-secondary magnetic-hover">
-              Projekt-Portfolio ansehen
-            </NuxtLink>
+            <Button asChild class="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 text-lg rounded-xl border border-primary/20" style="box-shadow: 0 4px 14px var(--glow-blue);">
+              <NuxtLink to="/contact" class="group animate-glow-pulse">
+                <span>Kostenloses Strategy-Gespräch</span>
+              </NuxtLink>
+            </Button>
+            <Button asChild variant="secondary" class="bg-secondary hover:bg-accent text-secondary-foreground border border-border hover:border-primary/50 px-6 py-3 text-lg rounded-xl magnetic-hover transition-all duration-300">
+              <NuxtLink to="/portfolio">
+                Projekt-Portfolio ansehen
+              </NuxtLink>
+            </Button>
           </div>
 
           <!-- Key Benefits -->
@@ -117,21 +121,27 @@
             class="grid grid-cols-3 gap-8 animate-slide-up-stagger"
             style="animation-delay: 0.8s"
           >
-            <div class="neon-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="text-xs text-accent-cyan mb-1">Entwicklungszeit</div>
-              <div class="text-3xl font-black text-glow-blue mb-1">4-8</div>
-              <div class="text-xs text-white/60">Wochen Standard</div>
-            </div>
-            <div class="cyber-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="text-xs text-accent-purple mb-1">Ansatz</div>
-              <div class="text-3xl font-black text-glow-cyan mb-1">Custom</div>
-              <div class="text-xs text-white/60">Requirements</div>
-            </div>
-            <div class="glass-card rounded-xl p-4 text-center magnetic-hover">
-              <div class="text-xs text-accent-primary mb-1">Gründung</div>
-              <div class="text-3xl font-black text-white mb-1 animate-glitch">2025</div>
-              <div class="text-xs text-white/60">erste Partnerschaften</div>
-            </div>
+            <Card class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors magnetic-hover">
+              <CardContent class="p-4 text-center">
+                <div class="text-xs text-cyan-400 mb-1">Entwicklungszeit</div>
+                <div class="text-3xl font-black text-glow-blue mb-1">4-8</div>
+                <div class="text-xs text-muted-foreground">Wochen Standard</div>
+              </CardContent>
+            </Card>
+            <Card class="bg-card/80 backdrop-blur-sm border-purple-500/20 hover:border-purple-500/40 transition-colors magnetic-hover">
+              <CardContent class="p-4 text-center">
+                <div class="text-xs text-purple-400 mb-1">Ansatz</div>
+                <div class="text-3xl font-black text-glow-cyan mb-1">Custom</div>
+                <div class="text-xs text-muted-foreground">Requirements</div>
+              </CardContent>
+            </Card>
+            <Card class="bg-card/60 backdrop-blur-lg border-primary/20 hover:border-primary/40 transition-colors magnetic-hover">
+              <CardContent class="p-4 text-center">
+                <div class="text-xs text-primary mb-1">Gründung</div>
+                <div class="text-3xl font-black text-foreground mb-1 animate-glitch">2025</div>
+                <div class="text-xs text-muted-foreground">erste Partnerschaften</div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
@@ -244,5 +254,8 @@
 </template>
 
 <script setup>
-// No icons needed
+import Button from '~/components/ui/Button.vue'
+import Card from '~/components/ui/Card.vue'
+import CardContent from '~/components/ui/CardContent.vue'
+import Badge from '~/components/ui/Badge.vue'
 </script>

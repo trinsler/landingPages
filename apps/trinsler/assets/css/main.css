@@ -1,62 +1,99 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
-/* Import universal theme system */
-@import '@monorepo/ui/src/styles/themes.css';
-
 @import "tailwindcss";
+
+/* Tailwind CSS v4 with shadcn/ui + Cyber theme system */
+@theme {
+  /* Cyber Theme Colors */
+  --color-background: oklch(5% 0 0);
+  --color-foreground: oklch(95% 0 0);
+  --color-card: oklch(8% 0 0);
+  --color-card-foreground: oklch(95% 0 0);
+  --color-popover: oklch(8% 0 0);
+  --color-popover-foreground: oklch(95% 0 0);
+  --color-primary: oklch(65% 0.2 250);
+  --color-primary-foreground: oklch(10% 0 0);
+  --color-secondary: oklch(12% 0 0);
+  --color-secondary-foreground: oklch(85% 0 0);
+  --color-muted: oklch(10% 0 0);
+  --color-muted-foreground: oklch(65% 0 0);
+  --color-accent: oklch(18% 0.05 180);
+  --color-accent-foreground: oklch(90% 0 0);
+  --color-destructive: oklch(62% 0.15 29);
+  --color-destructive-foreground: oklch(95% 0 0);
+  --color-border: oklch(20% 0.05 250);
+  --color-input: oklch(12% 0 0);
+  --color-ring: oklch(65% 0.2 250);
+
+  /* Cyber Special Colors */
+  --color-neon: oklch(75% 0.25 180);
+  --color-cyber-purple: oklch(65% 0.2 290);
+  --color-cyber-orange: oklch(70% 0.15 60);
+
+  /* Border radius */
+  --radius: 0.75rem;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
 
 /* Legacy color mappings for backward compatibility */
 :root {
-  /* Map old variables to new theme system */
-  --base-bg: var(--ui-bg-primary);
-  --surface-1: var(--ui-bg-secondary);
-  --surface-2: var(--ui-bg-tertiary);
-  --surface-3: var(--ui-bg-tertiary);
-  --accent-primary: var(--ui-bg-accent);
-  --accent-secondary: var(--ui-border-secondary);
-  --accent-cyan: var(--ui-text-accent);
-  --accent-purple: #8b5cf6;
-  --accent-orange: #f59e0b;
-  --accent-neutral: #64748b;
-  --text-primary: var(--ui-text-primary);
-  --text-secondary: var(--ui-text-secondary);
-  --text-muted: var(--ui-text-muted);
-  --glow-blue: var(--ui-glow-primary);
-  --glow-cyan: var(--ui-glow-secondary);
-  --glow-purple: var(--ui-glow-primary);
+  /* Map old variables to new shadcn theme system */
+  --base-bg: var(--color-background);
+  --surface-1: var(--color-card);
+  --surface-2: var(--color-secondary);
+  --surface-3: var(--color-accent);
+  --accent-primary: var(--color-primary);
+  --accent-secondary: var(--color-ring);
+  --accent-cyan: var(--color-neon);
+  --accent-purple: var(--color-cyber-purple);
+  --accent-orange: var(--color-cyber-orange);
+  --accent-neutral: oklch(50% 0 0);
+  --text-primary: var(--color-foreground);
+  --text-secondary: var(--color-muted-foreground);
+  --text-muted: var(--color-muted-foreground);
+  --glow-blue: 0 0 20px var(--color-primary);
+  --glow-cyan: 0 0 20px var(--color-neon);
+  --glow-purple: 0 0 20px var(--color-cyber-purple);
 
   /* Enhanced cyber theme variables */
-  --accent-neon: var(--ui-text-accent);
-  --accent-pink: #ec4899;
-  --glow-green: var(--ui-glow-primary);
+  --accent-neon: var(--color-neon);
+  --accent-pink: oklch(65% 0.25 340);
+  --glow-green: 0 0 20px var(--color-neon);
 }
 
 * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    background: var(--base-bg);
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    overflow-x: hidden;
-  }
+/* Global styles */
+* {
+  border-color: var(--color-border);
+}
 
-  h1, h2, h3 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 700;
-  }
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
 
-  .code-font {
-    font-family: 'JetBrains Mono', monospace;
-  }
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.code-font {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 @layer components {

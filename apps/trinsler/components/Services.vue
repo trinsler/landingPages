@@ -18,13 +18,11 @@
     <div class="relative container-custom">
       <!-- Cyber Section Header -->
       <div class="text-center max-w-4xl mx-auto mb-20">
-        <div
-          class="inline-flex items-center neon-card rounded-full px-6 py-3 text-sm font-semibold mb-6 animate-neon-flicker"
-        >
-          <div class="w-2 h-2 bg-accent-neon rounded-full mr-3" />
-          <span class="text-accent-cyan">Services</span>
-          <span class="text-white ml-2">Verfügbar</span>
-        </div>
+        <Badge variant="secondary" class="inline-flex items-center bg-card/80 backdrop-blur-sm border-primary/20 text-foreground rounded-full px-6 py-3 text-sm font-semibold mb-6 animate-neon-flicker hover:border-primary/40 transition-colors">
+          <div class="w-2 h-2 bg-primary rounded-full mr-3" />
+          <span class="text-cyan-400">Services</span>
+          <span class="text-foreground ml-2">Verfügbar</span>
+        </Badge>
 
         <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6">
           Warum
@@ -33,15 +31,17 @@
           <span class="text-accent-cyan">mit Trinsler</span>
         </h2>
 
-        <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto">
-          <div class="text-accent-cyan text-sm mb-3">Unser Ansatz</div>
-          <p class="text-lg text-white/90 leading-relaxed">
-            <span class="text-accent-neon">Spezialisierung:</span> Moderne Web-Applikationen,
-            Landing Pages und Websites. Wir entwickeln
-            <span class="font-bold text-glow-green">professionelle Web-Lösungen</span> – einfach,
-            praktisch und zu fairen Festpreisen.
-          </p>
-        </div>
+        <Card class="bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/30 transition-colors max-w-3xl mx-auto">
+          <CardContent class="p-6">
+            <Badge variant="secondary" class="text-cyan-400 bg-card/50 text-sm mb-3">Unser Ansatz</Badge>
+            <p class="text-lg text-foreground/90 leading-relaxed">
+              <span class="text-primary">Spezialisierung:</span> Moderne Web-Applikationen,
+              Landing Pages und Websites. Wir entwickeln
+              <span class="font-bold text-glow-green">professionelle Web-Lösungen</span> – einfach,
+              praktisch und zu fairen Festpreisen.
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       <!-- Terminal Service Cards -->
@@ -293,6 +293,11 @@
 </template>
 
 <script setup>
+import Button from '~/components/ui/Button.vue'
+import Card from '~/components/ui/Card.vue'
+import CardContent from '~/components/ui/CardContent.vue'
+import Badge from '~/components/ui/Badge.vue'
+
 // No icons or emojis needed
 
 const mainServices = [

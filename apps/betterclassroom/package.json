@@ -12,10 +12,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@monorepo/shared": "workspace:*",
-    "@monorepo/ui": "workspace:*"
-  },
-  "devDependencies": {
+    "@monorepo/shared": "workspace:*"
   },
   "version": "1.0.0",
   "description": "betterclassroom - Nuxt 3 App",
