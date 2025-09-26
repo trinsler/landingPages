@@ -1,36 +1,42 @@
 <template>
-  <header class="px-4 lg:px-6 h-16 flex items-center fixed w-full glass-morphism z-50 shadow-lg">
-    <div class="container mx-auto flex justify-between items-center">
-      <NuxtLink class="flex items-center justify-center" to="/">
-        <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
-        </svg>
-        <span class="ml-2 text-lg font-bold gradient-text">BetterClassroom</span>
-      </NuxtLink>
-      <nav class="hidden md:flex gap-4 sm:gap-6">
-        <NuxtLink
-          class="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          to="/"
-          @click="scrollToSection('features')"
-        >
-          Funktionen
+  <header class="px-6 lg:px-8 h-16 flex fixed w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50 shadow-sm">
+    <div class="flex justify-between items-center h-full w-full">
+      <div class="flex items-center">
+        <NuxtLink class="flex items-center justify-center" to="/">
+          <svg class="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+          </svg>
+          <span class="ml-2 text-lg font-bold gradient-text">BetterClassroom</span>
         </NuxtLink>
-        <NuxtLink
-          class="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          to="/"
-          @click="scrollToSection('contact')"
+      </div>
+      <div class="flex items-center gap-4">
+        <nav class="hidden md:flex gap-4 sm:gap-6">
+          <NuxtLink
+            class="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            to="/"
+            @click="scrollToSection('features')"
+          >
+            Funktionen
+          </NuxtLink>
+          <NuxtLink
+            class="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            to="/"
+            @click="scrollToSection('contact')"
+          >
+            Kontakt
+          </NuxtLink>
+        </nav>
+        <BaseButton
+          variant="ghost"
+          size="sm"
+          class="md:hidden"
+          @click="isMenuOpen = !isMenuOpen"
         >
-          Kontakt
-        </NuxtLink>
-      </nav>
-      <button
-        class="md:hidden p-2"
-        @click="isMenuOpen = !isMenuOpen"
-      >
-        <svg class="h-6 w-6 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+          <svg class="h-6 w-6 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </BaseButton>
+      </div>
     </div>
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
@@ -42,7 +48,7 @@
     >
       <div
         v-if="isMenuOpen"
-        class="absolute top-16 left-0 right-0 glass-morphism shadow-lg p-4 md:hidden"
+        class="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-lg p-4 md:hidden"
       >
         <NuxtLink
           class="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -65,6 +71,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { BaseButton } from '@monorepo/ui'
 
 const isMenuOpen = ref(false)
 

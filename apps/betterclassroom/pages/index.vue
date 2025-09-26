@@ -1,221 +1,215 @@
 <template>
   <div>
-    <!-- Hero Section -->
-    <section
-      class="w-full min-h-screen flex items-center justify-center relative overflow-hidden gradient-bg"
-    >
-      <div class="container mx-auto px-4 md:px-6">
-        <!-- Floating background elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            class="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl floating-animation"
-          />
-          <div
-            class="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl floating-animation"
-            style="animation-delay: -3s"
-          />
-          <div
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-300/10 to-indigo-500/10 rounded-full blur-3xl floating-animation"
-            style="animation-delay: -1.5s"
-          />
-        </div>
+    <!-- Enhanced Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Animated Background -->
+      <div class="absolute inset-0 gradient-bg-strong">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background)_/_0.8)_40%,hsl(var(--background)_/_1)_100%)]" />
+      </div>
 
-        <div
-          class="relative z-10 flex flex-col items-center space-y-8 text-center"
-          :class="{
-            'opacity-100 translate-y-0': isVisible,
-            'opacity-0 translate-y-10': !isVisible,
-          }"
-          style="transition: all 1s ease-out"
-        >
-          <div class="space-y-6">
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight">
+      <!-- Floating Elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-education-blue/20 to-education-indigo/20 rounded-full blur-3xl floating-animation animate-pulse" />
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-education-purple/20 to-education-pink/20 rounded-full blur-3xl floating-animation animate-pulse" style="animation-delay: -2s" />
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-education-indigo/15 to-education-purple/15 rounded-full blur-3xl floating-animation animate-pulse" style="animation-delay: -1s" />
+      </div>
+
+      <!-- Hero Content -->
+      <Container class="relative z-10">
+        <div class="text-center space-y-8 max-w-6xl mx-auto">
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-primary/20 animate-fade-in">
+            <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+            <span class="text-sm font-medium text-muted-foreground">Revolutionieren Sie Ihren Unterricht</span>
+          </div>
+
+          <!-- Main Headline -->
+          <div class="space-y-6 animate-slide-up">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
               <span class="gradient-text">Digitale Meldungen</span>
               <br />
               <span class="text-foreground">im Klassenzimmer</span>
             </h1>
-            <p
-              class="mx-auto max-w-[800px] text-xl md:text-2xl text-muted-foreground leading-relaxed"
-            >
-              Revolutionieren Sie die Interaktion in Ihrem Klassenzimmer. Ermöglichen Sie Schülern,
+            <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+              Revolutionieren Sie die Interaktion in Ihrem Klassenzimmer. Ermöglichen Sie Schüler:innen,
               sich digital zu melden, und behalten Sie den Überblick mit unserem innovativen
-              Dashboard.
+              Dashboard für moderne Bildung.
             </p>
           </div>
-          <div class="flex flex-col sm:flex-row gap-4 items-center">
-            <button
-              class="glass-card px-10 py-4 text-lg font-semibold text-foreground hover:scale-105 active:scale-95 transition-all duration-300 pulse-glow rounded-2xl"
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 items-center justify-center animate-scale-in" style="animation-delay: 0.3s">
+            <BaseButton
+              size="lg"
+              variant="default"
+              class="btn-modern group px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl"
               @click="scrollToSection('contact')"
             >
-              <span class="gradient-text">Demo anfordern</span>
-              <svg
-                class="ml-3 h-5 w-5 inline text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-            <button
-              class="px-8 py-4 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-2xl border border-border/50 hover:border-border backdrop-blur-sm"
+              <span class="gradient">Demo anfordern</span>
+              <ArrowRightIcon class="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </BaseButton>
+            <BaseButton
+              size="lg"
+              variant="outline"
+              class="btn-modern px-8 py-4 text-lg font-medium border-2 hover:border-primary/50"
               @click="scrollToSection('features')"
             >
-              Mehr erfahren
-            </button>
+              Funktionen entdecken
+              <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </BaseButton>
+          </div>
+
+          <!-- Trust Indicators -->
+          <div class="flex flex-wrap items-center justify-center gap-8 pt-8 animate-fade-in" style="animation-delay: 0.6s">
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <svg class="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span>Datenschutzkonform</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <svg class="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span>Easy Setup</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <svg class="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span>24/7 Support</span>
+            </div>
           </div>
         </div>
+      </Container>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <BaseButton
+          variant="ghost"
+          size="sm"
+          class="text-muted-foreground hover:text-foreground"
+          @click="scrollToSection('features')"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </BaseButton>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="w-full py-20 md:py-32 relative">
-      <div class="container mx-auto px-4 md:px-6">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-6xl font-bold mb-6">
-            <span class="gradient-text">Unsere Funktionen</span>
+    <!-- Enhanced Features Section -->
+    <Section id="features" class="py-20 md:py-32 bg-gray-50">
+      <Container>
+        <div class="text-center mb-16 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+            <span>Kernfunktionen</span>
+          </div>
+          <h2 class="text-4xl md:text-6xl font-bold">
+            <span class="gradient-text">Alles was Sie brauchen</span>
           </h2>
-          <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Entdecken Sie die innovativen Features, die Ihr Klassenzimmer revolutionieren werden
+          <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Entdecken Sie die innovativen Features, die Ihr Klassenzimmer in eine moderne Lernumgebung verwandeln
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div
-            class="group glass-card p-8 rounded-3xl hover:scale-[1.02] transition-all duration-500"
-          >
-            <div class="gradient-border rounded-2xl p-5 mb-6 w-fit mx-auto">
-              <svg
-                class="h-12 w-12 text-primary relative z-10"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3.5M18 15h-2.5A2.5 2.5 0 0113 12.5V10"
-                />
+          <!-- Feature 1 -->
+          <BaseCard class="feature-card p-8 text-center group bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-education-blue to-education-indigo flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
             </div>
-            <h3
-              class="text-2xl font-bold mb-4 text-center group-hover:gradient-text transition-all duration-300"
-            >
+            <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-education-blue transition-colors">
               Digitale Meldungen
             </h3>
-            <p class="text-muted-foreground leading-relaxed text-center">
-              Schüler können sich mit einem Klick melden, ohne den Unterricht zu stören.
+            <p class="text-gray-600 leading-relaxed">
+              Schüler:innen können sich mit einem Klick melden, ohne den Unterricht zu stören. Echtzeit-Übermittlung direkt auf Ihr Dashboard.
             </p>
-          </div>
+          </BaseCard>
 
-          <div
-            class="group glass-card p-8 rounded-3xl hover:scale-[1.02] transition-all duration-500"
-          >
-            <div class="gradient-border rounded-2xl p-5 mb-6 w-fit mx-auto">
-              <svg
-                class="h-12 w-12 text-primary relative z-10"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
-                />
+          <!-- Feature 2 -->
+          <BaseCard class="feature-card p-8 text-center group bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-education-indigo to-education-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
             </div>
-            <h3
-              class="text-2xl font-bold mb-4 text-center group-hover:gradient-text transition-all duration-300"
-            >
+            <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-education-indigo transition-colors">
               Lehrer-Dashboard
             </h3>
-            <p class="text-muted-foreground leading-relaxed text-center">
-              Übersichtliches Dashboard zeigt alle aktiven Meldungen in Echtzeit.
+            <p class="text-gray-600 leading-relaxed">
+              Übersichtliches Dashboard zeigt alle aktiven Meldungen in Echtzeit. Statistiken und Übersichten für optimale Unterrichtsführung.
             </p>
-          </div>
+          </BaseCard>
 
-          <div
-            class="group glass-card p-8 rounded-3xl hover:scale-[1.02] transition-all duration-500 md:col-span-2 lg:col-span-1"
-          >
-            <div class="gradient-border rounded-2xl p-5 mb-6 w-fit mx-auto">
-              <svg
-                class="h-12 w-12 text-primary relative z-10"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                />
+          <!-- Feature 3 -->
+          <BaseCard class="feature-card p-8 text-center group bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-education-purple to-education-pink flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-black" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3
-              class="text-2xl font-bold mb-4 text-center group-hover:gradient-text transition-all duration-300"
-            >
+            <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-education-purple transition-colors">
               Sitzplan-Integration
             </h3>
-            <p class="text-muted-foreground leading-relaxed text-center">
-              Visualisieren Sie die Meldungen auf einem digitalen Sitzplan des Klassenzimmers.
+            <p class="text-gray-600 leading-relaxed">
+              Visualisieren Sie die Meldungen auf einem digitalen Sitzplan des Klassenzimmers. Behalten Sie den Überblick über jede:n Schüler:in.
             </p>
-          </div>
+          </BaseCard>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
 
-    <!-- Image Gallery Component -->
+    <!-- Enhanced Image Gallery Component -->
     <ImageGallery />
 
-    <!-- Contact Section -->
-    <section id="contact" class="w-full py-12 md:py-24 lg:py-32 bg-secondary/30">
-      <div class="container mx-auto px-4 md:px-6">
-        <div class="max-w-3xl mx-auto text-center">
-          <h2
-            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6 text-foreground"
-          >
-            Bereit für die digitale Klassenzimmer Revolution?
-          </h2>
-          <p class="text-xl mb-10 text-muted-foreground leading-relaxed">
-            Erleben Sie BetterClassroom in Aktion. Fordern Sie jetzt Ihre persönliche Demo an!
-          </p>
-          <div class="flex flex-col items-center justify-center space-y-6">
-            <a
-              href="mailto:info@betterclassroom.de"
-              class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-semibold rounded-xl text-primary-foreground bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95"
-            >
-              Demo anfordern
-            </a>
-            <div class="bg-card border border-border rounded-2xl p-6 shadow-sm">
-              <p class="text-muted-foreground mb-2">Direkter Kontakt:</p>
-              <a
-                href="mailto:info@betterclassroom.de"
-                class="text-primary hover:underline text-lg font-medium"
-                >info@betterclassroom.de</a
-              >
+    <!-- Enhanced Contact Section -->
+    <Section id="contact" class="py-20 md:py-32 bg-gradient-to-br from-primary/5 to-transparent">
+      <Container>
+        <div class="max-w-4xl mx-auto text-center space-y-8">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+              <span>Starten Sie durch</span>
             </div>
+            <h2 class="text-4xl md:text-6xl font-bold">
+              <span class="gradient-text">Bereit für die digitale Klassenzimmer Revolution?</span>
+            </h2>
+            <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Erleben Sie BetterClassroom in Aktion. Fordern Sie jetzt Ihre persönliche Demo an und überzeugen Sie sich selbst von der Zukunft des Unterrichts.
+            </p>
+          </div>
+
+          <div class="flex flex-col items-center justify-center space-y-6">
+            <BaseButton
+              size="lg"
+              variant="default"
+              href="mailto:info@betterclassroom.de"
+              class="btn-modern group px-12 py-6 text-xl font-semibold shadow-xl hover:shadow-2xl"
+            >
+              <svg class="w-6 h-6 mr-3 text-white" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Demo anfordern
+              <ArrowRightIcon class="ml-2 h-6 w-6 text-white group-hover:translate-x-1 transition-transform" />
+            </BaseButton>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { BaseButton, BaseCard, Container, Section, ArrowRightIcon } from '@monorepo/ui'
 
 const isVisible = ref(false)
 
-const scrollToSection = id => {
+const scrollToSection = (id) => {
   const element = document.getElementById(id)
   if (element) {
     element.scrollIntoView({ behavior: 'smooth' })
