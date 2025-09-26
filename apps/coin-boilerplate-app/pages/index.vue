@@ -33,31 +33,33 @@
 
         <div class="mt-10 flex items-center justify-center gap-x-6">
           <template v-if="authStore.isAuthenticated">
-            <NuxtLink
-              to="/shop"
-              class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Browse Coin Packages
-            </NuxtLink>
+            <Button as-child>
+              <NuxtLink to="/shop">
+                Browse Coin Packages
+              </NuxtLink>
+            </Button>
 
-            <NuxtLink to="/dashboard" class="text-sm font-semibold leading-6 text-gray-900">
-              View Dashboard <span aria-hidden="true">→</span>
-            </NuxtLink>
+            <Button variant="ghost" as-child>
+              <NuxtLink to="/dashboard">
+                View Dashboard <span aria-hidden="true">→</span>
+              </NuxtLink>
+            </Button>
           </template>
 
           <template v-else>
-            <button
+            <Button
               :disabled="authStore.loading"
-              class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
               @click="handleSignIn"
             >
               <span v-if="authStore.loading">Signing in...</span>
               <span v-else>Sign in with Google</span>
-            </button>
+            </Button>
 
-            <a href="#features" class="text-sm font-semibold leading-6 text-gray-900">
-              Learn more <span aria-hidden="true">→</span>
-            </a>
+            <Button variant="link" as-child>
+              <a href="#features">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
+            </Button>
           </template>
         </div>
       </div>
@@ -65,30 +67,30 @@
 
     <!-- Newsletter Section -->
     <div class="mx-auto max-w-2xl px-6 lg:px-8 pb-16">
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div class="text-center">
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">Bleiben Sie auf dem Laufenden!</h3>
-          <p class="text-gray-600 mb-6">
+      <Card>
+        <CardHeader class="text-center">
+          <CardTitle class="text-lg">Bleiben Sie auf dem Laufenden!</CardTitle>
+          <CardDescription>
             Informationen über neue Features, Coin-Pakete und exklusive Angebote.
-          </p>
-
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <template v-if="authStore.isAuthenticated">
             <div class="flex flex-col items-center gap-4">
-              <p class="text-sm text-gray-600">
+              <p class="text-sm text-muted-foreground">
                 Newsletter-Status:
                 <span
                   :class="
                     authStore.user?.newsletter_subscribed
                       ? 'text-green-600 font-medium'
-                      : 'text-gray-500'
+                      : 'text-muted-foreground'
                   "
                 >
                   {{ authStore.user?.newsletter_subscribed ? 'Abonniert' : 'Nicht abonniert' }}
                 </span>
               </p>
-              <button
+              <Button
                 :disabled="newsletterLoading"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                 @click="toggleNewsletter"
               >
                 {{
@@ -96,18 +98,18 @@
                     ? 'Newsletter abbestellen'
                     : 'Newsletter abonnieren'
                 }}
-              </button>
+              </Button>
             </div>
           </template>
 
           <template v-else>
-            <div class="text-sm text-gray-500">
+            <div class="text-sm text-muted-foreground text-center">
               <p>Newsletter-Abonnement ist Teil der Registrierung.</p>
               <p class="mt-2">Melden Sie sich mit Google an, um den Newsletter zu abonnieren.</p>
             </div>
           </template>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
 
     <!-- Features Section -->
@@ -248,7 +250,7 @@
 </template>
 
 <script setup lang="ts">
-import { useToast } from '@monorepo/ui'
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui'
 
 definePageMeta({
   layout: 'default',

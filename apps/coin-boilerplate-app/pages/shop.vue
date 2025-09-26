@@ -20,20 +20,22 @@
 
       <!-- Packages Grid -->
       <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div
+        <Card
           v-for="pkg in shopStore.packages"
           :key="pkg.id"
-          class="relative bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-200"
-          :class="{ 'ring-2 ring-indigo-600 ring-opacity-50': pkg.popular }"
+          :class="cn(
+            'relative hover:shadow-lg transition-shadow duration-200',
+            pkg.popular && 'ring-2 ring-primary ring-opacity-50'
+          )"
         >
           <!-- Popular Badge -->
           <div v-if="pkg.popular" class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-            <span class="bg-indigo-600 text-white px-3 py-1 text-sm font-medium rounded-full">
+            <span class="bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded-full">
               Most Popular
             </span>
           </div>
 
-          <div class="text-center">
+          <CardHeader class="text-center">
             <!-- Coin Icon -->
             <div
               class="w-16 h-16 mx-auto bg-yellow-100 rounded-full flex items-center justify-center mb-4"
@@ -43,53 +45,54 @@
               </svg>
             </div>
 
-            <!-- Package Info -->
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ pkg.name }}</h3>
-            <p class="text-gray-600 text-sm mb-4">{{ pkg.description }}</p>
+            <CardTitle class="text-xl">{{ pkg.name }}</CardTitle>
+            <CardDescription>{{ pkg.description }}</CardDescription>
+          </CardHeader>
 
+          <CardContent class="text-center">
             <!-- Price -->
             <div class="mb-6">
-              <span class="text-3xl font-bold text-gray-900">€{{ pkg.price.toFixed(2) }}</span>
-              <div class="text-sm text-gray-500 mt-1">{{ pkg.coins.toLocaleString() }} coins</div>
-              <div class="text-xs text-gray-400 mt-1">
+              <span class="text-3xl font-bold">€{{ pkg.price.toFixed(2) }}</span>
+              <div class="text-sm text-muted-foreground mt-1">{{ pkg.coins.toLocaleString() }} coins</div>
+              <div class="text-xs text-muted-foreground mt-1">
                 €{{ ((pkg.price / pkg.coins) * 1000).toFixed(2) }} per 1000 coins
               </div>
             </div>
 
             <!-- Buy Button -->
-            <button
+            <Button
               :disabled="shopStore.processingPayment || !authStore.isAuthenticated"
-              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-              :class="{ 'bg-indigo-700': pkg.popular }"
+              class="w-full"
+              :variant="pkg.popular ? 'default' : 'default'"
               @click="handlePurchase(pkg.id)"
             >
               <span v-if="shopStore.processingPayment">Processing...</span>
               <span v-else-if="!authStore.isAuthenticated">Sign in to purchase</span>
               <span v-else>Buy {{ pkg.name }}</span>
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardContent>
+        </Card>
       </div>
 
       <!-- Sign In Prompt -->
-      <div
-        v-if="!authStore.isAuthenticated"
-        class="mt-12 text-center bg-white rounded-lg shadow-sm border border-gray-200 p-8"
-      >
-        <div class="max-w-md mx-auto">
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">Sign in to start purchasing</h3>
-          <p class="text-gray-600 mb-6">
-            Create an account with Google to securely purchase coin packages and track your balance.
-          </p>
-          <button
-            :disabled="authStore.loading"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-            @click="handleSignIn"
-          >
-            <span v-if="authStore.loading">Signing in...</span>
-            <span v-else>Sign in with Google</span>
-          </button>
-        </div>
+      <div v-if="!authStore.isAuthenticated" class="mt-12">
+        <Card class="max-w-md mx-auto text-center">
+          <CardHeader>
+            <CardTitle>Sign in to start purchasing</CardTitle>
+            <CardDescription>
+              Create an account with Google to securely purchase coin packages and track your balance.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button
+              :disabled="authStore.loading"
+              @click="handleSignIn"
+            >
+              <span v-if="authStore.loading">Signing in...</span>
+              <span v-else>Sign in with Google</span>
+            </Button>
+          </CardContent>
+        </Card>
       </div>
 
       <!-- Recent Transactions -->
@@ -135,6 +138,9 @@
 </template>
 
 <script setup lang="ts">
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui'
+import { cn } from '~/lib/utils'
+
 definePageMeta({
   layout: 'default',
 })

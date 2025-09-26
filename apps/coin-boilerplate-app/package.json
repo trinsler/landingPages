@@ -15,10 +15,22 @@
   },
   "dependencies": {
     "@monorepo/shared": "workspace:*",
-    "@monorepo/ui": "workspace:*",
-    "stripe": "^18.5.0"
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.544.0",
+    "radix-vue": "^1.9.17",
+    "stripe": "^18.5.0",
+    "tailwind-merge": "^3.3.1"
   },
-  "keywords": ["nuxt", "typescript", "supabase", "stripe", "oauth", "boilerplate", "monorepo"],
+  "keywords": [
+    "nuxt",
+    "typescript",
+    "supabase",
+    "stripe",
+    "oauth",
+    "boilerplate",
+    "monorepo"
+  ],
   "author": "Niels",
   "license": "MIT"
 }

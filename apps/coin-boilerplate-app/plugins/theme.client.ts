@@ -1,9 +1,5 @@
-import { useTheme } from '@monorepo/ui'
-
 export default defineNuxtPlugin(() => {
-  // Initialize minimal theme for Coin-Boilerplate app
-  const { setTheme } = useTheme()
-
-  // Set minimal theme as default for Coin-Boilerplate
-  setTheme('minimal')
+  // Simple theme initialization for shadcn/ui
+  // The theme is now handled directly via CSS variables in main.css
+  console.log('Theme plugin initialized with shadcn/ui')
 })
