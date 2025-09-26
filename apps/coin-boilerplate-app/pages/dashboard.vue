@@ -1,31 +1,34 @@
 <template>
-  <div class="bg-gray-50 min-h-screen py-12">
+  <div class="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Header -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p class="mt-2 text-gray-600">Welcome back, {{ authStore.user?.full_name }}!</p>
+      <div class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-foreground mb-4">
+          <span class="mr-3">📊</span>Dashboard
+        </h1>
+        <p class="text-xl text-muted-foreground">
+          Welcome back, <span class="text-primary font-semibold">{{ authStore.user?.full_name }}</span>! 👋
+        </p>
       </div>
 
       <!-- Stats Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <!-- Coin Balance -->
-        <Card>
+        <Card class="backdrop-blur-sm bg-card/90 shadow-lg hover:shadow-xl transition-all duration-300 border-primary/20">
           <CardContent class="p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2L3 7v11h14V7l-7-5z" />
-                  </svg>
+                <div class="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center shadow-lg">
+                  <span class="text-2xl">💰</span>
                 </div>
               </div>
-              <div class="ml-5 w-0 flex-1">
+              <div class="ml-6 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-muted-foreground truncate">Current Balance</dt>
-                  <dd class="text-2xl font-semibold">
-                    {{ authStore.coinBalance }} Coins
+                  <dt class="text-sm font-medium text-muted-foreground truncate mb-1">Current Balance</dt>
+                  <dd class="text-3xl font-bold text-primary">
+                    {{ authStore.coinBalance }}
                   </dd>
+                  <div class="text-sm text-muted-foreground">Coins</div>
                 </dl>
               </div>
             </div>
@@ -33,30 +36,20 @@
         </Card>
 
         <!-- Total Spent -->
-        <Card>
+        <Card class="backdrop-blur-sm bg-card/90 shadow-lg hover:shadow-xl transition-all duration-300 border-green-200/50">
           <CardContent class="p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg
-                    class="w-5 h-5 text-green-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
-                    />
-                  </svg>
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center shadow-lg">
+                  <span class="text-2xl">💳</span>
                 </div>
               </div>
-              <div class="ml-5 w-0 flex-1">
+              <div class="ml-6 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-muted-foreground truncate">Total Spent</dt>
-                  <dd class="text-2xl font-semibold">€{{ totalSpent.toFixed(2) }}</dd>
+                  <dt class="text-sm font-medium text-muted-foreground truncate mb-1">Total Spent</dt>
+                  <dd class="text-3xl font-bold text-green-600">
+                    €{{ totalSpent.toFixed(2) }}
+                  </dd>
                 </dl>
               </div>
             </div>
@@ -64,32 +57,21 @@
         </Card>
 
         <!-- Total Purchases -->
-        <Card>
+        <Card class="backdrop-blur-sm bg-card/90 shadow-lg hover:shadow-xl transition-all duration-300 border-blue-200/50">
           <CardContent class="p-6">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <svg
-                    class="w-5 h-5 text-blue-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                    />
-                  </svg>
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-xl flex items-center justify-center shadow-lg">
+                  <span class="text-2xl">🛒</span>
                 </div>
               </div>
-              <div class="ml-5 w-0 flex-1">
+              <div class="ml-6 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-muted-foreground truncate">Total Purchases</dt>
-                  <dd class="text-2xl font-semibold">
+                  <dt class="text-sm font-medium text-muted-foreground truncate mb-1">Total Purchases</dt>
+                  <dd class="text-3xl font-bold text-blue-600">
                     {{ completedPurchases.length }}
                   </dd>
+                  <div class="text-sm text-muted-foreground">Orders</div>
                 </dl>
               </div>
             </div>

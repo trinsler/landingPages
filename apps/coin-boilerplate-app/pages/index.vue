@@ -1,47 +1,48 @@
 <template>
-  <div class="relative isolate px-6 pt-14 lg:px-8">
+  <div class="relative isolate px-6 pt-14 lg:px-8 min-h-screen bg-gradient-to-b from-background to-accent/20">
     <!-- Background gradient -->
     <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
       <div
-        class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+        class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary/20 to-accent/30 opacity-60 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
       />
     </div>
 
     <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
       <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-        <div
-          class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
-        >
+        <Badge variant="outline" class="px-4 py-2 text-sm bg-card/50 backdrop-blur-sm border-primary/20">
+          <span class="mr-2">🔒</span>
           Secure digital coin platform with OAuth and Stripe integration.
-          <NuxtLink to="/shop" class="font-semibold text-indigo-600">
-            <span class="absolute inset-0" aria-hidden="true" />
-            Start shopping <span aria-hidden="true">&rarr;</span>
+          <NuxtLink to="/shop" class="ml-2 font-semibold text-primary hover:text-primary/80">
+            Start shopping <span aria-hidden="true">→</span>
           </NuxtLink>
-        </div>
+        </Badge>
       </div>
 
       <div class="text-center">
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+        <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
           Buy Digital Coins with
-          <span class="text-indigo-600">Confidence</span>
+          <span class="text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">Confidence</span>
         </h1>
 
-        <p class="mt-6 text-lg leading-8 text-gray-600">
+        <p class="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto">
           A modern, secure platform for purchasing digital coins. Built with Nuxt 3, Supabase, and
           Stripe for the best user experience and security standards.
         </p>
 
-        <div class="mt-10 flex items-center justify-center gap-x-6">
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <template v-if="authStore.isAuthenticated">
-            <Button as-child>
-              <NuxtLink to="/shop">
+            <Button as-child size="lg" class="w-full sm:w-auto">
+              <NuxtLink to="/shop" class="inline-flex items-center">
+                <span class="mr-2">🛍️</span>
                 Browse Coin Packages
               </NuxtLink>
             </Button>
 
-            <Button variant="ghost" as-child>
-              <NuxtLink to="/dashboard">
-                View Dashboard <span aria-hidden="true">→</span>
+            <Button variant="outline" size="lg" as-child class="w-full sm:w-auto">
+              <NuxtLink to="/dashboard" class="inline-flex items-center">
+                <span class="mr-2">📊</span>
+                View Dashboard
+                <span class="ml-2" aria-hidden="true">→</span>
               </NuxtLink>
             </Button>
           </template>
@@ -49,15 +50,24 @@
           <template v-else>
             <Button
               :disabled="authStore.loading"
+              size="lg"
+              class="w-full sm:w-auto"
               @click="handleSignIn"
             >
-              <span v-if="authStore.loading">Signing in...</span>
-              <span v-else>Sign in with Google</span>
+              <span v-if="authStore.loading" class="inline-flex items-center">
+                <span class="animate-spin mr-2">⏳</span>
+                Signing in...
+              </span>
+              <span v-else class="inline-flex items-center">
+                <span class="mr-2">🚀</span>
+                Sign in with Google
+              </span>
             </Button>
 
-            <Button variant="link" as-child>
-              <a href="#features">
-                Learn more <span aria-hidden="true">→</span>
+            <Button variant="ghost" size="lg" as-child class="w-full sm:w-auto">
+              <a href="#features" class="inline-flex items-center">
+                Learn more
+                <span class="ml-2" aria-hidden="true">→</span>
               </a>
             </Button>
           </template>
@@ -67,32 +77,40 @@
 
     <!-- Newsletter Section -->
     <div class="mx-auto max-w-2xl px-6 lg:px-8 pb-16">
-      <Card>
+      <Card class="backdrop-blur-sm bg-card/80 shadow-xl border-primary/10">
         <CardHeader class="text-center">
-          <CardTitle class="text-lg">Bleiben Sie auf dem Laufenden!</CardTitle>
+          <CardTitle class="text-xl flex items-center justify-center gap-2">
+            <span>📧</span>
+            Bleiben Sie auf dem Laufenden!
+          </CardTitle>
           <CardDescription>
             Informationen über neue Features, Coin-Pakete und exklusive Angebote.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <template v-if="authStore.isAuthenticated">
-            <div class="flex flex-col items-center gap-4">
-              <p class="text-sm text-muted-foreground">
-                Newsletter-Status:
-                <span
-                  :class="
-                    authStore.user?.newsletter_subscribed
-                      ? 'text-green-600 font-medium'
-                      : 'text-muted-foreground'
-                  "
+            <div class="flex flex-col items-center gap-6">
+              <div class="flex items-center gap-2">
+                <Badge
+                  :variant="authStore.user?.newsletter_subscribed ? 'success' : 'outline'"
+                  class="px-3 py-1"
                 >
+                  <span class="mr-1">
+                    {{ authStore.user?.newsletter_subscribed ? '✅' : '📝' }}
+                  </span>
                   {{ authStore.user?.newsletter_subscribed ? 'Abonniert' : 'Nicht abonniert' }}
-                </span>
-              </p>
+                </Badge>
+              </div>
               <Button
                 :disabled="newsletterLoading"
+                :variant="authStore.user?.newsletter_subscribed ? 'outline' : 'default'"
+                size="lg"
                 @click="toggleNewsletter"
               >
+                <span v-if="newsletterLoading" class="mr-2 animate-spin">⏳</span>
+                <span v-else class="mr-2">
+                  {{ authStore.user?.newsletter_subscribed ? '📧' : '✉️' }}
+                </span>
                 {{
                   authStore.user?.newsletter_subscribed
                     ? 'Newsletter abbestellen'
@@ -103,9 +121,16 @@
           </template>
 
           <template v-else>
-            <div class="text-sm text-muted-foreground text-center">
-              <p>Newsletter-Abonnement ist Teil der Registrierung.</p>
-              <p class="mt-2">Melden Sie sich mit Google an, um den Newsletter zu abonnieren.</p>
+            <div class="text-center space-y-4">
+              <div class="p-4 bg-accent/50 rounded-lg border border-primary/10">
+                <p class="text-sm text-muted-foreground">
+                  <span class="mr-2">ℹ️</span>
+                  Newsletter-Abonnement ist Teil der Registrierung.
+                </p>
+                <p class="text-sm text-muted-foreground mt-2">
+                  Melden Sie sich mit Google an, um den Newsletter zu abonnieren.
+                </p>
+              </div>
             </div>
           </template>
         </CardContent>
@@ -250,7 +275,7 @@
 </template>
 
 <script setup lang="ts">
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui'
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '~/components/ui'
 
 definePageMeta({
   layout: 'default',
