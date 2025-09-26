@@ -49,7 +49,6 @@ pnpm theme:minimal  # Quick shortcut back to minimal
 
 ### Component Structure
 - `ErrorBoundary.vue` - Global error handling
-- Uses shared UI components from `@monorepo/ui`
 - Theme-aware styling with shadcn/ui variables
 
 ## 🔧 Development
@@ -166,5 +165,3 @@ vitest apps/coin-boilerplate-app/tests/
 - **Supabase**: Backend-as-a-Service
 - **Stripe**: Payment processing
 - **Pinia**: State management
-- **Headless UI**: Accessible components
-- **Heroicons**: Icon library

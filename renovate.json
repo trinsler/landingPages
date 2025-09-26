@@ -142,7 +142,6 @@
     {
       "description": "Disable updates for local packages",
       "matchPackageNames": [
-        "@monorepo/ui",
         "@monorepo/shared",
         "@monorepo/trinsler",
         "@monorepo/betterclassroom",

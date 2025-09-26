@@ -26,7 +26,7 @@
             Kontakt
           </NuxtLink>
         </nav>
-        <BaseButton
+        <Button
           variant="ghost"
           size="sm"
           class="md:hidden"
@@ -35,7 +35,7 @@
           <svg class="h-6 w-6 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
-        </BaseButton>
+        </Button>
       </div>
     </div>
     <Transition
@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { BaseButton } from '@monorepo/ui'
+import { Button } from '~/components/ui' 
 
 const isMenuOpen = ref(false)
 

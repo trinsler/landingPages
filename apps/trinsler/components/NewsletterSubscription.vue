@@ -18,40 +18,44 @@
         <span class="gradient-text-neon">GROWTH_INTEL</span>
       </h3>
 
-      <CyberCard class="max-w-3xl mx-auto mb-8">
-        <div class="code-font text-accent-purple text-sm mb-3">/* INTEL_FEED_DESCRIPTION */</div>
-        <p class="text-lg text-white/90 leading-relaxed mb-4">
-          <span class="text-accent-cyan">CLASSIFIED:</span> Wöchentliche Growth-Insights und
-          <span class="font-bold text-glow-green">Startup-Intelligence</span> direkt aus unseren
-          erfolgreichen Equity-Partnerships.
-        </p>
-        <div class="code-font text-accent-orange text-sm">
-          if (founder.subscribe()) { intelligence.level++; }
-        </div>
-      </CyberCard>
+      <Card class="max-w-3xl mx-auto mb-8 border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+        <CardContent>
+          <div class="code-font text-accent-purple text-sm mb-3">/* INTEL_FEED_DESCRIPTION */</div>
+          <p class="text-lg text-white/90 leading-relaxed mb-4">
+            <span class="text-accent-cyan">CLASSIFIED:</span> Wöchentliche Growth-Insights und
+            <span class="font-bold text-glow-green">Startup-Intelligence</span> direkt aus unseren
+            erfolgreichen Equity-Partnerships.
+          </p>
+          <div class="code-font text-accent-orange text-sm">
+            if (founder.subscribe()) { intelligence.level++; }
+          </div>
+        </CardContent>
+      </Card>
     </div>
 
     <!-- Subscribe Form -->
-    <CyberCard class="max-w-md mx-auto mb-8">
-      <div class="code-font text-accent-cyan text-sm mb-4">SUBSCRIBE_PROTOCOL.init()</div>
-      <form class="space-y-4" @submit.prevent="subscribeIntel">
-        <div class="relative">
-          <input
-            v-model="emailIntel"
-            type="email"
-            required
-            placeholder="founder@startup.com"
-            class="w-full bg-surface-2 border border-accent-neon/30 rounded-xl px-4 py-3 text-white code-font focus:border-accent-neon focus:ring-2 focus:ring-accent-neon/20 transition-all"
-          />
-        </div>
-        <button
-          type="submit"
-          class="btn-primary w-full code-font animate-glow-pulse hover:scale-105 transition-all duration-300"
-        >
-          > SUBSCRIBE_TO_INTEL()
-        </button>
-      </form>
-    </CyberCard>
+    <Card class="max-w-md mx-auto mb-8 border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+      <CardContent class="p-6">
+        <div class="code-font text-accent-cyan text-sm mb-4">SUBSCRIBE_PROTOCOL.init()</div>
+        <form class="space-y-4" @submit.prevent="subscribeIntel">
+          <div class="relative">
+            <input
+              v-model="emailIntel"
+              type="email"
+              required
+              placeholder="founder@startup.com"
+              class="w-full bg-surface-2 border border-accent-neon/30 rounded-xl px-4 py-3 text-white code-font focus:border-accent-neon focus:ring-2 focus:ring-accent-neon/20 transition-all"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn-primary w-full code-font animate-glow-pulse hover:scale-105 transition-all duration-300"
+          >
+            > SUBSCRIBE_TO_INTEL()
+          </button>
+        </form>
+      </CardContent>
+    </Card>
 
     <!-- Intelligence Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 code-font text-sm">
@@ -72,7 +76,7 @@
 </template>
 
 <script setup>
-import { CyberCard } from '@monorepo/ui'
+import { Card, CardContent } from '~/components/ui' 
 
 const emailIntel = ref('')
 

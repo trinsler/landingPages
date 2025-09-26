@@ -1,9 +1,3 @@
-import { useTheme } from '@monorepo/ui'
 
-export default defineNuxtPlugin(() => {
-  // Initialize cyber theme for Trinsler app
-  const { setTheme } = useTheme()
-
-  // Set cyber theme as default for Trinsler
-  setTheme('cyber')
-})
+// Theme functionality removed for shadcn/ui migration
+// All apps now use consistent shadcn/ui styling

@@ -1,6 +1,8 @@
 {
-  "name": "@monorepo/betterclassroom",
+  "name": "@monorepo/coin-boilerplate-app",
   "type": "module",
+  "version": "1.0.1",
+  "description": "Coin Boilerplate App - Nuxt 3 with OAuth, Coin Purchase System and Stripe Integration",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -12,15 +14,18 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@monorepo/shared": "workspace:*"
+    "@monorepo/shared": "workspace:*",
+    "stripe": "^18.5.0"
   },
-  "version": "1.0.0",
-  "description": "betterclassroom - Nuxt 3 App",
-  "author": "Niels",
-  "license": "MIT",
   "keywords": [
     "nuxt",
     "typescript",
+    "supabase",
+    "stripe",
+    "oauth",
+    "boilerplate",
     "monorepo"
-  ]
+  ],
+  "author": "Niels",
+  "license": "MIT"
 }

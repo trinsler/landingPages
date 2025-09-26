@@ -21,5 +21,5 @@
 </template>
 
 <script setup>
-import { Container } from '@monorepo/ui'
+// Container component removed for shadcn/ui migration 
 </script>

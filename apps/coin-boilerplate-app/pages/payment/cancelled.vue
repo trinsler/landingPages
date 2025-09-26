@@ -4,7 +4,7 @@
       <div class="text-center">
         <!-- Cancelled Icon -->
         <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-          <XMarkIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
+          <X class="h-6 w-6 text-red-600" />
         </div>
 
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
@@ -20,7 +20,7 @@
         <div class="bg-yellow-50 border border-yellow-200 rounded-md p-4">
           <div class="flex">
             <div class="shrink-0">
-              <ExclamationTriangleIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+              <TriangleAlert class="h-5 w-5 text-yellow-400" />
             </div>
             <div class="ml-3">
               <h3 class="text-sm font-medium text-yellow-800">
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { XMarkIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
+import { X, TriangleAlert } from 'lucide-vue-next'
 
 // Set page title
 useHead({

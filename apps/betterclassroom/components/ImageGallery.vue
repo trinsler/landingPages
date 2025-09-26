@@ -4,7 +4,7 @@
     <div class="absolute inset-0 gradient-bg opacity-60" />
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--education-blue)_/_0.05)_0%,transparent_50%)]" />
 
-    <Container class="relative z-10">
+    <div class="relative z-10">
       <div class="text-center mb-16 space-y-4">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
           <span>So funktioniert's</span>
@@ -19,7 +19,7 @@
 
       <div class="relative max-w-7xl mx-auto">
         <!-- Enhanced Navigation Buttons -->
-        <BaseButton
+        <Button
           variant="outline"
           size="lg"
           class="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-30 hover-lift rounded-full w-14 h-14 p-0 glass-card border-2 hover:border-primary/30 transition-all duration-300"
@@ -28,7 +28,7 @@
           <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
           </svg>
-        </BaseButton>
+        </Button>
 
         <Transition
           :enter-active-class="`transition-all duration-700 ease-out`"
@@ -45,8 +45,8 @@
           >
             <!-- Professor View -->
             <div class="w-full lg:w-1/2 max-w-2xl animate-fade-in">
-              <BaseCard class="overflow-hidden glass-card hover-lift border-0 shadow-2xl">
-                <div class="p-8 pb-6 bg-gradient-to-br from-primary/5 to-transparent">
+              <Card class="overflow-hidden glass-card hover-lift border-0 shadow-2xl">
+                <CardContent class="p-8 pb-6 bg-gradient-to-br from-primary/5 to-transparent">
                   <div class="flex items-center justify-center space-x-4 mb-8">
                     <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-education-blue to-education-indigo flex items-center justify-center">
                       <svg class="w-6 h-6 text-white" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -58,7 +58,7 @@
                       <p class="text-sm text-muted-foreground mt-1">Dashboard & Verwaltung</p>
                     </div>
                   </div>
-                </div>
+                </CardContent>
                 <div class="p-8">
                   <div class="relative overflow-hidden rounded-2xl bg-muted/5 border border-border/20">
                     <!-- Apple-style dots above image -->
@@ -78,7 +78,7 @@
                     </div>
                   </div>
                   <!-- Enhanced Description Card -->
-                  <BaseCard class="mt-6 p-6 bg-gradient-to-r from-primary/5 to-education-blue/5 border border-primary/10">
+                  <CardContent class="mt-6 p-6 bg-gradient-to-r from-primary/5 to-education-blue/5 border border-primary/10">
                     <div class="flex items-start gap-3">
                       <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
@@ -89,15 +89,15 @@
                         {{ images[currentIndex].profDescription }}
                       </p>
                     </div>
-                  </BaseCard>
+                  </CardContent>
                 </div>
-              </BaseCard>
+              </Card>
             </div>
 
             <!-- Student View -->
             <div class="w-full lg:w-1/2 max-w-2xl animate-fade-in" style="animation-delay: 0.2s">
-              <BaseCard class="overflow-hidden glass-card hover-lift border-0 shadow-2xl">
-                <div class="p-8 pb-6 bg-gradient-to-br from-education-purple/5 to-transparent">
+              <Card class="overflow-hidden glass-card hover-lift border-0 shadow-2xl">
+                <CardContent class="p-8 pb-6 bg-gradient-to-br from-education-purple/5 to-transparent">
                   <div class="flex items-center justify-center space-x-4 mb-8">
                     <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-education-purple to-education-pink flex items-center justify-center">
                       <svg class="w-6 h-6 text-white" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -109,7 +109,7 @@
                       <p class="text-sm text-muted-foreground mt-1">Interaktion & Teilhabe</p>
                     </div>
                   </div>
-                </div>
+                </CardContent>
                 <div class="p-8">
                   <div class="relative overflow-hidden rounded-2xl bg-muted/5 border border-border/20">
                     <!-- Apple-style dots above image -->
@@ -129,7 +129,7 @@
                     </div>
                   </div>
                   <!-- Enhanced Description Card -->
-                  <BaseCard class="mt-6 p-6 bg-gradient-to-r from-education-purple/5 to-education-pink/5 border border-education-purple/10">
+                  <CardContent class="mt-6 p-6 bg-gradient-to-r from-education-purple/5 to-education-pink/5 border border-education-purple/10">
                     <div class="flex items-start gap-3">
                       <div class="w-8 h-8 rounded-lg bg-education-purple/10 flex items-center justify-center flex-shrink-0">
                         <svg class="w-4 h-4 text-education-purple" fill="currentColor" viewBox="0 0 20 20">
@@ -140,14 +140,14 @@
                         {{ images[currentIndex].studentDescription }}
                       </p>
                     </div>
-                  </BaseCard>
+                  </CardContent>
                 </div>
-              </BaseCard>
+              </Card>
             </div>
           </div>
         </Transition>
 
-        <BaseButton
+        <Button
           variant="outline"
           size="lg"
           class="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-30 hover-lift rounded-full w-14 h-14 p-0 glass-card border-2 hover:border-primary/30 transition-all duration-300"
@@ -156,7 +156,7 @@
           <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
           </svg>
-        </BaseButton>
+        </Button>
       </div>
 
       <!-- Enhanced Progress Indicator -->
@@ -186,13 +186,13 @@
           </button>
         </div>
       </div>
-    </Container>
+    </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { BaseButton, BaseCard, Container } from '@monorepo/ui'
+import { Button, Card, CardContent } from '~/components/ui' 
 
 const currentIndex = ref(0)
 const direction = ref(0)

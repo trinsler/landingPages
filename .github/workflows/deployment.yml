@@ -57,7 +57,6 @@ jobs:
 
       - name: 🧩 Run Component Tests
         run: |
-          pnpm --filter=@monorepo/ui vitest run
           pnpm --filter=@monorepo/shared vitest run
 
       - name: 🏗️ Build All Apps

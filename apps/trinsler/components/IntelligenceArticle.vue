@@ -1,7 +1,7 @@
 <template>
   <div class="group relative animate-slide-up-stagger" :style="`animation-delay: ${index * 0.2}s`">
     <!-- Intel File Terminal -->
-    <CyberCard hover glow>
+    <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm hover:shadow-lg hover:shadow-accent-neon/20 transition-all duration-300">
       <!-- Terminal Header -->
       <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
         <div class="flex items-center gap-2">
@@ -119,12 +119,12 @@
           </div>
         </div>
       </div>
-    </CyberCard>
+    </Card>
   </div>
 </template>
 
 <script setup>
-import { CyberCard } from '@monorepo/ui'
+import { Card, CardContent } from '~/components/ui' 
 
 defineProps({
   article: {

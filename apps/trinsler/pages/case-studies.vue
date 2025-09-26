@@ -1,65 +1,85 @@
 <template>
   <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
-    <!-- Background Effects -->
-    <DataStreamBackground />
-
     <div class="relative container-custom py-20">
       <!-- Terminal Header -->
-      <TerminalWindow title="Erfolgsgeschichten - Datenbank" class="mb-20">
-        <div class="text-accent-neon text-sm mb-6">
-          <span class="text-accent-cyan">Status:</span> Case Studies werden geladen
-        </div>
+      <Card class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm mb-20">
+        <CardContent class="p-8">
+          <div class="text-accent-neon text-sm mb-6">
+            <span class="text-accent-cyan">Status:</span> Case Studies werden geladen
+          </div>
 
-        <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 text-center">
-          Verifizierte
-          <br />
-          <span class="gradient-text-neon">Erfolgsgeschichten</span>
-        </h1>
+          <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 text-center">
+            Verifizierte
+            <br />
+            <span class="gradient-text-neon">Erfolgsgeschichten</span>
+          </h1>
 
-        <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto">
-          <div class="text-accent-purple text-sm mb-3">Validierungshinweis</div>
-          <p class="text-lg text-white/90 leading-relaxed text-center">
-            Echte Ergebnisse unserer ersten
-            <span class="text-accent-neon">Pilot-Partnerschaften</span>
-            mit messbaren KPIs und verifizierten Daten.
-          </p>
-        </div>
-      </TerminalWindow>
+          <div class="border border-accent-neon/20 rounded-xl p-6 max-w-3xl mx-auto">
+            <div class="text-accent-purple text-sm mb-3">Validierungshinweis</div>
+            <p class="text-lg text-white/90 leading-relaxed text-center">
+              Echte Ergebnisse unserer ersten
+              <span class="text-accent-neon">Pilot-Partnerschaften</span>
+              mit messbaren KPIs und verifizierten Daten.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       <!-- Case Studies Grid -->
-      <CaseStudiesSection :case-studies="caseStudies" />
+      <div class="grid lg:grid-cols-2 gap-8">
+        <Card v-for="study in caseStudies" :key="study.caseId" class="border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle :class="study.titleColor">{{ study.company }}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="space-y-4">
+              <div>
+                <span class="text-accent-neon text-xs">{{ study.caseId }}</span>
+                <span class="ml-2 text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">{{ study.status }}</span>
+                <span class="ml-2 text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">{{ study.duration }}</span>
+              </div>
+              <p class="text-white/80">{{ study.description }}</p>
+              <div class="flex flex-wrap gap-2">
+                <span v-for="tag in study.tags" :key="tag.text" :class="tag.class" class="text-xs px-2 py-1 rounded">{{ tag.text }}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <!-- CTA Section -->
       <div class="text-center mt-20">
-        <CyberCard rounded="2xl" class="max-w-4xl mx-auto p-8">
-          <div class="text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">Bereit für:</span> Ihre Erfolgsgeschichte
-          </div>
+        <Card class="max-w-4xl mx-auto p-8 border border-accent-neon/20 bg-card/95 backdrop-blur-sm">
+          <CardContent>
+            <div class="text-accent-neon text-sm mb-6">
+              <span class="text-accent-cyan">Bereit für:</span> Ihre Erfolgsgeschichte
+            </div>
 
-          <h3 class="text-3xl font-bold text-white mb-6">
-            <span class="text-accent-neon">Ihre</span>
-            <span class="gradient-text-neon">Erfolgsgeschichte</span>
-            <span class="text-accent-cyan"> wartet</span>
-          </h3>
+            <h3 class="text-3xl font-bold text-white mb-6">
+              <span class="text-accent-neon">Ihre</span>
+              <span class="gradient-text-neon">Erfolgsgeschichte</span>
+              <span class="text-accent-cyan"> wartet</span>
+            </h3>
 
-          <p class="text-white/80 mb-8 max-w-2xl mx-auto">
-            Werden Sie unsere nächste Erfolgsgeschichte. Equity-basierte Partnerschaft mit messbaren
-            Ergebnissen und transparenter Dokumentation.
-          </p>
+            <p class="text-white/80 mb-8 max-w-2xl mx-auto">
+              Werden Sie unsere nächste Erfolgsgeschichte. Equity-basierte Partnerschaft mit messbaren
+              Ergebnissen und transparenter Dokumentation.
+            </p>
 
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink to="/contact" class="btn-primary">
-              <span>Partnerschaft starten</span>
-            </NuxtLink>
-          </div>
-        </CyberCard>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <NuxtLink to="/contact" class="btn-primary">
+                <span>Partnerschaft starten</span>
+              </NuxtLink>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { TerminalWindow, DataStreamBackground, CaseStudiesSection, CyberCard } from '@monorepo/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui' 
 
 useHead({
   title: 'Case Studies - Verified Success Stories | Trinsler',

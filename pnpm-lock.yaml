@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@headlessui/vue':
-        specifier: ^1.7.23
-        version: 1.7.23(vue@3.5.21(typescript@5.9.2))
-      '@heroicons/vue':
-        specifier: ^2.2.0
-        version: 2.2.0(vue@3.5.21(typescript@5.9.2))
       '@nuxtjs/supabase':
         specifier: ^1.6.2
         version: 1.6.2
@@ -78,9 +72,6 @@ importers:
       '@monorepo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
-      '@monorepo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
 
   apps/coin-boilerplate-app:
     dependencies:
@@ -96,9 +87,6 @@ importers:
       '@monorepo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
-      '@monorepo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
 
   packages/shared:
     dependencies:
@@ -455,17 +443,6 @@ packages:
 
   '@floating-ui/vue@1.1.9':
     resolution: {integrity: sha512-BfNqNW6KA83Nexspgb9DZuz578R7HT8MZw1CfK9I6Ah4QReNWEJsXWHN+SdmOVLNGmTPDi+fDT535Df5PzMLbQ==}
-
-  '@headlessui/vue@1.7.23':
-    resolution: {integrity: sha512-JzdCNqurrtuu0YW6QaDtR2PIYCKPUWq28csDyMvN4zmGccmE7lz40Is6hc3LA4HFeCI7sekZ/PQMTNmn9I/4Wg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      vue: ^3.2.0
-
-  '@heroicons/vue@2.2.0':
-    resolution: {integrity: sha512-G3dbSxoeEKqbi/DFalhRxJU4mTXJn7GwZ7ae8NuEQzd1bqdd0jAbdaBZlHPcvPD2xI1iGzNVB4k20Un2AguYPw==}
-    peerDependencies:
-      vue: '>= 3'
 
   '@internationalized/date@3.9.0':
     resolution: {integrity: sha512-yaN3brAnHRD+4KyyOsJyk49XUvj2wtbNACSqg0bz3u8t2VuzhC8Q5dfRnrSxjnnbDb+ienBnkn1TzQfE154vyg==}
@@ -4422,15 +4399,6 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-
-  '@headlessui/vue@1.7.23(vue@3.5.21(typescript@5.9.2))':
-    dependencies:
-      '@tanstack/vue-virtual': 3.13.12(vue@3.5.21(typescript@5.9.2))
-      vue: 3.5.21(typescript@5.9.2)
-
-  '@heroicons/vue@2.2.0(vue@3.5.21(typescript@5.9.2))':
-    dependencies:
-      vue: 3.5.21(typescript@5.9.2)
 
   '@internationalized/date@3.9.0':
     dependencies:

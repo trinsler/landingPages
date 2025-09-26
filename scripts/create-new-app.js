@@ -218,7 +218,6 @@ try {
     // Remove redundant Nuxt dependencies (they're in root monorepo)
     packageJson.dependencies = {
       '@monorepo/shared': 'workspace:*',
-      '@monorepo/ui': 'workspace:*'
     };
 
     // Add missing scripts and ensure proper order
