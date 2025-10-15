@@ -24,11 +24,7 @@
     "dev:betterclassroom": "npm run dev --workspace=@monorepo/betterclassroom",
     "build:betterclassroom": "npm run build --workspace=@monorepo/betterclassroom",
     "generate:betterclassroom": "npm run generate --workspace=@monorepo/betterclassroom",
-    "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom",
-    "dev:newpotentialpage": "npm run dev --workspace=@monorepo/newpotentialpage",
-    "build:newpotentialpage": "npm run build --workspace=@monorepo/newpotentialpage",
-    "generate:newpotentialpage": "npm run generate --workspace=@monorepo/newpotentialpage",
-    "typecheck:newpotentialpage": "npm run typecheck --workspace=@monorepo/newpotentialpage"
+    "typecheck:betterclassroom": "npm run typecheck --workspace=@monorepo/betterclassroom"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.19.2",
