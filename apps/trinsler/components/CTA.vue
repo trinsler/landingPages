@@ -60,7 +60,7 @@
             <div class="w-4 h-4 rounded-full bg-yellow-500" />
             <div class="w-4 h-4 rounded-full bg-accent-neon" />
             <div class="ml-4 code-font text-accent-cyan text-lg">
-              ~/final-mission/execute_growth.sh
+              ~/final-mission/execute_impact.sh
             </div>
           </div>
         </div>
@@ -98,29 +98,28 @@
           <!-- Dynamic Headline -->
           <div class="mb-12 animate-slide-up-stagger" style="animation-delay: 0.4s">
             <h2 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
-              <span class="text-white">BEREIT FÜR</span>
+              <span class="text-white">READY TO CREATE</span>
               <br />
               <span class="gradient-text-neon" style="font-family: 'Space Grotesk', sans-serif">
-                NACHHALTIGES
+                SOCIAL IMPACT?
               </span>
               <br />
-              <span class="text-accent-cyan">WACHSTUM?</span>
+              <span class="text-accent-cyan">TOGETHER?</span>
             </h2>
           </div>
 
           <!-- Mission Brief -->
           <div class="mb-12 animate-slide-up-stagger" style="animation-delay: 0.6s">
             <div class="cyber-card rounded-2xl p-8 max-w-4xl mx-auto">
-              <div class="text-accent-purple text-sm mb-4">Warum Trinsler anders ist</div>
+              <div class="text-accent-purple text-sm mb-4">Why Trinsler is different</div>
               <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-6">
-                <span class="text-accent-cyan">Unser Ansatz:</span> Anstatt monatlich 5.000€+ für
-                Marketing zu zahlen,
+                <span class="text-accent-cyan">Our Approach:</span> Instead of traditional agency models,
                 <span class="font-bold text-glow-green"
-                  >arbeiten wir für Unternehmensanteile plus eine kleine Grundgebühr</span
-                >. So sind wir direkt am Erfolg Ihres Startups beteiligt.
+                  >we partner for social impact, focusing on community benefit over profit</span
+                >. We're invested in creating lasting positive change.
               </p>
               <div class="text-accent-orange text-lg">
-                Interessiert? Vereinbaren Sie ein kostenloses Erstgespräch
+                Interested? Let's start a conversation about your social-tech vision
               </div>
             </div>
           </div>
@@ -161,7 +160,7 @@
               class="btn-primary group relative overflow-hidden code-font text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
             >
               <span class="relative z-10 flex items-center">
-                Kostenloses Wachstums-Audit
+                Start Your Impact Journey
                 <svg
                   class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -182,7 +181,7 @@
               to="/portfolio"
               class="btn-secondary group code-font text-lg hover:scale-105 transition-all duration-300"
             >
-              Erfolgsgeschichten ansehen
+              View Impact Stories
             </NuxtLink>
           </div>
 
@@ -237,18 +236,18 @@
 <script setup>
 const benefits = [
   {
-    title: 'Niedrige Kosten',
-    description: '80% weniger als klassische Agenturen',
+    title: 'Social First',
+    description: 'Community impact over financial gain',
     iconBg: 'bg-gradient-to-r from-green-500 to-emerald-600',
   },
   {
-    title: 'Aligned Interests',
-    description: 'Wir verdienen nur, wenn Sie wachsen',
+    title: 'True Partnership',
+    description: 'We succeed when communities thrive',
     iconBg: 'bg-gradient-to-r from-red-500 to-pink-600',
   },
   {
-    title: 'Operative Excellence',
-    description: 'Echte Skills, keine Beratung',
+    title: 'Real Impact',
+    description: 'Tangible results that strengthen communities',
     iconBg: 'bg-gradient-to-r from-blue-500 to-purple-600',
   },
 ]

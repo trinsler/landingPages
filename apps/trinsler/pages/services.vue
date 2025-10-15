@@ -31,36 +31,6 @@
       />
     </div>
 
-    <!-- Floating Code Matrix -->
-    <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-28 text-accent-neon text-xs opacity-70">
-        Services verfügbar
-      </div>
-      <div
-        class="floating-element absolute top-40 right-32 text-accent-cyan text-xs opacity-70"
-        style="animation-delay: 1s"
-      >
-        Skalierung
-      </div>
-      <div
-        class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70"
-        style="animation-delay: 2s"
-      >
-        Equity-Kalkulation
-      </div>
-      <div
-        class="floating-element absolute top-2/3 right-1/4 text-accent-orange text-xs opacity-70"
-        style="animation-delay: 3s"
-      >
-        Umsatz + Partnerschaft
-      </div>
-      <div
-        class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70"
-        style="animation-delay: 4s"
-      >
-        Mission erfolgreich
-      </div>
-    </div>
 
     <div class="relative container-custom py-20">
       <!-- Services Terminal Header -->
@@ -291,7 +261,7 @@
 // No icons or emojis needed
 
 useHead({
-  title: 'Services - Trinsler Web-Development & Landing Pages',
+  title: 'Projects - Trinsler Social-Tech Innovation | Nächstenliebe, TheraConnect, Visit.Ghana',
 })
 
 const services = [

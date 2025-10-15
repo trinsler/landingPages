@@ -15,8 +15,8 @@
   --accent-primary: var(--ui-bg-accent);
   --accent-secondary: var(--ui-border-secondary);
   --accent-cyan: var(--ui-text-accent);
-  --accent-purple: #8b5cf6;
-  --accent-orange: #f59e0b;
+  --accent-purple: #1d4ed8;
+  --accent-orange: #2563eb;
   --accent-neutral: #64748b;
   --text-primary: var(--ui-text-primary);
   --text-secondary: var(--ui-text-secondary);
@@ -25,14 +25,14 @@
   --glow-cyan: var(--ui-glow-secondary);
   --glow-purple: var(--ui-glow-primary);
 
-  /* Enhanced cyber theme variables */
-  --accent-neon: var(--ui-text-accent);
-  --accent-pink: #ec4899;
-  --glow-green: var(--ui-glow-primary);
+  /* Enhanced cyber theme variables - Blue only */
+  --accent-neon: #3b82f6;
+  --accent-pink: #1e40af;
+  --glow-green: #2563eb;
 }
 
 * {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
 }
 
 @layer base {
@@ -50,7 +50,7 @@
   }
 
   h1, h2, h3 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     font-weight: 700;
   }
 
