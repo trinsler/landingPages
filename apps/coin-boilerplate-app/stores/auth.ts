@@ -128,6 +128,19 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async getAuthToken(): Promise<string | null> {
+      try {
+        const supabase = useSupabaseClient()
+        const { data: { session }, error } = await supabase.auth.getSession()
+
+        if (error) throw error
+        return session?.access_token || null
+      } catch (error) {
+        console.error('Error getting auth token:', error)
+        return null
+      }
+    },
+
     setUser(user: User | null) {
       this.user = user
     },

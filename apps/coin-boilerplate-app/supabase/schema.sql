@@ -44,6 +44,20 @@ CREATE TABLE public.payment_sessions (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create contact_forms table
+CREATE TABLE public.contact_forms (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL,
+  status TEXT CHECK (status IN ('pending', 'replied', 'closed', 'failed')) DEFAULT 'pending',
+  metadata JSONB DEFAULT '{}',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Create audit_logs table
 CREATE TABLE public.audit_logs (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -63,6 +77,9 @@ CREATE INDEX idx_transactions_user_id ON public.transactions(user_id);
 CREATE INDEX idx_transactions_status ON public.transactions(status);
 CREATE INDEX idx_payment_sessions_user_id ON public.payment_sessions(user_id);
 CREATE INDEX idx_payment_sessions_provider_session_id ON public.payment_sessions(provider_session_id);
+CREATE INDEX idx_contact_forms_user_id ON public.contact_forms(user_id);
+CREATE INDEX idx_contact_forms_status ON public.contact_forms(status);
+CREATE INDEX idx_contact_forms_email ON public.contact_forms(email);
 CREATE INDEX idx_audit_logs_user_id ON public.audit_logs(user_id);
 CREATE INDEX idx_audit_logs_created_at ON public.audit_logs(created_at);
 
@@ -70,6 +87,7 @@ CREATE INDEX idx_audit_logs_created_at ON public.audit_logs(created_at);
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.payment_sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.contact_forms ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for users table
@@ -94,6 +112,16 @@ CREATE POLICY "Users can view own payment sessions" ON public.payment_sessions
 CREATE POLICY "Users can insert own payment sessions" ON public.payment_sessions
   FOR INSERT TO authenticated
   WITH CHECK (auth.uid() = user_id);
+
+-- RLS Policies for contact_forms table
+CREATE POLICY "Users can view own contact forms" ON public.contact_forms
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Anyone can insert contact forms" ON public.contact_forms
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Service role can update contact forms" ON public.contact_forms
+  FOR UPDATE USING (auth.role() = 'service_role');
 
 -- RLS Policies for audit_logs table
 CREATE POLICY "Users can view own audit logs" ON public.audit_logs
@@ -165,6 +193,10 @@ CREATE TRIGGER update_transactions_updated_at
 
 CREATE TRIGGER update_payment_sessions_updated_at
   BEFORE UPDATE ON public.payment_sessions
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+CREATE TRIGGER update_contact_forms_updated_at
+  BEFORE UPDATE ON public.contact_forms
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
   -- Add the increment_user_coins function that's used in the webhook

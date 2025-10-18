@@ -32,6 +32,13 @@
                 Shop
               </NuxtLink>
 
+              <NuxtLink
+                to="/contact"
+                class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Kontakt
+              </NuxtLink>
+
               <!-- User Menu -->
               <div class="relative ml-3">
                 <HeadlessMenu as="div" class="relative inline-block text-left">
