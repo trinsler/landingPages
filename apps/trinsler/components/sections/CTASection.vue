@@ -53,8 +53,8 @@
               to="/portfolio" 
               class="px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 border-2 hover:shadow-lg"
               style="color: #243463; border-color: #243463; background: transparent;"
-              @mouseenter="(e) => { e.currentTarget.style.background = '#243463'; e.currentTarget.style.color = 'white' }"
-              @mouseleave="(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#243463' }"
+              @mouseenter="(e: MouseEvent) => { const target = e.currentTarget as HTMLElement; if (target) { target.style.background = '#243463'; target.style.color = 'white' } }"
+              @mouseleave="(e: MouseEvent) => { const target = e.currentTarget as HTMLElement; if (target) { target.style.background = 'transparent'; target.style.color = '#243463' } }"
             >
               Meet Our Communities
             </NuxtLink>
