@@ -1,0 +1,262 @@
+/* ===================================================
+   TRINSLER GLOBAL COLOR SYSTEM
+   =================================================== */
+
+/* ===== LOGO COLORS ===== */
+:root {
+  --logo-dark: 36, 52, 99;      /* Dunkelblau - RGB values */
+  --logo-medium: 58, 89, 175;    /* Mittelblau */
+  --logo-bright: 63, 129, 245;   /* Hellblau */
+  --logo-light: 104, 108, 245;   /* Leuchtendes Blau */
+  
+  /* ===== PRIMARY COLOR PALETTE ===== */
+  --primary-color: rgb(var(--logo-bright));
+  --primary-dark: rgb(var(--logo-dark));
+  --primary-medium: rgb(var(--logo-medium));
+  --primary-light: rgb(var(--logo-light));
+  
+  /* ===== SEMANTIC COLORS ===== */
+  --accent-color: rgb(var(--logo-bright));
+  --accent-secondary: rgb(var(--logo-light));
+  --accent-muted: rgb(var(--logo-medium));
+  
+  /* ===== NEUTRAL COLORS ===== */
+  --white-color: #FFFFFF;
+  --black-color: #000000;
+  --gray-50: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-300: #CBD5E1;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1E293B;
+  --gray-900: #0F172A;
+  
+  /* ===== BACKGROUND COLORS ===== */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: var(--white-color);
+  --bg-dark: var(--logo-dark);
+  --bg-surface: var(--white-color);
+  --bg-surface-secondary: var(--gray-100);
+  --bg-surface-tertiary: var(--gray-200);
+  
+  /* ===== TEXT COLORS ===== */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-muted: var(--gray-500);
+  --text-inverse: var(--white-color);
+  --text-accent: var(--accent-color);
+  
+  /* ===== BORDER COLORS ===== */
+  --border-primary: var(--gray-200);
+  --border-secondary: var(--gray-300);
+  --border-accent: var(--accent-color);
+  --border-light: rgba(255, 255, 255, 0.1);
+  
+  /* ===== SHADOW COLORS ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(36, 52, 99, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(36, 52, 99, 0.1), 0 2px 4px -1px rgba(36, 52, 99, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(36, 52, 99, 0.1), 0 4px 6px -2px rgba(36, 52, 99, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(36, 52, 99, 0.1), 0 10px 10px -5px rgba(36, 52, 99, 0.04);
+  --shadow-glow-sm: 0 0 10px rgba(63, 129, 245, 0.2);
+  --shadow-glow-md: 0 0 20px rgba(63, 129, 245, 0.3);
+  --shadow-glow-lg: 0 0 30px rgba(63, 129, 245, 0.4);
+  
+  /* ===== GRADIENTS ===== */
+  --gradient-primary: linear-gradient(135deg, rgb(var(--logo-bright)) 0%, rgb(var(--logo-light)) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgb(var(--logo-medium)) 0%, rgb(var(--logo-bright)) 100%);
+  --gradient-accent: linear-gradient(135deg, rgb(var(--logo-dark)) 0%, rgb(var(--logo-medium)) 100%);
+  --gradient-hero: linear-gradient(135deg, rgb(var(--logo-dark)) 0%, rgb(var(--logo-medium)) 50%, rgb(var(--logo-bright)) 100%);
+  --gradient-surface: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-secondary) 100%);
+  
+  /* ===== HOVER STATES ===== */
+  --hover-accent: linear-gradient(135deg, rgb(var(--logo-light)) 0%, rgb(var(--logo-bright)) 100%);
+  --hover-surface: var(--bg-surface-secondary);
+  
+  /* ===== FOCUS STATES ===== */
+  --focus-accent: 0 0 0 3px rgba(63, 129, 245, 0.3);
+  --focus-ring: 0 0 0 2px var(--accent-color);
+  
+  /* ===== STATUS COLORS ===== */
+  --success-color: #10B981;
+  --warning-color: #F59E0B;
+  --error-color: #EF4444;
+  --info-color: var(--logo-bright);
+  
+  /* ===== BRAND SPECIFIC ===== */
+  --brand-primary: var(--logo-bright);
+  --brand-secondary: var(--logo-medium);
+  --brand-accent: var(--logo-light);
+  --brand-dark: var(--logo-dark);
+  
+  /* ===== COMPONENT SPECIFIC ===== */
+  --card-bg: var(--bg-surface);
+  --card-border: var(--border-primary);
+  --card-shadow: var(--shadow-md);
+  --card-hover-shadow: var(--shadow-glow-sm);
+  
+  --btn-primary-bg: var(--gradient-primary);
+  --btn-primary-hover: var(--hover-accent);
+  --btn-primary-text: var(--text-inverse);
+  --btn-primary-shadow: var(--shadow-glow-sm);
+  
+  --btn-secondary-bg: transparent;
+  --btn-secondary-hover: var(--hover-surface);
+  --btn-secondary-text: var(--text-accent);
+  --btn-secondary-border: var(--border-accent);
+  
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --nav-scrolled-bg: rgba(255, 255, 255, 0.98);
+  --nav-shadow: var(--shadow-sm);
+  --nav-scrolled-shadow: var(--shadow-md);
+  
+  --footer-bg: var(--logo-dark);
+  --footer-text: var(--text-inverse);
+  --footer-link: rgba(255, 255, 255, 0.8);
+  --footer-link-hover: var(--text-inverse);
+  
+  /* ===== ANIMATION COLORS ===== */
+  --gradient-animation: gradient-shift 3s ease-in-out infinite;
+  --glow-animation: glow-pulse 2s ease-in-out infinite;
+  --float-animation: float-complex 8s ease-in-out infinite;
+}
+
+/* ===================================================
+   COLOR UTILITIES
+   =================================================== */
+
+/* Text Colors */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-accent { color: var(--text-accent); }
+.text-inverse { color: var(--text-inverse); }
+
+.text-logo-dark { color: var(--logo-dark); }
+.text-logo-medium { color: var(--logo-medium); }
+.text-logo-bright { color: var(--logo-bright); }
+.text-logo-light { color: var(--logo-light); }
+
+/* Background Colors */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-surface { background-color: var(--bg-surface); }
+.bg-surface-secondary { background-color: var(--bg-surface-secondary); }
+.bg-accent { background-color: var(--accent-color); }
+.bg-logo-dark { background-color: var(--logo-dark); }
+.bg-logo-medium { background-color: var(--logo-medium); }
+.bg-logo-bright { background-color: var(--logo-bright); }
+.bg-logo-light { background-color: var(--logo-light); }
+
+/* Border Colors */
+.border-primary { border-color: var(--border-primary); }
+.border-accent { border-color: var(--border-accent); }
+.border-logo { border-color: var(--accent-color); }
+
+/* ===================================================
+   GRADIENT CLASSES
+   =================================================== */
+
+.gradient-primary {
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-secondary {
+  background: var(--gradient-secondary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-accent {
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================================================
+   ANIMATION KEYFRAMES
+   =================================================== */
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: var(--shadow-glow-sm);
+  }
+  50% { 
+    box-shadow: var(--shadow-glow-md);
+  }
+}
+
+@keyframes float-complex {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  25% { 
+    transform: translateY(-20px) rotate(1deg); 
+  }
+  50% { 
+    transform: translateY(-10px) rotate(-1deg); 
+  }
+  75% { 
+    transform: translateY(-15px) rotate(0.5deg); 
+  }
+}
+
+/* ===================================================
+   RESPONSIVE COLOR ADJUSTMENTS
+   =================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: var(--gray-900);
+    --bg-secondary: var(--gray-800);
+    --bg-surface: var(--gray-800);
+    --bg-surface-secondary: var(--gray-700);
+    --text-primary: var(--gray-100);
+    --text-secondary: var(--gray-300);
+    --text-muted: var(--gray-400);
+    --border-primary: var(--gray-700);
+    --border-secondary: var(--gray-600);
+  }
+}
+
+/* ===================================================
+   ACCESSIBILITY & CONTRAST
+   =================================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --shadow-glow-sm: 0 0 15px rgba(63, 129, 245, 0.4);
+    --shadow-glow-md: 0 0 25px rgba(63, 129, 245, 0.5);
+    --shadow-glow-lg: 0 0 35px rgba(63, 129, 245, 0.6);
+  }
+}
+
+/* ===================================================
+   MOTION PREFERENCES
+   =================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .gradient-animation,
+  .glow-animation,
+  .float-animation {
+    animation: none !important;
+  }
+}

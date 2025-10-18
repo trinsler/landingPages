@@ -1,410 +1,337 @@
 <template>
-  <div class="min-h-screen matrix-bg relative overflow-hidden pt-20">
-    <!-- Cyber Grid Matrix -->
-    <div class="absolute inset-0 cyber-grid opacity-40" />
-
-    <!-- Multiple Data Streams -->
-    <div class="absolute inset-0">
-      <div
-        class="animate-data-stream absolute left-16 w-1 h-52 bg-gradient-to-b from-transparent via-accent-neon to-transparent"
-        style="animation-delay: 0s"
-      />
-      <div
-        class="animate-data-stream absolute left-32 w-1 h-44 bg-gradient-to-b from-transparent via-accent-cyan to-transparent"
-        style="animation-delay: 0.8s"
-      />
-      <div
-        class="animate-data-stream absolute left-48 w-1 h-36 bg-gradient-to-b from-transparent via-accent-purple to-transparent"
-        style="animation-delay: 1.6s"
-      />
-      <div
-        class="animate-data-stream absolute right-48 w-1 h-40 bg-gradient-to-b from-transparent via-accent-orange to-transparent"
-        style="animation-delay: 2.4s"
-      />
-      <div
-        class="animate-data-stream absolute right-32 w-1 h-46 bg-gradient-to-b from-transparent via-accent-pink to-transparent"
-        style="animation-delay: 3.2s"
-      />
-      <div
-        class="animate-data-stream absolute right-16 w-1 h-38 bg-gradient-to-b from-transparent via-accent-neon to-transparent"
-        style="animation-delay: 4s"
-      />
-    </div>
-
-    <!-- Floating Code Matrix -->
-    <div class="absolute inset-0 data-points">
-      <div class="floating-element absolute top-20 left-24 text-accent-neon text-xs opacity-70">
-        Vue.js Apps
+  <div>
+    <!-- Hero Section with Image -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Hero Background Image -->
+      <div class="absolute inset-0">
+        <img 
+          src="/images/wald.jpg" 
+          alt="Community projects and technology impact" 
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
       </div>
-      <div
-        class="floating-element absolute top-32 right-28 text-accent-cyan text-xs opacity-70"
-        style="animation-delay: 1s"
-      >
-        Landing Pages
-      </div>
-      <div
-        class="floating-element absolute bottom-40 left-1/3 text-accent-purple text-xs opacity-70"
-        style="animation-delay: 2s"
-      >
-        E-Commerce
-      </div>
-      <div
-        class="floating-element absolute top-2/3 right-1/3 text-accent-orange text-xs opacity-70"
-        style="animation-delay: 3s"
-      >
-        Websites
-      </div>
-      <div
-        class="floating-element absolute top-1/4 left-2/3 text-accent-pink text-xs opacity-70"
-        style="animation-delay: 4s"
-      >
-        Portfolio Live
-      </div>
-    </div>
 
-    <div class="relative container-custom py-20">
-      <!-- Hacker Terminal Header -->
-      <div
-        class="cyber-card rounded-3xl overflow-hidden max-w-5xl mx-auto mb-20 animate-glow-pulse"
-      >
-        <!-- Terminal Header -->
-        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
-          <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-red-500" />
-            <div class="w-4 h-4 rounded-full bg-yellow-500" />
-            <div class="w-4 h-4 rounded-full bg-accent-neon" />
-            <div class="ml-4 text-accent-cyan text-lg">Portfolio & Web-Projekte</div>
-          </div>
-        </div>
-
-        <!-- Terminal Content -->
-        <div class="p-8 lg:p-12 code-pattern">
-          <!-- System Boot -->
-          <div class="mb-8">
-            <div class="text-accent-neon text-sm mb-4 animate-slide-up-stagger">
-              <span class="text-accent-cyan">Status:</span> Web-Projekte werden geladen
-            </div>
-            <div class="neon-card rounded-xl px-6 py-3 inline-block animate-neon-flicker">
-              <span class="text-accent-neon">Portfolio Aktiv</span>
-              <span class="text-white ml-2">Web-Projekte</span>
-            </div>
-          </div>
-
-          <!-- ASCII Header -->
-          <div class="mb-12 text-center">
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white mb-6">
-              <span class="text-white">WEB</span>
-              <br />
-              <span class="gradient-text-neon">PROJEKTE</span>
-              <br />
-              <span class="text-accent-cyan">PORTFOLIO</span>
-            </h1>
-          </div>
-
-          <!-- Portfolio Brief -->
-          <div class="cyber-card rounded-xl p-6 max-w-4xl mx-auto">
-            <div class="text-accent-purple text-sm mb-3">Unsere Referenzen</div>
-            <p class="text-xl text-white/90 leading-relaxed">
-              <span class="text-accent-cyan">Projektbeispiele:</span> Unsere erfolgreichsten
-              <span class="font-bold text-glow-green"
-                >Web-Applikationen, Landing Pages und Websites</span
-              >. Jedes Projekt dokumentiert mit
-              <span class="text-accent-neon">konkreten Ergebnissen</span>.
-            </p>
-            <div class="text-accent-orange text-sm mt-4">
-              Alle Projekte wurden erfolgreich ausgeliefert und sind live
-            </div>
+      <div class="relative container-custom z-10 text-center">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.2]" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Projects That
+            <br />
+            <span style="color: #ffffff">Empower Communities</span>
+          </h1>
+          <p class="text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-12" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Our social impact projects strengthen human connections and create meaningful change in communities worldwide.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <NuxtLink to="/contact" class="btn-primary">
+              Share Your Idea
+            </NuxtLink>
+            <NuxtLink to="/services" class="btn-secondary">
+              Learn How We Work
+            </NuxtLink>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Mission Files Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-        <div
-          v-for="(project, index) in projects"
-          :key="project.title"
-          class="group relative animate-slide-up-stagger"
-          :style="`animation-delay: ${index * 0.2}s`"
-        >
-          <!-- Mission Terminal -->
-          <div
-            class="cyber-card rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] animate-glow-pulse"
-          >
-            <!-- Terminal Header -->
-            <div class="bg-surface-1 px-4 py-3 border-b border-accent-neon/30">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-accent-neon" />
-                <div class="text-accent-cyan text-xs">
-                  Projekt {{ String(index + 1).padStart(3, '0') }}
-                </div>
-                <div class="ml-auto text-xs" :class="project.statusColor">{{ project.status }}</div>
-              </div>
-            </div>
+    <!-- Portfolio Section (same as homepage) -->
+    <PortfolioSection />
 
-            <!-- Mission Visual -->
-            <div
-              class="relative h-48 bg-gradient-to-br from-surface-2 to-surface-1 overflow-hidden"
-            >
-              <!-- Background Image with Matrix Overlay -->
-              <img
-                :src="project.image"
-                :alt="project.title"
-                class="absolute inset-0 w-full h-full object-cover opacity-30"
+    <!-- Project Stories Section -->
+    <section class="py-16 lg:py-24 bg-white">
+      <div class="container-custom">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold text-black mb-4" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Project
+            <span style="color: #243463">Stories</span>
+          </h2>
+          <p class="text-lg text-gray-700 max-w-2xl mx-auto" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Behind every project are real communities and lives being transformed through thoughtful technology.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12">
+          <!-- Story 1 -->
+          <div class="animate-slide-up-stagger">
+            <div class="relative overflow-hidden rounded-3xl shadow-xl hover:scale-[1.02] transition-all duration-500">
+              <img 
+                src="/images/wohnzimmerlachen.jpg" 
+                alt="Community joy and connection through technology" 
+                class="w-full h-80 object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-br from-surface-2/80 to-surface-1/80" />
-
-              <!-- Matrix Code Rain -->
-              <div class="absolute inset-0 cyber-grid opacity-20" />
-
-              <!-- Floating Mission Data -->
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                  <div
-                    :class="project.iconBg"
-                    class="w-16 h-16 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform animate-neon-flicker"
-                  >
-                    <div class="text-white text-2xl font-bold" />
-                  </div>
-                  <div class="text-accent-cyan text-xs">{{ project.classification }}</div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-3 h-3 rounded-full bg-white"></div>
+                  <span class="text-white/80 text-sm uppercase tracking-wider">Impact Story</span>
                 </div>
-              </div>
-
-              <!-- Project Info -->
-              <div class="absolute top-4 left-4 text-xs text-accent-neon opacity-60">
-                {{ project.code }}
+                <h3 class="text-2xl font-bold text-white mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                  Building Bridges Between Generations
+                </h3>
+                <p class="text-white/90 leading-relaxed">
+                  Through Nächstenliebe, we've created meaningful connections that reduce isolation and build stronger, more supportive communities.
+                </p>
               </div>
             </div>
+          </div>
 
-            <!-- Mission Report -->
-            <div class="p-6 code-pattern">
-              <!-- Project ID -->
-              <div class="text-accent-neon text-sm mb-3">
-                Projektreferenz: {{ project.filename }}
+          <!-- Story 2 -->
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.2s">
+            <div class="relative overflow-hidden rounded-3xl shadow-xl hover:scale-[1.02] transition-all duration-500">
+              <img 
+                src="/images/wanderung.jpg" 
+                alt="Community journey and progress through technology" 
+                class="w-full h-80 object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-3 h-3 rounded-full bg-white"></div>
+                  <span class="text-white/80 text-sm uppercase tracking-wider">Development Journey</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                  From Idea to Impact
+                </h3>
+                <p class="text-white/90 leading-relaxed">
+                  Our iterative development process ensures every feature serves real community needs and creates lasting positive change.
+                </p>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <!-- Project Title -->
-              <h3 class="text-xl font-bold text-white mb-3">
-                {{ project.title }}
+        <!-- Stats with Images -->
+        <div class="grid md:grid-cols-3 gap-8 mt-16">
+          <div class="animate-slide-up-stagger">
+            <div class="relative overflow-hidden rounded-2xl">
+              <img 
+                src="/images/freundeHuckepack.jpg" 
+                alt="Community connections" 
+                class="w-full h-48 object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4 text-center">
+                <div class="text-3xl font-bold text-white mb-1">250+</div>
+                <div class="text-white/90 text-sm">Community Connections</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.2s">
+            <div class="relative overflow-hidden rounded-2xl">
+              <img 
+                src="/images/senioren.jpg" 
+                alt="Senior care and support" 
+                class="w-full h-48 object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4 text-center">
+                <div class="text-3xl font-bold text-white mb-1">15+</div>
+                <div class="text-white/90 text-sm">Therapy Professionals</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.4s">
+            <div class="relative overflow-hidden rounded-2xl">
+              <img 
+                src="/images/kleineKinder.jpg" 
+                alt="Youth and future impact" 
+                class="w-full h-48 object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4 text-center">
+                <div class="text-3xl font-bold text-white mb-1">50+</div>
+                <div class="text-white/90 text-sm">Local Hosts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="py-16 lg:py-24 bg-white">
+      <div class="container-custom">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold text-black mb-4" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Real Impact,
+            <span style="color: #243463">Real Stories</span>
+          </h2>
+          <p class="text-lg text-gray-700 max-w-2xl mx-auto" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Behind every project are real people whose lives are being transformed through technology that serves humanity.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="animate-slide-up-stagger">
+            <div class="bg-gray-100 rounded-2xl p-8 text-center hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="text-4xl font-bold mb-4" style="color: #243463">250+</div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Community Connections
               </h3>
-
-              <!-- Project Description -->
-              <div class="mb-4">
-                <div class="text-accent-purple text-xs mb-2">Projektbeschreibung</div>
-                <p class="text-white/90 text-sm leading-relaxed">{{ project.description }}</p>
-              </div>
-
-              <!-- Services Used -->
-              <div class="mb-4">
-                <div class="text-accent-cyan text-xs mb-2">Eingesetzte Services:</div>
-                <div class="flex flex-wrap gap-1 ml-4 mb-2">
-                  <span
-                    v-for="(tag, idx) in project.tags"
-                    :key="tag"
-                    class="neon-card px-2 py-1 text-xs text-white/80"
-                  >
-                    {{ tag }}{{ idx < project.tags.length - 1 ? ', ' : '' }}
-                  </span>
-                </div>
-              </div>
-
-              <!-- Project Result -->
-              <div class="neon-card rounded-xl p-4">
-                <div class="text-accent-orange text-xs mb-2">Projektergebnis</div>
-                <div class="text-center">
-                  <div class="text-2xl font-bold text-glow-green mb-1">{{ project.result }}</div>
-                  <div class="text-white/60 text-xs">Entwicklungszeit</div>
-                </div>
-              </div>
-
-              <!-- Project Status -->
-              <div class="mt-4 pt-4 border-t border-accent-neon/20">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-white/60">Projektstatus:</span>
-                  <span class="text-accent-neon">✓ {{ project.completion }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Terminal CTA Section -->
-      <div class="cyber-card rounded-3xl overflow-hidden max-w-4xl mx-auto animate-glow-pulse">
-        <!-- Terminal Header -->
-        <div class="bg-surface-1 px-6 py-4 border-b border-accent-neon/30">
-          <div class="flex items-center gap-3">
-            <div class="w-4 h-4 rounded-full bg-red-500" />
-            <div class="w-4 h-4 rounded-full bg-yellow-500" />
-            <div class="w-4 h-4 rounded-full bg-accent-neon" />
-            <div class="ml-4 text-accent-cyan text-lg">Neues Web-Projekt starten</div>
-          </div>
-        </div>
-
-        <!-- Terminal Content -->
-        <div class="p-8 lg:p-12 text-center code-pattern">
-          <!-- Call to Action -->
-          <div class="text-accent-neon text-sm mb-6">
-            <span class="text-accent-cyan">Bereit für:</span> Neues Web-Projekt
-          </div>
-
-          <!-- ASCII Banner -->
-          <div class="code-font text-accent-neon text-xs mb-8">
-            <pre class="text-center animate-slide-up-stagger">
-  ╔══════════════════════════════════════╗
-  ║       NEW PROJECT AVAILABLE        ║
-  ║       WEB DEVELOPMENT READY       ║
-  ╚══════════════════════════════════════╝
-            </pre>
-          </div>
-
-          <!-- Mission Brief -->
-          <div class="mb-8">
-            <h3 class="text-3xl lg:text-4xl font-bold text-white mb-6 animate-glitch">
-              Bereit für Ihr
-              <span class="gradient-text-neon">Web-Projekt?</span>
-            </h3>
-
-            <div class="cyber-card rounded-xl p-6 max-w-3xl mx-auto mb-8">
-              <div class="text-accent-purple text-sm mb-3">Ihr nächster Schritt</div>
-              <p class="text-lg text-white/90 leading-relaxed">
-                <span class="text-accent-cyan">Ziel:</span> Bringen Sie Ihr Web-Projekt zum Leben.
-                <span class="font-bold text-glow-green">Professionelle Web-Entwicklung</span>
-                beginnt hier.
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Through Nächstenliebe, we've created meaningful intergenerational connections that reduce isolation and build stronger communities.
               </p>
-              <div class="text-accent-orange text-sm mt-4">
-                Bereit für Ihr Web-Projekt? Lassen Sie uns starten!
-              </div>
             </div>
           </div>
 
-          <!-- Execute Button -->
-          <NuxtLink
-            to="/contact"
-            class="btn-primary group text-xl animate-glow-pulse transform hover:scale-110 transition-all duration-300"
-          >
-            <span class="flex items-center"> Web-Projekt starten </span>
-          </NuxtLink>
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.2s">
+            <div class="bg-gray-100 rounded-2xl p-8 text-center hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="text-4xl font-bold mb-4" style="color: #243463">15+</div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Mental Health Professionals
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                TheraConnect is making therapy more accessible by connecting patients with the right mental health professionals for their specific needs.
+              </p>
+            </div>
+          </div>
 
-          <!-- System Status -->
-          <div class="mt-8 pt-6 border-t border-accent-neon/20">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-              <div class="text-center">
-                <div class="text-accent-cyan mb-1">Web-Projekte 2024:</div>
-                <div class="text-accent-neon">● 25</div>
-              </div>
-              <div class="text-center">
-                <div class="text-accent-purple mb-1">Pünktliche Lieferung:</div>
-                <div class="text-glow-green font-bold">100%</div>
-              </div>
-              <div class="text-center">
-                <div class="text-accent-orange mb-1">Client Zufriedenheit:</div>
-                <div class="text-white font-bold">98%</div>
-              </div>
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.4s">
+            <div class="bg-gray-100 rounded-2xl p-8 text-center hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="text-4xl font-bold mb-4" style="color: #243463">50+</div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Local Hosts
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Visit.Ghana will support local hosts by providing authentic cultural experiences that ensure tourism revenue flows directly into communities.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-16 lg:py-24" style="background: #243463">
+      <div class="container-custom">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            How We Select
+            <span style="color: #ffffff">Our Projects</span>
+          </h2>
+          <p class="text-lg text-white/90 max-w-2xl mx-auto" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+            Every project we partner with must meet our criteria for creating meaningful social impact.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="animate-slide-up-stagger">
+            <div class="bg-white rounded-2xl p-6 text-center h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: #243463">
+                <div class="text-2xl font-bold text-white">1</div>
+              </div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Social Need
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Addresses a genuine community need with potential for meaningful impact.
+              </p>
+            </div>
+          </div>
+
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.2s">
+            <div class="bg-white rounded-2xl p-6 text-center h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: #243463">
+                <div class="text-2xl font-bold text-white">2</div>
+              </div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Community Input
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Developed with and for the communities it serves to ensure relevance.
+              </p>
+            </div>
+          </div>
+
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.4s">
+            <div class="bg-white rounded-2xl p-6 text-center h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: #243463">
+                <div class="text-2xl font-bold text-white">3</div>
+              </div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Scalable Solution
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Has potential to grow and serve more communities over time.
+              </p>
+            </div>
+          </div>
+
+          <div class="animate-slide-up-stagger" style="animation-delay: 0.6s">
+            <div class="bg-white rounded-2xl p-6 text-center h-full hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
+              <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: #243463">
+                <div class="text-2xl font-bold text-white">4</div>
+              </div>
+              <h3 class="text-xl font-bold text-black mb-3" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+                Strong Partnership
+              </h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Led by passionate founders committed to long-term social impact.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 lg:py-24 bg-white">
+      <div class="container-custom">
+        <div class="bg-white rounded-2xl p-8 max-w-4xl mx-auto shadow-lg">
+          <div class="text-center">
+            <h2 class="text-3xl lg:text-4xl font-bold text-black mb-4" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+              Have a Project That
+              <span style="color: #243463">Creates Impact?</span>
+            </h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-8" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
+              If you have an idea for technology that can strengthen communities and create meaningful change, we want to hear from you.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
+            <NuxtLink
+              to="/contact"
+              class="btn-primary rounded-lg"
+            >
+            Share Your Impact Idea
+          </NuxtLink>
+            <NuxtLink 
+              to="/portfolio" 
+              class="px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 border-2 hover:shadow-lg"
+              style="color: #243463; border-color: #243463; background: transparent;"
+              @mouseenter="(e) => { e.currentTarget.style.background = '#243463'; e.currentTarget.style.color = 'white' }"
+              @mouseleave="(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#243463' }"
+            >
+            Learn About Our Services
+          </NuxtLink>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Component -->
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
-// No icons or emojis needed
-
+// SEO Meta
 useHead({
-  title: 'Portfolio - Trinsler Web-Projekte',
+  title: 'Portfolio - Trinsler | Social Impact Projects',
+  meta: [
+    {
+      name: 'description',
+      content: 'Our social impact projects: Nächstenliebe connecting generations, TheraConnect making mental health accessible, Visit.Ghana enabling cultural exchange.',
+    },
+    {
+      name: 'keywords',
+      content: 'social impact projects, community technology, Nächstenliebe, TheraConnect, Visit.Ghana, social entrepreneurship, tech for good'
+    }
+  ]
 })
-
-const projects = [
-  {
-    title: 'SaaS Dashboard Platform',
-    description:
-      'Moderne Web-Applikation für B2B-SaaS Unternehmen. Vue.js Frontend mit Node.js Backend und real-time Analytics.',
-    tags: ['Vue.js', 'SaaS', 'Dashboard'],
-    result: '4 Wochen',
-    filename: 'saas_dashboard.vue',
-    code: 'app.deploy()',
-    classification: 'WEB_APP',
-    iconBg: 'bg-gradient-to-r from-accent-neon to-accent-cyan',
-    status: 'LIVE',
-    statusColor: 'text-accent-neon',
-    completion: 'ERFOLGREICH',
-    image: '/images/gabriel-benois-qnWPjzewewA-unsplash.jpg',
-  },
-  {
-    title: 'E-Commerce Shop',
-    description:
-      'Vollständiger Online-Shop mit Payment-Integration, Produktkatalog und Bestellverwaltung. Responsive Design für alle Geräte.',
-    tags: ['E-Commerce', 'Nuxt.js', 'Payment'],
-    result: '6 Wochen',
-    filename: 'ecommerce_shop.js',
-    code: 'shop.launch()',
-    classification: 'ONLINE_SHOP',
-    iconBg: 'bg-gradient-to-r from-accent-purple to-accent-pink',
-    status: 'ONLINE',
-    statusColor: 'text-accent-purple',
-    completion: 'AUSGELIEFERT',
-    image: '/images/tim-mossholder-SZgVZPbQ7RE-unsplash.jpg',
-  },
-  {
-    title: 'Corporate Website',
-    description:
-      'Professionelle Unternehmenswebsite mit CMS, SEO-Optimierung und Contact-Formularen. Modern und responsive.',
-    tags: ['Corporate', 'CMS', 'SEO'],
-    result: '3 Wochen',
-    filename: 'corporate_site.html',
-    code: 'website.publish()',
-    classification: 'CORPORATE',
-    iconBg: 'bg-gradient-to-r from-accent-orange to-accent-neon',
-    status: 'VERÖFFENTLICHT',
-    statusColor: 'text-accent-orange',
-    completion: 'TERMINGERECHT',
-    image: '/images/szabo-viktor-7hqEx1al0Fk-unsplash.jpg',
-  },
-  {
-    title: 'Landing Page Serie',
-    description:
-      'Hochkonvertierende Landing Pages für Marketing-Kampagnen. A/B Testing und Conversion-Optimierung implementiert.',
-    tags: ['Landing Pages', 'Conversion', 'Marketing'],
-    result: '2 Wochen',
-    filename: 'landing_pages.vue',
-    code: 'convert.optimize()',
-    classification: 'MARKETING',
-    iconBg: 'bg-gradient-to-r from-accent-cyan to-accent-purple',
-    status: 'CONVERTING',
-    statusColor: 'text-accent-cyan',
-    completion: 'OPTIMIERT',
-    image: '/images/georgia-de-lotz-hdQGAz1pQ_M-unsplash.jpg',
-  },
-  {
-    title: 'Booking System',
-    description:
-      'Online-Buchungssystem mit Kalender-Integration, Payment-Processing und automatischen E-Mail-Benachrichtigungen.',
-    tags: ['Booking', 'Calendar', 'Automation'],
-    result: '5 Wochen',
-    filename: 'booking_system.js',
-    code: 'booking.automate()',
-    classification: 'SYSTEM',
-    iconBg: 'bg-gradient-to-r from-green-500 to-emerald-500',
-    status: 'AUTOMATISIERT',
-    statusColor: 'text-green-400',
-    completion: 'FUNKTIONAL',
-    image: '/images/nathana-reboucas-LIfRyiWWBZs-unsplash.jpg',
-  },
-  {
-    title: 'Portfolio Website',
-    description:
-      'Kreative Portfolio-Website für Designer und Freelancer. Interaktive Galerie und Contact-Formulare.',
-    tags: ['Portfolio', 'Creative', 'Interactive'],
-    result: '2 Wochen',
-    filename: 'portfolio_site.css',
-    code: 'portfolio.showcase()',
-    classification: 'CREATIVE',
-    iconBg: 'bg-gradient-to-r from-blue-500 to-indigo-500',
-    status: 'SHOWCASE',
-    statusColor: 'text-blue-400',
-    completion: 'KREATIV',
-    image: '/images/carol-magalhaes-dSsXm15D9hg-unsplash.jpg',
-  },
-]
 </script>
+
+<style scoped>
+/* Portfolio page specific styles will inherit from global color system */
+</style>
