@@ -99,10 +99,10 @@
               <button
                 :disabled="authStore.loading"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="handleSignIn"
+                @click="openAuthModal"
               >
                 <span v-if="authStore.loading">Signing in...</span>
-                <span v-else>Sign in with Google</span>
+                <span v-else>Anmelden</span>
               </button>
             </template>
           </div>
@@ -114,6 +114,14 @@
     <main>
       <slot />
     </main>
+
+    <!-- Auth Modal -->
+    <AuthModal
+      :is-open="showAuthModal"
+      mode="login"
+      @close="closeAuthModal"
+      @success="handleAuthSuccess"
+    />
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2">
@@ -129,8 +137,25 @@ import {
   MenuItems as HeadlessMenuItems,
   MenuItem as HeadlessMenuItem,
 } from '@headlessui/vue'
+import { useToast } from '@monorepo/ui'
 
 const authStore = useAuthStore()
+const { success } = useToast()
+
+// Auth Modal state
+const showAuthModal = ref(false)
+
+const openAuthModal = () => {
+  showAuthModal.value = true
+}
+
+const closeAuthModal = () => {
+  showAuthModal.value = false
+}
+
+const handleAuthSuccess = () => {
+  success('Erfolgreich angemeldet!')
+}
 
 const handleSignIn = async () => {
   try {

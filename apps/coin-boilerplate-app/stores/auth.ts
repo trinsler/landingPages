@@ -78,24 +78,6 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async signOut() {
-      this.loading = true
-      try {
-        const supabase = useSupabaseClient()
-        const { error } = await supabase.auth.signOut()
-
-        if (error) throw error
-
-        this.user = null
-        await navigateTo('/')
-      } catch (error) {
-        console.error('Error signing out:', error)
-        throw error
-      } finally {
-        this.loading = false
-      }
-    },
-
     async updateCoins(newBalance: number) {
       if (this.user) {
         this.user.coins = newBalance
@@ -138,6 +120,105 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error('Error getting auth token:', error)
         return null
+      }
+    },
+
+    // Email Authentication Methods
+    async signInWithEmail(email: string, password: string) {
+      this.loading = true
+      try {
+        const supabase = useSupabaseClient()
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        })
+
+        if (error) throw error
+
+        if (data.user) {
+          await this.fetchUserProfile(data.user.id)
+        }
+
+        return data
+      } catch (error) {
+        console.error('Error signing in with email:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async signUpWithEmail(email: string, password: string, fullName?: string) {
+      this.loading = true
+      try {
+        const supabase = useSupabaseClient()
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName || ''
+            }
+          }
+        })
+
+        if (error) throw error
+
+        // Don't fetch user profile yet - email verification needed
+        return data
+      } catch (error) {
+        console.error('Error signing up with email:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async resetPassword(email: string) {
+      try {
+        const supabase = useSupabaseClient()
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${useRuntimeConfig().public.siteUrl}/reset-password`
+        })
+
+        if (error) throw error
+      } catch (error) {
+        console.error('Error resetting password:', error)
+        throw error
+      }
+    },
+
+    async updatePassword(newPassword: string) {
+      if (!this.user) throw new Error('User not authenticated')
+
+      try {
+        const supabase = useSupabaseClient()
+        const { error } = await supabase.auth.updateUser({
+          password: newPassword
+        })
+
+        if (error) throw error
+      } catch (error) {
+        console.error('Error updating password:', error)
+        throw error
+      }
+    },
+
+    async signOut() {
+      this.loading = true
+      try {
+        const supabase = useSupabaseClient()
+        const { error } = await supabase.auth.signOut()
+
+        if (error) throw error
+
+        this.user = null
+        await navigateTo('/')
+      } catch (error) {
+        console.error('Error signing out:', error)
+        throw error
+      } finally {
+        this.loading = false
       }
     },
 

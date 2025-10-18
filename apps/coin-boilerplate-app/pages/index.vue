@@ -49,10 +49,10 @@
             <button
               :disabled="authStore.loading"
               class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
-              @click="handleSignIn"
+              @click="openAuthModal"
             >
               <span v-if="authStore.loading">Signing in...</span>
-              <span v-else>Sign in with Google</span>
+              <span v-else>Jetzt starten</span>
             </button>
 
             <a href="#features" class="text-sm font-semibold leading-6 text-gray-900">
@@ -244,6 +244,14 @@
         class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
       />
     </div>
+
+    <!-- Auth Modal -->
+    <AuthModal
+      :is-open="showAuthModal"
+      mode="login"
+      @close="closeAuthModal"
+      @success="handleAuthSuccess"
+    />
   </div>
 </template>
 
@@ -255,8 +263,23 @@ definePageMeta({
 })
 
 const authStore = useAuthStore()
-const { success: showSuccess, error: showError } = useToast()
+const { success: showSuccess, error: showError, success } = useToast()
 const newsletterLoading = ref(false)
+
+// Auth Modal state
+const showAuthModal = ref(false)
+
+const openAuthModal = () => {
+  showAuthModal.value = true
+}
+
+const closeAuthModal = () => {
+  showAuthModal.value = false
+}
+
+const handleAuthSuccess = () => {
+  success('Erfolgreich angemeldet!')
+}
 
 const handleSignIn = async () => {
   try {
