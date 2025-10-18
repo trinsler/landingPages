@@ -10,10 +10,10 @@
 
 <script setup>
 // Import all section components
-import HeroSection from '~/components/sections/hero/HeroSection.vue'
-import PortfolioSection from '~/components/sections/portfolio/PortfolioSection.vue'
-import ServicesSection from '~/components/sections/services/ServicesSection.vue'
-import CTASection from '~/components/sections/cta/CTASection.vue'
+import HeroSection from '~/components/sections/HeroSection.vue'
+import PortfolioSection from '~/components/sections/PortfolioSection.vue'
+import ServicesSection from '~/components/sections/ServicesSection.vue'
+import CTASection from '~/components/sections/CTASection.vue'
 
 // SEO Meta
 useHead({

@@ -98,7 +98,7 @@
             </div>
             <div class="flex items-center space-x-2">
               <div class="w-2 h-2 bg-white rounded-full"></div>
-              <span>hello@trinsler.com</span>
+              <span>info.trinsler@gmail.com</span>
             </div>
           </div>
         </div>

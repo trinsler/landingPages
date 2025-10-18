@@ -212,7 +212,7 @@
                 <div class="bg-gray-100 rounded-2xl p-6">
                   <div style="color: #243463" class="text-sm font-semibold mb-2 uppercase tracking-wider">Email</div>
                   <div class="text-xl font-bold text-black mb-2" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
-                    hello@trinsler.com
+                    info.trinsler@gmail.com
                   </div>
                   <p class="text-gray-700 text-sm">
                     Direct project communication with our team

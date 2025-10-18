@@ -79,7 +79,7 @@
                   </svg>
                 </div>
                 <div style="color: #243463" class="text-sm font-bold mb-2 uppercase tracking-wider">CONTACT</div>
-                <div class="text-black font-medium text-lg">hello@trinsler.com</div>
+                <div class="text-black font-medium text-lg">info.trinsler@gmail.com</div>
                 <div class="text-gray-600 text-sm mt-1">We'd love to hear from you</div>
               </div>
             </div>

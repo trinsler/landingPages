@@ -252,9 +252,11 @@
             <div class="bg-gray-100 rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
               <div class="flex items-start gap-6">
                 <div class="flex-shrink-0">
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                    <div class="text-2xl font-bold text-white">NH</div>
-                  </div>
+                  <img
+                    src="/assets/pictures/nielsHensler.jpeg"
+                    alt="Niels Hensler"
+                    class="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+                  />
                 </div>
                 <div class="flex-1">
                   <h3 class="text-2xl font-bold text-black mb-2" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
@@ -303,9 +305,11 @@
             <div class="bg-gray-100 rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 hover:shadow-lg">
               <div class="flex items-start gap-6">
                 <div class="flex-shrink-0">
-                  <div class="w-20 h-20 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
-                    <div class="text-2xl font-bold text-white">MT</div>
-                  </div>
+                  <img
+                    src="/assets/pictures/MireioTrinley.jpeg"
+                    alt="Miréio Trinley"
+                    class="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+                  />
                 </div>
                 <div class="flex-1">
                   <h3 class="text-2xl font-bold text-black mb-2" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
