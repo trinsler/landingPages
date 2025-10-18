@@ -255,14 +255,23 @@
             <p class="text-lg text-gray-700 leading-relaxed mb-8" style="font-family: 'Inter', system-ui, -apple-system, sans-serif">
               Whether you have a detailed plan or just a spark of an idea, we're here to help you build something that creates real, lasting change.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <NuxtLink to="/contact" class="btn-primary">
-                Let's Discuss Your Vision
-              </NuxtLink>
-              <NuxtLink to="/portfolio" class="btn-secondary">
-                See Our Work
-              </NuxtLink>
-            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
+            <NuxtLink
+              to="/contact"
+              class="btn-primary rounded-lg"
+            >
+            Let's Discuss Your Vision
+          </NuxtLink>
+            <NuxtLink 
+              to="/portfolio" 
+              class="px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 border-2 hover:shadow-lg"
+              style="color: #243463; border-color: #243463; background: transparent;"
+              @mouseenter="(e) => { e.currentTarget.style.background = '#243463'; e.currentTarget.style.color = 'white' }"
+              @mouseleave="(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#243463' }"
+            >
+            See Our Work
+          </NuxtLink>
+          </div>
           </div>
         </div>
       </div>
