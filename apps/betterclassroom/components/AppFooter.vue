@@ -14,7 +14,7 @@
         </NuxtLink>
       </nav>
       <div class="text-xs text-gray-500 dark:text-gray-400 mt-4 sm:mt-0">
-        Powered by <a href="https://webwai.de" class="hover:text-primary transition-colors">webwai</a>
+        Powered by <a href="https:trinsler.com" class="hover:text-primary transition-colors">trinsler</a>
       </div>
     </div>
   </footer>

@@ -129,6 +129,13 @@ jobs:
           NODE_ENV: production
           NUXT_APP_ENV: production
 
+      - name: 🏗️ Build BetterClassroom app for production
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: pnpm --filter=@monorepo/betterclassroom run generate
+        env:
+          NODE_ENV: production
+          NUXT_APP_ENV: production
+
       # Deploy Coin app (always to production)
       - name: 🚀 Deploy Coin app
         uses: peaceiris/actions-gh-pages@v3
@@ -157,6 +164,16 @@ jobs:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./apps/trinsler/.output/public
           cname: trinsler.com
+
+      # Deploy BetterClassroom to Production (tags)
+      - name: 🚀 Deploy BetterClassroom app to Production
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: trinsler/betterclassroom
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./apps/betterclassroom/.output/public
+          cname: betterclassroom.trinsler.com
 
       - name: 📊 Deployment Summary
         if: always()

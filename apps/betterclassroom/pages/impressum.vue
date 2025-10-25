@@ -12,7 +12,7 @@
     <p class="mb-4">Einzelunternehmer</p>
 
     <h3 class="text-xl font-semibold mb-2">Kontakt:</h3>
-    <p class="mb-4">E-Mail: info@betterclassroom.de</p>
+    <p class="mb-4">E-Mail: info.trinsler@gmail.com</p>
 
     <h2 class="text-2xl font-semibold mb-4">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
     <p class="mb-4">

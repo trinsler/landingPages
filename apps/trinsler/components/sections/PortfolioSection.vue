@@ -14,7 +14,7 @@
       </div>
 
       <!-- Projects Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
         <div
           v-for="(project, index) in projects"
           :key="project.title"
@@ -65,13 +65,23 @@
               
               <!-- Call to Actions -->
               <div class="flex flex-col gap-3">
-                <button 
+                <a
+                  v-if="project.title === 'BetterClassroom'"
+                  href="https://betterclassroom.trinsler.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-primary w-full text-center text-sm inline-block"
+                >
+                  Visit BetterClassroom
+                </a>
+                <button
+                  v-else
                   @click="showDevelopmentPopup(project.title)"
                   class="btn-primary w-full text-center text-sm"
                 >
                   More Information
                 </button>
-                <button 
+                <button
                   @click="showDevelopmentPopup(project.title)"
                   class="w-full text-center text-sm py-3 px-4 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                   style="background: #243463; color: white; border: 2px solid #243463;"
@@ -135,6 +145,22 @@
 // Portfolio Section Component
 
 const projects = [
+  {
+    title: 'BetterClassroom',
+    description: 'An innovative learning platform that digitizes and simplifies communication between teachers and students. BetterClassroom enables students to digitally raise their hand, ask questions, and actively participate in class, while teachers maintain oversight and can respond to students in a targeted manner.',
+    tags: ['Education', 'Digital Learning', 'Teacher-Student Communication', 'Classroom Management'],
+    status: 'LIVE',
+    stats: 'Available Now',
+    statsLabel: 'BetterClassroom.com',
+    image: '/images/seniorsstudents.jpg',
+    story: 'BetterClassroom was developed to support digital transformation in the classroom. The platform simplifies daily communication and helps teachers make lessons more interactive and student-centered.',
+    testimonial: {
+      quote: 'BetterClassroom has revolutionized communication in our classes. Students can easily participate and we maintain better oversight.',
+      name: 'HTWG Konstanz',
+      role: 'University of Applied Sciences',
+      avatar: '/images/studentWithIpad.jpg'
+    }
+  },
   {
     title: 'Nächstenliebe',
     description: 'A hyper-local, community-driven platform that redefines neighborhood support. Nächstenliebe connects students and young people with seniors in their village for grocery shopping assistance and companionship, creating meaningful intergenerational connections.',

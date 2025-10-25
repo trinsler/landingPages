@@ -7,7 +7,7 @@
         </svg>
         <span class="ml-2 text-lg font-bold gradient-text">BetterClassroom</span>
       </NuxtLink>
-      <nav class="hidden md:flex gap-4 sm:gap-6">
+      <nav class="hidden md:flex gap-4 sm:gap-6 items-center">
         <NuxtLink
           class="text-sm font-medium text-foreground hover:text-primary transition-colors"
           to="/"
@@ -22,6 +22,13 @@
         >
           Kontakt
         </NuxtLink>
+        <div class="h-6 w-px bg-border mx-2"></div>
+        <img
+          src="/images/htwg-logo.png"
+          alt="HTWG Konstanz"
+          class="h-6 opacity-70 hover:opacity-100 transition-opacity"
+          onerror="this.style.display='none'"
+        />
       </nav>
       <button
         class="md:hidden p-2"

@@ -253,7 +253,7 @@
               <div class="flex items-start gap-6">
                 <div class="flex-shrink-0">
                   <img
-                    src="/assets/pictures/nielsHensler.jpeg"
+                    src="/public/images/nielsHensler.jpeg"
                     alt="Niels Hensler"
                     class="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                   />
@@ -306,7 +306,7 @@
               <div class="flex items-start gap-6">
                 <div class="flex-shrink-0">
                   <img
-                    src="/assets/pictures/MireioTrinley.jpeg"
+                    src="/public/images/MireioTrinley.jpeg"
                     alt="Miréio Trinley"
                     class="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                   />

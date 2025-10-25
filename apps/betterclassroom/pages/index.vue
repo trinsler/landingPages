@@ -8,14 +8,14 @@
         <!-- Floating background elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
           <div
-            class="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl floating-animation"
+            class="absolute top-20 left-10 w-64 h-64 bg-blue-400/8 rounded-full blur-3xl floating-animation"
           />
           <div
-            class="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl floating-animation"
+            class="absolute bottom-20 right-10 w-80 h-80 bg-blue-300/6 rounded-full blur-3xl floating-animation"
             style="animation-delay: -3s"
           />
           <div
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-300/10 to-indigo-500/10 rounded-full blur-3xl floating-animation"
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-200/4 rounded-full blur-3xl floating-animation"
             style="animation-delay: -1.5s"
           />
         </div>
@@ -176,6 +176,39 @@
     <!-- Image Gallery Component -->
     <ImageGallery />
 
+    <!-- Educational Partners Section -->
+    <section class="w-full py-16 md:py-24 bg-secondary/10">
+      <div class="container mx-auto px-4 md:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            Vertrauen führender Bildungseinrichtungen
+          </h2>
+          <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+            BetterClassroom wird bereits an renommierten Hochschulen erfolgreich im Einsatz betrieben
+          </p>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <div class="glass-card p-8 rounded-2xl max-w-md w-full text-center">
+            <div class="mb-6">
+              <img
+                src="/images/htwg-logo.png"
+                alt="HTWG Konstanz Logo"
+                class="h-16 mx-auto object-contain"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-foreground">HTWG Konstanz</h3>
+            <p class="text-muted-foreground leading-relaxed mb-4">
+              Hochschule für Technik und Wirtschaft Konstanz<br/>
+              Campus Konstanz<br/>
+              <span class="text-primary font-medium">Erfolgreich im Einsatz seit 2024</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="w-full py-12 md:py-24 lg:py-32 bg-secondary/30">
       <div class="container mx-auto px-4 md:px-6">
@@ -190,7 +223,7 @@
           </p>
           <div class="flex flex-col items-center justify-center space-y-6">
             <a
-              href="mailto:info@betterclassroom.de"
+              href="mailto:info.trinsler@gmail.com"
               class="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-semibold rounded-xl text-primary-foreground bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95"
             >
               Demo anfordern
@@ -198,9 +231,9 @@
             <div class="bg-card border border-border rounded-2xl p-6 shadow-sm">
               <p class="text-muted-foreground mb-2">Direkter Kontakt:</p>
               <a
-                href="mailto:info@betterclassroom.de"
+                href="mailto:info.trinsler@gmail.com"
                 class="text-primary hover:underline text-lg font-medium"
-                >info@betterclassroom.de</a
+                >info.trinsler@gmail.com</a
               >
             </div>
           </div>
