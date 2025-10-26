@@ -28,7 +28,11 @@
     "dev:newpotentialpage": "npm run dev --workspace=@monorepo/newpotentialpage",
     "build:newpotentialpage": "npm run build --workspace=@monorepo/newpotentialpage",
     "generate:newpotentialpage": "npm run generate --workspace=@monorepo/newpotentialpage",
-    "typecheck:newpotentialpage": "npm run typecheck --workspace=@monorepo/newpotentialpage"
+    "typecheck:newpotentialpage": "npm run typecheck --workspace=@monorepo/newpotentialpage",
+    "dev:naechstenliebe": "npm run dev --workspace=@monorepo/naechstenliebe",
+    "build:naechstenliebe": "npm run build --workspace=@monorepo/naechstenliebe",
+    "generate:naechstenliebe": "npm run generate --workspace=@monorepo/naechstenliebe",
+    "typecheck:naechstenliebe": "npm run typecheck --workspace=@monorepo/naechstenliebe"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.19.2",

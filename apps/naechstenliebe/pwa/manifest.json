@@ -1,0 +1,20 @@
+{
+  "name": "Nächstenliebe - Nachbarschaftshilfe",
+  "short_name": "Nächstenliebe",
+  "description": "Lokale Nachbarschaftshilfe zwischen Senioren und Schülern/Studenten",
+  "start_url": "/pwa/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5F6F55",
+  "orientation": "portrait",
+  "scope": "/pwa/",
+  "icons": [
+    {
+      "src": "/icons/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["social", "lifestyle", "utilities"],
+  "lang": "de-DE"
+}
