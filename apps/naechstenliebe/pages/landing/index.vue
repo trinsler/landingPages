@@ -33,14 +33,14 @@
 </template>
 
 <script setup>
-import TheHeader from '../components/TheHeader.vue'
-import HeroSection from '../components/HeroSection.vue'
-import FeaturesSection from '../components/FeaturesSection.vue'
-import ServicesSection from '../components/ServicesSection.vue'
-import HelpSeekersSection from '../components/HelpSeekersSection.vue'
-import HelpersSection from '../components/HelpersSection.vue'
-import SystemOverviewSection from '../components/SystemOverviewSection.vue'
-import FAQSection from '../components/FAQSection.vue'
-import CTASection from '../components/CTASection.vue'
-import TheFooter from '../components/TheFooter.vue'
+import TheHeader from '../components/landing/TheHeader.vue'
+import HeroSection from '../components/landing/HeroSection.vue'
+import FeaturesSection from '../components/landing/FeaturesSection.vue'
+import ServicesSection from '../components/landing/ServicesSection.vue'
+import HelpSeekersSection from '../components/landing/HelpSeekersSection.vue'
+import HelpersSection from '../components/landing/HelpersSection.vue'
+import SystemOverviewSection from '../components/landing/SystemOverviewSection.vue'
+import FAQSection from '../components/landing/FAQSection.vue'
+import CTASection from '../components/landing/CTASection.vue'
+import TheFooter from '../components/landing/TheFooter.vue'
 </script>
