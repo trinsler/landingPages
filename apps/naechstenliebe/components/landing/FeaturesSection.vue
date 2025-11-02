@@ -1,30 +1,14 @@
 <template>
-  <section id="funktionen" style="background: #474747; padding: 4rem 1.5rem 12rem 1.5rem; position: relative;">
-    <!-- Kreide-Spuren im Hintergrund wie in Hero Section -->
-    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: repeating-linear-gradient(to bottom, transparent, transparent 3rem, rgba(255,255,255,0.03) 3rem, rgba(255,255,255,0.03) 3.1rem); opacity: 0.6;"></div>
-    
-    <div style="max-width: 80rem; margin: 0 auto; position: relative; z-index: 2;">
-      <!-- Titel als Tafel-Notiz wie in Hero -->
-      <div style="text-align: center; margin-bottom: 6rem;">
-        <div style="background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); padding: 2.5rem 4rem; display: inline-block; transform: rotate(-1deg); box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative; backdrop-filter: blur(10px);">
-          <!-- Abgerissenes Eck -->
-          <div style="position: absolute; top: 0; right: 0; width: 25px; height: 25px; background: #474747; clip-path: polygon(100% 0, 0 100%, 100% 100%);"></div>
-          
-          <h2 style="font-size: 3rem; font-weight: 700; margin: 0; line-height: 1.2; color: white; font-family: 'Comic Sans MS', cursive, sans-serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-            So einfach funktioniert's
-          </h2>
-        </div>
-        <div style="background: #BECDA3; color: #474747; padding: 1.5rem 3rem; display: inline-block; transform: rotate(1deg); margin-top: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;">
-          <!-- Abgerissenes Eck -->
-          <div style="position: absolute; top: 0; right: 0; width: 20px; height: 20px; background: #474747; clip-path: polygon(100% 0, 0 100%, 100% 100%);"></div>
-          
-          <div style="display: flex; align-items: center; gap: 1.5rem;">
-            <img src="/icons/logo.svg" alt="Mein.Nachbar Logo" style="width: 80px; height: 80px;">
-            <p style="font-size: 1.3rem; margin: 0; font-weight: 600; font-family: 'Comic Sans MS', cursive, sans-serif;">
-              Drei einfache Schritte zur Nachbarschaftshilfe
-            </p>
-          </div>
-        </div>
+  <section id="funktionen" style="background: white; padding: 6rem 1.5rem;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Titel im PWA-Stil -->
+      <div style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin: 0 0 1rem 0; color: #474747;">
+          So einfach funktioniert's
+        </h2>
+        <p style="color: #666; font-size: 1.2rem; font-weight: 300; max-width: 600px; margin: 0 auto;">
+          Drei einfache Schritte zur Nachbarschaftshilfe
+        </p>
       </div>
 
       <!-- Features als handgemalte Notizzettel wie in Hero -->
