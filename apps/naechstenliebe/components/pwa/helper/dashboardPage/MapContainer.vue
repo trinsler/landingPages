@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 defineProps({
   showRequestsSheet: Boolean,
@@ -49,8 +49,8 @@ const loadLeaflet = () => {
 
 const initializeMap = () => {
   return new Promise((resolve) => {
-    // Initialize map centered on Munich
-    map.value = L.map('map').setView([48.1351, 11.5820], 13)
+    // Initialize map centered on Winnweiler
+    map.value = L.map('map').setView([49.5467, 7.7778], 12)
     
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -67,6 +67,11 @@ const initializeMap = () => {
       zoomControl.style.zIndex = '1000'
     }
     
+    // Add dummy request markers for testing
+    setTimeout(() => {
+      addDummyRequestMarkers()
+    }, 1000)
+    
     resolve()
   })
 }
@@ -75,8 +80,8 @@ const getUserLocation = () => {
   return new Promise((resolve) => {
     if (!navigator.geolocation) {
       locationStatus.value = 'error'
-      // Fallback to Munich center and add marker anyway
-      userLocation.value = { lat: 48.1351, lng: 11.5820 }
+      // Fallback to Winnweiler center and add marker anyway
+      userLocation.value = { lat: 49.5467, lng: 7.7778 }
       addUserMarker()
       emit('location-status-updated', locationStatus.value)
       emit('user-location-updated', userLocation.value)
@@ -214,7 +219,7 @@ const updateUserMarkerPopup = (isAvailable) => {
         Dein Standort
       </div>
       <div style="font-size: 12px; color: #666;">
-        Status: <span style="color: ${isAvailable ? '#10b981' : '#f59e0b'}; font-weight: 600;">
+        Status: <span style="color: ${isAvailable ? '#5F6F55' : '#8F8B82'}; font-weight: 600;">
           ${isAvailable ? 'Verfügbar' : 'Nicht verfügbar'}
         </span>
       </div>
@@ -222,9 +227,120 @@ const updateUserMarkerPopup = (isAvailable) => {
   }
 }
 
+const addDummyRequestMarkers = () => {
+  // Dummy requests around Winnweiler
+  const dummyRequests = [
+    {
+      id: 1,
+      title: 'Einkaufen bei Familie Schmidt',
+      type: 'shopping',
+      area: 'Winnweiler',
+      payment: 18,
+      position: { lat: 49.5467, lng: 7.7778 }
+    },
+    {
+      id: 2,
+      title: 'Gartenpflege bei Herrn Weber',
+      type: 'gardening',
+      area: 'Rockenhausen',
+      payment: 25,
+      position: { lat: 49.5964, lng: 7.7213 }
+    },
+    {
+      id: 3,
+      title: 'Technik-Hilfe für Seniorin',
+      type: 'tech_help',
+      area: 'Imsweiler',
+      payment: 22,
+      position: { lat: 49.5689, lng: 7.8234 }
+    },
+    {
+      id: 4,
+      title: 'Haushaltshilfe gesucht',
+      type: 'cleaning',
+      area: 'Bischweiler',
+      payment: 30,
+      position: { lat: 49.5987, lng: 7.6987 }
+    },
+    {
+      id: 5,
+      title: 'Hund Gassi gehen',
+      type: 'dog_walking',
+      area: 'Falkenstein',
+      payment: 12,
+      position: { lat: 49.5123, lng: 7.8123 }
+    },
+    {
+      id: 6,
+      title: 'Kochen für Single-Haushalt',
+      type: 'cooking',
+      area: 'Münsterappel',
+      payment: 35,
+      position: { lat: 49.6234, lng: 7.6543 }
+    },
+    {
+      id: 7,
+      title: 'Fenster putzen',
+      type: 'cleaning',
+      area: 'Ransweiler',
+      payment: 20,
+      position: { lat: 49.5789, lng: 7.8345 }
+    },
+    {
+      id: 8,
+      title: 'Medikamentenabholung',
+      type: 'shopping',
+      area: 'Schönborn',
+      payment: 15,
+      position: { lat: 49.5890, lng: 7.7567 }
+    }
+  ]
+
+  // Clear existing markers
+  requestMarkers.value.forEach(marker => {
+    if (marker.circle) map.value.removeLayer(marker.circle)
+    if (marker.marker) map.value.removeLayer(marker.marker)
+  })
+  requestMarkers.value = []
+
+  dummyRequests.forEach(request => {
+    // Add 100m radius circle (100 meters)
+    const circle = L.circle([request.position.lat, request.position.lng], {
+      color: '#5F6F55',
+      fillColor: '#BECDA3',
+      fillOpacity: 0.1,
+      radius: 100, // 100 meters
+      weight: 1
+    }).addTo(map.value)
+
+    // Add request marker
+    const requestIcon = L.divIcon({
+      html: `<div style="background: #BECDA3; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>`,
+      iconSize: [12, 12],
+      iconAnchor: [6, 6],
+      className: 'request-marker'
+    })
+
+    const marker = L.marker([request.position.lat, request.position.lng], {
+      icon: requestIcon
+    }).addTo(map.value)
+
+    marker.bindPopup(`
+      <div style="min-width: 200px;">
+        <h4 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600;">${request.title}</h4>
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${request.area} • ${request.payment}€</p>
+        <p style="margin: 0; font-size: 11px; color: #999;">Radius: 100m</p>
+      </div>
+    `)
+
+    requestMarkers.value.push({ circle, marker, id: request.id })
+  })
+}
+
 // Expose methods to parent
 defineExpose({
   addRequestMarkers,
+  addDummyRequestMarkers,
   focusOnRequest,
   updateUserMarkerPopup,
   map

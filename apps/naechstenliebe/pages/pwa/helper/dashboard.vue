@@ -3,9 +3,12 @@
     <!-- Header Component -->
     <AppHeader 
       title="Helfer Dashboard" 
+      current-role="helper"
       :request-count="mapRequests.length"
-      @open-requests="toggleRequestsSheet"
-      @open-profile="openProfile"
+      @open-requests="handleRequestsClick"
+      @open-profile="handleProfileClick"
+      @open-news="handleNewsClick"
+      @toggle-role="handleRoleToggle"
     />
 
     <!-- Map Container Component -->
@@ -34,9 +37,13 @@
         :selected-filter="selectedFilter"
         :filtered-requests="filteredRequests"
         :map-requests="mapRequests"
+        :visible-requests="visibleRequests"
+        :total-requests="mapRequests.length"
         @toggle-sheet="toggleRequestsSheet"
         @start-resize="startResize"
         @filter-change="selectedFilter = $event"
+        @radius-change="handleRadiusChange"
+        @city-change="handleCityChange"
         @focus-request="focusOnRequest"
         @contact-helper="contactHelper"
         @decline-request="declineDirectRequest"
@@ -45,12 +52,20 @@
 
     <!-- Footer Component -->
     <AppFooter 
-      :active-tab="activeTab"
-      @navigate="setActiveTab"
+      active-tab="dashboard"
+      current-role="helper"
+      @navigate="handleFooterNavigation"
     />
 
     <!-- Padding for bottom nav -->
     <div style="height: 5rem;"></div>
+
+    <!-- News Modal -->
+    <NewsModal 
+      :show="showNewsModal"
+      @close="showNewsModal = false"
+      @open-news-detail="openNewsDetail"
+    />
   </div>
 </template>
 
@@ -60,7 +75,12 @@ import AppHeader from '~/components/AppHeader.vue'
 import AppFooter from '~/components/AppFooter.vue'
 import MapContainer from '~/components/pwa/helper/dashboardPage/MapContainer.vue'
 import StatusButtons from '~/components/pwa/helper/dashboardPage/StatusButtons.vue'
-import RequestsSidePanel from '~/components/pwa/helper/dashboardPage/RequestsSidePanel.vue'
+import RequestsSidePanel from '~/components/pwa/helper/RequestsSidePanel.vue'
+import NewsModal from '~/components/pwa/helper/NewsModal.vue'
+
+// Import data and utilities
+import { mapRequests as initialMapRequests, winnweilerCenter } from '~/components/pwa/helper/dashboard/DashboardData.js'
+import { calculateVisibleRadius, calculateDistance, checkMobileSize } from '~/components/pwa/helper/dashboard/DashboardUtils.js'
 
 definePageMeta({
   layout: false
@@ -77,54 +97,24 @@ const selectedFilter = ref('all')
 const isMobile = ref(false)
 const sidebarWidth = ref(400)
 const isDragging = ref(false)
+const showNewsModal = ref(false)
 
-// Mock data for available requests on map
-const mapRequests = ref([
-  {
-    id: 1,
-    title: 'Einkaufen für Martha K.',
-    type: 'shopping',
-    area: 'Maxvorstadt',
-    payment: 15,
-    distance: '0.8km',
-    position: { lat: 48.1486, lng: 11.5804 },
-    circle: null,
-    client: 'Martha K., 78 Jahre',
-    description: 'Bitte Milch, Vollkornbrot und 6 Äpfel vom Supermarkt. Wichtig: Bio-Milch bevorzugt.',
-    address: 'Musterstraße 45, 80797 München'
-  },
-  {
-    id: 2,
-    title: 'Gartenarbeit bei Thomas',
-    type: 'gardening',
-    area: 'Schwabing',
-    payment: 25,
-    distance: '1.2km',
-    position: { lat: 48.1633, lng: 11.5879 },
-    circle: null,
-    client: 'Thomas M., 65 Jahre',
-    description: 'Rasenmähen und Unkrautjäten im Vorgarten. Dauer ca. 2 Stunden.',
-    address: 'Leopoldstraße 23, 80802 München'
-  },
-  {
-    id: 3,
-    title: 'Hilfe bei Technik',
-    type: 'tech_help',
-    area: 'Altstadt',
-    payment: 20,
-    distance: '2.1km',
-    position: { lat: 48.1351, lng: 11.5820 },
-    circle: null,
-    client: 'Anna P., 82 Jahre',
-    description: 'Hilfe beim Einrichten eines neuen Smartphones und E-Mail-Access.',
-    address: 'Marienplatz 8, 80331 München'
-  }
-])
+// Map and filter states
+const currentZoom = ref(12)
+const visibleRadius = ref(15) // in km
+const searchCity = ref('Winnweiler')
+const searchRadius = ref(10) // in km
+const mapBounds = ref(null)
+
+// Map requests from imported data
+const mapRequests = ref([...initialMapRequests])
 
 // Check if mobile on mount and resize
 onMounted(() => {
-  checkMobileSize()
-  window.addEventListener('resize', checkMobileSize)
+  isMobile.value = checkMobileSize()
+  window.addEventListener('resize', () => {
+    isMobile.value = checkMobileSize()
+  })
   
   // Add global mouse event listeners for resize
   document.addEventListener('mousemove', handleMouseMove)
@@ -133,7 +123,8 @@ onMounted(() => {
   // Initialize map markers after map is ready
   nextTick(() => {
     if (mapContainer.value) {
-      mapContainer.value.addRequestMarkers(mapRequests.value, isAvailable.value)
+      // Call the dummy marker method that we created in MapContainer
+      mapContainer.value.addDummyRequestMarkers()
     }
   })
 })
@@ -142,10 +133,6 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', handleMouseMove)
   document.removeEventListener('mouseup', stopResize)
 })
-
-const checkMobileSize = () => {
-  isMobile.value = window.innerWidth < 768
-}
 
 const toggleRequestsSheet = () => {
   showRequestsSheet.value = !showRequestsSheet.value
@@ -214,19 +201,47 @@ const focusOnRequest = (request) => {
   }
 }
 
-const setActiveTab = (tab) => {
-  activeTab.value = tab
+// Header event handlers
+const handleRequestsClick = () => {
+  toggleRequestsSheet()
+}
+
+const handleProfileClick = () => {
+  navigateTo('/pwa/shared/profile')
+}
+
+const handleNewsClick = () => {
+  navigateTo('/pwa/shared/news')
+}
+
+const handleRoleToggle = () => {
+  navigateTo('/pwa/seeker/dashboard')
+}
+
+// Footer navigation handler
+const handleFooterNavigation = (tab) => {
   switch(tab) {
+    case 'dashboard':
+      // Already on dashboard
+      break
     case 'tasks':
-      navigateTo('/pwa/helper/task-incoming')
+      navigateTo('/pwa/helper/tasks')
+      break
+    case 'loyalty':
+      navigateTo('/pwa/helper/loyalty')
       break
     case 'earnings':
       navigateTo('/pwa/helper/earnings')
       break
     case 'profile':
-      navigateTo('/pwa/helper/profile')
+      navigateTo('/pwa/shared/profile')
       break
   }
+}
+
+const setActiveTab = (tab) => {
+  activeTab.value = tab
+  handleFooterNavigation(tab)
 }
 
 const startResize = (e) => {
@@ -256,14 +271,44 @@ const stopResize = () => {
   isDragging.value = false
 }
 
+// Update visible radius when zoom changes
+const updateVisibleRadius = (zoom) => {
+  currentZoom.value = zoom
+  visibleRadius.value = calculateVisibleRadius(zoom)
+}
 
-// Computed property for filtered requests
-const filteredRequests = computed(() => {
-  if (selectedFilter.value === 'all') {
-    return mapRequests.value
-  }
-  return mapRequests.value.filter(request => request.type === selectedFilter.value)
+// All requests are always visible on map (like Munich example)
+const visibleRequests = computed(() => {
+  return mapRequests.value
 })
+
+// Computed property for filtered requests (based on all visible requests)
+const filteredRequests = computed(() => {
+  const requests = visibleRequests.value
+  if (selectedFilter.value === 'all') {
+    return requests
+  }
+  return requests.filter(request => request.type === selectedFilter.value)
+})
+
+// Handle radius change from sidebar
+const handleRadiusChange = (newRadius) => {
+  searchRadius.value = newRadius
+  console.log('Search radius changed to:', newRadius, 'km')
+}
+
+// Handle city search
+const handleCityChange = (city) => {
+  searchCity.value = city
+  console.log('Search city changed to:', city)
+  // In a real app, this would geocode the city and center the map
+}
+
+const openNewsDetail = (news) => {
+  console.log('Opening news detail:', news)
+  // In a real app, this could open a detailed view or navigate to full article
+  // For now, just log the selection
+}
 
 </script>
 

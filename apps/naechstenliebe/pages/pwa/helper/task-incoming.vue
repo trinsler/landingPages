@@ -13,8 +13,6 @@
       <!-- Timer - Modern Design -->
       <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; color: white; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);">
         <h2 style="margin: 0 0 1rem 0; font-size: 1.25rem; font-weight: 600;">Antworten Sie schnell!</h2>
-        <div style="font-size: 2.5rem; font-weight: 700; margin: 0;">1:47</div>
-        <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; opacity: 0.9;">verbleibende Zeit</p>
       </div>
 
       <!-- Auftragsdetails -->
@@ -116,6 +114,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
 import AppFooter from '~/components/AppFooter.vue'
 
