@@ -348,45 +348,36 @@ const form = ref({
 const submitted = ref(false)
 const isSubmitting = ref(false)
 
+// Use our Supabase composable
+const { submitContactForm } = useContactForm()
+
 const submitForm = async () => {
   isSubmitting.value = true
 
   try {
-    // Send email via Formspree
-    const response = await fetch('https://formspree.io/f/xpwavvke', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: form.value.name,
-        email: form.value.email,
-        company: form.value.company,
-        message: form.value.message,
-        _replyto: form.value.email,
-        _subject: `Social Impact Project Request from ${form.value.name}`,
-      }),
+    // Submit form via Supabase
+    await submitContactForm({
+      name: form.value.name,
+      email: form.value.email,
+      company: form.value.company,
+      message: form.value.message,
     })
 
-    if (response.ok) {
-      // Show success message
-      submitted.value = true
+    // Show success message
+    submitted.value = true
 
-      // Reset form
-      form.value = {
-        name: '',
-        email: '',
-        company: '',
-        message: '',
-      }
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        submitted.value = false
-      }, 5000)
-    } else {
-      throw new Error('Network response was not ok')
+    // Reset form
+    form.value = {
+      name: '',
+      email: '',
+      company: '',
+      message: '',
     }
+
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      submitted.value = false
+    }, 5000)
   } catch (error) {
     console.error('Error:', error)
     alert('Error sending message. Please try again later.')

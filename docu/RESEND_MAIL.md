@@ -1,4 +1,12 @@
-1. integration with https://resend.com/settings/integrations
+Prerequisits: 
+- Make sure Supabase URL and Anon Key is set in .env
+- integration with https://resend.com/settings/integrations works
+
+Mail Formular:
+1.1 Paste in functions and sql Table
+1.2 Set RESEND_API_KEY in Edge Functions Secrets
+
+Resend integration for login:
 2. confirm cloudflare dns
 3. edit custom mail template in supabase: https://supabase.com/dashboard/project/amilnmlymgtkefeizohj/auth/templates
 4. set smtp settings: https://supabase.com/dashboard/project/amilnmlymgtkefeizohj/auth/smtp
