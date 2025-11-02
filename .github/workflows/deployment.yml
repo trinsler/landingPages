@@ -128,8 +128,8 @@ jobs:
         if: (github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'develop')
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.TRINSLER_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.TRINSLER_SUPABASE_ANON_KEY }}
           NODE_ENV: development
           NUXT_APP_ENV: develop
 
@@ -137,8 +137,8 @@ jobs:
         if: (startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'production')
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.TRINSLER_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.TRINSLER_SUPABASE_ANON_KEY }}
           NODE_ENV: production
           NUXT_APP_ENV: production
 
