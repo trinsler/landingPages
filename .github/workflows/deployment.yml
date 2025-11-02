@@ -13,7 +13,15 @@ on:
     branches: [main, develop]
     types: [opened, synchronize, reopened]
   workflow_dispatch:
-    # Allow manual triggering
+    inputs:
+      target_environment:
+        description: 'Target environment'
+        required: true
+        default: 'develop'
+        type: choice
+        options:
+          - develop
+          - production
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -83,7 +91,8 @@ jobs:
     needs: [test]
     if: |
       (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
-      (startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push')
+      (startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push') ||
+      (github.event_name == 'workflow_dispatch')
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -114,9 +123,9 @@ jobs:
           NODE_ENV: production
           NUXT_APP_ENV: production
 
-      # Build Trinsler for Development (main branch) or Production (tags)
+      # Build Trinsler for Development (main branch) or Production (tags) or Manual
       - name: 🏗️ Build Trinsler app for development
-        if: github.ref == 'refs/heads/main'
+        if: (github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'develop')
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -125,7 +134,7 @@ jobs:
           NUXT_APP_ENV: develop
 
       - name: 🏗️ Build Trinsler app for production
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: (startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'production')
         run: pnpm --filter=@monorepo/trinsler run generate
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -134,7 +143,7 @@ jobs:
           NUXT_APP_ENV: production
 
       - name: 🏗️ Build BetterClassroom app for production
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: (startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'production')
         run: pnpm --filter=@monorepo/betterclassroom run generate
         env:
           NODE_ENV: production
@@ -149,9 +158,9 @@ jobs:
           publish_dir: ./apps/coin-boilerplate-app/.output/public
           cname: coin.trinsler.com
 
-      # Deploy Trinsler to Development (main branch)
+      # Deploy Trinsler to Development (main branch or manual develop)
       - name: 🚀 Deploy Trinsler app to Development
-        if: github.ref == 'refs/heads/main'
+        if: (github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'develop')
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: trinsler/trinsler-develop
@@ -159,9 +168,9 @@ jobs:
           publish_dir: ./apps/trinsler/.output/public
           cname: trinsler-develop.trinsler.com
 
-      # Deploy Trinsler to Production (tags)
+      # Deploy Trinsler to Production (tags or manual production)
       - name: 🚀 Deploy Trinsler app to Production
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: (startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'production')
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: trinsler/trinsler
@@ -169,9 +178,9 @@ jobs:
           publish_dir: ./apps/trinsler/.output/public
           cname: trinsler.com
 
-      # Deploy BetterClassroom to Production (tags)
+      # Deploy BetterClassroom to Production (tags or manual production)
       - name: 🚀 Deploy BetterClassroom app to Production
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: (startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_environment == 'production')
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: trinsler/betterclassroom
