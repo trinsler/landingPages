@@ -44,3 +44,8 @@ All deployments run tests first. Deployment only occurs if tests pass:
 3. **Deploy** (Development or Production)
 
 View deployment status in [GitHub Actions](../../actions).
+
+
+Redeploy:
+1. Release erstellen: git tag v2.0.1 && git push origin v2.0.1
+2. Deployment triggern: git commit --allow-empty -m "[deploy] v2.0.1" && git push origin main

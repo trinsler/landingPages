@@ -17,9 +17,9 @@ export default defineNuxtConfig({
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_ANON_KEY,
     redirectOptions: {
-      login: '/',
+      login: '/home',
       callback: '/auth/callback',
-      exclude: ['/contact', '/impressum', '/datenschutz', '/agb']
+      exclude: ['/contact', '/impressum', '/datenschutz', '/agb', '/about', '/portfolio', '/services']
     }
   },
   
