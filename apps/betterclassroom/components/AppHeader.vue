@@ -22,14 +22,7 @@
         >
           Kontakt
         </NuxtLink>
-        <div class="h-6 w-px bg-border mx-2"></div>
-        <img
-          src="/images/htwg-logo.png"
-          alt="HTWG Konstanz"
-          class="h-6 opacity-70 hover:opacity-100 transition-opacity"
-          onerror="this.style.display='none'"
-        />
-      </nav>
+        </nav>
       <button
         class="md:hidden p-2"
         @click="isMenuOpen = !isMenuOpen"

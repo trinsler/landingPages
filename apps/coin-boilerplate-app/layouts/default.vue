@@ -115,6 +115,103 @@
       <slot />
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Company Info -->
+          <div class="md:col-span-1">
+            <div class="flex items-center space-x-2 mb-4">
+              <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold text-lg">C</span>
+              </div>
+              <span class="text-xl font-bold text-gray-900">CoinApp</span>
+            </div>
+            <p class="text-gray-600 text-sm">
+              Secure digital coin platform with OAuth and Stripe integration.
+            </p>
+          </div>
+
+          <!-- Navigation -->
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+              Navigation
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <NuxtLink to="/" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Home
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/shop" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Shop
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/dashboard" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Dashboard
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/contact" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Kontakt
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Legal -->
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+              Legal
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <NuxtLink to="/impressum" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Impressum
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/datenschutz" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  Datenschutz
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/agb" class="text-gray-600 hover:text-indigo-600 text-sm transition-colors">
+                  AGB
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">
+              Kontakt
+            </h3>
+            <div class="space-y-3">
+              <p class="text-gray-600 text-sm">
+                E-Mail: info.trinsler@gmail.com
+              </p>
+              <p class="text-gray-600 text-sm">
+                Powered by <a href="https://trinsler.com" target="_blank" class="text-indigo-600 hover:text-indigo-500 transition-colors">Trinsler</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm">
+              &copy; 2025 CoinApp. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <!-- Auth Modal -->
     <AuthModal
       :is-open="showAuthModal"

@@ -127,9 +127,9 @@ const navigation = {
     { name: 'Social Impact Consulting', href: '/services' },
   ],
   legal: [
-    { name: 'Impressum', href: '/legal/imprint' },
-    { name: 'Datenschutz', href: '/legal/privacy' },
-    { name: 'AGB', href: '/legal/terms' },
+    { name: 'Impressum', href: '/impressum' },
+    { name: 'Datenschutz', href: '/datenschutz' },
+    { name: 'AGB', href: '/agb' },
   ],
 }
 
