@@ -17,9 +17,9 @@ export default defineNuxtConfig({
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_ANON_KEY,
     redirectOptions: {
-      login: false,
-      callback: false,
-      exclude: ['*']
+      login: '/',
+      callback: '/auth/callback',
+      exclude: ['/']
     }
   },
   
@@ -57,5 +57,17 @@ export default defineNuxtConfig({
 
   build: {
     transpile: []
+  },
+
+  runtimeConfig: {
+    // Private keys (only available on server-side)
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+
+    // Public keys (exposed to client-side)
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    }
   }
 })

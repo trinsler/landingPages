@@ -36,6 +36,13 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
+    // Private keys (only available on server-side)
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    resendApiKey: process.env.RESEND_API_KEY,
+
+    // Public keys (exposed to client-side)
     public: {
       stripePublicKey: process.env.STRIPE_PUBLIC_KEY,
       supabaseUrl: process.env.SUPABASE_URL,
