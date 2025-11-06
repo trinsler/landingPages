@@ -71,10 +71,10 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
+    <UnifiedFooter 
       :active-tab="'tasks'"
       @navigate="(tab) => {
-        if (tab === 'dashboard') navigateTo('/pwa/helper/dashboard')
+        if (tab === 'dashboard') navigateTo('/pwa')
         if (tab === 'tasks') navigateTo('/pwa/helper/task-incoming')
         if (tab === 'earnings') navigateTo('/pwa/helper/earnings')
         if (tab === 'profile') navigateTo('/pwa/helper/profile')
@@ -89,7 +89,7 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 
 definePageMeta({
   layout: false

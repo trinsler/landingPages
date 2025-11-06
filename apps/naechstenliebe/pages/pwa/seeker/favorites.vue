@@ -3,12 +3,12 @@
     <!-- Header Component -->
     <AppHeader 
       title="Favoriten" 
-      current-role="seeker"
+      current-role="unified"
       :request-count="0"
-      @open-requests="handleRequestsClick"
-      @open-profile="handleProfileClick"
-      @open-news="handleNewsClick"
-      @toggle-role="handleRoleToggle"
+      @open-requests="() => navigateTo('/pwa')"
+      @open-profile="() => navigateTo('/pwa/shared/profile')"
+      @open-news="() => navigateTo('/pwa/shared/news')"
+      @toggle-role="() => navigateTo('/pwa')"
     />
 
     <div style="padding: 1rem; padding-bottom: 6rem;">
@@ -37,9 +37,9 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
-      active-tab="favorites"
-      current-role="seeker"
+    <UnifiedFooter 
+      active-tab="seeker-favorites"
+      current-role="unified"
       @navigate="handleFooterNavigation"
     />
 
@@ -51,7 +51,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import FavoritesInfoHeader from '~/components/pwa/seeker/FavoritesInfoHeader.vue'
 import FavoriteHelperCard from '~/components/pwa/seeker/FavoriteHelperCard.vue'
 import FindNewHelpers from '~/components/pwa/seeker/FindNewHelpers.vue'
@@ -118,33 +118,11 @@ const handleNewsClick = () => {
 }
 
 const handleRoleToggle = () => {
-  navigateTo('/pwa/helper/dashboard')
-}
-
-// Footer navigation handler
-const handleFooterNavigation = (tab) => {
-  switch(tab) {
-    case 'dashboard':
-      navigateTo('/pwa/seeker/dashboard')
-      break
-    case 'tasks':
-      navigateTo('/pwa/seeker/history')
-      break
-    case 'favorites':
-      // Already on favorites page
-      break
-    case 'create':
-    case 'task-create':
-      navigateTo('/pwa/seeker/task-create')
-      break
-    case 'profile':
-      navigateTo('/pwa/shared/profile')
-      break
-  }
+  navigateTo('/pwa')
 }
 
 const switchToHelperMode = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 // Component event handlers
@@ -168,5 +146,28 @@ const handleOpenChat = (helperId) => {
 
 const handleSearchHelpers = () => {
   navigateTo('/pwa/seeker/task-create')
+}
+
+const handleFooterNavigation = (tab) => {
+  switch(tab) {
+    case 'dashboard':
+      navigateTo('/pwa')
+      break
+    case 'helper-tasks':
+      navigateTo('/pwa/helper/tasks')
+      break
+    case 'helper-earnings':
+      navigateTo('/pwa/helper/earnings')
+      break
+    case 'seeker-create':
+      navigateTo('/pwa/seeker/task-create')
+      break
+    case 'seeker-history':
+      navigateTo('/pwa/seeker/history')
+      break
+    case 'seeker-favorites':
+      // Already on favorites page
+      break
+  }
 }
 </script>

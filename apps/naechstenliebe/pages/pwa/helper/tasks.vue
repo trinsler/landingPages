@@ -3,7 +3,7 @@
     <!-- Header Component -->
     <AppHeader 
       title="Meine Aufträge" 
-      current-role="helper"
+      current-role="unified"
       :request-count="availableJobsCount"
       @open-requests="handleRequestsClick"
       @open-profile="handleProfileClick"
@@ -15,6 +15,7 @@
     <QuickActions 
       @open-data-protection="showDataProtectionModal = true"
       @open-conflict-resolution="showSupportModal = true"
+      @open-dashboard="navigateTo('/pwa')"
     />
 
     <!-- Filter Section -->
@@ -32,10 +33,10 @@
       @show-details="openTaskDetail"
     />
 
-    <!-- Footer Component -->
-    <AppFooter 
-      active-tab="tasks"
-      current-role="helper"
+    <!-- Unified Footer Component -->
+    <UnifiedFooter 
+      active-tab="helper-tasks"
+      current-role="unified"
       @navigate="handleFooterNavigation"
     />
 
@@ -72,7 +73,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import TaskDetailModal from '~/components/pwa/helper/TaskDetailModal.vue'
 
 // Import new components
@@ -201,7 +202,7 @@ const handleSubmitSupport = (data) => {
 
 // Header event handlers
 const handleRequestsClick = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 const handleProfileClick = () => {
@@ -216,20 +217,32 @@ const handleRoleToggle = () => {
   navigateTo('/pwa/seeker/dashboard')
 }
 
-// Footer navigation handler
+// Unified footer navigation handler
 const handleFooterNavigation = (tab) => {
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/helper/dashboard')
+      navigateTo('/pwa')
       break
-    case 'tasks':
+    case 'helper-tasks':
       // Already on tasks page
       break
-    case 'loyalty':
+    case 'helper-earnings':
+      navigateTo('/pwa/helper/earnings')
+      break
+    case 'helper-loyalty':
       navigateTo('/pwa/helper/loyalty')
       break
-    case 'earnings':
-      navigateTo('/pwa/helper/earnings')
+    case 'seeker-create':
+      navigateTo('/pwa/seeker/task-create')
+      break
+    case 'seeker-tasks':
+      navigateTo('/pwa') // Opens with seeker tasks sidebar
+      break
+    case 'seeker-favorites':
+      navigateTo('/pwa') // Opens with favorites sidebar
+      break
+    case 'seeker-history':
+      navigateTo('/pwa/seeker/history')
       break
     case 'profile':
       navigateTo('/pwa/shared/profile')

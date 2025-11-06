@@ -48,7 +48,7 @@ const setActiveTab = (tab) => {
   activeTab.value = tab
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/helper/dashboard')
+      navigateTo('/pwa')
       break
     case 'tasks':
       // Stay on current page

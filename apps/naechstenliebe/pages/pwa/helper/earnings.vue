@@ -3,7 +3,7 @@
     <!-- Header Component -->
     <AppHeader 
       title="Meine Verdienste" 
-      current-role="helper"
+      current-role="unified"
       :request-count="8"
       @open-requests="handleRequestsClick"
       @open-profile="handleProfileClick"
@@ -30,9 +30,9 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
-      active-tab="earnings"
-      current-role="helper"
+    <UnifiedFooter 
+      active-tab="helper-earnings"
+      current-role="unified"
       @navigate="handleFooterNavigation"
     />
 
@@ -43,7 +43,7 @@
 
 <script setup>
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 
 // Import earnings components
 import BalanceDisplay from '~/components/pwa/helper/earnings/BalanceDisplay.vue'
@@ -66,7 +66,7 @@ const requestPayout = () => {
 
 // Header event handlers
 const handleRequestsClick = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 const handleProfileClick = () => {
@@ -85,7 +85,7 @@ const handleRoleToggle = () => {
 const handleFooterNavigation = (tab) => {
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/helper/dashboard')
+      navigateTo('/pwa')
       break
     case 'tasks':
       navigateTo('/pwa/helper/tasks')

@@ -4,7 +4,7 @@
     <AppHeader 
       title="News Publisher" 
       :request-count="3"
-      @open-requests="() => navigateTo('/pwa/helper/dashboard')"
+      @open-requests="() => navigateTo('/pwa')"
       @open-profile="() => navigateTo('/pwa/helper/profile')"
       @open-news="() => navigateTo('/pwa/helper/news')"
     />
@@ -38,10 +38,10 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
+    <UnifiedFooter 
       :active-tab="'publisher'"
       @navigate="(tab) => {
-        if (tab === 'dashboard') navigateTo('/pwa/helper/dashboard')
+        if (tab === 'dashboard') navigateTo('/pwa')
         if (tab === 'tasks') navigateTo('/pwa/helper/tasks')
         if (tab === 'news') navigateTo('/pwa/helper/news')
         if (tab === 'earnings') navigateTo('/pwa/helper/earnings')
@@ -57,7 +57,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import ArticleForm from '~/components/pwa/helper/news-publisher/ArticleForm.vue'
 import ProcessDocumentation from '~/components/pwa/helper/news-publisher/ProcessDocumentation.vue'
 

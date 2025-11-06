@@ -3,12 +3,12 @@
     <!-- Header Component -->
     <AppHeader 
       title="Auftragshistorie" 
-      current-role="seeker"
+      current-role="unified"
       :request-count="0"
-      @open-requests="handleRequestsClick"
-      @open-profile="handleProfileClick"
-      @open-news="handleNewsClick"
-      @toggle-role="handleRoleToggle"
+      @open-requests="() => navigateTo('/pwa')"
+      @open-profile="() => navigateTo('/pwa/shared/profile')"
+      @open-news="() => navigateTo('/pwa/shared/news')"
+      @toggle-role="() => navigateTo('/pwa')"
     />
     
     <div style="padding: 1rem; padding-bottom: 6rem;">
@@ -42,9 +42,9 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
-      active-tab="tasks"
-      current-role="seeker"
+    <UnifiedFooter 
+      active-tab="seeker-history"
+      current-role="unified"
       @navigate="handleFooterNavigation"
     />
 
@@ -56,7 +56,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import StatisticsHeader from '~/components/pwa/seeker/StatisticsHeader.vue'
 import HistoryFilter from '~/components/pwa/seeker/HistoryFilter.vue'
 import TaskHistoryGroup from '~/components/pwa/seeker/TaskHistoryGroup.vue'
@@ -156,33 +156,35 @@ const handleNewsClick = () => {
 }
 
 const handleRoleToggle = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 // Footer navigation handler
 const handleFooterNavigation = (tab) => {
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/seeker/dashboard')
+      navigateTo('/pwa')
       break
-    case 'tasks':
-      // Already on tasks/history page
+    case 'helper-tasks':
+      navigateTo('/pwa/helper/tasks')
       break
-    case 'favorites':
-      navigateTo('/pwa/seeker/favorites')
+    case 'helper-earnings':
+      navigateTo('/pwa/helper/earnings')
       break
-    case 'create':
-    case 'task-create':
+    case 'seeker-create':
       navigateTo('/pwa/seeker/task-create')
       break
-    case 'profile':
-      navigateTo('/pwa/shared/profile')
+    case 'seeker-history':
+      // Already on history page
+      break
+    case 'seeker-favorites':
+      navigateTo('/pwa/seeker/favorites')
       break
   }
 }
 
 const switchToHelperMode = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 // Component event handlers

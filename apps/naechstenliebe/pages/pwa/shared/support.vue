@@ -174,7 +174,7 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
+    <UnifiedFooter 
       :active-tab="'support'"
       :current-role="currentRole"
       @navigate="handleNavigation"
@@ -188,7 +188,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import { useRole } from '~/composables/useRole.js'
 
 definePageMeta({

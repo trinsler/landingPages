@@ -44,7 +44,7 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
+    <UnifiedFooter 
       active-tab="loyalty"
       current-role="helper"
       @navigate="handleFooterNavigation"
@@ -58,7 +58,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 
 // Import loyalty components
 import TierStatus from '~/components/pwa/helper/loyalty/TierStatus.vue'
@@ -111,7 +111,7 @@ const showProfileDetails = (section) => {
 
 // Header event handlers
 const handleRequestsClick = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 const handleProfileClick = () => {
@@ -130,7 +130,7 @@ const handleRoleToggle = () => {
 const handleFooterNavigation = (tab) => {
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/helper/dashboard')
+      navigateTo('/pwa')
       break
     case 'tasks':
       navigateTo('/pwa/helper/tasks')

@@ -3,7 +3,7 @@
     <!-- Header Component -->
     <AppHeader 
       title="Hilfe anfragen" 
-      current-role="seeker"
+      current-role="unified"
       :request-count="0"
       @open-requests="handleRequestsClick"
       @open-profile="handleProfileClick"
@@ -26,15 +26,26 @@
 
       <!-- Task Description Form -->
       <div style="background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <h3 style="color: #474747; font-size: 1.25rem; font-weight: 600; margin: 0 0 1rem 0;">Was benötigen Sie?</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="color: #474747; font-size: 1.25rem; font-weight: 600; margin: 0;">Was benötigen Sie?</h3>
+          <span style="color: #6b7280; font-size: 0.75rem; background: rgba(107, 114, 128, 0.1); padding: 0.25rem 0.5rem; border-radius: 12px;">{{ taskDescription.length }}/500</span>
+        </div>
         
         <textarea 
           v-model="taskDescription"
-          placeholder="Beschreiben Sie Ihre Anfrage... z.B. 'Ich benötige Hilfe beim wöchentlichen Einkauf für Lebensmittel'"
-          style="width: 100%; min-height: 120px; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; resize: vertical; font-family: inherit;"
-          @focus="$event.target.style.borderColor='#BECDA3'"
+          maxlength="500"
+          placeholder="Beschreiben Sie Ihre Anfrage detailliert... z.B. 'Ich benötige Hilfe beim wöchentlichen Einkauf für Lebensmittel. Bevorzugt donnerstags zwischen 14-17 Uhr.'"
+          style="width: 100%; min-height: 140px; padding: 1rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; resize: vertical; font-family: inherit; line-height: 1.6;"
+          @focus="$event.target.style.borderColor='#5F6F55'"
           @blur="$event.target.style.borderColor='#e5e7eb'"
         ></textarea>
+        
+        <div style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+          <svg style="width: 1rem; height: 1rem; color: #6b7280;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span style="color: #6b7280; font-size: 0.75rem;">Je detaillierter die Beschreibung, desto besser können Helfer Ihnen assistieren.</span>
+        </div>
       </div>
 
       <!-- Quick Category Selection -->
@@ -62,32 +73,65 @@
       </div>
 
       <!-- Submit Buttons -->
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <button 
-          @click="submitTask"
-          style="background: #5F6F55; color: white; padding: 1rem 2rem; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; font-size: 1rem; transition: all 0.2s;"
-          onmouseover="this.style.background='#4a5c44'"
-          onmouseout="this.style.background='#5F6F55'"
-        >
-          Hilfe anfragen
-        </button>
+      <div style="background: white; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <div style="margin-bottom: 1rem;">
+          <h3 style="color: #474747; font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0;">Anfrage senden</h3>
+          <p style="color: #6b7280; font-size: 0.875rem; margin: 0;">Ihre Anfrage wird an verfügbare Helfer in der Nähe gesendet.</p>
+        </div>
         
-        <button 
-          @click="navigateTo('/pwa/seeker/dashboard')"
-          style="background: white; color: #474747; padding: 1rem 2rem; border-radius: 12px; border: 2px solid #e5e7eb; cursor: pointer; font-size: 1rem; transition: all 0.2s;"
-          onmouseover="this.style.borderColor='#BECDA3'"
-          onmouseout="this.style.borderColor='#e5e7eb'"
-        >
-          Abbrechen
-        </button>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button 
+            @click="submitTask"
+            :disabled="!taskDescription.trim()"
+            :style="`background: ${taskDescription.trim() ? '#5F6F55' : '#d1d5db'}; 
+                     color: white; 
+                     padding: 1.25rem 2rem; 
+                     border-radius: 12px; 
+                     border: none; 
+                     font-weight: 600; 
+                     cursor: ${taskDescription.trim() ? 'pointer' : 'not-allowed'}; 
+                     font-size: 1rem; 
+                     transition: all 0.2s;
+                     display: flex;
+                     align-items: center;
+                     justify-content: center;
+                     gap: 0.5rem;`"
+            onmouseover="if(this.style.background === 'rgb(95, 111, 85)') { this.style.background='#4a5c44'; this.style.transform='translateY(-1px)'; }"
+            onmouseout="if(this.style.background === 'rgb(74, 92, 68)') { this.style.background='#5F6F55'; this.style.transform='translateY(0)'; }"
+          >
+            <svg style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            Hilfe anfragen
+          </button>
+          
+          <button 
+            @click="saveDraft"
+            style="background: rgba(95, 111, 85, 0.1); color: #5F6F55; padding: 0.875rem 2rem; border-radius: 12px; border: 1px solid rgba(95, 111, 85, 0.2); font-weight: 500; cursor: pointer; font-size: 0.875rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+            onmouseover="this.style.background='rgba(95, 111, 85, 0.2)'"
+            onmouseout="this.style.background='rgba(95, 111, 85, 0.1)'"
+          >
+            <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2M7 4h10M7 4l-2 16h14l-2-16M9 9v6m6-6v6"/>
+            </svg>
+            Als Entwurf speichern
+          </button>
+        </div>
+        
+        <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(34, 197, 94, 0.1); border-radius: 8px; display: flex; align-items: center; gap: 0.5rem;">
+          <svg style="width: 1rem; height: 1rem; color: #22c55e;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span style="color: #22c55e; font-size: 0.75rem; font-weight: 500;">Ihre Anfrage ist kostenfrei und unverbindlich</span>
+        </div>
       </div>
 
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
-      active-tab="create"
-      current-role="seeker"
+    <UnifiedFooter 
+      active-tab="seeker-create"
+      current-role="unified"
       @navigate="handleFooterNavigation"
     />
 
@@ -99,7 +143,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 
 definePageMeta({
   layout: false
@@ -119,7 +163,6 @@ const categories = ref([
 
 const submitTask = () => {
   if (!taskDescription.value.trim()) {
-    alert('Bitte beschreiben Sie, wobei Sie Hilfe benötigen.')
     return
   }
   
@@ -129,7 +172,16 @@ const submitTask = () => {
   })
   
   alert('Ihre Anfrage wurde erfolgreich übermittelt! Sie werden benachrichtigt, sobald ein Helfer verfügbar ist.')
-  navigateTo('/pwa/seeker/dashboard')
+  navigateTo('/pwa')
+}
+
+const saveDraft = () => {
+  console.log('Saving draft:', {
+    description: taskDescription.value,
+    category: selectedCategory.value
+  })
+  // In a real app, this would save to local storage or backend
+  alert('Entwurf gespeichert! Sie können ihn später aus Ihren Entwürfen laden.')
 }
 
 // Header event handlers
@@ -146,27 +198,29 @@ const handleNewsClick = () => {
 }
 
 const handleRoleToggle = () => {
-  navigateTo('/pwa/helper/dashboard')
+  navigateTo('/pwa')
 }
 
 // Footer navigation handler
 const handleFooterNavigation = (tab) => {
   switch(tab) {
     case 'dashboard':
-      navigateTo('/pwa/seeker/dashboard')
+      navigateTo('/pwa')
       break
-    case 'tasks':
-      navigateTo('/pwa/seeker/history')
+    case 'helper-tasks':
+      navigateTo('/pwa/helper/tasks')
       break
-    case 'favorites':
-      navigateTo('/pwa/seeker/favorites')
+    case 'helper-earnings':
+      navigateTo('/pwa/helper/earnings')
       break
-    case 'create':
-    case 'task-create':
+    case 'seeker-create':
       // Already on task-create page
       break
-    case 'profile':
-      navigateTo('/pwa/shared/profile')
+    case 'seeker-history':
+      navigateTo('/pwa/seeker/history')
+      break
+    case 'seeker-favorites':
+      navigateTo('/pwa/seeker/favorites')
       break
   }
 }

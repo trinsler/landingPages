@@ -2,13 +2,13 @@
   <div style="min-height: 100vh; background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
     <!-- Header Component -->
     <AppHeader 
-      :title="getRoleBasedTitle('news')"
-      :current-role="currentRole"
+      title="Nachrichten"
+      current-role="unified"
       :request-count="0"
-      @open-requests="getRequestButtonAction()"
+      @open-requests="() => navigateTo('/pwa')"
       @open-profile="() => navigateTo('/pwa/shared/profile')"
       @open-news="() => {}"
-      @toggle-role="toggleRole"
+      @toggle-role="() => navigateTo('/pwa')"
     />
 
     <div style="padding: 1rem; padding-bottom: 6rem;">
@@ -129,10 +129,10 @@
     </div>
 
     <!-- Footer Component -->
-    <AppFooter 
-      :active-tab="currentRole === 'helper' ? 'news' : 'dashboard'"
-      :current-role="currentRole"
-      @navigate="handleNavigation"
+    <UnifiedFooter 
+      active-tab="dashboard"
+      current-role="unified"
+      @navigate="handleFooterNavigation"
     />
 
     <!-- Padding for bottom nav -->
@@ -143,7 +143,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import AppFooter from '~/components/AppFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
 import { useRole } from '~/composables/useRole.js'
 
 definePageMeta({
@@ -265,10 +265,29 @@ const shareArticle = (article) => {
   console.log('Sharing article:', article.title)
 }
 
-const handleNavigation = (tab) => {
-  const path = getRoleBasedNavigation(tab)
-  if (path) {
-    navigateTo(path)
+const handleFooterNavigation = (tab) => {
+  switch(tab) {
+    case 'dashboard':
+      navigateTo('/pwa')
+      break
+    case 'helper-tasks':
+      navigateTo('/pwa/helper/tasks')
+      break
+    case 'helper-earnings':
+      navigateTo('/pwa/helper/earnings')
+      break
+    case 'seeker-create':
+      navigateTo('/pwa/seeker/task-create')
+      break
+    case 'seeker-tasks':
+      navigateTo('/pwa') // Opens with seeker tasks sidebar
+      break
+    case 'seeker-favorites':
+      navigateTo('/pwa') // Opens with favorites sidebar
+      break
+    case 'profile':
+      navigateTo('/pwa/shared/profile')
+      break
   }
 }
 </script>

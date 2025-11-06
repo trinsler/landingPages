@@ -101,8 +101,8 @@
             :disabled="!selectedIssue || !description.trim()"
             style="flex: 2; background: #ef4444; color: white; padding: 1rem; border: none; cursor: pointer; font-weight: 600; font-size: 0.875rem; border-radius: 8px; transition: all 0.2s;"
             :style="selectedIssue && description.trim() ? '' : 'opacity: 0.5; cursor: not-allowed;'"
-            onmouseover="selectedIssue && description.trim() ? 'this.style.background=\"#dc2626\"' : ''"
-            onmouseout="selectedIssue && description.trim() ? 'this.style.background=\"#ef4444\"' : ''"
+            @mouseover="handleButtonHover"
+            @mouseout="handleButtonLeave"
           >
             Hilfe anfordern
           </button>
@@ -151,5 +151,17 @@ const callEmergencySupport = () => {
   emit('emergency-call')
   // In a real app, this would make an actual phone call
   alert('Notfall-Team wird angerufen...')
+}
+
+const handleButtonHover = (event) => {
+  if (selectedIssue.value && description.value.trim()) {
+    event.target.style.background = '#dc2626'
+  }
+}
+
+const handleButtonLeave = (event) => {
+  if (selectedIssue.value && description.value.trim()) {
+    event.target.style.background = '#ef4444'
+  }
 }
 </script>
