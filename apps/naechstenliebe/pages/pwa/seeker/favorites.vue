@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: 100vh; background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+  <div class="dashboard-container">
     <!-- Header Component -->
     <AppHeader 
       title="Favoriten" 
@@ -11,13 +11,13 @@
       @toggle-role="() => navigateTo('/pwa')"
     />
 
-    <div style="padding: 1rem; padding-bottom: 6rem;">
+    <div class="mobile-container">
       
       <!-- Info Header -->
       <FavoritesInfoHeader />
 
-      <!-- Favoriten Liste -->
-      <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+      <!-- Favoriten Liste - Mobile First -->
+      <div class="favorites-list">
         <FavoriteHelperCard 
           v-for="helper in favoriteHelpers" 
           :key="helper.id"
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Footer Component -->
-    <UnifiedFooter 
+    <MinimalFooter 
       active-tab="seeker-favorites"
       current-role="unified"
       @navigate="handleFooterNavigation"
@@ -51,7 +51,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
+import MinimalFooter from '~/components/pwa/unified/MinimalFooter.vue'
 import FavoritesInfoHeader from '~/components/pwa/seeker/FavoritesInfoHeader.vue'
 import FavoriteHelperCard from '~/components/pwa/seeker/FavoriteHelperCard.vue'
 import FindNewHelpers from '~/components/pwa/seeker/FindNewHelpers.vue'
@@ -65,7 +65,7 @@ const favoriteHelpers = ref([
   {
     id: 1,
     name: 'Maria H.',
-    avatar: '/icons/verschiedeneMenschen.svg',
+    avatar: null, // Will use SVG in component
     rating: '★★★★★',
     reviewCount: 47,
     distance: '0.3km',
@@ -79,7 +79,7 @@ const favoriteHelpers = ref([
   {
     id: 2,
     name: 'Klaus B.',
-    avatar: '/icons/technikBanalcieren.svg',
+    avatar: null, // Will use SVG in component
     rating: '★★★★★',
     reviewCount: 32,
     distance: '0.7km',
@@ -92,7 +92,7 @@ const favoriteHelpers = ref([
   {
     id: 3,
     name: 'Anna K.',
-    avatar: '/icons/gießenBub.svg',
+    avatar: null, // Will use SVG in component
     rating: '★★★★★',
     reviewCount: 28,
     distance: '0.5km',
@@ -171,3 +171,64 @@ const handleFooterNavigation = (tab) => {
   }
 }
 </script>
+
+<style scoped>
+/* Mobile First Design */
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  position: relative;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(95, 111, 85, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(190, 205, 163, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(143, 139, 130, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile First Container */
+.mobile-container {
+  padding: 1rem;
+  padding-bottom: 6rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Favorites List - Mobile First */
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .mobile-container {
+    padding: 2rem;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+  
+  .favorites-list {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-container {
+    max-width: 1024px;
+  }
+}
+</style>

@@ -47,7 +47,9 @@
           >
             <div style="display: flex; align-items: center; gap: 1rem;">
               <div style="width: 3rem; height: 3rem; background: #BECDA3; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 0px rgba(0,0,0,0.1);">
-                <img src="/icons/verschiedeneMenschen.svg" alt="Profil" style="width: 1.5rem; height: 1.5rem;">
+                <svg style="width: 1.5rem; height: 1.5rem; color: #5F6F55;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
               </div>
               <div style="text-align: left;">
                 <h4 style="font-weight: 600; color: #474747; margin: 0 0 0.25rem 0; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ resident.name }}</h4>
@@ -80,7 +82,21 @@
                 :data-not-selected="selectedTaskType !== type.id"
               >
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                  <img :src="type.icon" :alt="type.name" style="width: 2rem; height: 2rem;">
+                  <svg style="width: 2rem; height: 2rem; color: #5F6F55;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path v-if="type.id === 'shopping'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5L17 18"/>
+                    <circle v-if="type.id === 'shopping'" cx="9" cy="20" r="1"/>
+                    <circle v-if="type.id === 'shopping'" cx="20" cy="20" r="1"/>
+                    <path v-if="type.id === 'gardening'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path v-if="type.id === 'gardening'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 9a2.5 2.5 0 005 0"/>
+                    <path v-if="type.id === 'gardening'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11.5v3"/>
+                    <path v-if="type.id === 'cooking'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    <path v-if="type.id === 'cooking'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 2v1m6-1v1"/>
+                    <path v-if="type.id === 'cleaning'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    <path v-if="type.id === 'tech_help'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM21 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    <path v-if="type.id === 'tech_help'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17h10M7 17H3m4 0v-5a1 1 0 011-1h9a1 1 0 011 1v5m0 0h4m-4 0H7m14 0v2a1 1 0 01-1 1h-1a1 1 0 01-1-1v-2M7 17v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2"/>
+                    <path v-if="type.id === 'tech_help'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6l6 6-6 6"/>
+                    <path v-if="type.id === 'dog_walking'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
                   <span style="font-weight: 500; font-size: 0.9rem; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ type.name }}</span>
                 </div>
               </button>
@@ -225,12 +241,12 @@ const residents = ref([
 ])
 
 const taskTypes = ref([
-  { id: 'shopping', name: 'Einkaufen', icon: '/icons/einkaufenMadl.svg' },
-  { id: 'cooking', name: 'Kochen', icon: '/icons/kochen.svg' },
-  { id: 'cleaning', name: 'Reinigen', icon: '/icons/staubsaugen.svg' },
-  { id: 'gardening', name: 'Garten', icon: '/icons/gießenBub.svg' },
-  { id: 'tech_help', name: 'Technik', icon: '/icons/technikBanalcieren.svg' },
-  { id: 'dog_walking', name: 'Gassi gehen', icon: '/icons/FrontalGassiJunge.svg' }
+  { id: 'shopping', name: 'Einkaufen' },
+  { id: 'cooking', name: 'Kochen' },
+  { id: 'cleaning', name: 'Reinigen' },
+  { id: 'gardening', name: 'Garten' },
+  { id: 'tech_help', name: 'Technik' },
+  { id: 'dog_walking', name: 'Gassi gehen' }
 ])
 
 const priorities = ref([

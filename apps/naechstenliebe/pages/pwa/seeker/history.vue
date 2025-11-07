@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: 100vh; background: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;">
+  <div class="dashboard-container">
     <!-- Header Component -->
     <AppHeader 
       title="Auftragshistorie" 
@@ -11,7 +11,7 @@
       @toggle-role="() => navigateTo('/pwa')"
     />
     
-    <div style="padding: 1rem; padding-bottom: 6rem;">
+    <div class="mobile-container">
       
       <!-- Statistiken Header -->
       <StatisticsHeader :stats="statistics" />
@@ -23,8 +23,8 @@
         @filter-change="handleFilterChange"
       />
 
-      <!-- Verlauf Liste -->
-      <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+      <!-- Verlauf Liste - Mobile First -->
+      <div class="history-list">
         <TaskHistoryGroup 
           v-for="group in taskGroups" 
           :key="group.id"
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Footer Component -->
-    <UnifiedFooter 
+    <MinimalFooter 
       active-tab="seeker-history"
       current-role="unified"
       @navigate="handleFooterNavigation"
@@ -56,7 +56,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
+import MinimalFooter from '~/components/pwa/unified/MinimalFooter.vue'
 import StatisticsHeader from '~/components/pwa/seeker/StatisticsHeader.vue'
 import HistoryFilter from '~/components/pwa/seeker/HistoryFilter.vue'
 import TaskHistoryGroup from '~/components/pwa/seeker/TaskHistoryGroup.vue'
@@ -91,7 +91,7 @@ const taskGroups = ref([
         id: 1,
         title: 'Einkaufen',
         type: 'shopping',
-        icon: '/icons/einkaufenMadl.svg',
+        icon: 'shopping',
         helper: 'Maria H.',
         time: '15:23',
         status: 'Erledigt',
@@ -110,7 +110,7 @@ const taskGroups = ref([
         id: 2,
         title: 'Kochen',
         type: 'cooking',
-        icon: '/icons/kochen.svg',
+        icon: 'cooking',
         helper: 'Maria H.',
         time: '18:00',
         status: 'Erledigt',
@@ -129,7 +129,7 @@ const taskGroups = ref([
         id: 3,
         title: 'Technik-Hilfe',
         type: 'tech',
-        icon: '/icons/technikBanalcieren.svg',
+        icon: 'tech',
         helper: 'Klaus B.',
         time: 'Montag',
         status: 'Erledigt',
@@ -172,10 +172,10 @@ const handleFooterNavigation = (tab) => {
       navigateTo('/pwa/helper/earnings')
       break
     case 'seeker-create':
-      navigateTo('/pwa/seeker/task-create')
+      navigateTo('/pwa/jobs/create/category')
       break
     case 'seeker-history':
-      // Already on history page
+      navigateTo('/pwa/jobs/my-jobs')
       break
     case 'seeker-favorites':
       navigateTo('/pwa/seeker/favorites')
@@ -202,3 +202,64 @@ const handleLoadMore = () => {
   console.log('Loading more tasks...')
 }
 </script>
+
+<style scoped>
+/* Mobile First Design */
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  position: relative;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(95, 111, 85, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(190, 205, 163, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(143, 139, 130, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile First Container */
+.mobile-container {
+  padding: 1rem;
+  padding-bottom: 6rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* History List - Mobile First */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .mobile-container {
+    padding: 2rem;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+  
+  .history-list {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-container {
+    max-width: 1024px;
+  }
+}
+</style>
