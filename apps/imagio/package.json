@@ -1,0 +1,28 @@
+{
+  "name": "@monorepo/imagio",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "clean": "rm -rf .nuxt .output dist",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "^3.4.0",
+    "@nuxt/devtools": "^1.0.0"
+  },
+  "version": "1.0.0",
+  "description": "imagio - Nuxt 3 App",
+  "author": "Niels",
+  "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "typescript",
+    "monorepo"
+  ]
+}

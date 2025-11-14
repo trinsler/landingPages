@@ -1,0 +1,297 @@
+import { ref, computed, watch } from 'vue'
+
+const currentLanguage = ref<'en' | 'de' | 'fr'>('en')
+
+export const useLanguage = () => {
+  // Initialize from localStorage
+  if (typeof window !== 'undefined') {
+    const savedLanguage = localStorage.getItem('imagio-language') as 'en' | 'de' | 'fr'
+    if (savedLanguage && ['en', 'de', 'fr'].includes(savedLanguage)) {
+      currentLanguage.value = savedLanguage
+    }
+  }
+
+  // Watch for language changes and persist to localStorage
+  watch(currentLanguage, (newLang) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('imagio-language', newLang)
+      // Emit global event for other components
+      window.dispatchEvent(new CustomEvent('languageChange', {
+        detail: { language: newLang }
+      }))
+    }
+  })
+
+  const setLanguage = (lang: 'en' | 'de' | 'fr') => {
+    currentLanguage.value = lang
+  }
+
+  const t = (key: string, translations: Record<string, Record<string, string>>) => {
+    return translations[currentLanguage.value]?.[key] || translations['en']?.[key] || key
+  }
+
+  return {
+    currentLanguage: computed(() => currentLanguage.value),
+    setLanguage,
+    t
+  }
+}
+
+// Global translations
+export const globalTranslations = {
+  en: {
+    home: 'Home',
+    microphoneTest: 'Microphone Test',
+    faq: 'FAQ',
+    about: 'About the Game',
+    admin: 'Admin',
+    menu: 'Menu',
+    close: 'Close',
+    cancel: 'Cancel',
+    login: 'Login',
+    username: 'Username',
+    password: 'Password',
+    invalidCredentials: 'Invalid credentials',
+    testMicrophone: 'Test your microphone here...',
+    startTest: 'Start Test',
+    transcription: 'Transcription:',
+    // Page specific
+    welcomeTitle: 'Welcome to IMAGIO',
+    welcomeSubtitle: 'Enter your scenario code to begin',
+    enterCode: 'Enter scenario code',
+    startLearning: 'Start Learning',
+    advancedLogin: 'Advanced Login',
+    mainMenu: 'Main Menu',
+    codeTooShort: 'Code must be at least 3 characters',
+    // FAQ page
+    faqTitle: 'Frequently Asked Questions',
+    faqQuestion1: 'How do I start a scenario?',
+    faqAnswer1: 'Enter your scenario code on the main page and click "Start Learning".',
+    faqQuestion2: 'How do I test my microphone?',
+    faqAnswer2: 'Click on "Microphone Test" in the menu to test your audio setup.',
+    faqQuestion3: 'What browsers are supported?',
+    faqAnswer3: 'IMAGIO works best with modern browsers like Chrome, Firefox, Safari, and Edge.',
+    // About page
+    aboutTitle: 'About IMAGIO',
+    aboutDescription: 'IMAGIO is an innovative learning platform that uses interactive scenarios to enhance your learning experience.',
+    aboutFeatures: 'Key Features:',
+    aboutFeature1: 'Interactive voice-based scenarios',
+    aboutFeature2: 'Real-time feedback and assessment',
+    aboutFeature3: 'Multi-language support',
+    aboutFeature4: 'Progress tracking and analytics',
+    // Admin Dashboard
+    adminDashboard: 'Admin Dashboard',
+    scenarioManagement: 'Scenario Management',
+    userManagement: 'User Management',
+    scenarios: 'Scenarios',
+    createScenario: 'Create Scenario',
+    code: 'Code',
+    questions: 'Questions',
+    questionsFor: 'Questions for',
+    selectScenario: 'Select a Scenario',
+    addQuestion: 'Add Question',
+    selectScenarioToManage: 'Select a scenario to manage questions',
+    edit: 'Edit',
+    delete: 'Delete',
+    duration: 'Duration',
+    type: 'Type',
+    adminUsers: 'Admin Users',
+    createUser: 'Create User',
+    role: 'Role',
+    created: 'Created',
+    actions: 'Actions',
+    createNewUser: 'Create New User',
+    // Results Page
+    resultsPortal: 'Results Portal',
+    enterGameCode: 'Enter Game Code',
+    enterGameCodeDescription: 'Enter the game code that was displayed during your IMAGIO session to view and manage your results.',
+    gameCode: 'Game Code',
+    gameCodePlaceholder: 'Enter your game code (e.g. ABC123)',
+    loadResults: 'Load Results',
+    gameCodeNotFound: 'Game code not found. Please check your code and try again.',
+    backToCodeInput: 'Back to Code Input',
+    audioRecordings: 'Audio Recordings',
+    question: 'Question',
+    recorded: 'Recorded',
+    play: 'Play',
+    pause: 'Pause',
+    transcript: 'Transcript',
+    save: 'Save',
+    rating: 'Rating',
+    poor: 'Poor',
+    excellent: 'Excellent',
+    exportResults: 'Export Results',
+    exportPDF: 'Export PDF',
+    exportCSV: 'Export CSV'
+  },
+  de: {
+    home: 'Start',
+    microphoneTest: 'Mikrofon Test',
+    faq: 'FAQ',
+    about: 'Über das Spiel',
+    admin: 'Admin',
+    menu: 'Menü',
+    close: 'Schließen',
+    cancel: 'Abbrechen',
+    login: 'Anmelden',
+    username: 'Benutzername',
+    password: 'Passwort',
+    invalidCredentials: 'Falsche Anmeldedaten',
+    testMicrophone: 'Teste dein Mikrofon hier...',
+    startTest: 'Test starten',
+    transcription: 'Transkription:',
+    // Page specific
+    welcomeTitle: 'Willkommen bei IMAGIO',
+    welcomeSubtitle: 'Geben Sie Ihren Szenario-Code ein',
+    enterCode: 'Szenario-Code eingeben',
+    startLearning: 'Starten',
+    advancedLogin: 'Erweiterte Anmeldung',
+    mainMenu: 'Hauptmenü',
+    codeTooShort: 'Code muss mindestens 3 Zeichen lang sein',
+    // FAQ page
+    faqTitle: 'Häufig gestellte Fragen',
+    faqQuestion1: 'Wie starte ich ein Szenario?',
+    faqAnswer1: 'Geben Sie Ihren Szenario-Code auf der Hauptseite ein und klicken Sie auf "Starten".',
+    faqQuestion2: 'Wie teste ich mein Mikrofon?',
+    faqAnswer2: 'Klicken Sie auf "Mikrofon Test" im Menü, um Ihr Audio-Setup zu testen.',
+    faqQuestion3: 'Welche Browser werden unterstützt?',
+    faqAnswer3: 'IMAGIO funktioniert am besten mit modernen Browsern wie Chrome, Firefox, Safari und Edge.',
+    // About page
+    aboutTitle: 'Über IMAGIO',
+    aboutDescription: 'IMAGIO ist eine innovative Lernplattform, die interaktive Szenarien verwendet, um Ihr Lernerlebnis zu verbessern.',
+    aboutFeatures: 'Hauptmerkmale:',
+    aboutFeature1: 'Interaktive sprachbasierte Szenarien',
+    aboutFeature2: 'Echtzeit-Feedback und Bewertung',
+    aboutFeature3: 'Mehrsprachige Unterstützung',
+    aboutFeature4: 'Fortschrittsverfolgung und Analysen',
+    // Admin Dashboard
+    adminDashboard: 'Admin Dashboard',
+    scenarioManagement: 'Szenario-Verwaltung',
+    userManagement: 'Benutzerverwaltung',
+    scenarios: 'Szenarien',
+    createScenario: 'Szenario erstellen',
+    code: 'Code',
+    questions: 'Fragen',
+    questionsFor: 'Fragen für',
+    selectScenario: 'Szenario auswählen',
+    addQuestion: 'Frage hinzufügen',
+    selectScenarioToManage: 'Wählen Sie ein Szenario aus, um Fragen zu verwalten',
+    edit: 'Bearbeiten',
+    delete: 'Löschen',
+    duration: 'Dauer',
+    type: 'Typ',
+    adminUsers: 'Admin-Benutzer',
+    createUser: 'Benutzer erstellen',
+    role: 'Rolle',
+    created: 'Erstellt',
+    actions: 'Aktionen',
+    createNewUser: 'Neuen Benutzer erstellen',
+    // Results Page
+    resultsPortal: 'Ergebnisportal',
+    enterGameCode: 'Spielcode eingeben',
+    enterGameCodeDescription: 'Geben Sie den Spielcode ein, der während Ihrer IMAGIO-Sitzung angezeigt wurde, um Ihre Ergebnisse anzuzeigen und zu verwalten.',
+    gameCode: 'Spielcode',
+    gameCodePlaceholder: 'Geben Sie Ihren Spielcode ein (z.B. ABC123)',
+    loadResults: 'Ergebnisse laden',
+    gameCodeNotFound: 'Spielcode nicht gefunden. Bitte überprüfen Sie Ihren Code und versuchen Sie es erneut.',
+    backToCodeInput: 'Zurück zur Code-Eingabe',
+    audioRecordings: 'Audioaufnahmen',
+    question: 'Frage',
+    recorded: 'Aufgenommen',
+    play: 'Abspielen',
+    pause: 'Pause',
+    transcript: 'Transkript',
+    save: 'Speichern',
+    rating: 'Bewertung',
+    poor: 'Schlecht',
+    excellent: 'Ausgezeichnet',
+    exportResults: 'Ergebnisse exportieren',
+    exportPDF: 'PDF exportieren',
+    exportCSV: 'CSV exportieren'
+  },
+  fr: {
+    home: 'Accueil',
+    microphoneTest: 'Test Microphone',
+    faq: 'FAQ',
+    about: 'À propos du jeu',
+    admin: 'Admin',
+    menu: 'Menu',
+    close: 'Fermer',
+    cancel: 'Annuler',
+    login: 'Connexion',
+    username: 'Nom d\'utilisateur',
+    password: 'Mot de passe',
+    invalidCredentials: 'Identifiants invalides',
+    testMicrophone: 'Testez votre microphone ici...',
+    startTest: 'Démarrer le test',
+    transcription: 'Transcription:',
+    // Page specific
+    welcomeTitle: 'Bienvenue sur IMAGIO',
+    welcomeSubtitle: 'Entrez votre code de scénario',
+    enterCode: 'Entrez le code de scénario',
+    startLearning: 'Commencer',
+    advancedLogin: 'Connexion avancée',
+    mainMenu: 'Menu principal',
+    codeTooShort: 'Le code doit contenir au moins 3 caractères',
+    // FAQ page
+    faqTitle: 'Questions fréquemment posées',
+    faqQuestion1: 'Comment démarrer un scénario?',
+    faqAnswer1: 'Entrez votre code de scénario sur la page principale et cliquez sur "Commencer".',
+    faqQuestion2: 'Comment tester mon microphone?',
+    faqAnswer2: 'Cliquez sur "Test Microphone" dans le menu pour tester votre configuration audio.',
+    faqQuestion3: 'Quels navigateurs sont pris en charge?',
+    faqAnswer3: 'IMAGIO fonctionne mieux avec des navigateurs modernes comme Chrome, Firefox, Safari et Edge.',
+    // About page
+    aboutTitle: 'À propos d\'IMAGIO',
+    aboutDescription: 'IMAGIO est une plateforme d\'apprentissage innovante qui utilise des scénarios interactifs pour améliorer votre expérience d\'apprentissage.',
+    aboutFeatures: 'Caractéristiques principales:',
+    aboutFeature1: 'Scénarios interactifs basés sur la voix',
+    aboutFeature2: 'Retours et évaluations en temps réel',
+    aboutFeature3: 'Support multilingue',
+    aboutFeature4: 'Suivi des progrès et analyses',
+    // Admin Dashboard
+    adminDashboard: 'Tableau de bord Admin',
+    scenarioManagement: 'Gestion des scénarios',
+    userManagement: 'Gestion des utilisateurs',
+    scenarios: 'Scénarios',
+    createScenario: 'Créer un scénario',
+    code: 'Code',
+    questions: 'Questions',
+    questionsFor: 'Questions pour',
+    selectScenario: 'Sélectionner un scénario',
+    addQuestion: 'Ajouter une question',
+    selectScenarioToManage: 'Sélectionnez un scénario pour gérer les questions',
+    edit: 'Modifier',
+    delete: 'Supprimer',
+    duration: 'Durée',
+    type: 'Type',
+    adminUsers: 'Utilisateurs Admin',
+    createUser: 'Créer un utilisateur',
+    role: 'Rôle',
+    created: 'Créé',
+    actions: 'Actions',
+    createNewUser: 'Créer un nouvel utilisateur',
+    // Results Page
+    resultsPortal: 'Portail des résultats',
+    enterGameCode: 'Entrer le code de jeu',
+    enterGameCodeDescription: 'Entrez le code de jeu qui a été affiché pendant votre session IMAGIO pour voir et gérer vos résultats.',
+    gameCode: 'Code de jeu',
+    gameCodePlaceholder: 'Entrez votre code de jeu (ex. ABC123)',
+    loadResults: 'Charger les résultats',
+    gameCodeNotFound: 'Code de jeu introuvable. Veuillez vérifier votre code et réessayer.',
+    backToCodeInput: 'Retour à la saisie du code',
+    audioRecordings: 'Enregistrements audio',
+    question: 'Question',
+    recorded: 'Enregistré',
+    play: 'Jouer',
+    pause: 'Pause',
+    transcript: 'Transcription',
+    save: 'Sauvegarder',
+    rating: 'Évaluation',
+    poor: 'Mauvais',
+    excellent: 'Excellent',
+    exportResults: 'Exporter les résultats',
+    exportPDF: 'Exporter PDF',
+    exportCSV: 'Exporter CSV'
+  }
+}
