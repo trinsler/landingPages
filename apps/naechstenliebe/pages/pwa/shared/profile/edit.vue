@@ -19,7 +19,11 @@
         <div class="avatar-edit-section">
           <div class="current-avatar">
             <img v-if="formData.profilePicture" :src="formData.profilePicture" alt="Profilbild" class="avatar-image">
-            <img v-else src="/icons/verschiedeneMenschen.svg" alt="Profil" class="avatar-placeholder">
+            <div v-else class="avatar-placeholder">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </div>
           </div>
           <div class="avatar-actions">
             <button @click="uploadAvatar" class="avatar-btn primary">
@@ -373,7 +377,7 @@ const handleFooterNavigation = (tab) => {
         navigateTo('/pwa')
         break
       case 'helper-tasks':
-        navigateTo('/pwa/helper/tasks')
+        navigateTo('/pwa')
         break
       case 'helper-earnings':
         navigateTo('/pwa/helper/earnings')
@@ -493,7 +497,17 @@ onMounted(() => {
 .avatar-placeholder {
   width: 3rem;
   height: 3rem;
-  opacity: 0.8;
+  background: linear-gradient(135deg, #BECDA3, #5F6F55);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
 }
 
 .avatar-actions {

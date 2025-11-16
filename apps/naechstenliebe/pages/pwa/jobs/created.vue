@@ -133,7 +133,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/MinimalFooter.vue'
 
 definePageMeta({
   layout: false
@@ -168,8 +168,8 @@ const handleFooterNavigation = (tab) => {
     case 'helper-tasks':
       navigateTo('/pwa/helper/tasks')
       break
-    case 'helper-earnings':
-      navigateTo('/pwa/helper/earnings')
+    case 'chat':
+      navigateTo('/pwa/shared/chat')
       break
     case 'seeker-create':
       navigateTo('/pwa/jobs/create/category')

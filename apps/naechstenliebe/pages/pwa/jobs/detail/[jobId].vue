@@ -1467,7 +1467,7 @@ const handleFooterNavigation = (tab) => {
       navigateTo('/pwa')
       break
     case 'helper-tasks':
-      navigateTo('/pwa/helper/tasks')
+      navigateTo('/pwa')
       break
     case 'helper-earnings':
       navigateTo('/pwa/helper/earnings')

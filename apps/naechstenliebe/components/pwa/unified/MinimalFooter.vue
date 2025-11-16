@@ -16,18 +16,6 @@
         <span class="nav-text">Home</span>
       </button>
 
-      <!-- Tasks/Jobs -->
-      <button 
-        class="nav-btn"
-        :class="{ active: activeTab === 'helper-tasks' || activeTab === 'seeker-history' }"
-        @click="handleTasksClick"
-        aria-label="Aufträge"
-      >
-        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-        </svg>
-        <span class="nav-text">Jobs</span>
-      </button>
 
       <!-- Create (Primary Action) -->
       <button 
@@ -43,17 +31,17 @@
         <span class="nav-text">Erstellen</span>
       </button>
 
-      <!-- Earnings -->
+      <!-- Chat -->
       <button 
         class="nav-btn"
-        :class="{ active: activeTab === 'helper-earnings' }"
-        @click="$emit('navigate', 'helper-earnings')"
-        aria-label="Verdienst"
+        :class="{ active: activeTab === 'chat' }"
+        @click="$emit('navigate', 'chat')"
+        aria-label="Chat"
       >
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-2.707-.408l-3.005.606C6.581 20.365 6 19.7 6 19c0-.28.115-.532.308-.742l.813-3.262A8.002 8.002 0 013 12a8 8 0 018-8 8 8 0 018 8z"/>
         </svg>
-        <span class="nav-text">Verdienst</span>
+        <span class="nav-text">Chat</span>
       </button>
 
       <!-- Profile -->
@@ -86,15 +74,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['navigate'])
-
-const handleTasksClick = () => {
-  // Smart navigation based on context
-  if (props.currentRole === 'helper' || props.activeTab.includes('helper')) {
-    emit('navigate', 'helper-tasks')
-  } else {
-    emit('navigate', 'seeker-history')
-  }
-}
 </script>
 
 <style scoped>
@@ -133,9 +112,10 @@ const handleTasksClick = () => {
   min-height: 44px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease;
   color: #6b7280;
   position: relative;
+  touch-action: manipulation;
 }
 
 .nav-btn:hover {
@@ -159,7 +139,7 @@ const handleTasksClick = () => {
   width: 22px;
   height: 22px;
   margin-bottom: 0.25rem;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 /* Text Labels */

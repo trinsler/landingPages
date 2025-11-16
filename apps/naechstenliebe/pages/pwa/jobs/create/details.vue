@@ -240,14 +240,14 @@ Beispiel: 'Ich brauche jemanden, der für mich bei REWE einkauft. Die Einkaufsli
           <svg v-else class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
           </svg>
-          {{ isCreating ? 'Job wird erstellt...' : 'Job erstellen' }}
+          {{ isCreating ? 'Wird geladen...' : 'Zur Vorschau' }}
         </button>
         
         <div class="submit-info">
           <svg class="info-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <span class="info-text">Ihr Job wird an verfügbare Helfer in der Nähe gesendet</span>
+          <span class="info-text">Überprüfen Sie Ihren Job vor der Veröffentlichung</span>
         </div>
       </div>
 
@@ -268,7 +268,7 @@ Beispiel: 'Ich brauche jemanden, der für mich bei REWE einkauft. Die Einkaufsli
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
-import UnifiedFooter from '~/components/pwa/unified/UnifiedFooter.vue'
+import UnifiedFooter from '~/components/pwa/unified/MinimalFooter.vue'
 
 definePageMeta({
   layout: false
@@ -361,15 +361,13 @@ const goBackToCategory = () => {
 const createJob = async () => {
   if (!isFormValid.value) return
   
-  isCreating.value = true
-  
-  try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    const jobPayload = {
+  // Navigate to preview page with all job data
+  navigateTo({
+    path: '/pwa/jobs/create/preview',
+    query: {
       category: selectedCategoryId.value,
       categoryName: selectedCategoryName.value,
+      categoryIcon: selectedCategoryIcon.value,
       title: jobData.value.title.trim(),
       description: jobData.value.description.trim(),
       isImmediate: jobData.value.isImmediate,
@@ -377,23 +375,9 @@ const createJob = async () => {
       scheduledTime: jobData.value.scheduledTime,
       duration: jobData.value.duration,
       price: jobData.value.price,
-      radius: jobData.value.radius,
-      status: 'open',
-      createdAt: new Date().toISOString()
+      radius: jobData.value.radius
     }
-    
-    console.log('Job created:', jobPayload)
-    
-    // Show success and navigate to confirmation
-    alert('Job erfolgreich erstellt! Wir benachrichtigen Sie, sobald sich Helfer melden.')
-    navigateTo('/pwa/jobs/created')
-    
-  } catch (error) {
-    console.error('Error creating job:', error)
-    alert('Fehler beim Erstellen des Jobs. Bitte versuchen Sie es erneut.')
-  } finally {
-    isCreating.value = false
-  }
+  })
 }
 
 // Footer navigation
@@ -407,8 +391,8 @@ const handleFooterNavigation = (tab) => {
     case 'helper-tasks':
       navigateTo('/pwa/helper/tasks')
       break
-    case 'helper-earnings':
-      navigateTo('/pwa/helper/earnings')
+    case 'chat':
+      navigateTo('/pwa/shared/chat')
       break
     case 'seeker-create':
       // Already on create flow

@@ -361,7 +361,7 @@ const focusOnRequest = (request) => {
 // Header event handlers
 const handleRequestsClick = () => {
   // Navigate to dedicated helper tasks page
-  navigateTo('/pwa/helper/tasks')
+  navigateTo('/pwa')
 }
 
 const handleProfileClick = () => {
@@ -381,16 +381,13 @@ const handleFooterNavigation = (tab) => {
       // Already on dashboard
       break
     case 'helper-tasks':
-      navigateTo('/pwa/helper/tasks')
-      break
-    case 'seeker-history':
-      navigateTo('/pwa/jobs/my-jobs')
+      navigateTo('/pwa')
       break
     case 'seeker-create':
       navigateTo('/pwa/jobs/create/category')
       break
-    case 'helper-earnings':
-      navigateTo('/pwa/helper/earnings')
+    case 'chat':
+      navigateTo('/pwa/shared/chat')
       break
     case 'seeker-favorites':
       navigateTo('/pwa/seeker/favorites')
