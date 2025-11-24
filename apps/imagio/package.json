@@ -9,12 +9,16 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "clean": "rm -rf .nuxt .output dist",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@nuxt/devtools": "^1.0.0",
+    "@nuxt/image": "^2.0.0",
     "nuxt": "^3.13.0",
-    "vue": "^3.4.0",
-    "@nuxt/devtools": "^1.0.0"
+    "vue": "^3.4.0"
   },
   "version": "1.0.0",
   "description": "imagio - Nuxt 3 App",
@@ -24,5 +28,12 @@
     "nuxt",
     "typescript",
     "monorepo"
-  ]
+  ],
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^20.0.10",
+    "jsdom": "^27.2.0",
+    "vitest": "^4.0.10"
+  }
 }

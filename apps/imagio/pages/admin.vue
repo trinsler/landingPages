@@ -1,635 +1,792 @@
 <template>
-  <div class="admin-screen">
-    <div class="admin-content">
-      <h1 class="admin-title">{{ t('adminDashboard', globalTranslations) }}</h1>
-      
-      <!-- Tab Navigation -->
-      <div class="tab-navigation">
-        <button 
-          @click="activeTab = 'scenarios'"
-          class="tab-button"
-          :class="{ active: activeTab === 'scenarios' }"
+  <div class="admin-page">
+    <!-- Admin Header -->
+    <div class="admin-header">
+      <div class="admin-header-content">
+        <div class="header-main">
+          <div class="header-text">
+            <h1 class="admin-title">Admin Dashboard</h1>
+            <p class="admin-subtitle">Szenarien verwalten</p>
+          </div>
+          <button @click="createNewScenario" class="primary-button">
+            Neues Szenario
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <div class="view-header">
+        <h2 class="view-title">Scenarios</h2>
+      </div>
+
+      <!-- Scenarios Grid -->
+      <div class="scenarios-grid">
+        <div 
+          v-for="scenario in scenarios" 
+          :key="scenario.id"
+          class="scenario-card"
+          @click="editScenario(scenario)"
         >
-          {{ t('scenarioManagement', globalTranslations) }}
-        </button>
-        <button 
-          @click="activeTab = 'users'"
-          class="tab-button"
-          :class="{ active: activeTab === 'users' }"
-        >
-          {{ t('userManagement', globalTranslations) }}
+          <div class="scenario-card-header">
+            <h3 class="scenario-name">{{ scenario.name }}</h3>
+            <div class="scenario-code-badge">{{ scenario.code }}</div>
+          </div>
+          
+          <div class="scenario-stats">
+            <span class="scenario-stat">
+              {{ scenario.questions.length }} Fragen
+            </span>
+            <span class="scenario-stat">
+              {{ getScenarioUserCount(scenario.id) }} Benutzer
+            </span>
+          </div>
+          
+          <div class="scenario-description">
+            {{ scenario.description || 'Keine Beschreibung' }}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Fullscreen Scenario Editor -->
+    <div v-if="showScenarioEditor" class="fullscreen-editor with-header">
+      <div class="editor-header">
+        <div class="editor-title-section">
+          <h1 class="editor-title">{{ selectedScenario?.name }}</h1>
+          <p class="editor-subtitle">{{ selectedScenario?.code }}</p>
+        </div>
+        <button @click="closeEditor" class="editor-close">
+          Schließen
         </button>
       </div>
-      
-      <!-- Tab Content -->
-      <div class="tab-content">
-        <!-- Scenario Management Tab -->
-        <div v-if="activeTab === 'scenarios'" class="scenario-tab">
-          <div class="split-pane">
-            <!-- Left Pane: Scenarios (40%) -->
-            <div class="scenarios-pane">
-              <div class="pane-header">
-                <h3 class="pane-title">{{ t('scenarios', globalTranslations) }}</h3>
-                <button @click="createScenario" class="create-button">
-                  {{ t('createScenario', globalTranslations) }}
-                </button>
-              </div>
-              
-              <div class="scenarios-list">
-                <div 
-                  v-for="scenario in scenarios" 
-                  :key="scenario.id"
-                  @click="selectScenario(scenario)"
-                  class="scenario-item"
-                  :class="{ active: selectedScenario?.id === scenario.id }"
-                >
-                  <div class="scenario-info">
-                    <h4 class="scenario-name">{{ scenario.name }}</h4>
-                    <p class="scenario-code">{{ t('code', globalTranslations) }}: {{ scenario.code }}</p>
-                    <p class="scenario-questions">{{ scenario.questions.length }} {{ t('questions', globalTranslations) }}</p>
-                  </div>
-                  <div class="scenario-actions">
-                    <button @click.stop="editScenario(scenario)" class="action-button edit">
-                      {{ t('edit', globalTranslations) }}
-                    </button>
-                    <button @click.stop="deleteScenario(scenario.id)" class="action-button delete">
-                      {{ t('delete', globalTranslations) }}
-                    </button>
-                  </div>
-                </div>
-              </div>
+
+      <!-- Tab Navigation -->
+      <nav class="editor-nav">
+        <button 
+          @click="activeEditorTab = 'info'"
+          class="editor-tab"
+          :class="{ active: activeEditorTab === 'info' }"
+        >
+          Kurs-Info
+        </button>
+        <button 
+          @click="activeEditorTab = 'questions'"
+          class="editor-tab"
+          :class="{ active: activeEditorTab === 'questions' }"
+        >
+          Fragen
+        </button>
+        <button 
+          @click="activeEditorTab = 'users'"
+          class="editor-tab"
+          :class="{ active: activeEditorTab === 'users' }"
+        >
+          Benutzer
+        </button>
+      </nav>
+
+      <!-- Editor Content -->
+      <div class="editor-content">
+        <!-- Course Info Tab -->
+        <div v-if="activeEditorTab === 'info'" class="editor-section">
+          <div class="section-header">
+            <h2 class="section-title">Kurs-Informationen</h2>
+          </div>
+          
+          <div class="course-info-form">
+            <div class="form-field">
+              <label class="form-label">Kurs-Name</label>
+              <input 
+                v-model="selectedScenario.name" 
+                type="text" 
+                class="form-input"
+                placeholder="Gib den Kurs-Namen ein"
+              >
             </div>
             
-            <!-- Right Pane: Questions (60%) -->
-            <div class="questions-pane">
-              <div class="pane-header">
-                <h3 class="pane-title">
-                  {{ selectedScenario ? `${t('questionsFor', globalTranslations)} "${selectedScenario.name}"` : t('selectScenario', globalTranslations) }}
-                </h3>
-                <button 
-                  v-if="selectedScenario"
-                  @click="createQuestion" 
-                  class="create-button"
-                >
-                  {{ t('addQuestion', globalTranslations) }}
-                </button>
-              </div>
-              
-              <div v-if="selectedScenario" class="questions-list">
-                <div class="drag-area">
-                  <div 
-                    v-for="(question, index) in selectedScenario.questions"
-                    :key="question.id"
-                    class="question-item"
-                    draggable="true"
-                    @dragstart="dragStart(index)"
-                    @dragover.prevent
-                    @drop="dragDrop(index)"
-                  >
-                    <div class="drag-handle">⋮⋮</div>
-                    <div class="question-info">
-                      <div class="question-number">{{ index + 1 }}</div>
-                      <div class="question-content">
-                        <h4 class="question-text">{{ question.text }}</h4>
-                        <p class="question-meta">
-                          {{ t('duration', globalTranslations) }}: {{ question.duration }}s | 
-                          {{ t('type', globalTranslations) }}: {{ question.type }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="question-actions">
-                      <button @click="editQuestion(question)" class="action-button edit">
-                        {{ t('edit', globalTranslations) }}
-                      </button>
-                      <button @click="deleteQuestion(question.id)" class="action-button delete">
-                        {{ t('delete', globalTranslations) }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div v-else class="no-scenario-selected">
-                <p>{{ t('selectScenarioToManage', globalTranslations) }}</p>
-              </div>
+            <div class="form-field">
+              <label class="form-label">Kurs-Code</label>
+              <input 
+                v-model="selectedScenario.code" 
+                type="text" 
+                class="form-input"
+                placeholder="z.B. CS001"
+              >
+            </div>
+            
+            <div class="form-field">
+              <label class="form-label">Beschreibung</label>
+              <textarea 
+                v-model="selectedScenario.description" 
+                class="form-textarea"
+                rows="4"
+                placeholder="Beschreibe den Kurs..."
+              ></textarea>
+            </div>
+            
+            <div class="form-field">
+              <label class="form-label">Kurs-Einleitung</label>
+              <textarea 
+                v-model="selectedScenario.introduction" 
+                class="form-textarea large"
+                rows="8"
+                placeholder="Diese Einleitung wird den Studenten zu Beginn des Kurses gezeigt..."
+              ></textarea>
             </div>
           </div>
         </div>
-        
-        <!-- User Management Tab -->
-        <div v-if="activeTab === 'users'" class="users-tab">
-          <div class="users-section">
-            <div class="section-header">
-              <h3 class="section-title">{{ t('adminUsers', globalTranslations) }}</h3>
-              <button @click="showCreateUserForm = true" class="create-button">
-                {{ t('createUser', globalTranslations) }}
-              </button>
-            </div>
-            
-            <div class="users-table">
-              <div class="table-header">
-                <div class="header-cell">{{ t('username', globalTranslations) }}</div>
-                <div class="header-cell">{{ t('role', globalTranslations) }}</div>
-                <div class="header-cell">{{ t('created', globalTranslations) }}</div>
-                <div class="header-cell">{{ t('actions', globalTranslations) }}</div>
+
+        <!-- Questions Tab -->
+        <div v-if="activeEditorTab === 'questions'" class="editor-section">
+          <div class="section-header">
+            <h2 class="section-title">Fragen ({{ manualQuestions.length }})</h2>
+            <button @click="addNewQuestion" class="add-button">
+              Neue Frage
+            </button>
+          </div>
+          
+          <div class="questions-list">
+            <div 
+              v-for="(question, index) in manualQuestions" 
+              :key="question.id"
+              class="question-item"
+            >
+              <div class="question-header">
+                <div class="question-title-group">
+                  <span class="question-number">Frage {{ index + 1 }}</span>
+                </div>
+                <div class="question-actions">
+                  <button @click="duplicateQuestion(index)" class="action-button duplicate">
+                    Duplizieren
+                  </button>
+                  <button @click="removeQuestion(index)" class="action-button remove">
+                    Löschen
+                  </button>
+                </div>
               </div>
               
-              <div 
-                v-for="user in users" 
-                :key="user.id"
-                class="table-row"
-              >
-                <div class="table-cell">{{ user.username }}</div>
-                <div class="table-cell">
-                  <span class="role-badge" :class="user.role">{{ user.role }}</span>
+              <div class="question-form">
+                <div class="form-field">
+                  <label class="form-label">Frage</label>
+                  <textarea
+                    v-model="question.text"
+                    placeholder="Gib hier die Frage ein..."
+                    class="form-textarea"
+                    rows="2"
+                  ></textarea>
                 </div>
-                <div class="table-cell">{{ formatDate(user.created) }}</div>
-                <div class="table-cell">
-                  <button @click="editUser(user)" class="action-button edit">
-                    {{ t('edit', globalTranslations) }}
-                  </button>
-                  <button @click="deleteUser(user.id)" class="action-button delete">
-                    {{ t('delete', globalTranslations) }}
-                  </button>
+                
+                <div class="form-field">
+                  <label class="form-label">Musterantwort</label>
+                  <textarea
+                    v-model="question.answer"
+                    placeholder="Gib hier die erwartete Antwort ein..."
+                    class="form-textarea"
+                    rows="3"
+                  ></textarea>
                 </div>
               </div>
+            </div>
+            
+            <div v-if="manualQuestions.length === 0" class="empty-state">
+              <p class="empty-text">Noch keine Fragen vorhanden</p>
+              <p class="empty-subtext">Klicke auf "Neue Frage" um zu beginnen</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div v-if="activeEditorTab === 'users'" class="editor-section">
+          <div class="section-header">
+            <h2 class="section-title">Benutzer ({{ getScenarioUserCount(selectedScenario?.id) }})</h2>
+            <button @click="showAddUserForm = true" class="add-button">
+              Benutzer hinzufügen
+            </button>
+          </div>
+          
+          <!-- Add User Form -->
+          <div v-if="showAddUserForm" class="add-user-form">
+            <h3 class="form-title">Neuen Benutzer hinzufügen</h3>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label">Name</label>
+                <input 
+                  v-model="newUser.name" 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="Vollständiger Name"
+                >
+              </div>
+              <div class="form-field">
+                <label class="form-label">E-Mail</label>
+                <input 
+                  v-model="newUser.email" 
+                  type="email" 
+                  class="form-input" 
+                  placeholder="benutzer@example.com"
+                >
+              </div>
+            </div>
+            <div class="form-actions">
+              <button @click="showAddUserForm = false" class="secondary-button">
+                Abbrechen
+              </button>
+              <button 
+                @click="saveNewUser" 
+                class="primary-button" 
+                :disabled="!newUser.name || !newUser.email"
+              >
+                Hinzufügen
+              </button>
             </div>
           </div>
           
-          <!-- Create User Form -->
-          <div v-if="showCreateUserForm" class="modal-overlay" @click="showCreateUserForm = false">
-            <div class="modal-content" @click.stop>
-              <div class="modal-header">
-                <h3 class="modal-title">{{ t('createNewUser', globalTranslations) }}</h3>
-                <button @click="showCreateUserForm = false" class="modal-close">×</button>
+          <!-- Users List -->
+          <div class="users-list">
+            <div 
+              v-for="user in getScenarioUsers(selectedScenario?.id)" 
+              :key="user.id"
+              class="user-item"
+            >
+              <div class="user-info">
+                <div class="user-name">{{ user.name }}</div>
+                <div class="user-email">{{ user.email }}</div>
               </div>
-              <form @submit.prevent="createUser" class="user-form">
-                <div class="form-group">
-                  <label>{{ t('username', globalTranslations) }}</label>
-                  <input v-model="newUser.username" type="text" class="form-input" required>
-                </div>
-                <div class="form-group">
-                  <label>{{ t('password', globalTranslations) }}</label>
-                  <input v-model="newUser.password" type="password" class="form-input" required>
-                </div>
-                <div class="form-group">
-                  <label>{{ t('role', globalTranslations) }}</label>
-                  <select v-model="newUser.role" class="form-input">
-                    <option value="admin">Admin</option>
-                    <option value="moderator">Moderator</option>
-                    <option value="viewer">Viewer</option>
-                  </select>
-                </div>
-                <div class="form-actions">
-                  <button type="submit" class="submit-button">
-                    {{ t('createUser', globalTranslations) }}
-                  </button>
-                  <button type="button" @click="showCreateUserForm = false" class="cancel-button">
-                    {{ t('cancel', globalTranslations) }}
-                  </button>
-                </div>
-              </form>
+              <button 
+                @click="removeUserFromScenario(selectedScenario.id, user.id)" 
+                class="remove-user-button"
+              >
+                Entfernen
+              </button>
+            </div>
+            
+            <div v-if="getScenarioUserCount(selectedScenario?.id) === 0" class="empty-state">
+              <p class="empty-text">Noch keine Benutzer vorhanden</p>
+              <p class="empty-subtext">Klicke auf "Benutzer hinzufügen" um zu beginnen</p>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="editor-footer">
+        <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState }">
+          <span v-if="isSaving">Speichere...</span>
+          <span v-else-if="showSavedState">✓ Gespeichert</span>
+          <span v-else>Änderungen speichern</span>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useLanguage, globalTranslations } from '~/composables/useLanguage'
+import { ref } from 'vue'
 
-const { t } = useLanguage()
+// Main state
+const showScenarioEditor = ref(false)
+const activeEditorTab = ref('info')
+const selectedScenario = ref(null)
+const manualQuestions = ref<any[]>([])
+const showAddUserForm = ref(false)
+const newUser = ref({ name: '', email: '' })
+const isSaving = ref(false)
+const showSavedState = ref(false)
 
-// Tab management
-const activeTab = ref('scenarios')
-
-// Scenario management
+// Sample scenario data
 const scenarios = ref([
   {
     id: 1,
-    name: 'Communication Skills Assessment',
-    code: '123',
+    name: 'Basic Computer Science - Level 1',
+    code: 'CS001',
+    description: 'Einführung in die Grundlagen der Informatik',
+    introduction: 'Willkommen zum ersten Level in Computer Science!',
     questions: [
-      { id: 1, text: 'Introduce yourself and explain your background', duration: 45, type: 'voice' },
-      { id: 2, text: 'How do you handle difficult conversations?', duration: 45, type: 'voice' },
-      { id: 3, text: 'Describe a time when you had to explain a complex concept', duration: 60, type: 'voice' }
+      { id: 1, text: 'Was ist ein Computerprogramm?', answer: 'Ein Computerprogramm ist eine Ansammlung von Anweisungen...' },
+      { id: 2, text: 'Erkläre was ein Algorithmus ist.', answer: 'Ein Algorithmus ist eine schrittweise Vorgehensweise...' }
     ]
   },
   {
     id: 2,
-    name: 'Customer Service Training',
-    code: 'CS001',
+    name: 'Basic Computer Science - Level 2',
+    code: 'CS002',
+    description: 'Programmierung und Algorithmen',
+    introduction: 'Vertiefen Sie Ihr Verständnis von Programmierung.',
     questions: [
-      { id: 4, text: 'How would you handle an angry customer?', duration: 45, type: 'voice' },
-      { id: 5, text: 'Describe your problem-solving approach', duration: 60, type: 'voice' },
-      { id: 6, text: 'What makes good customer service?', duration: 45, type: 'voice' }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Leadership Assessment',
-    code: 'LD002',
-    questions: [
-      { id: 7, text: 'Describe your leadership style', duration: 60, type: 'voice' },
-      { id: 8, text: 'How do you motivate a team?', duration: 45, type: 'voice' }
+      { id: 3, text: 'Was ist eine Variable?', answer: 'Eine Variable ist ein Container für Daten...' },
+      { id: 4, text: 'Was macht eine Schleife?', answer: 'Eine Schleife wiederholt Code...' }
     ]
   }
 ])
 
-const selectedScenario = ref(null)
+// User data per scenario
+const scenarioUsers = ref({
+  1: [
+    { id: 1, name: 'Max Mustermann', email: 'max@example.com' },
+    { id: 2, name: 'Anna Schmidt', email: 'anna@example.com' }
+  ],
+  2: [
+    { id: 3, name: 'Tom Weber', email: 'tom@example.com' }
+  ]
+})
 
-// User management
-const users = ref([
-  { id: 1, username: 'admin', role: 'admin', created: new Date('2024-01-01') },
-  { id: 2, username: 'moderator1', role: 'moderator', created: new Date('2024-02-15') },
-  { id: 3, username: 'viewer1', role: 'viewer', created: new Date('2024-03-10') }
-])
-
-const showCreateUserForm = ref(false)
-const newUser = ref({ username: '', password: '', role: 'viewer' })
-
-// Drag and drop
-const draggedIndex = ref(-1)
-
-// Methods
-const selectScenario = (scenario: any) => {
-  selectedScenario.value = scenario
+// Helper functions
+const getScenarioUserCount = (scenarioId: number) => {
+  return scenarioUsers.value[scenarioId]?.length || 0
 }
 
-const createScenario = () => {
-  const name = prompt('Enter scenario name:')
-  const code = prompt('Enter scenario code:')
-  if (name && code) {
-    const newScenario = {
-      id: Date.now(),
-      name,
-      code: code.toUpperCase(),
-      questions: []
-    }
-    scenarios.value.push(newScenario)
+const getScenarioUsers = (scenarioId: number) => {
+  return scenarioUsers.value[scenarioId] || []
+}
+
+// Scenario methods
+const createNewScenario = () => {
+  const scenario = {
+    id: Date.now(),
+    name: 'Neues Szenario',
+    code: 'NEW' + Date.now().toString().slice(-3),
+    description: '',
+    introduction: '',
+    questions: []
   }
+  scenarios.value.push(scenario)
+  scenarioUsers.value[scenario.id] = []
+  editScenario(scenario)
 }
 
 const editScenario = (scenario: any) => {
-  const newName = prompt('Edit scenario name:', scenario.name)
-  if (newName) {
-    scenario.name = newName
-  }
+  selectedScenario.value = scenario
+  manualQuestions.value = [...scenario.questions]
+  activeEditorTab.value = 'info'
+  showScenarioEditor.value = true
+  showAddUserForm.value = false
 }
 
-const deleteScenario = (id: number) => {
-  if (confirm('Are you sure you want to delete this scenario?')) {
-    scenarios.value = scenarios.value.filter(s => s.id !== id)
-    if (selectedScenario.value?.id === id) {
-      selectedScenario.value = null
-    }
-  }
+const closeEditor = () => {
+  showScenarioEditor.value = false
+  selectedScenario.value = null
+  manualQuestions.value = []
+  showAddUserForm.value = false
 }
 
-const createQuestion = () => {
+const saveScenario = async () => {
   if (!selectedScenario.value) return
   
-  const text = prompt('Enter question text:')
-  const duration = parseInt(prompt('Enter duration (seconds):', '45') || '45')
+  isSaving.value = true
+  showSavedState.value = false
   
-  if (text) {
-    const newQuestion = {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    selectedScenario.value.questions = [...manualQuestions.value]
+    showSavedState.value = true
+    setTimeout(() => {
+      showSavedState.value = false
+    }, 2000)
+  } catch (error) {
+    console.error('Save error:', error)
+  } finally {
+    isSaving.value = false
+  }
+}
+
+// Question methods
+const addNewQuestion = () => {
+  const newQuestion = {
+    id: `q_${Date.now()}`,
+    text: '',
+    answer: ''
+  }
+  manualQuestions.value.push(newQuestion)
+}
+
+const removeQuestion = (index: number) => {
+  if (confirm('Frage wirklich löschen?')) {
+    manualQuestions.value.splice(index, 1)
+  }
+}
+
+const duplicateQuestion = (index: number) => {
+  const originalQuestion = manualQuestions.value[index]
+  const duplicatedQuestion = {
+    ...JSON.parse(JSON.stringify(originalQuestion)),
+    id: `q_${Date.now()}`,
+  }
+  manualQuestions.value.splice(index + 1, 0, duplicatedQuestion)
+}
+
+// User methods
+const saveNewUser = () => {
+  if (selectedScenario.value && newUser.value.name && newUser.value.email) {
+    const scenarioId = selectedScenario.value.id
+    if (!scenarioUsers.value[scenarioId]) {
+      scenarioUsers.value[scenarioId] = []
+    }
+    
+    const user = {
       id: Date.now(),
-      text,
-      duration,
-      type: 'voice'
+      name: newUser.value.name,
+      email: newUser.value.email
     }
-    selectedScenario.value.questions.push(newQuestion)
+    
+    scenarioUsers.value[scenarioId].push(user)
+    newUser.value = { name: '', email: '' }
+    showAddUserForm.value = false
   }
 }
 
-const editQuestion = (question: any) => {
-  const newText = prompt('Edit question text:', question.text)
-  if (newText) {
-    question.text = newText
+const removeUserFromScenario = (scenarioId: number, userId: number) => {
+  if (confirm('Benutzer wirklich entfernen?')) {
+    const users = scenarioUsers.value[scenarioId]
+    if (users) {
+      const index = users.findIndex(u => u.id === userId)
+      if (index !== -1) {
+        users.splice(index, 1)
+      }
+    }
   }
-}
-
-const deleteQuestion = (id: number) => {
-  if (!selectedScenario.value) return
-  if (confirm('Are you sure you want to delete this question?')) {
-    selectedScenario.value.questions = selectedScenario.value.questions.filter(q => q.id !== id)
-  }
-}
-
-const dragStart = (index: number) => {
-  draggedIndex.value = index
-}
-
-const dragDrop = (dropIndex: number) => {
-  if (draggedIndex.value === -1 || !selectedScenario.value) return
-  
-  const questions = selectedScenario.value.questions
-  const draggedItem = questions[draggedIndex.value]
-  
-  // Remove the dragged item
-  questions.splice(draggedIndex.value, 1)
-  
-  // Insert at new position
-  const newIndex = draggedIndex.value < dropIndex ? dropIndex - 1 : dropIndex
-  questions.splice(newIndex, 0, draggedItem)
-  
-  draggedIndex.value = -1
-}
-
-const createUser = () => {
-  const user = {
-    id: Date.now(),
-    ...newUser.value,
-    created: new Date()
-  }
-  users.value.push(user)
-  newUser.value = { username: '', password: '', role: 'viewer' }
-  showCreateUserForm.value = false
-}
-
-const editUser = (user: any) => {
-  const newUsername = prompt('Edit username:', user.username)
-  if (newUsername) {
-    user.username = newUsername
-  }
-}
-
-const deleteUser = (id: number) => {
-  if (confirm('Are you sure you want to delete this user?')) {
-    users.value = users.value.filter(u => u.id !== id)
-  }
-}
-
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US', { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
-  }).format(date)
 }
 </script>
 
 <style scoped>
-.admin-screen {
+.admin-page {
   min-height: calc(100vh - 64px);
-  padding: 2rem;
-  background-color: #f8fafc;
+  background: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.admin-content {
-  max-width: 1400px;
+.admin-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 2rem 0;
+}
+
+.admin-header-content {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
 }
 
 .admin-title {
   color: #1f2937;
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 2rem;
-  text-align: center;
+  margin: 0 0 0.5rem 0;
 }
 
-/* Tab Navigation */
-.tab-navigation {
+.admin-subtitle {
+  color: #6b7280;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.admin-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.view-title {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
+}
+
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.scenario-card {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.scenario-card:hover {
+  border-color: #0097b2;
+  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
+}
+
+.scenario-card-header {
   display: flex;
-  gap: 0.25rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #e5e7eb;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
-.tab-button {
+.scenario-name {
+  color: #1f2937;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.scenario-code-badge {
+  background: #0097b2;
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.scenario-stats {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.scenario-stat {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.scenario-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.primary-button {
+  background: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: #007a8e;
+  transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Editor Styles */
+.fullscreen-editor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-editor.with-header {
+  top: 64px;
+  z-index: 998;
+}
+
+.editor-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.editor-title {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.editor-subtitle {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.editor-close {
+  background: #ffffff;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
   padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editor-close:hover {
+  border-color: #0097b2;
+  color: #0097b2;
+}
+
+.editor-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+.editor-tab {
+  padding: 1rem 2rem;
   background: none;
   border: none;
   color: #6b7280;
   font-weight: 500;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
   transition: all 0.2s;
+  border-bottom: 2px solid transparent;
 }
 
-.tab-button:hover {
+.editor-tab:hover {
   color: #374151;
-  background-color: #f9fafb;
 }
 
-.tab-button.active {
+.editor-tab.active {
   color: #0097b2;
   border-bottom-color: #0097b2;
-  background-color: #ffffff;
 }
 
-/* Tab Content */
-.tab-content {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.editor-content {
+  flex: 1;
+  overflow-y: auto;
   padding: 2rem;
 }
 
-/* Split Pane Layout */
-.split-pane {
-  display: flex;
-  gap: 2rem;
-  min-height: 600px;
+.editor-section {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.scenarios-pane {
-  flex: 0 0 40%;
-  border-right: 2px solid #e5e7eb;
-  padding-right: 2rem;
-}
-
-.questions-pane {
-  flex: 1;
-}
-
-.pane-header {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f3f4f6;
 }
 
-.pane-title {
+.section-title {
   color: #1f2937;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
 }
 
-.create-button {
-  padding: 0.5rem 1rem;
-  background-color: #0097b2;
+.add-button {
+  background: #0097b2;
   color: #ffffff;
   border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.create-button:hover {
-  background-color: #007a8e;
-}
-
-/* Scenarios List */
-.scenarios-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.scenario-item {
-  padding: 1rem;
-  border: 2px solid #e5e7eb;
   border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.scenario-item:hover {
-  border-color: #0097b2;
-  transform: translateY(-1px);
+.add-button:hover {
+  background: #007a8e;
 }
 
-.scenario-item.active {
-  border-color: #0097b2;
-  background-color: #f0f9ff;
-}
-
-.scenario-info h4 {
-  color: #1f2937;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-.scenario-code {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin: 0.25rem 0;
-}
-
-.scenario-questions {
-  color: #374151;
-  font-size: 0.875rem;
-  margin: 0.25rem 0 1rem 0;
-}
-
-.scenario-actions {
+.course-info-form {
   display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-.action-button {
-  padding: 0.375rem 0.75rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
+.form-label {
+  color: #374151;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 0.875rem;
 }
 
-.action-button.edit {
-  background-color: #f59e0b;
-  color: #ffffff;
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
 }
 
-.action-button.edit:hover {
-  background-color: #d97706;
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #0097b2;
+  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
 }
 
-.action-button.delete {
-  background-color: #ef4444;
-  color: #ffffff;
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.action-button.delete:hover {
-  background-color: #dc2626;
+.form-textarea.large {
+  min-height: 200px;
 }
 
-/* Questions List */
 .questions-list {
-  max-height: 500px;
-  overflow-y: auto;
-}
-
-.drag-area {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .question-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
   border-radius: 8px;
+  padding: 1.5rem;
   transition: all 0.2s;
 }
 
 .question-item:hover {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
+  border-color: #0097b2;
+  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
 }
 
-.drag-handle {
-  color: #9ca3af;
-  font-weight: bold;
-  cursor: grab;
-  user-select: none;
-}
-
-.drag-handle:active {
-  cursor: grabbing;
-}
-
-.question-info {
+.question-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  flex: 1;
+  margin-bottom: 1rem;
 }
 
 .question-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  background-color: #0097b2;
-  color: #ffffff;
-  border-radius: 50%;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.question-content {
-  flex: 1;
-}
-
-.question-text {
-  color: #1f2937;
-  font-weight: 500;
-  margin: 0 0 0.25rem 0;
+  color: #0097b2;
   font-size: 1rem;
-}
-
-.question-meta {
-  color: #6b7280;
-  font-size: 0.75rem;
-  margin: 0;
+  font-weight: 600;
 }
 
 .question-actions {
@@ -637,275 +794,201 @@ const formatDate = (date: Date) => {
   gap: 0.5rem;
 }
 
-.no-scenario-selected {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
+.action-button {
+  background: #ffffff;
   color: #6b7280;
-  font-style: italic;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-/* User Management */
-.users-section {
+.action-button.duplicate:hover {
+  border-color: #0097b2;
+  color: #0097b2;
+}
+
+.action-button.remove:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.question-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6b7280;
+}
+
+.empty-text {
+  color: #374151;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-subtext {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.add-user-form {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.section-title {
+.form-title {
   color: #1f2937;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 1rem 0;
 }
 
-/* Users Table */
-.users-table {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table-header {
+.form-grid {
   display: grid;
-  grid-template-columns: 1fr 120px 120px 140px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.header-cell {
-  padding: 0.75rem 1rem;
-  font-weight: 600;
-  color: #374151;
-  font-size: 0.875rem;
-}
-
-.table-row {
-  display: grid;
-  grid-template-columns: 1fr 120px 120px 140px;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.table-row:last-child {
-  border-bottom: none;
-}
-
-.table-row:hover {
-  background-color: #f9fafb;
-}
-
-.table-cell {
-  padding: 1rem;
-  color: #374151;
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.role-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.role-badge.admin {
-  background-color: #fee2e2;
-  color: #991b1b;
-}
-
-.role-badge.moderator {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-.role-badge.viewer {
-  background-color: #e0f2fe;
-  color: #0277bd;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001;
-  padding: 1rem;
-}
-
-.modal-content {
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  padding: 1.5rem 1.5rem 0 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e7eb;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
   margin-bottom: 1rem;
-  padding-bottom: 1rem;
-}
-
-.modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #6b7280;
-  cursor: pointer;
-  padding: 0.25rem;
-  line-height: 1;
-}
-
-.modal-close:hover {
-  color: #374151;
-}
-
-/* Form Styles */
-.user-form {
-  padding: 0 1.5rem 1.5rem 1.5rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 0.5rem;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  transition: border-color 0.15s ease;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #0097b2;
-  box-shadow: 0 0 0 2px rgba(0, 151, 178, 0.1);
 }
 
 .form-actions {
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
-  margin-top: 1.5rem;
 }
 
-.submit-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #0097b2;
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-
-.submit-button:hover {
-  background-color: #007a8e;
-}
-
-.cancel-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #ffffff;
+.secondary-button {
+  background: #ffffff;
   color: #374151;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s;
 }
 
-.cancel-button:hover {
-  background-color: #f9fafb;
+.secondary-button:hover {
+  background: #f9fafb;
   border-color: #9ca3af;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .split-pane {
-    flex-direction: column;
-  }
-  
-  .scenarios-pane {
-    flex: none;
-    border-right: none;
-    border-bottom: 2px solid #e5e7eb;
-    padding-right: 0;
-    padding-bottom: 2rem;
-  }
-  
-  .table-header,
-  .table-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .table-cell {
-    padding: 0.5rem 1rem;
-  }
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.user-item:hover {
+  border-color: #0097b2;
+  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
+}
+
+.user-name {
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.user-email {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.remove-user-button {
+  background: #ffffff;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-user-button:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.editor-footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.save-button {
+  background: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 3rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 200px;
+}
+
+.save-button:hover:not(.saving):not(.saved) {
+  background: #007a8e;
+  transform: translateY(-1px);
+}
+
+.save-button.saving {
+  background: #6b7280;
+  cursor: not-allowed;
+}
+
+.save-button.saved {
+  background: #059669;
 }
 
 @media (max-width: 768px) {
-  .admin-screen {
-    padding: 1rem;
-  }
-  
-  .admin-title {
-    font-size: 1.5rem;
-  }
-  
-  .tab-content {
-    padding: 1rem;
-  }
-  
-  .pane-header {
+  .header-main {
     flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
+    gap: 1.5rem;
   }
   
-  .question-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+  .scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fullscreen-editor.with-header {
+    top: 56px;
   }
 }
 </style>

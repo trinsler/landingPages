@@ -30,11 +30,13 @@
       
       <div class="header-right">
         <div class="language-selector">
-          <select :value="currentLanguage" @change="changeLanguage" class="lang-select">
-            <option value="en">English</option>
-            <option value="de">Deutsch</option>
-            <option value="fr">Français</option>
-          </select>
+          <button 
+            @click="toggleLanguage" 
+            class="language-toggle"
+            :title="currentLanguage === 'en' ? 'Switch to Deutsch' : 'Switch to English'"
+          >
+            {{ currentLanguage === 'en' ? 'DE' : 'EN' }}
+          </button>
         </div>
         <div class="sumo-logo-container">
           <img src="/assets/sumo_logo_400.png" alt="SUMO" class="sumo-logo" />
@@ -85,7 +87,7 @@
               <!-- Audio Playback -->
               <div v-if="playbackMode === 'audio' && recordedAudioBlob" class="audio-playback">
                 <button @click="playRecordedAudio" class="playback-button">
-                  🔊 Play Recording
+                   Play Recording
                 </button>
               </div>
               
@@ -111,7 +113,7 @@
       </div>
     </div>
     
-    <!-- Admin Login Modal - inline implementation -->
+    <!-- Admin Login Modal -->
     <div v-if="showAdminModal" class="modal-overlay" @click="closeAdminModal">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
@@ -119,7 +121,7 @@
           <button @click="closeAdminModal" class="modal-close">×</button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="handleAdminLogin({ username: adminUsername, password: adminPassword })">
+          <form @submit.prevent="() => handleAdminLogin({ username: adminUsername, password: adminPassword })">
             <div class="form-group">
               <label>{{ t('username', globalTranslations) }}</label>
               <input v-model="adminUsername" type="text" class="form-input" required>
@@ -184,7 +186,6 @@ const displayTranscription = computed(() => {
 const menuItems = computed(() => [
   { path: '/', label: t('home', globalTranslations) },
   { path: '#microphone', label: t('microphoneTest', globalTranslations), action: 'microphone' },
-  { path: '/results', label: t('resultsPortal', globalTranslations) },
   { path: '/faq', label: t('faq', globalTranslations) },
   { path: '/about', label: t('about', globalTranslations) },
   { path: '#admin', label: t('admin', globalTranslations), action: 'admin', special: true }
@@ -195,11 +196,9 @@ const isActiveRoute = (path: string) => {
   return route.path === path
 }
 
-const changeLanguage = (event: Event) => {
-  const target = event.target as HTMLSelectElement
-  if (target && target.value) {
-    setLanguage(target.value as 'en' | 'de' | 'fr')
-  }
+const toggleLanguage = () => {
+  const newLanguage = currentLanguage.value === 'en' ? 'de' : 'en'
+  setLanguage(newLanguage as 'en' | 'de')
 }
 
 const handleMenuClick = (item: any) => {
@@ -251,10 +250,19 @@ const closeAdminModal = () => {
   adminPassword.value = ''
 }
 
-const handleAdminLogin = (credentials: { username: string; password: string }) => {
+const handleAdminLogin = async (credentials: { username: string; password: string }) => {
   if (credentials.username === 'admin' && credentials.password === '123') {
-    router.push('/admin')
-    showAdminModal.value = false
+    try {
+      await router.push('/admin')
+      showAdminModal.value = false
+      console.log('Successfully navigated to admin page')
+    } catch (error) {
+      console.error('Navigation error:', error)
+      loginError.value = 'Admin login erfolgreich! Navigiere...'
+      setTimeout(() => {
+        window.location.href = '/admin'
+      }, 1000)
+    }
   } else {
     loginError.value = t('invalidCredentials', globalTranslations)
   }
@@ -516,31 +524,33 @@ const playRecordedAudio = () => {
   position: relative;
 }
 
-.lang-select {
-  padding: 0.5rem 1.75rem 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
+.language-toggle {
+  padding: 0.5rem 0.875rem;
+  border: 1px solid #e5e7eb;
   border-radius: 6px;
   background-color: #ffffff;
-  color: #374151;
+  color: #6b7280;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236B7280' d='M2 3L5 6L8 3' stroke='%236B7280' stroke-width='1' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.625rem center;
-  padding-right: 1.875rem;
+  transition: all 0.2s ease;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.lang-select:focus {
+.language-toggle:hover {
+  background-color: #f9fafb;
+  border-color: #0097b2;
+  color: #0097b2;
+  transform: translateY(-1px);
+}
+
+.language-toggle:focus {
   outline: none;
   border-color: #0097b2;
   box-shadow: 0 0 0 2px rgba(0, 151, 178, 0.1);
-}
-
-.lang-select:hover {
-  border-color: #9ca3af;
 }
 
 .sumo-logo-container {
@@ -601,9 +611,10 @@ const playRecordedAudio = () => {
     display: none;
   }
   
-  .lang-select {
+  .language-toggle {
     font-size: 0.75rem;
-    padding: 0.4375rem 1.5rem 0.4375rem 0.625rem;
+    padding: 0.4375rem 0.75rem;
+    min-width: 40px;
   }
   
   .sumo-logo-container {
@@ -1054,6 +1065,7 @@ const playRecordedAudio = () => {
   border-radius: 4px;
   white-space: pre-wrap;
 }
+
 
 /* Add padding to main content when header is fixed */
 :global(body) {

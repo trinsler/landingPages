@@ -72,11 +72,11 @@ const expandedItems = ref<number[]>([])
 
 // Multilingual FAQ data
 const categories = computed(() => [
-  { id: 'all', name: currentLanguage.value === 'de' ? 'Alle Fragen' : currentLanguage.value === 'fr' ? 'Toutes les questions' : 'All Questions' },
-  { id: 'general', name: currentLanguage.value === 'de' ? 'Allgemein' : currentLanguage.value === 'fr' ? 'Général' : 'General' },
-  { id: 'technical', name: currentLanguage.value === 'de' ? 'Technisch' : currentLanguage.value === 'fr' ? 'Technique' : 'Technical' },
-  { id: 'scenarios', name: currentLanguage.value === 'de' ? 'Szenarien' : currentLanguage.value === 'fr' ? 'Scénarios' : 'Scenarios' },
-  { id: 'account', name: currentLanguage.value === 'de' ? 'Konto' : currentLanguage.value === 'fr' ? 'Compte' : 'Account' }
+  { id: 'all', name: currentLanguage.value === 'de' ? 'Alle Fragen' : 'All Questions' },
+  { id: 'general', name: currentLanguage.value === 'de' ? 'Allgemein' : 'General' },
+  { id: 'technical', name: currentLanguage.value === 'de' ? 'Technisch' : 'Technical' },
+  { id: 'scenarios', name: currentLanguage.value === 'de' ? 'Szenarien' : 'Scenarios' },
+  { id: 'account', name: currentLanguage.value === 'de' ? 'Konto' : 'Account' }
 ])
 
 const faqData = {
@@ -103,18 +103,6 @@ const faqData = {
     { id: 8, category: 'account', question: 'Wie greife ich auf Admin-Funktionen zu?', answer: 'Klicken Sie auf "Admin" im Header-Menü. Wenden Sie sich an Ihren Administrator für Anmeldedaten.' },
     { id: 9, category: 'technical', question: 'Was soll ich tun, wenn die Audioqualität schlecht ist?', answer: 'Verwenden Sie den Mikrofontest im Menü, um Ihre Audioqualität zu überprüfen. Passen Sie Ihre Mikrofoneinstellungen an oder verwenden Sie ein anderes Mikrofon.' },
     { id: 10, category: 'general', question: 'Wo kann ich Hilfe bekommen?', answer: 'Sie können den Support über die Feedback-Option kontaktieren oder unsere FAQ-Sektion für häufige Probleme überprüfen.' }
-  ],
-  fr: [
-    { id: 1, category: 'general', question: 'Qu\'est-ce qu\'IMAGIO?', answer: 'IMAGIO est une plateforme d\'apprentissage interactive qui offre une formation basée sur des scénarios pour les compétences de communication et de résolution de problèmes.' },
-    { id: 2, category: 'general', question: 'Comment démarrer un scénario?', answer: 'Entrez votre code de scénario sur la page principale et cliquez sur "Commencer". Vous avez besoin d\'au moins 3 caractères pour un code valide.' },
-    { id: 3, category: 'technical', question: 'Quels navigateurs sont pris en charge?', answer: 'IMAGIO fonctionne mieux avec les dernières versions de Chrome, Firefox, Safari et Edge. Nous recommandons Chrome pour la meilleure expérience.' },
-    { id: 4, category: 'technical', question: 'Pourquoi mon microphone ne fonctionne-t-il pas?', answer: 'Assurez-vous d\'avoir accordé les permissions de microphone à votre navigateur. Vérifiez les paramètres du navigateur et assurez-vous qu\'aucune autre application n\'utilise le microphone.' },
-    { id: 5, category: 'scenarios', question: 'Combien de temps dure chaque scénario?', answer: 'La plupart des scénarios prennent entre 15 et 45 minutes à compléter, selon la complexité.' },
-    { id: 6, category: 'scenarios', question: 'Puis-je mettre en pause et reprendre les scénarios?', answer: 'Oui, votre progression est automatiquement sauvegardée. Vous pouvez revenir compléter le scénario à tout moment.' },
-    { id: 7, category: 'account', question: 'Ai-je besoin d\'un compte pour utiliser IMAGIO?', answer: 'Pour les scénarios de base, aucun compte n\'est requis. Certaines fonctionnalités avancées peuvent nécessiter une inscription.' },
-    { id: 8, category: 'account', question: 'Comment accéder aux fonctionnalités admin?', answer: 'Cliquez sur "Admin" dans le menu d\'en-tête. Contactez votre administrateur pour les identifiants de connexion.' },
-    { id: 9, category: 'technical', question: 'Que faire si la qualité audio est mauvaise?', answer: 'Utilisez le test de microphone dans le menu pour vérifier votre qualité audio. Ajustez les paramètres de votre microphone ou utilisez un autre microphone si nécessaire.' },
-    { id: 10, category: 'general', question: 'Où puis-je obtenir de l\'aide?', answer: 'Vous pouvez contacter le support via l\'option de feedback ou consulter notre section FAQ pour les problèmes courants.' }
   ]
 }
 
@@ -130,11 +118,6 @@ const localTranslations = {
     searchPlaceholder: 'Fragen durchsuchen...',
     noResults: 'Keine Ergebnisse gefunden. Versuchen Sie andere Suchbegriffe.',
     backToMenu: 'Zurück zum Menü'
-  },
-  fr: {
-    searchPlaceholder: 'Rechercher des questions...',
-    noResults: 'Aucun résultat trouvé. Essayez d\'autres termes de recherche.',
-    backToMenu: 'Retour au menu'
   }
 }
 

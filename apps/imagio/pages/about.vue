@@ -230,63 +230,6 @@ const localTranslations = {
     section10Content: 'Imagio von sumo technologies gmbh, Wien. Durch die Nutzung des Spiels Imagio und aller Funktionen dieser Website akzeptieren Sie die Nutzungsbedingungen der sumo technologies gmbh. Jegliche Haftung durch die sumo technologies gmbh ist ausgeschlossen. Jeglicher Schadensersatzanspruch gegen die sumo technologies gmbh ist ausgeschlossen.',
     
     backToMenu: 'Zurück zum Menü'
-  },
-  fr: {
-    gameInstructions: 'Instructions du jeu',
-    imagioDescription1: 'Après le démarrage du jeu, les questions doivent être répondues de manière spontanée.',
-    imagioDescription2: 'Des images ou des vidéos sont affichées qui se rapportent aux questions. Pour chaque question, vous avez 45 secondes.',
-    imagioDescription3: 'Les voix sont enregistrées puis évaluées plus tard.',
-    imagioDescription4: 'Les réponses doivent être en anglais.',
-    imagioDescription5: 'L\'évaluation se fait via le portail de feedback, en entrant le code de jeu affiché. Veuillez retenir le code de jeu.',
-    imagioDescription6: 'Dans le portail de feedback, les mots les plus fréquents ou les plus importants doivent être classés selon leur importance.',
-    
-    privacyTitle: 'Informations sur la confidentialité',
-    privacyIntro: 'En utilisant le jeu Imagio et toutes les fonctions de ce site Web, vous acceptez les conditions d\'utilisation de sumo technologies gmbh. Toute responsabilité de sumo technologies gmbh est exclue.',
-    
-    gdprTitle: 'Informations sur le traitement des données personnelles',
-    gdprIntro: 'À compter du 25 mai 2018, le règlement du Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l\'égard du traitement des données à caractère personnel et à la libre circulation de ces données (RGPD) est directement applicable dans tous les États membres de l\'UE.',
-    gdvrPurpose: 'Le RGPD prévoit notamment des obligations d\'information élargies concernant le traitement des données personnelles. Dans le cadre de ces obligations (notamment l\'article 13 du RGPD), nous vous informons par la présente du traitement de vos données personnelles que nous effectuons.',
-    
-    section1Title: 'Quelles données personnelles (en bref "données") sont traitées?',
-    section1Content: 'Fichiers audio enregistrés par les "joueurs" et convertis en fichiers texte au moyen d\'un logiciel.',
-    
-    section2Title: 'Dans quel but les données sont-elles traitées?',
-    section2Content: 'Dans le cadre de l\'utilisation d\'Imagio, les entrées vocales relatives aux questions (réponses, opinions, commentaires) sont converties en texte écrit et les mots et phrases les plus fréquemment mentionnés sont listés.',
-    
-    section3Title: 'Sur quelle base juridique les données sont-elles traitées?',
-    section3Content: '✓ Art. 6 par. 1 lit. a RGPD - Le joueur concerné a donné son consentement au traitement des données personnelles le concernant pour une ou plusieurs finalités spécifiques (en cochant l\'option correspondante)',
-    
-    section4Title: 'Un profilage a-t-il lieu dans le cadre du traitement?',
-    section4Content: 'Non',
-    
-    section5Title: 'Les données sont-elles transmises en totalité ou en partie à d\'autres personnes/institutions?',
-    section5Content: 'Oui, vos données sont transmises aux destinataires suivants dans le cadre du traitement pour la finalité mentionnée ci-dessus: Les fichiers audio sont traités par Google (spécifiquement: convertis en fichiers texte)',
-    
-    section6Title: 'Les destinataires mentionnés au point 5 se trouvent-ils en dehors de l\'UE/EEE ou s\'agit-il d\'une organisation internationale?',
-    section6Content: 'Oui',
-    
-    section7Title: 'Combien de temps les données sont-elles conservées ou selon quels critères la durée de conservation est-elle déterminée?',
-    section7Content: 'Les fichiers audio sont supprimés en accord avec le joueur ou l\'organisation du joueur.',
-    
-    section8Title: 'Quels droits avez-vous en tant que personne concernée?',
-    section8Content: 'Vous avez en principe les droits d\'accès, de rectification, d\'effacement, de limitation, de portabilité des données et de révocation. Pour exercer ces droits, veuillez contacter notre délégué à la protection des données (coordonnées voir point 9). De plus, vous avez le droit de déposer des plaintes auprès de l\'autorité de protection des données.',
-    
-    section9Title: 'Coordonnées des responsables et de leur délégué à la protection des données:',
-    section9Responsible: 'Responsable',
-    section9Company: 'Sumo Technologies GmbH',
-    section9Address: 'Lindengasse 56',
-    section9City: '1070 Vienne',
-    
-    section9DataProtection: 'Délégué à la protection des données',
-    section9DPOName: 'Mariusz Gasinski',
-    section9DPOAddress: 'Lindengasse 56',
-    section9DPOCity: '1070 Vienne',
-    section9DPOEmail: 'mariusz@sumo-technologies.com',
-    
-    section10Title: 'Exclusion de responsabilité',
-    section10Content: 'Imagio par sumo technologies gmbh, Vienne. En utilisant le jeu Imagio et toutes les fonctions de ce site Web, vous acceptez les conditions d\'utilisation de sumo technologies gmbh. Toute responsabilité de sumo technologies gmbh est exclue. Toute demande de dommages-intérêts contre sumo technologies gmbh est exclue.',
-    
-    backToMenu: 'Retour au menu'
   }
 }
 

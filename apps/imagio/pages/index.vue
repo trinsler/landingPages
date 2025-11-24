@@ -2,15 +2,15 @@
   <div class="landing-page">
     <div class="content">
       <img src="/assets/imagio_logo.png" alt="IMAGIO" class="logo" />
-      <h1>{{ t('title') }}</h1>
-      <p>{{ t('subtitle') }}</p>
+      <h1>{{ tLocal('title') }}</h1>
+      <p>{{ tLocal('subtitle') }}</p>
       
       <div class="login-section">
         <div class="input-container">
           <input
             v-model="scenarioCode"
             type="text"
-            :placeholder="t('enterCode')"
+            :placeholder="tLocal('enterCode')"
             class="scenario-input"
             @keyup.enter="handleDirectLogin"
           />
@@ -22,9 +22,8 @@
         <button 
           @click="handleDirectLogin" 
           class="login-button"
-          :disabled="!isValidCode"
         >
-          {{ t('start') }}
+          {{ tLocal('start') }}
         </button>
       </div>
       
@@ -35,57 +34,81 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useExamStore } from '~/composables/useExamStore'
+import { useLanguage, globalTranslations } from '~/composables/useLanguage'
 
 const router = useRouter()
+const examStore = useExamStore()
+const { currentLanguage, t } = useLanguage()
 
 // Reactive state
 const scenarioCode = ref('')
-const currentLanguage = ref('en')
+const validationError = ref('')
 
-// Translations
-const t = (key: string) => {
-  const translations: Record<string, Record<string, string>> = {
-    en: {
-      title: 'Welcome to IMAGIO',
-      subtitle: 'Enter your scenario code to begin',
-      enterCode: 'Enter scenario code',
-      start: 'Start Learning'
-    },
-    de: {
-      title: 'Willkommen bei IMAGIO',
-      subtitle: 'Geben Sie Ihren Szenario-Code ein',
-      enterCode: 'Szenario-Code eingeben',
-      start: 'Starten'
-    },
-    fr: {
-      title: 'Bienvenue sur IMAGIO',
-      subtitle: 'Entrez votre code de scénario',
-      enterCode: 'Entrez le code de scénario',
-      start: 'Commencer'
-    }
+// Create local translations that work with global system
+const translations = {
+  en: {
+    title: 'Welcome to IMAGIO',
+    subtitle: 'Enter your scenario code to begin',
+    enterCode: 'Enter scenario code',
+    start: 'Start Learning',
+    codeRequired: 'Please enter a scenario code',
+    codeTooShort: 'Code must be at least 3 characters',
+    codeNotFound: 'Scenario code not found. Please check your code.',
+    codeInvalid: 'Invalid scenario code format'
+  },
+  de: {
+    title: 'Willkommen bei IMAGIO',
+    subtitle: 'Geben Sie Ihren Szenario-Code ein',
+    enterCode: 'Szenario-Code eingeben',
+    start: 'Starten',
+    codeRequired: 'Bitte geben Sie einen Szenario-Code ein',
+    codeTooShort: 'Code muss mindestens 3 Zeichen lang sein',
+    codeNotFound: 'Szenario-Code nicht gefunden. Bitte überprüfen Sie Ihren Code.',
+    codeInvalid: 'Ungültiges Szenario-Code Format'
   }
-  return translations[currentLanguage.value][key] || key
 }
+
+const tLocal = (key: string) => t(key, translations)
 
 // Computed properties
 const isValidCode = computed(() => {
   return scenarioCode.value.trim().length >= 3
 })
 
-const validationError = computed(() => {
-  if (scenarioCode.value.trim().length > 0 && scenarioCode.value.trim().length < 3) {
-    return currentLanguage.value === 'de' ? 'Code muss mindestens 3 Zeichen lang sein' : 
-           currentLanguage.value === 'fr' ? 'Le code doit contenir au moins 3 caractères' : 
-           'Code must be at least 3 characters'
-  }
-  return ''
-})
-
 // Methods
+const validateCode = (code: string): boolean => {
+  // Clear previous error
+  validationError.value = ''
+  
+  // Check if code is empty
+  if (!code) {
+    validationError.value = tLocal('codeRequired')
+    return false
+  }
+  
+  // Check minimum length
+  if (code.length < 3) {
+    validationError.value = tLocal('codeTooShort')
+    return false
+  }
+  
+  // Check if code exists in examStore
+  const course = examStore.getCourseByCode(code)
+  if (!course) {
+    validationError.value = tLocal('codeNotFound')
+    return false
+  }
+  
+  return true
+}
+
 const handleDirectLogin = () => {
-  if (isValidCode.value) {
-    // Store the scenario code and redirect to the introduction page
-    localStorage.setItem('currentScenarioCode', scenarioCode.value)
+  const code = scenarioCode.value.trim()
+  
+  if (validateCode(code)) {
+    // Code is valid, store and redirect
+    localStorage.setItem('currentScenarioCode', code)
     router.push('/introduction')
   }
 }
@@ -99,18 +122,20 @@ const handleDirectLogin = () => {
   justify-content: center;
   background-color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 2rem;
 }
 
 .content {
   text-align: center;
   max-width: 450px;
-  padding: 2rem;
+  width: 100%;
 }
 
 .logo {
   width: 200px;
   height: auto;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto;
+  display: block;
 }
 
 h1 {
