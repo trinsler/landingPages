@@ -368,22 +368,31 @@ const loadScenarios = async () => {
     })
 
     // Transform API response to match our scenario format
-    scenarios.value = response.courses.map((course: any) => ({
-      id: course.code, // Use code as temporary ID for display
-      courseId: course.code,
-      examId: course.examId,
-      name: course.title,
-      code: course.code,
-      description: course.description,
-      introduction: '',
-      level: course.level,
-      totalTime: course.totalTime,
-      timePerQuestion: course.timePerQuestion,
-      questionsCount: course.totalQuestions
-    }))
+    if (response && response.courses && Array.isArray(response.courses)) {
+      scenarios.value = response.courses.map((course: any) => ({
+        id: course.code,
+        courseId: course.code,
+        examId: course.examId,
+        name: course.title,
+        code: course.code,
+        description: course.description,
+        introduction: '',
+        level: course.level,
+        totalTime: course.totalTime,
+        timePerQuestion: course.timePerQuestion,
+        questionsCount: course.totalQuestions
+      }))
+    } else {
+      scenarios.value = []
+    }
   } catch (error: any) {
     console.error('Error loading scenarios:', error)
-    loadError.value = 'Fehler beim Laden der Szenarien'
+    // Don't show error for empty database - just show empty state
+    scenarios.value = []
+    // Only show error if it's not a 404 or empty response
+    if (error.statusCode && error.statusCode !== 404) {
+      loadError.value = 'Fehler beim Laden der Szenarien'
+    }
   } finally {
     isLoading.value = false
   }
@@ -643,15 +652,16 @@ onMounted(() => {
 
 <style scoped>
 .admin-page {
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   background: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding-top: 64px;
 }
 
 .admin-header {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem 0;
 }
 
 .admin-header-content {

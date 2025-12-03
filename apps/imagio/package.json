@@ -3,6 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "prebuild": "nuxt prepare && printf '{\\n  \"extends\": \"./.nuxt/tsconfig.json\",\\n  \"compilerOptions\": {\\n    \"composite\": true,\\n    \"types\": [\"node\"]\\n  }\\n}' > .nuxt/tsconfig.app.json",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -37,7 +38,7 @@
   ],
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue": "^5.2.0",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.0.10",
     "jsdom": "^27.2.0",

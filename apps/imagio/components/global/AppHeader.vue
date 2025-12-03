@@ -279,53 +279,90 @@ const toggleRecording = async () => {
 
 const startRecording = async () => {
   try {
+    // Check if we're in a secure context
+    if (!window.isSecureContext && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      recordingStatus.value = {
+        message: 'Microphone requires HTTPS or localhost. Current URL: ' + window.location.protocol,
+        type: 'error'
+      }
+      return
+    }
+
+    // Check if MediaDevices API is available
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      recordingStatus.value = {
+        message: 'Microphone API not available in this browser.',
+        type: 'error'
+      }
+      return
+    }
+
     recordingStatus.value = { message: 'Requesting microphone access...', type: 'info' }
     transcription.value = ''
     interimTranscript.value = ''
-    
-    // Start speech recognition for transcription
+
+    // Start speech recognition for transcription (if available)
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-      recognition.value = new SpeechRecognition()
-      
-      recognition.value.continuous = true
-      recognition.value.interimResults = true
-      recognition.value.lang = currentLanguage.value === 'de' ? 'de-DE' : 
-                               currentLanguage.value === 'fr' ? 'fr-FR' : 'en-US'
-      
-      recognition.value.onresult = (event: any) => {
-        let tempInterimTranscript = ''
-        
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript
-          
-          if (event.results[i].isFinal) {
-            // Add finalized words to permanent transcription
-            const trimmedTranscript = transcript.trim()
-            if (trimmedTranscript) {
-              transcription.value += (transcription.value ? ' ' : '') + trimmedTranscript
+      try {
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+        recognition.value = new SpeechRecognition()
+
+        recognition.value.continuous = true
+        recognition.value.interimResults = true
+        recognition.value.lang = currentLanguage.value === 'de' ? 'de-DE' : 'en-US'
+
+        recognition.value.onresult = (event: any) => {
+          let tempInterimTranscript = ''
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript
+
+            if (event.results[i].isFinal) {
+              // Add finalized words to permanent transcription
+              const trimmedTranscript = transcript.trim()
+              if (trimmedTranscript) {
+                transcription.value += (transcription.value ? ' ' : '') + trimmedTranscript
+              }
+            } else {
+              // Store interim results for display
+              tempInterimTranscript = transcript
+            }
+          }
+
+          // Update interim transcript for display
+          interimTranscript.value = tempInterimTranscript
+        }
+
+        recognition.value.onerror = (event: any) => {
+          console.error('Speech recognition error:', event.error)
+          if (event.error === 'not-allowed') {
+            recordingStatus.value = {
+              message: 'Speech recognition permission denied.',
+              type: 'error'
             }
           } else {
-            // Store interim results for display
-            tempInterimTranscript = transcript
+            recordingStatus.value = {
+              message: 'Speech recognition error: ' + event.error,
+              type: 'error'
+            }
           }
         }
-        
-        // Update interim transcript for display
-        interimTranscript.value = tempInterimTranscript
-      }
-      
-      recognition.value.onerror = (event: any) => {
-        console.error('Speech recognition error:', event.error)
-        recordingStatus.value = { 
-          message: 'Speech recognition error. Please try again.', 
-          type: 'error' 
+
+        recognition.value.start()
+      } catch (speechError) {
+        console.warn('Speech recognition failed to start:', speechError)
+        recordingStatus.value = {
+          message: 'Speech recognition unavailable, but audio recording will work.',
+          type: 'info'
         }
       }
-      
-      recognition.value.start()
+    } else {
+      recordingStatus.value = {
+        message: 'Speech recognition not supported. Audio recording will work.',
+        type: 'info'
+      }
     }
-    
+
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     
     mediaRecorder.value = new MediaRecorder(stream)

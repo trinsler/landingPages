@@ -1,0 +1,37 @@
+services:
+  # Service Name: imagio-app
+  imagio-app:
+    # Baue Image aus Dockerfile im aktuellen Verzeichnis
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Container Name (sonst random Name)
+    container_name: imagio-nuxt-app
+
+    # Port Mapping: Host:Container
+    # localhost:3000 auf deinem Mac -> Port 3000 im Container
+    ports:
+      - "3000:3000"
+
+    # Volumes: Persistente Daten (überlebt Container Restart!)
+    # WICHTIG für SQLite Datenbank!
+    volumes:
+      - ./prisma:/app/prisma
+
+    # Environment Variables
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+
+    # Restart Policy: Bei Crash automatisch neustarten
+    restart: unless-stopped
+
+    # Health Check: Überprüfe ob App läuft
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
