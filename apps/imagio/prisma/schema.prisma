@@ -1,0 +1,206 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ============================================
+// BASIC USER MANAGEMENT
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  sessionId String?  @unique  // Für anonyme Sessions
+  
+  // Optional Profile (für zukünftige Erweiterung)
+  email     String?  @unique
+  firstName String?
+  lastName  String?
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastActivityAt DateTime?
+  
+  // Relations
+  examAttempts ExamAttempt[]
+  userProgress UserProgress?
+  
+  @@map("users")
+}
+
+// ============================================
+// COURSE & EXAM SYSTEM
+// ============================================
+
+model Course {
+  id               String  @id @default(uuid())
+  code             String  @unique // ABC123, CS001, etc.
+  title            String
+  description      String
+  level            Int     // 1, 2, 3, 4
+  
+  // Time Configuration
+  totalTime        Int     // Minuten
+  totalQuestions   Int
+  timePerQuestion  Int     // Sekunden
+  
+  // Status
+  isPublished      Boolean @default(true)
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  // Relations
+  exam             Exam?   @relation(fields: [examId], references: [id])
+  examId           String?
+  
+  @@map("courses")
+}
+
+model Exam {
+  id           String     @id @default(uuid())
+  title        String
+  description  String
+  sourceText   String     // Text-Basis für Fragen
+  level        Int        // 1-4
+  duration     Int?       // Minuten
+  
+  // Status
+  isPublished  Boolean    @default(true)
+  
+  // Timestamps
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  // Relations
+  questions    Question[]
+  examAttempts ExamAttempt[]
+  courses      Course[]
+  
+  @@map("exams")
+}
+
+model Question {
+  id         String   @id @default(uuid())
+  examId     String
+  exam       Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  
+  // Content
+  text       String
+  answer     String?  // Optional vordefinierte Antwort
+  
+  // Difficulty & Keywords (Kern des Systems!)
+  difficulty String   // EASY, MEDIUM, HARD
+  keywords   String   // JSON string von Schlüsselwörtern
+  
+  // Configuration
+  selected   Boolean  @default(true)  // Frage aktiv?
+  order      Int      @default(0)
+  
+  // Timestamps
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relations
+  answers    Answer[]
+  
+  @@map("questions")
+}
+
+
+// ============================================
+// EXAM SESSIONS & ANSWERS
+// ============================================
+
+model ExamAttempt {
+  id           String            @id @default(uuid())
+  userId       String
+  user         User              @relation(fields: [userId], references: [id])
+  examId       String
+  exam         Exam              @relation(fields: [examId], references: [id])
+  
+  // Session State
+  startedAt    DateTime          @default(now())
+  completedAt  DateTime?
+  
+  // Results
+  overallScore Float             @default(0)
+  passed       Boolean           @default(false)
+  level        Int               // Level des Exams
+  
+  // Relations
+  answers      Answer[]
+  
+  @@map("exam_attempts")
+}
+
+model Answer {
+  id              String      @id @default(uuid())
+  examAttemptId   String
+  examAttempt     ExamAttempt @relation(fields: [examAttemptId], references: [id])
+  questionId      String
+  question        Question    @relation(fields: [questionId], references: [id])
+  
+  // User Answer
+  answerText      String
+  mode            String      // WRITTEN oder ORAL
+  
+  // Keyword Analysis (Kern-Feature!)
+  foundKeywords   String      // JSON string gefundene Keywords
+  score           Float       // Keyword-Score (0-100)
+  percentage      Float       // Prozent der gefundenen Keywords
+  passed          Boolean     // Bestanden ja/nein
+  
+  // Analysis Details (JSON für flexible Daten)
+  analysisDetails String?     // JSON string der Keyword-Analyse
+  
+  // Metadata
+  timeSpent       Int         @default(0) // Sekunden
+  timestamp       DateTime    @default(now())
+  
+  @@unique([examAttemptId, questionId])
+  @@map("answers")
+}
+
+
+// ============================================
+// USER PROGRESS & STATISTICS
+// ============================================
+
+model UserProgress {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  
+  // Level System
+  currentLevel      Int      @default(1)
+  completedLevels   String   @default("[]") // JSON Array von abgeschlossenen Levels
+  
+  // Activity
+  lastActivity      DateTime @default(now())
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@map("user_progress")
+}
+
+// ============================================
+// SYSTEM SETTINGS
+// ============================================
+
+model SystemSetting {
+  id          String  @id @default(uuid())
+  key         String  @unique
+  value       String
+  description String?
+  
+  updatedAt   DateTime @updatedAt
+  
+  @@map("system_settings")
+}

@@ -21,31 +21,58 @@
         <h2 class="view-title">Scenarios</h2>
       </div>
 
+      <!-- Loading State -->
+      <div v-if="isLoading" class="loading-state">
+        Lade Szenarien...
+      </div>
+
+      <!-- Error State -->
+      <div v-if="loadError" class="error-state">
+        {{ loadError }}
+      </div>
+
       <!-- Scenarios Grid -->
-      <div class="scenarios-grid">
-        <div 
-          v-for="scenario in scenarios" 
+      <div v-else class="scenarios-grid">
+        <div
+          v-for="scenario in scenarios"
           :key="scenario.id"
           class="scenario-card"
-          @click="editScenario(scenario)"
         >
-          <div class="scenario-card-header">
-            <h3 class="scenario-name">{{ scenario.name }}</h3>
-            <div class="scenario-code-badge">{{ scenario.code }}</div>
+          <div class="scenario-card-content" @click="editScenario(scenario)">
+            <div class="scenario-card-header">
+              <h3 class="scenario-name">{{ scenario.name }}</h3>
+              <div class="scenario-code-badge">{{ scenario.code }}</div>
+            </div>
+
+            <div class="scenario-stats">
+              <span class="scenario-stat">
+                Level {{ scenario.level }}
+              </span>
+              <span class="scenario-stat">
+                {{ scenario.questionsCount || 0 }} Fragen
+              </span>
+            </div>
+
+            <div class="scenario-description">
+              {{ scenario.description || 'Keine Beschreibung' }}
+            </div>
           </div>
-          
-          <div class="scenario-stats">
-            <span class="scenario-stat">
-              {{ scenario.questions.length }} Fragen
-            </span>
-            <span class="scenario-stat">
-              {{ getScenarioUserCount(scenario.id) }} Benutzer
-            </span>
+
+          <div class="scenario-card-actions">
+            <button
+              @click.stop="deleteScenario(scenario)"
+              class="delete-scenario-button"
+              :disabled="scenario.isDeleting"
+            >
+              <span v-if="scenario.isDeleting">Lösche...</span>
+              <span v-else>Löschen</span>
+            </button>
           </div>
-          
-          <div class="scenario-description">
-            {{ scenario.description || 'Keine Beschreibung' }}
-          </div>
+        </div>
+
+        <div v-if="scenarios.length === 0 && !isLoading" class="empty-state">
+          <p class="empty-text">Noch keine Szenarien vorhanden</p>
+          <p class="empty-subtext">Klicke auf "Neues Szenario" um zu beginnen</p>
         </div>
       </div>
     </main>
@@ -64,26 +91,19 @@
 
       <!-- Tab Navigation -->
       <nav class="editor-nav">
-        <button 
+        <button
           @click="activeEditorTab = 'info'"
           class="editor-tab"
           :class="{ active: activeEditorTab === 'info' }"
         >
           Kurs-Info
         </button>
-        <button 
+        <button
           @click="activeEditorTab = 'questions'"
           class="editor-tab"
           :class="{ active: activeEditorTab === 'questions' }"
         >
           Fragen
-        </button>
-        <button 
-          @click="activeEditorTab = 'users'"
-          class="editor-tab"
-          :class="{ active: activeEditorTab === 'users' }"
-        >
-          Benutzer
         </button>
       </nav>
 
@@ -94,46 +114,79 @@
           <div class="section-header">
             <h2 class="section-title">Kurs-Informationen</h2>
           </div>
-          
+
           <div class="course-info-form">
             <div class="form-field">
               <label class="form-label">Kurs-Name</label>
-              <input 
-                v-model="selectedScenario.name" 
-                type="text" 
+              <input
+                v-model="selectedScenario.name"
+                type="text"
                 class="form-input"
                 placeholder="Gib den Kurs-Namen ein"
               >
             </div>
-            
+
             <div class="form-field">
-              <label class="form-label">Kurs-Code</label>
-              <input 
-                v-model="selectedScenario.code" 
-                type="text" 
+              <label class="form-label">Kurs-Code (Startcode für Studenten)</label>
+              <input
+                v-model="selectedScenario.code"
+                type="text"
                 class="form-input"
-                placeholder="z.B. CS001"
+                placeholder="z.B. CS001 oder ABC123"
               >
             </div>
-            
+
+            <div class="form-field">
+              <label class="form-label">Level (1-4)</label>
+              <input
+                v-model.number="selectedScenario.level"
+                type="number"
+                min="1"
+                max="4"
+                class="form-input"
+              >
+            </div>
+
             <div class="form-field">
               <label class="form-label">Beschreibung</label>
-              <textarea 
-                v-model="selectedScenario.description" 
+              <textarea
+                v-model="selectedScenario.description"
                 class="form-textarea"
                 rows="4"
                 placeholder="Beschreibe den Kurs..."
               ></textarea>
             </div>
-            
+
             <div class="form-field">
-              <label class="form-label">Kurs-Einleitung</label>
-              <textarea 
-                v-model="selectedScenario.introduction" 
+              <label class="form-label">Kurs-Einleitung / Quelltext</label>
+              <textarea
+                v-model="selectedScenario.introduction"
                 class="form-textarea large"
                 rows="8"
                 placeholder="Diese Einleitung wird den Studenten zu Beginn des Kurses gezeigt..."
               ></textarea>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label">Gesamtzeit (Minuten)</label>
+                <input
+                  v-model.number="selectedScenario.totalTime"
+                  type="number"
+                  class="form-input"
+                  placeholder="z.B. 10"
+                >
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Zeit pro Frage (Sekunden)</label>
+                <input
+                  v-model.number="selectedScenario.timePerQuestion"
+                  type="number"
+                  class="form-input"
+                  placeholder="z.B. 60"
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -146,11 +199,11 @@
               Neue Frage
             </button>
           </div>
-          
+
           <div class="questions-list">
-            <div 
-              v-for="(question, index) in manualQuestions" 
-              :key="question.id"
+            <div
+              v-for="(question, index) in manualQuestions"
+              :key="question.tempId || question.id"
               class="question-item"
             >
               <div class="question-header">
@@ -166,7 +219,7 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="question-form">
                 <div class="form-field">
                   <label class="form-label">Frage</label>
@@ -177,7 +230,7 @@
                     rows="2"
                   ></textarea>
                 </div>
-                
+
                 <div class="form-field">
                   <label class="form-label">Musterantwort</label>
                   <textarea
@@ -187,84 +240,55 @@
                     rows="3"
                   ></textarea>
                 </div>
+
+                <div class="form-field">
+                  <label class="form-label">Schwierigkeit</label>
+                  <select v-model="question.difficulty" class="form-input">
+                    <option value="EASY">Einfach</option>
+                    <option value="MEDIUM">Mittel</option>
+                    <option value="HARD">Schwierig</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <div class="form-label-with-button">
+                    <label class="form-label">Keywords (durch Komma getrennt)</label>
+                    <button
+                      @click="generateKeywordsForQuestion(question)"
+                      class="ai-generate-button"
+                      :disabled="!question.answer || question.answer.trim().length === 0 || question.isGeneratingKeywords"
+                      type="button"
+                    >
+                      <span v-if="question.isGeneratingKeywords">
+                        Generiere...
+                      </span>
+                      <span v-else>
+                        KI Keywords generieren
+                      </span>
+                    </button>
+                  </div>
+                  <input
+                    v-model="question.keywordsText"
+                    type="text"
+                    placeholder="z.B. algorithmus, computer, programmierung"
+                    class="form-input"
+                    @input="updateKeywordsFromText(question)"
+                  >
+                  <div class="keywords-preview">
+                    <span v-for="(keyword, i) in question.keywords" :key="i" class="keyword-tag">
+                      {{ keyword }}
+                    </span>
+                  </div>
+                  <div v-if="question.keywordError" class="keyword-error">
+                    {{ question.keywordError }}
+                  </div>
+                </div>
               </div>
             </div>
-            
+
             <div v-if="manualQuestions.length === 0" class="empty-state">
               <p class="empty-text">Noch keine Fragen vorhanden</p>
               <p class="empty-subtext">Klicke auf "Neue Frage" um zu beginnen</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Users Tab -->
-        <div v-if="activeEditorTab === 'users'" class="editor-section">
-          <div class="section-header">
-            <h2 class="section-title">Benutzer ({{ getScenarioUserCount(selectedScenario?.id) }})</h2>
-            <button @click="showAddUserForm = true" class="add-button">
-              Benutzer hinzufügen
-            </button>
-          </div>
-          
-          <!-- Add User Form -->
-          <div v-if="showAddUserForm" class="add-user-form">
-            <h3 class="form-title">Neuen Benutzer hinzufügen</h3>
-            <div class="form-grid">
-              <div class="form-field">
-                <label class="form-label">Name</label>
-                <input 
-                  v-model="newUser.name" 
-                  type="text" 
-                  class="form-input" 
-                  placeholder="Vollständiger Name"
-                >
-              </div>
-              <div class="form-field">
-                <label class="form-label">E-Mail</label>
-                <input 
-                  v-model="newUser.email" 
-                  type="email" 
-                  class="form-input" 
-                  placeholder="benutzer@example.com"
-                >
-              </div>
-            </div>
-            <div class="form-actions">
-              <button @click="showAddUserForm = false" class="secondary-button">
-                Abbrechen
-              </button>
-              <button 
-                @click="saveNewUser" 
-                class="primary-button" 
-                :disabled="!newUser.name || !newUser.email"
-              >
-                Hinzufügen
-              </button>
-            </div>
-          </div>
-          
-          <!-- Users List -->
-          <div class="users-list">
-            <div 
-              v-for="user in getScenarioUsers(selectedScenario?.id)" 
-              :key="user.id"
-              class="user-item"
-            >
-              <div class="user-info">
-                <div class="user-name">{{ user.name }}</div>
-                <div class="user-email">{{ user.email }}</div>
-              </div>
-              <button 
-                @click="removeUserFromScenario(selectedScenario.id, user.id)" 
-                class="remove-user-button"
-              >
-                Entfernen
-              </button>
-            </div>
-            
-            <div v-if="getScenarioUserCount(selectedScenario?.id) === 0" class="empty-state">
-              <p class="empty-text">Noch keine Benutzer vorhanden</p>
-              <p class="empty-subtext">Klicke auf "Benutzer hinzufügen" um zu beginnen</p>
             </div>
           </div>
         </div>
@@ -272,7 +296,10 @@
 
       <!-- Save Button -->
       <div class="editor-footer">
-        <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState }">
+        <div v-if="saveError" class="save-error">
+          {{ saveError }}
+        </div>
+        <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState }" :disabled="isSaving">
           <span v-if="isSaving">Speichere...</span>
           <span v-else-if="showSavedState">✓ Gespeichert</span>
           <span v-else>Änderungen speichern</span>
@@ -283,120 +310,239 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
+// Types
+interface Question {
+  id?: string
+  tempId?: string
+  text: string
+  answer: string
+  difficulty: string
+  keywords: string[]
+  keywordsText?: string
+  selected?: boolean
+  order?: number
+  isGeneratingKeywords?: boolean
+  keywordError?: string
+}
+
+interface Scenario {
+  id?: string
+  courseId?: string
+  examId?: string
+  name: string
+  code: string
+  description: string
+  introduction: string
+  level: number
+  totalTime: number
+  timePerQuestion: number
+  questionsCount?: number
+  questions?: Question[]
+  isDeleting?: boolean
+}
 
 // Main state
 const showScenarioEditor = ref(false)
 const activeEditorTab = ref('info')
-const selectedScenario = ref(null)
-const manualQuestions = ref<any[]>([])
-const showAddUserForm = ref(false)
-const newUser = ref({ name: '', email: '' })
+const selectedScenario = ref<Scenario | null>(null)
+const manualQuestions = ref<Question[]>([])
 const isSaving = ref(false)
 const showSavedState = ref(false)
+const saveError = ref('')
+const isLoading = ref(false)
+const loadError = ref('')
 
-// Sample scenario data
-const scenarios = ref([
-  {
-    id: 1,
-    name: 'Basic Computer Science - Level 1',
-    code: 'CS001',
-    description: 'Einführung in die Grundlagen der Informatik',
-    introduction: 'Willkommen zum ersten Level in Computer Science!',
-    questions: [
-      { id: 1, text: 'Was ist ein Computerprogramm?', answer: 'Ein Computerprogramm ist eine Ansammlung von Anweisungen...' },
-      { id: 2, text: 'Erkläre was ein Algorithmus ist.', answer: 'Ein Algorithmus ist eine schrittweise Vorgehensweise...' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Basic Computer Science - Level 2',
-    code: 'CS002',
-    description: 'Programmierung und Algorithmen',
-    introduction: 'Vertiefen Sie Ihr Verständnis von Programmierung.',
-    questions: [
-      { id: 3, text: 'Was ist eine Variable?', answer: 'Eine Variable ist ein Container für Daten...' },
-      { id: 4, text: 'Was macht eine Schleife?', answer: 'Eine Schleife wiederholt Code...' }
-    ]
+// Scenario list
+const scenarios = ref<Scenario[]>([])
+
+// Load scenarios from backend
+const loadScenarios = async () => {
+  isLoading.value = true
+  loadError.value = ''
+
+  try {
+    const response = await $fetch('/api/courses', {
+      method: 'GET'
+    })
+
+    // Transform API response to match our scenario format
+    scenarios.value = response.courses.map((course: any) => ({
+      id: course.code, // Use code as temporary ID for display
+      courseId: course.code,
+      examId: course.examId,
+      name: course.title,
+      code: course.code,
+      description: course.description,
+      introduction: '',
+      level: course.level,
+      totalTime: course.totalTime,
+      timePerQuestion: course.timePerQuestion,
+      questionsCount: course.totalQuestions
+    }))
+  } catch (error: any) {
+    console.error('Error loading scenarios:', error)
+    loadError.value = 'Fehler beim Laden der Szenarien'
+  } finally {
+    isLoading.value = false
   }
-])
-
-// User data per scenario
-const scenarioUsers = ref({
-  1: [
-    { id: 1, name: 'Max Mustermann', email: 'max@example.com' },
-    { id: 2, name: 'Anna Schmidt', email: 'anna@example.com' }
-  ],
-  2: [
-    { id: 3, name: 'Tom Weber', email: 'tom@example.com' }
-  ]
-})
-
-// Helper functions
-const getScenarioUserCount = (scenarioId: number) => {
-  return scenarioUsers.value[scenarioId]?.length || 0
 }
 
-const getScenarioUsers = (scenarioId: number) => {
-  return scenarioUsers.value[scenarioId] || []
-}
-
-// Scenario methods
+// Create new scenario
 const createNewScenario = () => {
-  const scenario = {
-    id: Date.now(),
+  const scenario: Scenario = {
     name: 'Neues Szenario',
     code: 'NEW' + Date.now().toString().slice(-3),
     description: '',
     introduction: '',
+    level: 1,
+    totalTime: 10,
+    timePerQuestion: 60,
     questions: []
   }
-  scenarios.value.push(scenario)
-  scenarioUsers.value[scenario.id] = []
-  editScenario(scenario)
-}
-
-const editScenario = (scenario: any) => {
   selectedScenario.value = scenario
-  manualQuestions.value = [...scenario.questions]
+  manualQuestions.value = []
   activeEditorTab.value = 'info'
   showScenarioEditor.value = true
-  showAddUserForm.value = false
+}
+
+// Edit existing scenario
+const editScenario = async (scenario: Scenario) => {
+  isLoading.value = true
+
+  try {
+    // Load full exam details including questions
+    if (scenario.code) {
+      const examResponse = await $fetch(`/api/courses/${scenario.code}/exam`, {
+        method: 'GET'
+      })
+
+      // Merge course data with exam data
+      selectedScenario.value = {
+        ...scenario,
+        introduction: examResponse.exam.sourceText,
+        description: examResponse.exam.description
+      }
+
+      // Load questions
+      manualQuestions.value = examResponse.questions.map((q: any) => ({
+        id: q.id,
+        text: q.text,
+        answer: q.answer || '',
+        difficulty: q.difficulty,
+        keywords: q.keywords,
+        keywordsText: q.keywords.join(', '),
+        selected: q.selected
+      }))
+    } else {
+      selectedScenario.value = { ...scenario }
+      manualQuestions.value = []
+    }
+
+    activeEditorTab.value = 'info'
+    showScenarioEditor.value = true
+  } catch (error: any) {
+    console.error('Error loading scenario details:', error)
+    alert('Fehler beim Laden der Szenario-Details')
+  } finally {
+    isLoading.value = false
+  }
 }
 
 const closeEditor = () => {
   showScenarioEditor.value = false
   selectedScenario.value = null
   manualQuestions.value = []
-  showAddUserForm.value = false
+  saveError.value = ''
 }
 
+// Save scenario to backend
 const saveScenario = async () => {
   if (!selectedScenario.value) return
-  
+
   isSaving.value = true
   showSavedState.value = false
-  
+  saveError.value = ''
+
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    selectedScenario.value.questions = [...manualQuestions.value]
+    const isNewScenario = !selectedScenario.value.courseId
+
+    // Step 1: Create/Update Course
+    let courseResponse
+    if (isNewScenario) {
+      courseResponse = await $fetch('/api/courses', {
+        method: 'POST',
+        body: {
+          code: selectedScenario.value.code,
+          title: selectedScenario.value.name,
+          description: selectedScenario.value.description,
+          level: selectedScenario.value.level,
+          totalTime: selectedScenario.value.totalTime,
+          totalQuestions: manualQuestions.value.length,
+          timePerQuestion: selectedScenario.value.timePerQuestion,
+          isPublished: true
+        }
+      })
+    }
+
+    // Step 2: Create/Update Exam with Questions
+    const examData = {
+      title: selectedScenario.value.name,
+      description: selectedScenario.value.description,
+      sourceText: selectedScenario.value.introduction,
+      level: selectedScenario.value.level,
+      duration: selectedScenario.value.totalTime,
+      isPublished: true,
+      courseId: isNewScenario ? courseResponse.id : undefined,
+      questions: manualQuestions.value.map((q, index) => ({
+        text: q.text,
+        answer: q.answer,
+        difficulty: q.difficulty,
+        keywords: q.keywords,
+        selected: true,
+        order: index
+      }))
+    }
+
+    if (isNewScenario) {
+      await $fetch('/api/exams', {
+        method: 'POST',
+        body: examData
+      })
+    } else if (selectedScenario.value.examId) {
+      await $fetch(`/api/exams/${selectedScenario.value.examId}`, {
+        method: 'PUT',
+        body: examData
+      })
+    }
+
+    // Success!
     showSavedState.value = true
     setTimeout(() => {
       showSavedState.value = false
     }, 2000)
-  } catch (error) {
+
+    // Reload scenarios list
+    await loadScenarios()
+
+  } catch (error: any) {
     console.error('Save error:', error)
+    saveError.value = error.data?.statusMessage || 'Fehler beim Speichern'
   } finally {
     isSaving.value = false
   }
 }
 
-// Question methods
+// Question management
 const addNewQuestion = () => {
-  const newQuestion = {
-    id: `q_${Date.now()}`,
+  const newQuestion: Question = {
+    tempId: `q_${Date.now()}`,
     text: '',
-    answer: ''
+    answer: '',
+    difficulty: 'MEDIUM',
+    keywords: [],
+    keywordsText: ''
   }
   manualQuestions.value.push(newQuestion)
 }
@@ -409,44 +555,90 @@ const removeQuestion = (index: number) => {
 
 const duplicateQuestion = (index: number) => {
   const originalQuestion = manualQuestions.value[index]
-  const duplicatedQuestion = {
+  const duplicatedQuestion: Question = {
     ...JSON.parse(JSON.stringify(originalQuestion)),
-    id: `q_${Date.now()}`,
+    tempId: `q_${Date.now()}`,
+    id: undefined
   }
   manualQuestions.value.splice(index + 1, 0, duplicatedQuestion)
 }
 
-// User methods
-const saveNewUser = () => {
-  if (selectedScenario.value && newUser.value.name && newUser.value.email) {
-    const scenarioId = selectedScenario.value.id
-    if (!scenarioUsers.value[scenarioId]) {
-      scenarioUsers.value[scenarioId] = []
-    }
-    
-    const user = {
-      id: Date.now(),
-      name: newUser.value.name,
-      email: newUser.value.email
-    }
-    
-    scenarioUsers.value[scenarioId].push(user)
-    newUser.value = { name: '', email: '' }
-    showAddUserForm.value = false
+const updateKeywordsFromText = (question: Question) => {
+  if (question.keywordsText) {
+    question.keywords = question.keywordsText
+      .split(',')
+      .map(k => k.trim())
+      .filter(k => k.length > 0)
+  } else {
+    question.keywords = []
   }
 }
 
-const removeUserFromScenario = (scenarioId: number, userId: number) => {
-  if (confirm('Benutzer wirklich entfernen?')) {
-    const users = scenarioUsers.value[scenarioId]
-    if (users) {
-      const index = users.findIndex(u => u.id === userId)
-      if (index !== -1) {
-        users.splice(index, 1)
+// Generate keywords using AI
+const generateKeywordsForQuestion = async (question: Question) => {
+  if (!question.answer || question.answer.trim().length === 0) {
+    question.keywordError = 'Bitte zuerst eine Musterantwort eingeben'
+    return
+  }
+
+  question.isGeneratingKeywords = true
+  question.keywordError = ''
+
+  try {
+    const response: any = await $fetch('/api/generate-keywords', {
+      method: 'POST',
+      body: {
+        answerText: question.answer,
+        questionText: question.text
       }
-    }
+    })
+
+    // Update keywords
+    question.keywords = response.keywords
+    question.keywordsText = response.keywords.join(', ')
+  } catch (error: any) {
+    console.error('Error generating keywords:', error)
+    question.keywordError = 'Fehler beim Generieren der Keywords. Bitte versuche es erneut.'
+  } finally {
+    question.isGeneratingKeywords = false
   }
 }
+
+// Delete scenario
+const deleteScenario = async (scenario: Scenario) => {
+  // Confirmation dialog
+  const confirmMessage = `Möchtest du das Szenario "${scenario.name}" (${scenario.code}) wirklich löschen?\n\nDies löscht:\n- Den Kurs\n- Alle Fragen\n- Das zugehörige Exam\n\nDiese Aktion kann nicht rückgängig gemacht werden!`
+
+  if (!confirm(confirmMessage)) {
+    return
+  }
+
+  scenario.isDeleting = true
+
+  try {
+    await $fetch(`/api/courses/${scenario.code}`, {
+      method: 'DELETE'
+    })
+
+    // Remove from local list
+    const index = scenarios.value.findIndex(s => s.code === scenario.code)
+    if (index !== -1) {
+      scenarios.value.splice(index, 1)
+    }
+
+    // Show success message (optional)
+    alert(`Szenario "${scenario.name}" wurde erfolgreich gelöscht.`)
+  } catch (error: any) {
+    console.error('Error deleting scenario:', error)
+    alert('Fehler beim Löschen des Szenarios. Bitte versuche es erneut.')
+    scenario.isDeleting = false
+  }
+}
+
+// Load scenarios on mount
+onMounted(() => {
+  loadScenarios()
+})
 </script>
 
 <style scoped>
@@ -501,6 +693,17 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   margin: 0 0 2rem 0;
 }
 
+.loading-state,
+.error-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6b7280;
+}
+
+.error-state {
+  color: #ef4444;
+}
+
 .scenarios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -513,12 +716,56 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   border-radius: 8px;
   padding: 1.5rem;
   transition: all 0.2s;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .scenario-card:hover {
   border-color: #0097b2;
   box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
+}
+
+.scenario-card-content {
+  cursor: pointer;
+  flex: 1;
+}
+
+.scenario-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.delete-scenario-button {
+  background: #ffffff;
+  color: #0097b2;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  text-align: center;
+}
+
+.delete-scenario-button:hover:not(:disabled) {
+  background: #0097b2;
+  border-color: #0097b2;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.delete-scenario-button:disabled {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .scenario-card-header {
@@ -757,6 +1004,12 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   min-height: 200px;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
 .questions-list {
   display: flex;
   flex-direction: column;
@@ -822,6 +1075,62 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   gap: 1rem;
 }
 
+.form-label-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.ai-generate-button {
+  background: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-generate-button:hover:not(:disabled) {
+  background: #007a8e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 151, 178, 0.3);
+}
+
+.ai-generate-button:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.keywords-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.keyword-tag {
+  background: #e0f2f7;
+  color: #0097b2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.keyword-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
 .empty-state {
   text-align: center;
   padding: 3rem 2rem;
@@ -841,109 +1150,20 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   margin: 0;
 }
 
-.add-user-form {
-  background: #ffffff;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.form-title {
-  color: #1f2937;
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 0 0 1rem 0;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.form-actions {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-}
-
-.secondary-button {
-  background: #ffffff;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.secondary-button:hover {
-  background: #f9fafb;
-  border-color: #9ca3af;
-}
-
-.users-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: #ffffff;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-
-.user-item:hover {
-  border-color: #0097b2;
-  box-shadow: 0 0 0 3px rgba(0, 151, 178, 0.1);
-}
-
-.user-name {
-  color: #1f2937;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.user-email {
-  color: #6b7280;
-  font-size: 0.875rem;
-}
-
-.remove-user-button {
-  background: #ffffff;
-  color: #6b7280;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.remove-user-button:hover {
-  border-color: #ef4444;
-  color: #ef4444;
-}
-
 .editor-footer {
   background: #ffffff;
   border-top: 1px solid #e5e7eb;
   padding: 1.5rem 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   flex-shrink: 0;
+}
+
+.save-error {
+  color: #ef4444;
+  font-size: 0.875rem;
 }
 
 .save-button {
@@ -959,12 +1179,13 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
   min-width: 200px;
 }
 
-.save-button:hover:not(.saving):not(.saved) {
+.save-button:hover:not(.saving):not(.saved):not(:disabled) {
   background: #007a8e;
   transform: translateY(-1px);
 }
 
-.save-button.saving {
+.save-button.saving,
+.save-button:disabled {
   background: #6b7280;
   cursor: not-allowed;
 }
@@ -978,15 +1199,15 @@ const removeUserFromScenario = (scenarioId: number, userId: number) => {
     flex-direction: column;
     gap: 1.5rem;
   }
-  
+
   .scenarios-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .fullscreen-editor.with-header {
     top: 56px;
   }

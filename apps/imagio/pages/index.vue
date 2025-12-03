@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useExamStore } from '~/composables/useExamStore'
 import { useLanguage, globalTranslations } from '~/composables/useLanguage'
@@ -44,6 +44,8 @@ const { currentLanguage, t } = useLanguage()
 // Reactive state
 const scenarioCode = ref('')
 const validationError = ref('')
+const availableCourses = ref<any[]>([])
+const isLoadingCourses = ref(false)
 
 // Create local translations that work with global system
 const translations = {
@@ -76,42 +78,65 @@ const isValidCode = computed(() => {
   return scenarioCode.value.trim().length >= 3
 })
 
+// Load available courses from backend
+const loadCourses = async () => {
+  isLoadingCourses.value = true
+  try {
+    const response = await $fetch('/api/courses', {
+      method: 'GET'
+    })
+    availableCourses.value = response.courses
+  } catch (error) {
+    console.error('Error loading courses:', error)
+  } finally {
+    isLoadingCourses.value = false
+  }
+}
+
 // Methods
 const validateCode = (code: string): boolean => {
   // Clear previous error
   validationError.value = ''
-  
+
   // Check if code is empty
   if (!code) {
     validationError.value = tLocal('codeRequired')
     return false
   }
-  
+
   // Check minimum length
   if (code.length < 3) {
     validationError.value = tLocal('codeTooShort')
     return false
   }
-  
-  // Check if code exists in examStore
-  const course = examStore.getCourseByCode(code)
-  if (!course) {
+
+  // Check if code exists in backend courses
+  const courseExists = availableCourses.value.some(
+    course => course.code.toLowerCase() === code.toLowerCase()
+  )
+
+  if (!courseExists) {
     validationError.value = tLocal('codeNotFound')
     return false
   }
-  
+
   return true
 }
 
 const handleDirectLogin = () => {
-  const code = scenarioCode.value.trim()
-  
+  const code = scenarioCode.value.trim().toUpperCase()
+
   if (validateCode(code)) {
     // Code is valid, store and redirect
     localStorage.setItem('currentScenarioCode', code)
     router.push('/introduction')
   }
 }
+
+// Load courses on mount
+onMounted(() => {
+  loadCourses()
+})
 </script>
 
 <style scoped>

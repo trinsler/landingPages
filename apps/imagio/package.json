@@ -12,11 +12,17 @@
     "typecheck": "nuxt typecheck",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@nuxt/devtools": "^1.0.0",
     "@nuxt/image": "^2.0.0",
+    "@prisma/client": "^5.7.0",
+    "prisma": "^5.7.0",
     "nuxt": "^3.13.0",
     "vue": "^3.4.0"
   },
@@ -30,10 +36,12 @@
     "monorepo"
   ],
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.0.10",
     "jsdom": "^27.2.0",
+    "tsx": "^4.6.0",
     "vitest": "^4.0.10"
   }
 }
