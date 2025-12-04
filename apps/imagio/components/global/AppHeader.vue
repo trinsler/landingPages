@@ -1106,12 +1106,12 @@ const playRecordedAudio = () => {
 
 /* Add padding to main content when header is fixed */
 :global(body) {
-  padding-top: 64px;
+  padding-top: 0 !important;
 }
 
 @media (max-width: 768px) {
   :global(body) {
-    padding-top: 56px;
+    padding-top: 0 !important;
   }
 }
 </style>

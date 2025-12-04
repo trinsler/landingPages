@@ -27,14 +27,14 @@ html, body {
 }
 
 .main-content {
-  min-height: calc(100vh - 70px);
-  padding-top: 70px;
+  min-height: calc(100vh - 64px);
+  padding-top: 64px;
 }
 
 @media (max-width: 768px) {
   .main-content {
-    min-height: calc(100vh - 60px);
-    padding-top: 60px;
+    min-height: calc(100vh - 56px);
+    padding-top: 56px;
   }
 }
 </style>

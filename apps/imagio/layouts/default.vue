@@ -20,14 +20,6 @@ const { removeToast } = useAppState()
 
 <style scoped>
 .main-content {
-  min-height: calc(100vh - 70px);
-  padding-top: 70px;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    min-height: calc(100vh - 60px);
-    padding-top: 60px;
-  }
+  /* Header spacing is handled globally in app.vue */
 }
 </style>

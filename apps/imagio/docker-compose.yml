@@ -1,37 +1,81 @@
+version: '3.8'
+
 services:
-  # Service Name: imagio-app
+  # IMAGIO Application Service
   imagio-app:
-    # Baue Image aus Dockerfile im aktuellen Verzeichnis
     build:
       context: .
       dockerfile: Dockerfile
-
-    # Container Name (sonst random Name)
-    container_name: imagio-nuxt-app
-
-    # Port Mapping: Host:Container
-    # localhost:3000 auf deinem Mac -> Port 3000 im Container
+      target: runner
+    
+    container_name: imagio-production
+    
     ports:
       - "3000:3000"
-
-    # Volumes: Persistente Daten (überlebt Container Restart!)
-    # WICHTIG für SQLite Datenbank!
+    
+    # Development volume configuration - share database with localhost
     volumes:
-      - ./prisma:/app/prisma
-
-    # Environment Variables
+      # Mount local prisma directory to share the same dev.db database
+      - ./prisma:/app/prisma:rw
+      # Logs directory for debugging
+      - ./logs:/app/logs:rw
+    
+    # Development environment variables - use same database as localhost
     environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - HOST=0.0.0.0
-
-    # Restart Policy: Bei Crash automatisch neustarten
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: "file:/app/prisma/dev.db"
+      LOG_LEVEL: info
+      # Security settings
+      JWT_SECRET: "${JWT_SECRET:-CHANGE-THIS-IN-PRODUCTION}"
+      BCRYPT_ROUNDS: 12
+    
+    # Production restart policy
     restart: unless-stopped
-
-    # Health Check: Überprüfe ob App läuft
+    
+    # Resource limits for production
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # Health check using dedicated endpoint
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Security settings
+    security_opt:
+      - no-new-privileges:true
+    
+    # Process limits
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+# Named volumes for data persistence
+volumes:
+  imagio_data:
+    driver: local
+    name: imagio_production_data
+
+# Network configuration
+networks:
+  default:
+    name: imagio_network

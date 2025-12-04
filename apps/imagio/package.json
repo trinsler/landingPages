@@ -17,14 +17,26 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "docker:build": "docker build -t imagio:latest .",
+    "docker:run": "docker run -p 3000:3000 -e DATABASE_URL=file:/data/production.db -v imagio_data:/data imagio:latest",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker-compose down -v && docker system prune -f",
+    "prod:deploy": "docker-compose up --build -d",
+    "prod:logs": "docker-compose logs -f imagio-app",
+    "prod:restart": "docker-compose restart imagio-app",
+    "prod:health": "curl -f http://localhost:3000/api/health"
   },
   "dependencies": {
     "@nuxt/devtools": "^1.0.0",
     "@nuxt/image": "^2.0.0",
     "@prisma/client": "^5.7.0",
-    "prisma": "^5.7.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "jsonwebtoken": "^9.0.3",
     "nuxt": "^3.13.0",
+    "prisma": "^5.7.0",
     "vue": "^3.4.0"
   },
   "version": "1.0.0",

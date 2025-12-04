@@ -1,43 +1,95 @@
-# Node
-node_modules
+# Production-optimized .dockerignore for IMAGIO
+
+# Dependencies (will be installed in container)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Nuxt build artifacts (will be built in container)
+.nuxt/
+.output/
+dist/
+.cache/
+.temp/
+
+# Environment files (security - handle via docker-compose)
+.env*
+!.env.example
+
+# Development database (production uses mounted volume)
+prisma/dev.db
+prisma/dev.db-journal
+*.sqlite
+*.sqlite3
+
+# Git and version control
+.git/
+.gitignore
+.gitmodules
+
+# Documentation and configs not needed in production
+README.md
+CHANGELOG.md
+*.md
+.editorconfig
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs (handled by docker logging)
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Nuxt
-.nuxt
-.output
-dist
-.cache
+# Testing files and coverage
+test/
+tests/
+__tests__/
+coverage/
+.nyc_output/
+*.test.*
+*.spec.*
+jest.config.*
 
-# Environment Files
-.env
-.env.*
-!.env.example
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
 
-# Git
-.git
-.gitignore
+# Optional npm cache directory
+.npm/
 
-# Testing
-coverage
-*.test.js
-*.spec.js
+# Optional REPL history
+.node_repl_history
 
-# IDE
-.vscode
-.idea
-*.swp
-*.swo
+# Yarn Integrity file
+.yarn-integrity
 
-# OS
-.DS_Store
-Thumbs.db
+# Docker related files (not needed in image)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
 
-# Logs
-logs
-*.log
-
-# Prisma
-prisma/dev.db
-prisma/dev.db-journal
+# Development tools
+.dev/
+.local/

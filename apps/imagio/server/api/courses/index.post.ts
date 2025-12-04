@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { createSuccessResponse, createErrorResponse, ErrorCodes, HttpStatus, type ApiResponse } from '~/server/lib/response-formatter'
 
 interface CreateCourseRequest {
   code: string
@@ -23,16 +24,19 @@ interface CourseResponse {
   isPublished: boolean
 }
 
-export default defineEventHandler(async (event): Promise<CourseResponse> => {
+export default defineEventHandler(async (event): Promise<ApiResponse<CourseResponse>> => {
   try {
     const body = await readBody<CreateCourseRequest>(event)
 
     // Validation
     if (!body.code || !body.title) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Code and title are required'
-      })
+      const errorResponse = createErrorResponse(
+        ErrorCodes.VALIDATION_ERROR,
+        'Code and title are required',
+        HttpStatus.BAD_REQUEST
+      )
+      setResponseStatus(event, HttpStatus.BAD_REQUEST)
+      return errorResponse
     }
 
     // Check if code already exists
@@ -41,10 +45,13 @@ export default defineEventHandler(async (event): Promise<CourseResponse> => {
     })
 
     if (existingCourse) {
-      throw createError({
-        statusCode: 409,
-        statusMessage: 'Course code already exists'
-      })
+      const errorResponse = createErrorResponse(
+        ErrorCodes.COURSE_CODE_EXISTS,
+        'Course code already exists',
+        HttpStatus.CONFLICT
+      )
+      setResponseStatus(event, HttpStatus.CONFLICT)
+      return errorResponse
     }
 
     // Create course
@@ -61,7 +68,7 @@ export default defineEventHandler(async (event): Promise<CourseResponse> => {
       }
     })
 
-    return {
+    const courseResponse: CourseResponse = {
       id: course.id,
       code: course.code,
       title: course.title,
@@ -72,14 +79,19 @@ export default defineEventHandler(async (event): Promise<CourseResponse> => {
       timePerQuestion: course.timePerQuestion,
       isPublished: course.isPublished
     }
+
+    setResponseStatus(event, HttpStatus.CREATED)
+    return createSuccessResponse(courseResponse)
   } catch (error) {
-    if (error.statusCode) {
-      throw error
-    }
     console.error('Error creating course:', error)
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Error creating course'
-    })
+    
+    const errorResponse = createErrorResponse(
+      ErrorCodes.COURSE_CREATION_FAILED,
+      'Error creating course',
+      HttpStatus.INTERNAL_SERVER_ERROR
+    )
+    
+    setResponseStatus(event, HttpStatus.INTERNAL_SERVER_ERROR)
+    return errorResponse
   }
 })

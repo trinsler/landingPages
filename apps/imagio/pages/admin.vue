@@ -31,8 +31,9 @@
         {{ loadError }}
       </div>
 
+
       <!-- Scenarios Grid -->
-      <div v-else class="scenarios-grid">
+      <div v-if="scenarios.length > 0" class="scenarios-grid">
         <div
           v-for="scenario in scenarios"
           :key="scenario.id"
@@ -127,7 +128,18 @@
             </div>
 
             <div class="form-field">
-              <label class="form-label">Kurs-Code (Startcode für Studenten)</label>
+              <div class="form-label-with-button">
+                <label class="form-label">Kurs-Code (Startcode für Studenten)</label>
+                <button
+                  @click="generateNewCode"
+                  type="button" 
+                  class="ai-generate-button"
+                  :disabled="isGeneratingCode"
+                >
+                  <span v-if="isGeneratingCode">Generiere...</span>
+                  <span v-else>Neuen Code generieren</span>
+                </button>
+              </div>
               <input
                 v-model="selectedScenario.code"
                 type="text"
@@ -296,7 +308,7 @@
 
       <!-- Save Button -->
       <div class="editor-footer">
-        <div v-if="saveError" class="save-error">
+        <div v-if="saveError" class="save-error" :data-error="saveError.startsWith('❌')" :data-warning="saveError.startsWith('⚠️')">
           {{ saveError }}
         </div>
         <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState }" :disabled="isSaving">
@@ -341,6 +353,7 @@ interface Scenario {
   questionsCount?: number
   questions?: Question[]
   isDeleting?: boolean
+  isNew?: boolean // Flag to distinguish between new and existing scenarios
 }
 
 // Main state
@@ -353,6 +366,7 @@ const showSavedState = ref(false)
 const saveError = ref('')
 const isLoading = ref(false)
 const loadError = ref('')
+const isGeneratingCode = ref(false)
 
 // Scenario list
 const scenarios = ref<Scenario[]>([])
@@ -399,21 +413,40 @@ const loadScenarios = async () => {
 }
 
 // Create new scenario
-const createNewScenario = () => {
-  const scenario: Scenario = {
-    name: 'Neues Szenario',
-    code: 'NEW' + Date.now().toString().slice(-3),
-    description: '',
-    introduction: '',
-    level: 1,
-    totalTime: 10,
-    timePerQuestion: 60,
-    questions: []
+const createNewScenario = async () => {
+  // Check limit of 3 courses
+  if (scenarios.value.length >= 3) {
+    alert('Maximal 3 Szenarien erlaubt. Bitte lösche zuerst ein existierendes Szenario.')
+    return
   }
-  selectedScenario.value = scenario
-  manualQuestions.value = []
-  activeEditorTab.value = 'info'
-  showScenarioEditor.value = true
+
+  try {
+    // Generate unique course code
+    const codeResponse = await $fetch('/api/courses/generate-code', {
+      method: 'GET'
+    })
+
+    const scenario: Scenario = {
+      name: 'Neues Szenario',
+      code: codeResponse.code, // Use generated unique code
+      description: '',
+      introduction: '',
+      level: 1,
+      totalTime: 10,
+      timePerQuestion: 60,
+      questions: [],
+      isNew: true // Mark as new scenario
+    }
+    selectedScenario.value = scenario
+    manualQuestions.value = []
+    activeEditorTab.value = 'info'
+    showScenarioEditor.value = true
+    
+    console.log('Generated unique course code:', codeResponse.code)
+  } catch (error) {
+    console.error('Error generating course code:', error)
+    alert('Fehler beim Generieren eines einzigartigen Kurs-Codes')
+  }
 }
 
 // Edit existing scenario
@@ -423,27 +456,55 @@ const editScenario = async (scenario: Scenario) => {
   try {
     // Load full exam details including questions
     if (scenario.code) {
-      const examResponse = await $fetch(`/api/courses/${scenario.code}/exam`, {
-        method: 'GET'
-      })
+      try {
+        const examResponse = await $fetch(`/api/courses/${scenario.code}/exam`, {
+          method: 'GET'
+        })
 
-      // Merge course data with exam data
-      selectedScenario.value = {
-        ...scenario,
-        introduction: examResponse.exam.sourceText,
-        description: examResponse.exam.description
+        if (examResponse && examResponse.exam) {
+          // Merge course data with exam data
+          selectedScenario.value = {
+            ...scenario,
+            introduction: examResponse.exam.sourceText || '',
+            description: examResponse.exam.description || scenario.description || '',
+            isNew: false // Mark as existing scenario for editing
+          }
+
+          // Load questions
+          if (examResponse.questions && examResponse.questions.length > 0) {
+            manualQuestions.value = examResponse.questions.map((q: any) => ({
+              id: q.id,
+              text: q.text,
+              answer: q.answer || '',
+              difficulty: q.difficulty,
+              keywords: Array.isArray(q.keywords) ? q.keywords : JSON.parse(q.keywords || '[]'),
+              keywordsText: Array.isArray(q.keywords) ? q.keywords.join(', ') : JSON.parse(q.keywords || '[]').join(', '),
+              selected: q.selected !== false
+            }))
+          } else {
+            manualQuestions.value = []
+          }
+        } else {
+          // No exam found - course without exam
+          selectedScenario.value = {
+            ...scenario,
+            introduction: '',
+            description: scenario.description || '',
+            isNew: false
+          }
+          manualQuestions.value = []
+        }
+      } catch (examError) {
+        console.warn(`No exam found for course ${scenario.code}:`, examError)
+        // Course exists but has no exam yet
+        selectedScenario.value = {
+          ...scenario,
+          introduction: '',
+          description: scenario.description || '',
+          isNew: false
+        }
+        manualQuestions.value = []
       }
-
-      // Load questions
-      manualQuestions.value = examResponse.questions.map((q: any) => ({
-        id: q.id,
-        text: q.text,
-        answer: q.answer || '',
-        difficulty: q.difficulty,
-        keywords: q.keywords,
-        keywordsText: q.keywords.join(', '),
-        selected: q.selected
-      }))
     } else {
       selectedScenario.value = { ...scenario }
       manualQuestions.value = []
@@ -453,7 +514,23 @@ const editScenario = async (scenario: Scenario) => {
     showScenarioEditor.value = true
   } catch (error: any) {
     console.error('Error loading scenario details:', error)
-    alert('Fehler beim Laden der Szenario-Details')
+    
+    // Still open editor but show warning
+    selectedScenario.value = {
+      ...scenario,
+      introduction: '',
+      description: scenario.description || '',
+      isNew: false
+    }
+    manualQuestions.value = []
+    activeEditorTab.value = 'info'
+    showScenarioEditor.value = true
+    
+    // Show informative message instead of blocking
+    saveError.value = '⚠️ Kurs-Details konnten nicht vollständig geladen werden. Sie können trotzdem Änderungen vornehmen und speichern.'
+    setTimeout(() => {
+      saveError.value = ''
+    }, 5000)
   } finally {
     isLoading.value = false
   }
@@ -466,6 +543,26 @@ const closeEditor = () => {
   saveError.value = ''
 }
 
+// Generate new unique course code
+const generateNewCode = async () => {
+  if (!selectedScenario.value) return
+  
+  isGeneratingCode.value = true
+  try {
+    const codeResponse = await $fetch('/api/courses/generate-code', {
+      method: 'GET'
+    })
+    
+    selectedScenario.value.code = codeResponse.code
+    console.log('Generated new code:', codeResponse.code)
+  } catch (error) {
+    console.error('Error generating code:', error)
+    alert('Fehler beim Generieren eines neuen Codes')
+  } finally {
+    isGeneratingCode.value = false
+  }
+}
+
 // Save scenario to backend
 const saveScenario = async () => {
   if (!selectedScenario.value) return
@@ -475,50 +572,184 @@ const saveScenario = async () => {
   saveError.value = ''
 
   try {
-    const isNewScenario = !selectedScenario.value.courseId
+    // Check if this is a truly new scenario (marked as isNew)
+    const isNewScenario = selectedScenario.value.isNew === true
+    
+    // Detailed validation with specific error messages
+    if (!selectedScenario.value.name || selectedScenario.value.name.trim().length === 0) {
+      saveError.value = '❌ Kurs-Name ist erforderlich. Bitte geben Sie einen aussagekräftigen Namen ein.'
+      setTimeout(() => { saveError.value = '' }, 8000)
+      return
+    }
+    
+    if (!selectedScenario.value.code || selectedScenario.value.code.trim().length === 0) {
+      saveError.value = '❌ Kurs-Code ist erforderlich. Nutzen Sie "Neuen Code generieren" oder geben Sie einen eigenen Code ein.'
+      setTimeout(() => { saveError.value = '' }, 8000)
+      return
+    }
+    
+    if (selectedScenario.value.code.trim().length < 3) {
+      saveError.value = '❌ Kurs-Code muss mindestens 3 Zeichen lang sein.'
+      setTimeout(() => { saveError.value = '' }, 8000)
+      return
+    }
+    
+    if (!selectedScenario.value.totalTime || selectedScenario.value.totalTime < 1) {
+      saveError.value = '❌ Gesamtzeit muss mindestens 1 Minute betragen.'
+      setTimeout(() => { saveError.value = '' }, 8000)
+      return
+    }
+    
+    if (!selectedScenario.value.timePerQuestion || selectedScenario.value.timePerQuestion < 10) {
+      saveError.value = '❌ Zeit pro Frage muss mindestens 10 Sekunden betragen.'
+      setTimeout(() => { saveError.value = '' }, 8000)
+      return
+    }
+    
+    // Check for changes in existing scenarios
+    if (!isNewScenario) {
+      // Additional validation for existing courses
+      const originalScenario = scenarios.value.find(s => s.code === selectedScenario.value.code)
+      if (originalScenario && 
+          originalScenario.name === selectedScenario.value.name &&
+          originalScenario.description === selectedScenario.value.description &&
+          originalScenario.totalTime === selectedScenario.value.totalTime &&
+          originalScenario.timePerQuestion === selectedScenario.value.timePerQuestion &&
+          manualQuestions.value.length === (originalScenario.questionsCount || 0)) {
+        saveError.value = '⚠️ Keine Änderungen erkannt. Bitte nehmen Sie Änderungen vor oder schließen Sie den Editor.'
+        setTimeout(() => { saveError.value = '' }, 6000)
+        return
+      }
+    }
 
     // Step 1: Create/Update Course
     let courseResponse
     if (isNewScenario) {
+      // Calculate question count (minimum 2 questions for new courses)
+      const questionCount = Math.max(manualQuestions.value.length, 2)
+      
+      // CREATE new course
       courseResponse = await $fetch('/api/courses', {
         method: 'POST',
         body: {
-          code: selectedScenario.value.code,
-          title: selectedScenario.value.name,
-          description: selectedScenario.value.description,
-          level: selectedScenario.value.level,
-          totalTime: selectedScenario.value.totalTime,
-          totalQuestions: manualQuestions.value.length,
-          timePerQuestion: selectedScenario.value.timePerQuestion,
+          code: selectedScenario.value.code.trim(),
+          title: selectedScenario.value.name.trim(),
+          description: selectedScenario.value.description || '',
+          level: selectedScenario.value.level || 1,
+          totalTime: selectedScenario.value.totalTime || 10,
+          totalQuestions: questionCount,
+          timePerQuestion: selectedScenario.value.timePerQuestion || 60,
           isPublished: true
         }
       })
+    } else {
+      // UPDATE existing course - find course by code first
+      const existingCourseResponse = await $fetch('/api/courses', {
+        method: 'GET'
+      })
+      
+      console.log('Available courses:', existingCourseResponse.courses)
+      console.log('Looking for course with code:', selectedScenario.value.code)
+      
+      const existingCourse = existingCourseResponse.courses.find((c: any) => c.code === selectedScenario.value.code)
+      
+      if (!existingCourse) {
+        console.error('Course not found in database. Available courses:', existingCourseResponse.courses.map((c: any) => c.code))
+        saveError.value = `❌ Kurs mit Code "${selectedScenario.value.code}" nicht gefunden. Verfügbare Kurse: ${existingCourseResponse.courses.map((c: any) => c.code).join(', ')}`
+        setTimeout(() => { saveError.value = '' }, 10000)
+        return
+      }
+      
+      console.log('Found existing course:', existingCourse)
+      
+      // Update the course using the correct ID
+      try {
+        courseResponse = await $fetch(`/api/courses/${existingCourse.id}`, {
+          method: 'PUT',
+          body: {
+            code: selectedScenario.value.code.trim(),
+            title: selectedScenario.value.name.trim(),
+            description: selectedScenario.value.description || '',
+            level: selectedScenario.value.level || 1,
+            totalTime: selectedScenario.value.totalTime || 10,
+            totalQuestions: manualQuestions.value.length,
+            timePerQuestion: selectedScenario.value.timePerQuestion || 60,
+            isPublished: true
+          }
+        })
+        console.log('Course update successful:', courseResponse)
+      } catch (updateError: any) {
+        console.error('Course update failed:', updateError)
+        saveError.value = `❌ Fehler beim Aktualisieren des Kurses: ${updateError.statusMessage || updateError.message}`
+        setTimeout(() => { saveError.value = '' }, 8000)
+        return
+      }
     }
 
     // Step 2: Create/Update Exam with Questions
+    console.log('Manual questions before processing:', manualQuestions.value)
+    
+    // Filter out empty questions and validate
+    let questionsForExam = manualQuestions.value.filter(q => {
+      const hasText = q.text && q.text.trim().length > 0
+      const hasAnswer = q.answer && q.answer.trim().length > 0
+      const hasKeywords = q.keywords && q.keywords.length > 0
+      return hasText && hasAnswer && hasKeywords
+    })
+    
+    console.log('Filtered valid questions:', questionsForExam)
+    
+    // If new course has no valid questions, add default sample questions
+    if (isNewScenario && questionsForExam.length === 0) {
+      questionsForExam = [
+        {
+          text: 'Beschreiben Sie die wichtigsten Konzepte dieses Kurses.',
+          answer: 'Beispielantwort: Die wichtigsten Konzepte umfassen theoretische Grundlagen und praktische Anwendungen.',
+          difficulty: 'MEDIUM',
+          keywords: ['konzepte', 'grundlagen', 'anwendungen', 'theorie', 'praxis'],
+          selected: true
+        },
+        {
+          text: 'Wie würden Sie das Gelernte in der Praxis umsetzen?',
+          answer: 'Beispielantwort: Durch schrittweise Anwendung der erlernten Methoden in realen Projekten.',
+          difficulty: 'MEDIUM', 
+          keywords: ['praxis', 'umsetzung', 'anwendung', 'methoden', 'projekte'],
+          selected: true
+        }
+      ]
+      console.log('Using default questions for new course')
+    }
+    
+    console.log('Final questions for exam:', questionsForExam)
+
     const examData = {
-      title: selectedScenario.value.name,
-      description: selectedScenario.value.description,
-      sourceText: selectedScenario.value.introduction,
-      level: selectedScenario.value.level,
-      duration: selectedScenario.value.totalTime,
+      title: selectedScenario.value.name.trim(),
+      description: selectedScenario.value.description || '',
+      sourceText: selectedScenario.value.introduction || 'Willkommen zu diesem Kurs. Bitte lesen Sie die Anweisungen sorgfältig und beantworten Sie die Fragen durchdacht.',
+      level: selectedScenario.value.level || 1,
+      duration: selectedScenario.value.totalTime || 10,
       isPublished: true,
       courseId: isNewScenario ? courseResponse.id : undefined,
-      questions: manualQuestions.value.map((q, index) => ({
-        text: q.text,
-        answer: q.answer,
-        difficulty: q.difficulty,
-        keywords: q.keywords,
+      questions: questionsForExam.map((q, index) => ({
+        text: q.text || '',
+        answer: q.answer || '',
+        difficulty: q.difficulty || 'MEDIUM',
+        keywords: q.keywords || [],
         selected: true,
         order: index
       }))
     }
 
     if (isNewScenario) {
-      await $fetch('/api/exams', {
+      // CREATE new exam with questions for new course
+      const examResponse = await $fetch('/api/exams', {
         method: 'POST',
-        body: examData
+        body: {
+          ...examData,
+          courseId: courseResponse.id // Link to the newly created course
+        }
       })
+      console.log('Created exam for new course:', examResponse.id)
     } else if (selectedScenario.value.examId) {
       await $fetch(`/api/exams/${selectedScenario.value.examId}`, {
         method: 'PUT',
@@ -526,18 +757,47 @@ const saveScenario = async () => {
       })
     }
 
-    // Success!
+    // Success messages based on action
+    if (isNewScenario) {
+      saveError.value = '✅ Neuer Kurs erfolgreich erstellt! Der Kurs ist jetzt verfügbar und kann im Willkommensfenster verwendet werden.'
+    } else {
+      saveError.value = '✅ Kurs erfolgreich aktualisiert! Alle Änderungen wurden gespeichert.'
+    }
+    
+    // Show success message briefly
     showSavedState.value = true
     setTimeout(() => {
       showSavedState.value = false
-    }, 2000)
+      saveError.value = '' // Clear success message after showing
+    }, 4000)
 
-    // Reload scenarios list
+    // Reload scenarios list to show updated data
     await loadScenarios()
 
   } catch (error: any) {
     console.error('Save error:', error)
-    saveError.value = error.data?.statusMessage || 'Fehler beim Speichern'
+    console.error('Save error detail:', error.data)
+    
+    // Detailed error handling based on error type
+    if (error.status === 409 || error.statusCode === 409) {
+      saveError.value = '❌ Kurs-Code bereits vergeben. Bitte verwenden Sie "Neuen Code generieren" oder wählen Sie einen anderen Code.'
+    } else if (error.status === 400 || error.statusCode === 400) {
+      saveError.value = '❌ Ungültige Daten. Bitte überprüfen Sie alle Eingabefelder.'
+    } else if (error.status === 404 || error.statusCode === 404) {
+      saveError.value = '❌ Kurs nicht gefunden. Möglicherweise wurde er bereits gelöscht.'
+    } else if (error.status === 500 || error.statusCode === 500) {
+      saveError.value = '❌ Server-Fehler. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.'
+    } else if (error.message && error.message.includes('Course not found')) {
+      saveError.value = '❌ Kurs konnte nicht gefunden werden. Bitte laden Sie die Seite neu.'
+    } else if (error.data?.statusMessage) {
+      saveError.value = `❌ ${error.data.statusMessage}`
+    } else if (error.statusMessage) {
+      saveError.value = `❌ ${error.statusMessage}`
+    } else if (error.message) {
+      saveError.value = `❌ ${error.message}`
+    } else {
+      saveError.value = '❌ Unbekannter Fehler beim Speichern. Bitte versuchen Sie es erneut.'
+    }
   } finally {
     isSaving.value = false
   }
@@ -623,24 +883,51 @@ const deleteScenario = async (scenario: Scenario) => {
   }
 
   scenario.isDeleting = true
+  console.log(`Attempting to delete course with code: ${scenario.code}`)
 
   try {
-    await $fetch(`/api/courses/${scenario.code}`, {
-      method: 'DELETE'
+    const deleteResponse = await $fetch('/api/courses/delete-by-code', {
+      method: 'DELETE',
+      query: {
+        code: scenario.code
+      }
     })
 
-    // Remove from local list
-    const index = scenarios.value.findIndex(s => s.code === scenario.code)
-    if (index !== -1) {
-      scenarios.value.splice(index, 1)
-    }
+    console.log('Delete response:', deleteResponse)
 
-    // Show success message (optional)
-    alert(`Szenario "${scenario.name}" wurde erfolgreich gelöscht.`)
+    // Only remove from local list if backend deletion was successful
+    if (deleteResponse && deleteResponse.success) {
+      const index = scenarios.value.findIndex(s => s.code === scenario.code)
+      if (index !== -1) {
+        scenarios.value.splice(index, 1)
+      }
+      console.log(`Successfully deleted course ${scenario.code} from both database and frontend`)
+      
+      // Show success message
+      saveError.value = `✅ Szenario "${scenario.name}" wurde erfolgreich aus der Datenbank gelöscht.`
+      setTimeout(() => { saveError.value = '' }, 4000)
+    } else {
+      throw new Error('Backend deletion did not return success')
+    }
   } catch (error: any) {
-    console.error('Error deleting scenario:', error)
-    alert('Fehler beim Löschen des Szenarios. Bitte versuche es erneut.')
+    console.error('Error deleting scenario from database:', error)
+    console.error('Error details:', error.data)
+    
+    // Reset deleting state since deletion failed
     scenario.isDeleting = false
+    
+    // Show detailed error message
+    let errorMessage = 'Fehler beim Löschen des Szenarios aus der Datenbank.'
+    if (error.statusCode === 404) {
+      errorMessage = `❌ Szenario "${scenario.code}" wurde nicht in der Datenbank gefunden.`
+    } else if (error.statusCode === 500) {
+      errorMessage = `❌ Server-Fehler beim Löschen von "${scenario.name}". Bitte versuchen Sie es erneut.`
+    } else if (error.statusMessage) {
+      errorMessage = `❌ ${error.statusMessage}`
+    }
+    
+    saveError.value = errorMessage
+    setTimeout(() => { saveError.value = '' }, 8000)
   }
 }
 
@@ -655,13 +942,14 @@ onMounted(() => {
   min-height: 100vh;
   background: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  padding-top: 64px;
+  padding-top: 80px; /* Space for global header */
 }
 
 .admin-header {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
-  padding: 3rem 0 2rem 0;
+  padding: 2rem 0;
+  margin-top: 0; /* Remove extra margin since we have padding-top on .admin-page */
 }
 
 .admin-header-content {
@@ -841,6 +1129,7 @@ onMounted(() => {
   cursor: not-allowed;
   transform: none;
 }
+
 
 /* Editor Styles */
 .fullscreen-editor {
@@ -1172,8 +1461,32 @@ onMounted(() => {
 }
 
 .save-error {
-  color: #ef4444;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
   font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+  border: 2px solid;
+  
+  /* Success messages */
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #10b981;
+}
+
+/* Error messages */
+.save-error[data-error="true"] {
+  background: #fef2f2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+/* Warning messages */  
+.save-error[data-warning="true"] {
+  background: #fffbeb;
+  color: #92400e;
+  border-color: #f59e0b;
 }
 
 .save-button {

@@ -166,6 +166,7 @@ const toggleItem = (id: number) => {
   justify-content: flex-start;
   align-items: center;
   padding: 2rem;
+  padding-top: 100px; /* Extra space for global header */
   background-color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
@@ -321,6 +322,7 @@ const toggleItem = (id: number) => {
   .faq-screen {
     min-height: calc(100vh - 56px);
     padding: 1rem;
+    padding-top: 80px; /* Extra space for mobile global header */
   }
   
   .faq-content {

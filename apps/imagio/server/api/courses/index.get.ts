@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { createSuccessResponse, createErrorResponse, ErrorCodes, HttpStatus, type ApiResponse } from '~/server/lib/response-formatter'
 
 interface CourseInfo {
   code: string;
@@ -11,11 +12,7 @@ interface CourseInfo {
   level: number;
 }
 
-interface CoursesResponse {
-  courses: CourseInfo[];
-}
-
-export default defineEventHandler(async (event): Promise<CoursesResponse> => {
+export default defineEventHandler(async (event): Promise<ApiResponse<CourseInfo[]>> => {
   try {
     const courses = await prisma.course.findMany({
       where: {
@@ -41,13 +38,24 @@ export default defineEventHandler(async (event): Promise<CoursesResponse> => {
       level: course.level
     }))
 
-    return {
-      courses: courseInfos
-    }
-  } catch (error) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Error fetching courses'
+    return createSuccessResponse(courseInfos, {
+      pagination: {
+        page: 1,
+        pageSize: courses.length,
+        total: courses.length,
+        totalPages: 1
+      }
     })
+  } catch (error) {
+    console.error('Error fetching courses:', error)
+    
+    const errorResponse = createErrorResponse(
+      ErrorCodes.INTERNAL_ERROR,
+      'Failed to fetch courses',
+      HttpStatus.INTERNAL_SERVER_ERROR
+    )
+    
+    setResponseStatus(event, HttpStatus.INTERNAL_SERVER_ERROR)
+    return errorResponse
   }
 })

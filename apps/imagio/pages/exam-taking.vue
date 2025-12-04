@@ -199,30 +199,8 @@ const examTitle = ref('Demo Exam')
 const currentQuestionIndex = ref(0)
 const totalQuestions = ref(3)
 const showExitConfirm = ref(false)
-const questions = ref([
-  {
-    type: 'text',
-    text: 'What is the primary purpose of effective communication in a professional environment?',
-    image: null
-  },
-  {
-    type: 'multiple-choice',
-    text: 'Which of the following is NOT a barrier to effective communication?',
-    options: [
-      'Language differences',
-      'Cultural misunderstandings', 
-      'Clear and simple language',
-      'Physical distractions'
-    ],
-    correctAnswer: 2,
-    image: null
-  },
-  {
-    type: 'text',
-    text: 'Describe a situation where non-verbal communication played a crucial role. What percentage of communication is typically non-verbal?',
-    image: '/assets/game_images/1.jpg'
-  }
-])
+// Questions will be loaded from the EXACT course created by admin
+const questions = ref<any[]>([])
 
 const currentAnswer = ref('')
 const selectedChoice = ref<number | null>(null)
@@ -233,7 +211,7 @@ const recognition = ref<any>(null)
 
 // Exam state
 const examStartTime = ref(Date.now())
-const timeLimit = ref(1800) // 30 minutes in seconds
+const timeLimit = ref(1800) // Default 30 minutes in seconds, will be overridden
 const timeRemaining = ref(timeLimit.value)
 const timer = ref<any>(null)
 
@@ -260,8 +238,8 @@ const currentAnalysis = computed(() => {
 })
 
 // Lifecycle
-onMounted(() => {
-  loadExamData()
+onMounted(async () => {
+  await loadExamData() // Wait for course data to load before starting timer
   startTimer()
   initializeSpeechRecognition()
   
@@ -280,17 +258,78 @@ onUnmounted(() => {
 })
 
 // Methods
-const loadExamData = () => {
+const loadExamData = async () => {
   const savedCode = localStorage.getItem('currentScenarioCode')
-  if (savedCode) {
-    const course = examStore.getCourseByCode(savedCode)
-    if (course) {
-      examTitle.value = course.title
-      // Load actual questions from course if available
-    }
+  if (!savedCode) {
+    console.error('No course code found')
+    router.push('/')
+    return
   }
   
-  // Initialize arrays
+  console.log(`Loading EXACT exam for course code: ${savedCode}`)
+  
+  try {
+    // Load course from backend API to get correct timing
+    const response = await $fetch('/api/courses', {
+      method: 'GET'
+    })
+    
+    // Find the course by code
+    const course = response.courses.find((c: any) => c.code === savedCode)
+    
+    if (!course) {
+      console.error('Course not found:', savedCode)
+      router.push('/')
+      return
+    }
+    
+    examTitle.value = course.title
+    // Set correct time limit from course settings (convert minutes to seconds)
+    timeLimit.value = course.totalTime * 60
+    timeRemaining.value = timeLimit.value
+    console.log(`Setting exam timer to ${course.totalTime} minutes (${timeLimit.value} seconds)`)
+    
+    // NOW LOAD THE EXACT QUESTIONS that admin created
+    try {
+      const examResponse = await $fetch(`/api/courses/${savedCode}/exam`, {
+        method: 'GET'
+      })
+      
+      console.log('Loaded EXACT exam questions:', examResponse)
+      
+      if (examResponse && examResponse.questions && examResponse.questions.length > 0) {
+        // Use the EXACT questions from admin
+        questions.value = examResponse.questions.map((q: any) => ({
+          type: 'text', // Admin questions are always text-based
+          text: q.text,
+          answer: q.answer, // Store expected answer for keyword checking
+          keywords: Array.isArray(q.keywords) ? q.keywords : JSON.parse(q.keywords || '[]'),
+          difficulty: q.difficulty,
+          image: null // Admin can't add images yet
+        }))
+        
+        totalQuestions.value = questions.value.length
+        console.log(`Loaded ${questions.value.length} EXACT questions from admin:`, questions.value)
+      } else {
+        // No questions found - this shouldn't happen
+        console.error('No questions found for course:', savedCode)
+        alert('Fehler: Keine Fragen für diesen Kurs gefunden. Bitte wenden Sie sich an den Administrator.')
+        router.push('/')
+        return
+      }
+    } catch (examError) {
+      console.error('Error loading exam questions:', examError)
+      alert('Fehler beim Laden der Prüfungsfragen. Bitte versuchen Sie es erneut.')
+      router.push('/')
+      return
+    }
+  } catch (error) {
+    console.error('Error loading course data:', error)
+    router.push('/')
+    return
+  }
+  
+  // Initialize arrays with correct length
   userAnswers.value = new Array(totalQuestions.value).fill('')
   questionAnalyses.value = new Array(totalQuestions.value).fill(undefined)
 }
@@ -394,14 +433,52 @@ const submitCurrentAnswer = async () => {
 }
 
 const analyzeAnswer = async (answer: string) => {
-  // Mock analysis - replace with actual Claude AI call
-  const isCorrect = Math.random() > 0.3 // 70% chance correct for demo
+  const currentQuestion = questions.value[currentQuestionIndex.value]
+  
+  if (!currentQuestion || !currentQuestion.keywords || currentQuestion.keywords.length === 0) {
+    console.error('No keywords defined for this question')
+    return {
+      passed: false,
+      score: 0,
+      feedback: 'Fehler: Keine Bewertungskriterien für diese Frage definiert.'
+    }
+  }
+  
+  console.log(`Analyzing answer for question ${currentQuestionIndex.value + 1}:`)
+  console.log(`Answer: "${answer}"`)
+  console.log(`Required Keywords:`, currentQuestion.keywords)
+  
+  // Check ONLY the admin-defined keywords
+  const answerLowerCase = answer.toLowerCase()
+  const keywordsFound = currentQuestion.keywords.filter((keyword: string) => 
+    answerLowerCase.includes(keyword.toLowerCase())
+  )
+  
+  console.log(`Keywords found in answer:`, keywordsFound)
+  
+  // Score based on keyword match percentage
+  const keywordMatchPercentage = (keywordsFound.length / currentQuestion.keywords.length) * 100
+  const minPassingScore = 50 // At least 50% of keywords must be present
+  
+  const passed = keywordMatchPercentage >= minPassingScore
+  const score = Math.round((keywordMatchPercentage / 100) * 10) // Convert to 0-10 scale
+  
+  let feedback = ''
+  if (passed) {
+    feedback = `✅ Gut! Gefunden: ${keywordsFound.join(', ')}. ${keywordMatchPercentage.toFixed(0)}% der erwarteten Konzepte abgedeckt.`
+  } else {
+    const missingKeywords = currentQuestion.keywords.filter((keyword: string) => 
+      !answerLowerCase.includes(keyword.toLowerCase())
+    )
+    feedback = `❌ Unvollständig. Gefunden: ${keywordsFound.join(', ') || 'keine'}. Fehlend: ${missingKeywords.join(', ')}. Nur ${keywordMatchPercentage.toFixed(0)}% abgedeckt.`
+  }
+  
+  console.log(`Analysis result: ${passed ? 'PASSED' : 'FAILED'}, Score: ${score}, Feedback: ${feedback}`)
+  
   return {
-    passed: isCorrect,
-    score: isCorrect ? Math.floor(Math.random() * 3) + 8 : Math.floor(Math.random() * 5) + 3,
-    feedback: isCorrect 
-      ? 'Great answer! You demonstrated a good understanding of the concept.'
-      : 'Your answer shows some understanding, but could be more comprehensive.'
+    passed,
+    score,
+    feedback
   }
 }
 

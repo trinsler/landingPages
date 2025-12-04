@@ -5,19 +5,26 @@
       <p>{{ scenarioData.description }}</p>
     </div>
 
-    <div v-if="scenarioData.professorMessage" class="professor-message">
-      <h2>Message from Your Professor</h2>
-      <p>{{ scenarioData.professorMessage }}</p>
+    <div class="professor-message">
+      <h2>Kurs-Einleitung</h2>
+      <p v-if="scenarioData.professorMessage && scenarioData.professorMessage.length > 0">
+        {{ scenarioData.professorMessage }}
+      </p>
+      <p v-else>
+        Willkommen zu diesem Kurs. Bitte lesen Sie die Anweisungen sorgfältig durch und beantworten Sie die Fragen durchdacht. 
+        Ihre Antworten werden automatisch anhand spezifischer Kriterien bewertet. Viel Erfolg!
+      </p>
     </div>
 
     <div class="scenario-instructions">
-      <h2>Instructions</h2>
+      <h2>Anweisungen</h2>
       <ul>
-        <li>Each question shows an image or video for analysis</li>
-        <li>You have {{ scenarioData.timePerQuestion }} seconds per question</li>
-        <li>Press "Start Answer" to begin recording your response</li>
-        <li>Speak clearly into your microphone</li>
-        <li>Your responses will be recorded and analyzed</li>
+        <li>Sie haben insgesamt {{ scenarioData.totalTime }} Minuten für die gesamte Prüfung</li>
+        <li>Jede Frage hat ein Zeitlimit von {{ scenarioData.timePerQuestion }} Sekunden</li>
+        <li>Antworten Sie in vollständigen Sätzen und schriftlicher Form</li>
+        <li>Ihre Antworten werden automatisch nach definierten Kriterien bewertet</li>
+        <li>Sie können jederzeit zur vorherigen Frage zurückkehren</li>
+        <li>Denken Sie an die Schlüsselwörter in Ihren Antworten</li>
       </ul>
     </div>
   </div>

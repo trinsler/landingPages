@@ -35,6 +35,8 @@
             v-else
             :recordings="selectedResult.recordings"
             :currentPlaying="currentPlaying"
+            :getProgressPercent="getProgressPercent"
+            :getCurrentTime="getCurrentTime"
             @togglePlayback="togglePlayback"
             @toggleTranscriptEdit="toggleTranscriptEdit"
             @updateTranscript="updateTranscript"
@@ -129,6 +131,14 @@ const updateTranscript = (index: number, value: string) => {
 }
 const setRating = (index: number, rating: number) => {
   console.log('Set rating:', index, rating)
+}
+
+const getProgressPercent = (index: number) => {
+  return 0 // Mock implementation
+}
+
+const getCurrentTime = (index: number) => {
+  return 0 // Mock implementation
 }
 
 // Export methods

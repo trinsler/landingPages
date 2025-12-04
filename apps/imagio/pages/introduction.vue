@@ -46,33 +46,94 @@ const scenarioData = ref({
   attempts: 3
 })
 
-onMounted(() => {
+onMounted(async () => {
   const savedCode = localStorage.getItem('currentScenarioCode')
   if (savedCode) {
     scenarioCode.value = savedCode
-    loadScenarioData(savedCode)
+    await loadScenarioData(savedCode)
     loadAttemptData(savedCode)
   } else {
     router.push('/')
   }
 })
 
-const loadScenarioData = (code: string) => {
-  const course = examStore.getCourseByCode(code)
-  if (course) {
-    scenarioData.value = {
-      title: course.title,
-      totalTime: course.totalTime,
-      totalQuestions: course.totalQuestions,
-      timePerQuestion: course.timePerQuestion,
-      description: course.description,
-      examId: course.examId,
-      difficulty: 'Intermediate',
-      category: 'Communication',
-      professorMessage: course.professorMessage || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
-      attempts: course.attempts || 3
+const loadScenarioData = async (code: string) => {
+  try {
+    console.log(`Loading EXACT course data for code: ${code}`)
+    
+    // Load course from backend API
+    const response = await $fetch('/api/courses', {
+      method: 'GET'
+    })
+    
+    // Find the course by code (exact match)
+    const course = response.courses.find((c: any) => c.code === code)
+    
+    if (!course) {
+      console.error('Course not found:', code)
+      console.error('Available courses:', response.courses.map((c: any) => c.code))
+      router.push('/')
+      return
     }
-  } else {
+    
+    console.log('Found course:', course)
+    
+    // Now load the EXACT exam data that the admin created
+    try {
+      const examResponse = await $fetch(`/api/courses/${code}/exam`, {
+        method: 'GET'
+      })
+      
+      console.log('Loaded EXACT exam data:', examResponse)
+      
+      if (examResponse && examResponse.exam) {
+        scenarioData.value = {
+          title: course.title,
+          totalTime: course.totalTime,
+          totalQuestions: course.totalQuestions,
+          timePerQuestion: course.timePerQuestion,
+          description: course.description,
+          examId: course.examId || examResponse.exam.id,
+          difficulty: 'Level ' + course.level,
+          category: 'Custom Course',
+          // Use the EXACT introduction text that admin entered
+          professorMessage: examResponse.exam.sourceText || examResponse.exam.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
+          attempts: 3
+        }
+        console.log('Final scenario data loaded:', scenarioData.value)
+      } else {
+        // Fallback if no exam found yet
+        scenarioData.value = {
+          title: course.title,
+          totalTime: course.totalTime,
+          totalQuestions: course.totalQuestions,
+          timePerQuestion: course.timePerQuestion,
+          description: course.description,
+          examId: course.examId || 'default',
+          difficulty: 'Level ' + course.level,
+          category: 'Custom Course',
+          professorMessage: course.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
+          attempts: 3
+        }
+      }
+    } catch (examError) {
+      console.warn('No specific exam found, using basic course data:', examError)
+      // Use basic course data if exam not found
+      scenarioData.value = {
+        title: course.title,
+        totalTime: course.totalTime,
+        totalQuestions: course.totalQuestions,
+        timePerQuestion: course.timePerQuestion,
+        description: course.description,
+        examId: course.examId || 'default',
+        difficulty: 'Level ' + course.level,
+        category: 'Custom Course',
+        professorMessage: course.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
+        attempts: 3
+      }
+    }
+  } catch (error) {
+    console.error('Error loading course:', error)
     router.push('/')
   }
 }
