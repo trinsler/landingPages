@@ -98,7 +98,7 @@ const loadScenarioData = async (code: string) => {
           category: 'Custom Course',
           // Use the EXACT introduction text that admin entered
           professorMessage: examResponse.exam.sourceText || examResponse.exam.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
-          attempts: 3
+          attempts: course.maxAttempts || 3
         }
         console.log('Final scenario data loaded:', scenarioData.value)
       } else {
@@ -113,7 +113,7 @@ const loadScenarioData = async (code: string) => {
           difficulty: 'Level ' + course.level,
           category: 'Custom Course',
           professorMessage: course.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
-          attempts: 3
+          attempts: course.maxAttempts || 3
         }
       }
     } catch (examError) {
@@ -129,7 +129,7 @@ const loadScenarioData = async (code: string) => {
         difficulty: 'Level ' + course.level,
         category: 'Custom Course',
         professorMessage: course.description || 'Welcome to this scenario! Please read the instructions carefully and take your time to provide thoughtful answers. Good luck!',
-        attempts: 3
+        attempts: course.maxAttempts || 3
       }
     }
   } catch (error) {

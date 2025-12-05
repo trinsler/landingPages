@@ -265,7 +265,7 @@ const toggleItem = (id: number) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   background-color: #ffffff;
   border: none;
   text-align: left;
@@ -306,7 +306,7 @@ const toggleItem = (id: number) => {
 }
 
 .faq-answer div {
-  padding: 0 1.25rem 1.25rem;
+  padding: 0 1.5rem 1.5rem;
   color: #6b7280;
   line-height: 1.6;
 }

@@ -1,11 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config'
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
+
+// Ensure DATABASE_URL is set
+process.env.DATABASE_URL = process.env.DATABASE_URL || 'file:./dev.db'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-12-02',
   devtools: { enabled: false },
   ssr: false,
+  
+  // Runtime Config für Environment Variables
+  runtimeConfig: {
+    // Server-only variables (DATABASE_URL ist sensibel)
+    databaseUrl: process.env.DATABASE_URL || 'file:./dev.db'
+  },
 
   // TypeScript Konfiguration
   typescript: {
@@ -26,6 +36,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image'
   ],
+  
+  // Nitro Config
+  nitro: {
+    // Disable dev warnings für cleaner Output
+    devErrorHandler: false
+  },
 
   // Vite Konfiguration
   vite: {
@@ -67,9 +83,9 @@ export default defineNuxtConfig({
           const filePath = resolve(nuxtDir, file)
           writeFileSync(filePath, JSON.stringify(tsconfigBase, null, 2))
         })
-        console.log('✅ Created missing tsconfig files for @vitejs/plugin-vue@6')
+        console.log('Created missing tsconfig files for @vitejs/plugin-vue@6')
       } catch (err) {
-        console.error('❌ Failed to create tsconfig files:', err)
+        console.error('Failed to create tsconfig files:', err)
       }
     }
   }

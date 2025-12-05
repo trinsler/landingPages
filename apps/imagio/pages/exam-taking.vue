@@ -465,12 +465,12 @@ const analyzeAnswer = async (answer: string) => {
   
   let feedback = ''
   if (passed) {
-    feedback = `✅ Gut! Gefunden: ${keywordsFound.join(', ')}. ${keywordMatchPercentage.toFixed(0)}% der erwarteten Konzepte abgedeckt.`
+    feedback = `Gut! Gefunden: ${keywordsFound.join(', ')}. ${keywordMatchPercentage.toFixed(0)}% der erwarteten Konzepte abgedeckt.`
   } else {
     const missingKeywords = currentQuestion.keywords.filter((keyword: string) => 
       !answerLowerCase.includes(keyword.toLowerCase())
     )
-    feedback = `❌ Unvollständig. Gefunden: ${keywordsFound.join(', ') || 'keine'}. Fehlend: ${missingKeywords.join(', ')}. Nur ${keywordMatchPercentage.toFixed(0)}% abgedeckt.`
+    feedback = `Unvollständig. Gefunden: ${keywordsFound.join(', ') || 'keine'}. Fehlend: ${missingKeywords.join(', ')}. Nur ${keywordMatchPercentage.toFixed(0)}% abgedeckt.`
   }
   
   console.log(`Analysis result: ${passed ? 'PASSED' : 'FAILED'}, Score: ${score}, Feedback: ${feedback}`)

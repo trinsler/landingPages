@@ -1,7 +1,7 @@
 import { prisma } from '~/server/lib/prisma'
-import { createSuccessResponse, createErrorResponse, ErrorCodes, HttpStatus, type ApiResponse } from '~/server/lib/response-formatter'
 
 interface CourseInfo {
+  id: string;        // ← ADD MISSING ID FIELD
   code: string;
   title: string;
   description: string;
@@ -10,9 +10,10 @@ interface CourseInfo {
   totalQuestions: number;
   timePerQuestion: number;
   level: number;
+  maxAttempts: number;
 }
 
-export default defineEventHandler(async (event): Promise<ApiResponse<CourseInfo[]>> => {
+export default defineEventHandler(async (event) => {
   try {
     const courses = await prisma.course.findMany({
       where: {
@@ -28,6 +29,7 @@ export default defineEventHandler(async (event): Promise<ApiResponse<CourseInfo[
     })
 
     const courseInfos: CourseInfo[] = courses.map(course => ({
+      id: course.id,        // ← FIXED: Include ID for updates
       code: course.code,
       title: course.title,
       description: course.description,
@@ -35,27 +37,24 @@ export default defineEventHandler(async (event): Promise<ApiResponse<CourseInfo[
       totalTime: course.totalTime,
       totalQuestions: course.totalQuestions,
       timePerQuestion: course.timePerQuestion,
-      level: course.level
+      level: course.level,
+      maxAttempts: course.maxAttempts || 3
     }))
 
-    return createSuccessResponse(courseInfos, {
-      pagination: {
-        page: 1,
-        pageSize: courses.length,
-        total: courses.length,
-        totalPages: 1
-      }
-    })
+    // Return format expected by frontend: { courses: [...] }
+    return { 
+      courses: courseInfos,
+      success: true,
+      timestamp: new Date().toISOString()
+    }
   } catch (error) {
     console.error('Error fetching courses:', error)
     
-    const errorResponse = createErrorResponse(
-      ErrorCodes.INTERNAL_ERROR,
-      'Failed to fetch courses',
-      HttpStatus.INTERNAL_SERVER_ERROR
-    )
-    
-    setResponseStatus(event, HttpStatus.INTERNAL_SERVER_ERROR)
-    return errorResponse
+    return {
+      courses: [],
+      success: false,
+      error: 'Failed to fetch courses',
+      timestamp: new Date().toISOString()
+    }
   }
 })

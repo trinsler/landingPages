@@ -36,75 +36,120 @@ export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> =
   }
 
   try {
-    // Verify exam attempt exists
-    const attempt = await prisma.examAttempt.findUnique({
-      where: { id: attemptId }
-    })
-
-    if (!attempt) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Exam attempt not found'
-      })
-    }
-
-    // Get question with keywords
-    const question = await prisma.question.findUnique({
-      where: { id: body.questionId }
-    })
-
-    if (!question) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Question not found'
-      })
-    }
-
-    // Analyze keywords in answer
-    const analyzer = new KeywordAnalyzer()
-    const keywords = JSON.parse(question.keywords || '[]')
-    const analysis = await analyzer.analyzeAnswer(body.answerText, keywords)
-
-    // Create or update answer
-    const answer = await prisma.answer.upsert({
-      where: {
-        examAttemptId_questionId: {
-          examAttemptId: attemptId,
-          questionId: body.questionId
+    // Enhanced atomic transaction with attempt counting
+    const result = await prisma.$transaction(async (tx) => {
+      // Verify exam attempt exists
+      const attempt = await tx.examAttempt.findUnique({
+        where: { id: attemptId },
+        include: {
+          exam: {
+            include: {
+              courses: true
+            }
+          }
         }
-      },
-      update: {
-        answerText: body.answerText,
-        mode: body.mode,
-        foundKeywords: JSON.stringify(analysis.foundKeywords),
-        score: analysis.score,
-        percentage: analysis.percentage,
+      })
+
+      if (!attempt) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Exam attempt not found'
+        })
+      }
+
+      // Enhanced attempt counting with course maxAttempts
+      const course = attempt.exam?.courses?.[0]
+      const maxAttempts = course?.maxAttempts || 3
+      
+      if (attempt.attemptCount > maxAttempts) {
+        throw createError({
+          statusCode: 403,
+          statusMessage: `Maximum attempts (${maxAttempts}) exceeded`
+        })
+      }
+
+      // Get question with keywords
+      const question = await tx.question.findUnique({
+        where: { id: body.questionId }
+      })
+
+      if (!question) {
+        throw createError({
+          statusCode: 404,
+          statusMessage: 'Question not found'
+        })
+      }
+
+      // Enhanced keyword analysis
+      const analyzer = new KeywordAnalyzer()
+      let keywords: string[] = []
+      
+      try {
+        keywords = JSON.parse(question.keywords || '[]')
+      } catch {
+        keywords = []
+      }
+
+      const analysis = await analyzer.analyzeAnswer(body.answerText, keywords)
+
+      // Create/update answer with enhanced scoring
+      const answer = await tx.answer.upsert({
+        where: {
+          examAttemptId_questionId: {
+            examAttemptId: attemptId,
+            questionId: body.questionId
+          }
+        },
+        update: {
+          answerText: body.answerText,
+          submittedText: body.answerText,
+          mode: body.mode,
+          foundKeywords: JSON.stringify(analysis.foundKeywords),
+          score: analysis.score,
+          scoreObtained: Math.round(analysis.score),
+          percentage: analysis.percentage,
+          passed: analysis.passed,
+          analysisDetails: JSON.stringify(analysis.details),
+          scoringBreakdown: JSON.stringify(analysis.details),
+          timeSpent: body.timeSpent,
+          timestamp: new Date()
+        },
+        create: {
+          examAttemptId: attemptId,
+          questionId: body.questionId,
+          answerText: body.answerText,
+          submittedText: body.answerText,
+          mode: body.mode,
+          foundKeywords: JSON.stringify(analysis.foundKeywords),
+          score: analysis.score,
+          scoreObtained: Math.round(analysis.score),
+          percentage: analysis.percentage,
+          passed: analysis.passed,
+          analysisDetails: JSON.stringify(analysis.details),
+          scoringBreakdown: JSON.stringify(analysis.details),
+          timeSpent: body.timeSpent
+        }
+      })
+
+      // Simple attempt increment
+      await tx.examAttempt.update({
+        where: { id: attemptId },
+        data: { 
+          attemptCount: attempt.attemptCount + 1,
+          attemptsCount: (attempt.attemptsCount || 0) + 1
+        }
+      })
+
+      return {
+        answerId: answer.id,
+        analysis,
         passed: analysis.passed,
-        analysisDetails: JSON.stringify(analysis.details),
-        timeSpent: body.timeSpent,
-        timestamp: new Date()
-      },
-      create: {
-        examAttemptId: attemptId,
-        questionId: body.questionId,
-        answerText: body.answerText,
-        mode: body.mode,
-        foundKeywords: JSON.stringify(analysis.foundKeywords),
         score: analysis.score,
-        percentage: analysis.percentage,
-        passed: analysis.passed,
-        analysisDetails: JSON.stringify(analysis.details),
-        timeSpent: body.timeSpent
+        percentage: analysis.percentage
       }
     })
 
-    return {
-      answerId: answer.id,
-      analysis,
-      passed: analysis.passed,
-      score: analysis.score,
-      percentage: analysis.percentage
-    }
+    return result
   } catch (error) {
     if (error.statusCode) {
       throw error

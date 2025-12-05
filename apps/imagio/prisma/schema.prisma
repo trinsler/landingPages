@@ -18,8 +18,10 @@ model User {
   
   // Optional Profile (für zukünftige Erweiterung)
   email     String?  @unique
+  name      String?
   firstName String?
   lastName  String?
+  role      String   @default("student") // student|admin|professor
   
   // Timestamps
   createdAt DateTime @default(now())
@@ -29,8 +31,47 @@ model User {
   // Relations
   examAttempts ExamAttempt[]
   userProgress UserProgress?
+  scenarios    Scenario[]    @relation("ScenarioCreator")
   
   @@map("users")
+}
+
+// ============================================
+// SCENARIO SYSTEM (per spec)
+// ============================================
+
+model Scenario {
+  id                  String   @id @default(uuid())
+  title               String
+  description         String
+  courseCode          String   @unique
+  maxAttempts         Int?     // vom Admin gesetzt
+  totalDurationSeconds Int?    // Gesamtzeit in Sekunden vom Admin gesetzt
+  language            String   @default("de") // 'de'|'en' etc.
+  designTheme         String?  // minimal palette/settings (JSON string)
+  createdBy           String
+  creator             User     @relation("ScenarioCreator", fields: [createdBy], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  // Relations
+  questions           Question[]
+  exams               Exam[]
+  
+  @@map("scenarios")
+}
+
+model Keyword {
+  id           String   @id @default(uuid())
+  questionId   String
+  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  token        String   // keyword canonical
+  weight       Int      @default(1) // z.B. 1..10
+  synonyms     String?  // TEXT[] -- optional (JSON string)
+  allowPartial Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  
+  @@map("keywords")
 }
 
 // ============================================
@@ -48,6 +89,9 @@ model Course {
   totalTime        Int     // Minuten
   totalQuestions   Int
   timePerQuestion  Int     // Sekunden
+  
+  // Attempts Configuration (minimal addition)
+  maxAttempts      Int     @default(3)
   
   // Status
   isPublished      Boolean @default(true)
@@ -69,6 +113,8 @@ model Exam {
   sourceText   String     // Text-Basis für Fragen
   level        Int        // 1-4
   duration     Int?       // Minuten
+  scenarioId   String?    // Link to scenario
+  scenario     Scenario?  @relation(fields: [scenarioId], references: [id])
   
   // Status
   isPublished  Boolean    @default(true)
@@ -86,28 +132,34 @@ model Exam {
 }
 
 model Question {
-  id         String   @id @default(uuid())
-  examId     String
-  exam       Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  id           String    @id @default(uuid())
+  scenarioId   String?
+  scenario     Scenario? @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  examId       String
+  exam         Exam      @relation(fields: [examId], references: [id], onDelete: Cascade)
   
   // Content
-  text       String
-  answer     String?  // Optional vordefinierte Antwort
+  order        Int       @default(0)
+  questionText String?   // lokalisiert: {de: "...", en: "..."} (JSON string)
+  text         String    // fallback for existing data
+  questionType String    @default("text") // 'text'|'speech'|'multiple_choice'
+  pointsTotal  Int       @default(10)
+  answer       String?   // Optional vordefinierte Antwort
   
   // Difficulty & Keywords (Kern des Systems!)
-  difficulty String   // EASY, MEDIUM, HARD
-  keywords   String   // JSON string von Schlüsselwörtern
+  difficulty   String    @default("MEDIUM") // EASY, MEDIUM, HARD
+  keywords     String?   // JSON string von Schlüsselwörtern (legacy)
   
   // Configuration
-  selected   Boolean  @default(true)  // Frage aktiv?
-  order      Int      @default(0)
+  selected     Boolean   @default(true)  // Frage aktiv?
   
   // Timestamps
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   
   // Relations
-  answers    Answer[]
+  answers      Answer[]
+  keywordList  Keyword[]
   
   @@map("questions")
 }
@@ -123,15 +175,23 @@ model ExamAttempt {
   user         User              @relation(fields: [userId], references: [id])
   examId       String
   exam         Exam              @relation(fields: [examId], references: [id])
+  scenarioId   String?           
   
   // Session State
   startedAt    DateTime          @default(now())
+  endedAt      DateTime?
   completedAt  DateTime?
+  status       String            @default("in_progress") // 'in_progress','completed','aborted'
+  language     String            @default("de")
+  
+  // Attempts tracking (per spec)
+  attemptsCount Int              @default(0) // how many submission attempts happened
+  attemptCount Int               @default(1) // legacy
   
   // Results
   overallScore Float             @default(0)
   passed       Boolean           @default(false)
-  level        Int               // Level des Exams
+  level        Int               @default(1) // Level des Exams
   
   // Relations
   answers      Answer[]
@@ -141,20 +201,25 @@ model ExamAttempt {
 
 model Answer {
   id              String      @id @default(uuid())
+  examId          String?     // exam instances per student ID
   examAttemptId   String
   examAttempt     ExamAttempt @relation(fields: [examAttemptId], references: [id])
   questionId      String
   question        Question    @relation(fields: [questionId], references: [id])
   
   // User Answer
-  answerText      String
-  mode            String      // WRITTEN oder ORAL
+  submittedText   String?     // per spec
+  answerText      String      // legacy
+  submittedAudioRef String?   // URL or store ref if speech
+  mode            String      @default("WRITTEN") // WRITTEN oder ORAL
   
   // Keyword Analysis (Kern-Feature!)
-  foundKeywords   String      // JSON string gefundene Keywords
-  score           Float       // Keyword-Score (0-100)
-  percentage      Float       // Prozent der gefundenen Keywords
-  passed          Boolean     // Bestanden ja/nein
+  scoreObtained   Int         @default(0) // per spec
+  scoringBreakdown String?    // detail: [{keyword, matched:boolean, match_type:'lev'|'embed'|'exact', score, distance}] (JSON string)
+  foundKeywords   String?     // JSON string gefundene Keywords (legacy)
+  score           Float       @default(0) // legacy: Keyword-Score (0-100)
+  percentage      Float       @default(0) // legacy: Prozent der gefundenen Keywords
+  passed          Boolean     @default(false) // Bestanden ja/nein
   
   // Analysis Details (JSON für flexible Daten)
   analysisDetails String?     // JSON string der Keyword-Analyse
@@ -162,6 +227,7 @@ model Answer {
   // Metadata
   timeSpent       Int         @default(0) // Sekunden
   timestamp       DateTime    @default(now())
+  createdAt       DateTime    @default(now())
   
   @@unique([examAttemptId, questionId])
   @@map("answers")
@@ -203,4 +269,25 @@ model SystemSetting {
   updatedAt   DateTime @updatedAt
   
   @@map("system_settings")
+}
+
+model AdminSetting {
+  id         String   @id @default(uuid())
+  settingKey String   @unique
+  value      String  // JSON string
+  updatedAt  DateTime @updatedAt
+  
+  @@map("admin_settings")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  entityType String   // 'scenario', 'question', 'exam', etc.
+  entityId   String   // UUID of the entity
+  userId     String?  // UUID of user who performed action
+  action     String   // 'create', 'update', 'delete', 'start_exam', etc.
+  meta       String?  // additional metadata (JSON string)
+  createdAt  DateTime @default(now())
+  
+  @@map("audit_logs")
 }

@@ -84,6 +84,10 @@
         <div class="editor-title-section">
           <h1 class="editor-title">{{ selectedScenario?.name }}</h1>
           <p class="editor-subtitle">{{ selectedScenario?.code }}</p>
+          <!-- Unsaved changes indicator -->
+          <div v-if="hasUnsavedChanges" class="unsaved-indicator">
+Ungespeicherte Änderungen
+          </div>
         </div>
         <button @click="closeEditor" class="editor-close">
           Schließen
@@ -308,12 +312,13 @@
 
       <!-- Save Button -->
       <div class="editor-footer">
-        <div v-if="saveError" class="save-error" :data-error="saveError.startsWith('❌')" :data-warning="saveError.startsWith('⚠️')">
+        <div v-if="saveError" class="save-error">
           {{ saveError }}
         </div>
-        <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState }" :disabled="isSaving">
+        <button @click="saveScenario" class="save-button" :class="{ saving: isSaving, saved: showSavedState, unsaved: hasUnsavedChanges && !isSaving }" :disabled="isSaving">
           <span v-if="isSaving">Speichere...</span>
-          <span v-else-if="showSavedState">✓ Gespeichert</span>
+          <span v-else-if="showSavedState">Gespeichert</span>
+          <span v-else-if="hasUnsavedChanges">Änderungen speichern *</span>
           <span v-else>Änderungen speichern</span>
         </button>
       </div>
@@ -322,7 +327,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 
 // Types
 interface Question {
@@ -367,6 +372,9 @@ const saveError = ref('')
 const isLoading = ref(false)
 const loadError = ref('')
 const isGeneratingCode = ref(false)
+// Change detection
+const hasUnsavedChanges = ref(false)
+const lastSavedSnapshot = ref<string | null>(null)
 
 // Scenario list
 const scenarios = ref<Scenario[]>([])
@@ -527,7 +535,7 @@ const editScenario = async (scenario: Scenario) => {
     showScenarioEditor.value = true
     
     // Show informative message instead of blocking
-    saveError.value = '⚠️ Kurs-Details konnten nicht vollständig geladen werden. Sie können trotzdem Änderungen vornehmen und speichern.'
+    saveError.value = 'Kurs-Details konnten nicht vollständig geladen werden. Sie können trotzdem Änderungen vornehmen und speichern.'
     setTimeout(() => {
       saveError.value = ''
     }, 5000)
@@ -577,31 +585,31 @@ const saveScenario = async () => {
     
     // Detailed validation with specific error messages
     if (!selectedScenario.value.name || selectedScenario.value.name.trim().length === 0) {
-      saveError.value = '❌ Kurs-Name ist erforderlich. Bitte geben Sie einen aussagekräftigen Namen ein.'
+      saveError.value = 'Kurs-Name ist erforderlich. Bitte geben Sie einen aussagekräftigen Namen ein.'
       setTimeout(() => { saveError.value = '' }, 8000)
       return
     }
     
     if (!selectedScenario.value.code || selectedScenario.value.code.trim().length === 0) {
-      saveError.value = '❌ Kurs-Code ist erforderlich. Nutzen Sie "Neuen Code generieren" oder geben Sie einen eigenen Code ein.'
+      saveError.value = 'Kurs-Code ist erforderlich. Nutzen Sie "Neuen Code generieren" oder geben Sie einen eigenen Code ein.'
       setTimeout(() => { saveError.value = '' }, 8000)
       return
     }
     
     if (selectedScenario.value.code.trim().length < 3) {
-      saveError.value = '❌ Kurs-Code muss mindestens 3 Zeichen lang sein.'
+      saveError.value = 'Kurs-Code muss mindestens 3 Zeichen lang sein.'
       setTimeout(() => { saveError.value = '' }, 8000)
       return
     }
     
     if (!selectedScenario.value.totalTime || selectedScenario.value.totalTime < 1) {
-      saveError.value = '❌ Gesamtzeit muss mindestens 1 Minute betragen.'
+      saveError.value = 'Gesamtzeit muss mindestens 1 Minute betragen.'
       setTimeout(() => { saveError.value = '' }, 8000)
       return
     }
     
     if (!selectedScenario.value.timePerQuestion || selectedScenario.value.timePerQuestion < 10) {
-      saveError.value = '❌ Zeit pro Frage muss mindestens 10 Sekunden betragen.'
+      saveError.value = 'Zeit pro Frage muss mindestens 10 Sekunden betragen.'
       setTimeout(() => { saveError.value = '' }, 8000)
       return
     }
@@ -616,7 +624,7 @@ const saveScenario = async () => {
           originalScenario.totalTime === selectedScenario.value.totalTime &&
           originalScenario.timePerQuestion === selectedScenario.value.timePerQuestion &&
           manualQuestions.value.length === (originalScenario.questionsCount || 0)) {
-        saveError.value = '⚠️ Keine Änderungen erkannt. Bitte nehmen Sie Änderungen vor oder schließen Sie den Editor.'
+        saveError.value = 'Keine Änderungen erkannt. Bitte nehmen Sie Änderungen vor oder schließen Sie den Editor.'
         setTimeout(() => { saveError.value = '' }, 6000)
         return
       }
@@ -655,7 +663,7 @@ const saveScenario = async () => {
       
       if (!existingCourse) {
         console.error('Course not found in database. Available courses:', existingCourseResponse.courses.map((c: any) => c.code))
-        saveError.value = `❌ Kurs mit Code "${selectedScenario.value.code}" nicht gefunden. Verfügbare Kurse: ${existingCourseResponse.courses.map((c: any) => c.code).join(', ')}`
+        saveError.value = `Kurs mit Code "${selectedScenario.value.code}" nicht gefunden. Verfügbare Kurse: ${(existingCourseResponse as any)?.courses?.map((c: any) => c.code).join(', ') || 'Keine verfügbar'}`
         setTimeout(() => { saveError.value = '' }, 10000)
         return
       }
@@ -664,9 +672,10 @@ const saveScenario = async () => {
       
       // Update the course using the correct ID
       try {
-        courseResponse = await $fetch(`/api/courses/${existingCourse.id}`, {
+        courseResponse = await $fetch(`/api/courses`, {
           method: 'PUT',
           body: {
+            id: existingCourse.id,
             code: selectedScenario.value.code.trim(),
             title: selectedScenario.value.name.trim(),
             description: selectedScenario.value.description || '',
@@ -674,13 +683,14 @@ const saveScenario = async () => {
             totalTime: selectedScenario.value.totalTime || 10,
             totalQuestions: manualQuestions.value.length,
             timePerQuestion: selectedScenario.value.timePerQuestion || 60,
+            maxAttempts: selectedScenario.value.maxAttempts || 3,
             isPublished: true
           }
         })
         console.log('Course update successful:', courseResponse)
       } catch (updateError: any) {
         console.error('Course update failed:', updateError)
-        saveError.value = `❌ Fehler beim Aktualisieren des Kurses: ${updateError.statusMessage || updateError.message}`
+        saveError.value = `Fehler beim Aktualisieren des Kurses: ${updateError.statusMessage || updateError.message}`
         setTimeout(() => { saveError.value = '' }, 8000)
         return
       }
@@ -689,13 +699,43 @@ const saveScenario = async () => {
     // Step 2: Create/Update Exam with Questions
     console.log('Manual questions before processing:', manualQuestions.value)
     
+    // FIRST: Update keywords from text for all questions
+    manualQuestions.value.forEach(question => {
+      updateKeywordsFromText(question)
+    })
+    
+    console.log('Manual questions after keyword processing:', manualQuestions.value)
+    
     // Filter out empty questions and validate
     let questionsForExam = manualQuestions.value.filter(q => {
       const hasText = q.text && q.text.trim().length > 0
       const hasAnswer = q.answer && q.answer.trim().length > 0
       const hasKeywords = q.keywords && q.keywords.length > 0
+      
+      console.log(`Question validation:`, {
+        text: hasText ? 'YES' : 'NO',
+        answer: hasAnswer ? 'YES' : 'NO', 
+        keywords: hasKeywords ? `YES (${q.keywords.length})` : 'NO',
+        keywordsText: q.keywordsText,
+        question: q.text?.substring(0, 30) + '...'
+      })
+      
       return hasText && hasAnswer && hasKeywords
     })
+    
+    // FALLBACK: If no questions with keywords, include questions with text+answer only
+    if (questionsForExam.length === 0) {
+      console.log('No questions with keywords found, trying fallback filter...')
+      questionsForExam = manualQuestions.value.filter(q => {
+        const hasText = q.text && q.text.trim().length > 0
+        const hasAnswer = q.answer && q.answer.trim().length > 0
+        return hasText && hasAnswer
+      }).map(q => ({
+        ...q,
+        keywords: q.keywords?.length > 0 ? q.keywords : ['allgemein'], // Default keyword
+      }))
+      console.log('Fallback questions:', questionsForExam)
+    }
     
     console.log('Filtered valid questions:', questionsForExam)
     
@@ -751,17 +791,20 @@ const saveScenario = async () => {
       })
       console.log('Created exam for new course:', examResponse.id)
     } else if (selectedScenario.value.examId) {
-      await $fetch(`/api/exams/${selectedScenario.value.examId}`, {
+      await $fetch(`/api/exams`, {
         method: 'PUT',
-        body: examData
+        body: {
+          id: selectedScenario.value.examId,
+          ...examData
+        }
       })
     }
 
     // Success messages based on action
     if (isNewScenario) {
-      saveError.value = '✅ Neuer Kurs erfolgreich erstellt! Der Kurs ist jetzt verfügbar und kann im Willkommensfenster verwendet werden.'
+      saveError.value = 'Neuer Kurs erfolgreich erstellt! Der Kurs ist jetzt verfügbar und kann im Willkommensfenster verwendet werden.'
     } else {
-      saveError.value = '✅ Kurs erfolgreich aktualisiert! Alle Änderungen wurden gespeichert.'
+      saveError.value = 'Kurs erfolgreich aktualisiert! Alle Änderungen wurden gespeichert.'
     }
     
     // Show success message briefly
@@ -770,6 +813,10 @@ const saveScenario = async () => {
       showSavedState.value = false
       saveError.value = '' // Clear success message after showing
     }, 4000)
+
+    // Update change detection snapshot
+    updateSavedSnapshot()
+    console.log('Save successful - snapshot updated, no unsaved changes')
 
     // Reload scenarios list to show updated data
     await loadScenarios()
@@ -780,23 +827,23 @@ const saveScenario = async () => {
     
     // Detailed error handling based on error type
     if (error.status === 409 || error.statusCode === 409) {
-      saveError.value = '❌ Kurs-Code bereits vergeben. Bitte verwenden Sie "Neuen Code generieren" oder wählen Sie einen anderen Code.'
+      saveError.value = 'Kurs-Code bereits vergeben. Bitte verwenden Sie "Neuen Code generieren" oder wählen Sie einen anderen Code.'
     } else if (error.status === 400 || error.statusCode === 400) {
-      saveError.value = '❌ Ungültige Daten. Bitte überprüfen Sie alle Eingabefelder.'
+      saveError.value = 'Ungültige Daten. Bitte überprüfen Sie alle Eingabefelder.'
     } else if (error.status === 404 || error.statusCode === 404) {
-      saveError.value = '❌ Kurs nicht gefunden. Möglicherweise wurde er bereits gelöscht.'
+      saveError.value = 'Kurs nicht gefunden. Möglicherweise wurde er bereits gelöscht.'
     } else if (error.status === 500 || error.statusCode === 500) {
-      saveError.value = '❌ Server-Fehler. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.'
+      saveError.value = 'Server-Fehler. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.'
     } else if (error.message && error.message.includes('Course not found')) {
-      saveError.value = '❌ Kurs konnte nicht gefunden werden. Bitte laden Sie die Seite neu.'
+      saveError.value = 'Kurs konnte nicht gefunden werden. Bitte laden Sie die Seite neu.'
     } else if (error.data?.statusMessage) {
-      saveError.value = `❌ ${error.data.statusMessage}`
+      saveError.value = `${error.data.statusMessage}`
     } else if (error.statusMessage) {
-      saveError.value = `❌ ${error.statusMessage}`
+      saveError.value = `${error.statusMessage}`
     } else if (error.message) {
-      saveError.value = `❌ ${error.message}`
+      saveError.value = `${error.message}`
     } else {
-      saveError.value = '❌ Unbekannter Fehler beim Speichern. Bitte versuchen Sie es erneut.'
+      saveError.value = 'Unbekannter Fehler beim Speichern. Bitte versuchen Sie es erneut.'
     }
   } finally {
     isSaving.value = false
@@ -904,7 +951,7 @@ const deleteScenario = async (scenario: Scenario) => {
       console.log(`Successfully deleted course ${scenario.code} from both database and frontend`)
       
       // Show success message
-      saveError.value = `✅ Szenario "${scenario.name}" wurde erfolgreich aus der Datenbank gelöscht.`
+      saveError.value = `Szenario "${scenario.name}" wurde erfolgreich aus der Datenbank gelöscht.`
       setTimeout(() => { saveError.value = '' }, 4000)
     } else {
       throw new Error('Backend deletion did not return success')
@@ -919,16 +966,71 @@ const deleteScenario = async (scenario: Scenario) => {
     // Show detailed error message
     let errorMessage = 'Fehler beim Löschen des Szenarios aus der Datenbank.'
     if (error.statusCode === 404) {
-      errorMessage = `❌ Szenario "${scenario.code}" wurde nicht in der Datenbank gefunden.`
+      errorMessage = `Szenario "${scenario.code}" wurde nicht in der Datenbank gefunden.`
     } else if (error.statusCode === 500) {
-      errorMessage = `❌ Server-Fehler beim Löschen von "${scenario.name}". Bitte versuchen Sie es erneut.`
+      errorMessage = `Server-Fehler beim Löschen von "${scenario.name}". Bitte versuchen Sie es erneut.`
     } else if (error.statusMessage) {
-      errorMessage = `❌ ${error.statusMessage}`
+      errorMessage = `${error.statusMessage}`
     }
     
     saveError.value = errorMessage
     setTimeout(() => { saveError.value = '' }, 8000)
   }
+}
+
+// Change detection watchers
+const createSnapshot = () => {
+  if (!selectedScenario.value) return null
+  return JSON.stringify({
+    name: selectedScenario.value.name,
+    code: selectedScenario.value.code,
+    description: selectedScenario.value.description,
+    introduction: selectedScenario.value.introduction,
+    level: selectedScenario.value.level,
+    totalTime: selectedScenario.value.totalTime,
+    timePerQuestion: selectedScenario.value.timePerQuestion,
+    maxAttempts: selectedScenario.value.maxAttempts
+  })
+}
+
+// Watch for changes in course info fields
+watch(selectedScenario, (newVal) => {
+  if (!newVal) {
+    hasUnsavedChanges.value = false
+    lastSavedSnapshot.value = null
+    return
+  }
+
+  const currentSnapshot = createSnapshot()
+  
+  // If we don't have a saved snapshot yet, create one (initial load)
+  if (lastSavedSnapshot.value === null) {
+    lastSavedSnapshot.value = currentSnapshot
+    hasUnsavedChanges.value = false
+    return
+  }
+  
+  // Compare with last saved state
+  hasUnsavedChanges.value = currentSnapshot !== lastSavedSnapshot.value
+  
+  console.log('Change detected:', hasUnsavedChanges.value ? 'YES' : 'NO')
+  if (hasUnsavedChanges.value) {
+    console.log('Unsaved changes in course info detected')
+  }
+}, { deep: true })
+
+// Watch manual questions for changes
+watch(manualQuestions, () => {
+  if (selectedScenario.value && lastSavedSnapshot.value !== null) {
+    hasUnsavedChanges.value = true
+    console.log('Unsaved changes in questions detected')
+  }
+}, { deep: true })
+
+// Update snapshot after successful save
+const updateSavedSnapshot = () => {
+  lastSavedSnapshot.value = createSnapshot()
+  hasUnsavedChanges.value = false
 }
 
 // Load scenarios on mount
@@ -999,7 +1101,7 @@ onMounted(() => {
 }
 
 .error-state {
-  color: #ef4444;
+  color: #0097b2;
 }
 
 .scenarios-grid {
@@ -1170,6 +1272,27 @@ onMounted(() => {
   color: #6b7280;
   font-size: 0.875rem;
   margin: 0;
+}
+
+.unsaved-indicator {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  border: 1px solid #f59e0b;
+  animation: pulse-warning 3s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .editor-close {
@@ -1364,8 +1487,8 @@ onMounted(() => {
 }
 
 .action-button.remove:hover {
-  border-color: #ef4444;
-  color: #ef4444;
+  border-color: #0097b2;
+  color: #0097b2;
 }
 
 .question-form {
@@ -1425,7 +1548,7 @@ onMounted(() => {
 }
 
 .keyword-error {
-  color: #ef4444;
+  color: #0097b2;
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
@@ -1470,24 +1593,19 @@ onMounted(() => {
   border: 2px solid;
   
   /* Success messages */
-  background: #ecfdf5;
-  color: #065f46;
-  border-color: #10b981;
+  background: #e0f2f7;
+  color: #0097b2;
+  border-color: #0097b2;
 }
 
 /* Error messages */
-.save-error[data-error="true"] {
-  background: #fef2f2;
-  color: #991b1b;
-  border-color: #ef4444;
+.save-error {
+  background: #e0f2f7;
+  color: #0097b2;
+  border-color: #0097b2;
 }
 
 /* Warning messages */  
-.save-error[data-warning="true"] {
-  background: #fffbeb;
-  color: #92400e;
-  border-color: #f59e0b;
-}
 
 .save-button {
   background: #0097b2;
@@ -1515,6 +1633,24 @@ onMounted(() => {
 
 .save-button.saved {
   background: #059669;
+}
+
+.save-button.unsaved {
+  background: #0097b2;
+  animation: pulse-unsaved 2s ease-in-out infinite;
+}
+
+.save-button.unsaved:hover {
+  background: #007a8e;
+}
+
+@keyframes pulse-unsaved {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @media (max-width: 768px) {

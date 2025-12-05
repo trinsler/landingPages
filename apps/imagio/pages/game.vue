@@ -486,6 +486,10 @@ onUnmounted(() => {
 .timer-container {
   display: flex;
   justify-content: center;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
 }
 
 .timer-circle {
