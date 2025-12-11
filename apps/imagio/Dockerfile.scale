@@ -1,6 +1,5 @@
-# ==========================================
-# FRONTEND-ONLY DOCKERFILE FOR PRODUCTION
-# ==========================================
+# SCALE-READY DOCKERFILE
+# Optimized for PostgreSQL + Redis production deployment
 
 # ==========================================
 # STAGE 1: Dependencies
@@ -9,21 +8,18 @@ FROM node:20-alpine AS deps
 
 WORKDIR /app
 
-# Install system dependencies including SQLite for Prisma
+# Install system dependencies
 RUN apk add --no-cache \
     libc6-compat \
     ca-certificates \
-    sqlite \
-    openssl \
-    openssl-dev
+    curl \
+    postgresql-client
 
-# Copy package files for better caching
+# Copy package files
 COPY package.json package-lock.json* ./
-
-# Copy Prisma schema for client generation
 COPY prisma/schema.prisma ./prisma/schema.prisma
 
-# Install dependencies with npm ci for production
+# Install dependencies
 RUN npm ci --only=production --no-audit --prefer-offline && \
     npm cache clean --force
 
@@ -37,17 +33,16 @@ WORKDIR /app
 # Install build dependencies
 RUN apk add --no-cache \
     libc6-compat \
-    sqlite \
-    openssl \
-    openssl-dev
+    postgresql-client \
+    curl
 
 # Copy node_modules from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy all source files including Prisma
+# Copy all source files
 COPY . .
 
-# Generate Prisma Client for build
+# Generate Prisma Client
 RUN npx prisma generate
 
 # Build the application
@@ -60,26 +55,31 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Install minimal runtime dependencies
+# Install minimal runtime dependencies + health check tools
 RUN apk add --no-cache \
     ca-certificates \
     tini \
-    openssl \
-    sqlite
+    curl \
+    postgresql-client
 
 # Create dedicated user for security
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nuxtjs --ingroup nodejs
 
-# Copy frontend build output
+# Copy build output
 COPY --from=builder --chown=nuxtjs:nodejs /app/.output ./.output
+COPY --from=builder --chown=nuxtjs:nodejs /app/prisma ./prisma
+
+# Copy health check script
+COPY --chown=nuxtjs:nodejs scripts/health-check.sh /usr/local/bin/health-check.sh
+RUN chmod +x /usr/local/bin/health-check.sh
 
 # Switch to non-root user
 USER nuxtjs
 
-# Health check for frontend
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:3000', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"
+# Enhanced health check for scale environment
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /usr/local/bin/health-check.sh
 
 EXPOSE 3000
 

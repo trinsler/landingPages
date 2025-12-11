@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # DEVELOPMENT SETUP - Hot-reload enabled
+  imagio-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      
+    container_name: imagio-dev
+    
+    ports:
+      - "3000:3000"
+    
+    # VOLUME MOUNTS for hot-reload
+    volumes:
+      - ./server:/app/server:rw
+      - ./components:/app/components:rw
+      - ./pages:/app/pages:rw
+      - ./composables:/app/composables:rw
+      - ./layouts:/app/layouts:rw
+      - ./middleware:/app/middleware:rw
+      - ./prisma:/app/prisma:rw
+      - ./types:/app/types:rw
+      - ./nuxt.config.ts:/app/nuxt.config.ts:rw
+      - ./package.json:/app/package.json:rw
+      - ./logs:/app/logs:rw
+      # Exclude node_modules and .output
+      - /app/node_modules
+      - /app/.nuxt
+      - /app/.output
+    
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: "file:/app/prisma/dev.db"
+      JWT_SECRET: "dev-secret-123"
+      # Enable hot-reload
+      NUXT_DEVTOOLS: "true"
+    
+    restart: unless-stopped
+    
+    # Development command
+    command: npm run dev
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

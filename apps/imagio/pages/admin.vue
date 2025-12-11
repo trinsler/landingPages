@@ -390,8 +390,8 @@ const loadScenarios = async () => {
     })
 
     // Transform API response to match our scenario format
-    if (response && response.courses && Array.isArray(response.courses)) {
-      scenarios.value = response.courses.map((course: any) => ({
+    if (response && response.data && response.data.courses && Array.isArray(response.data.courses)) {
+      scenarios.value = response.data.courses.map((course: any) => ({
         id: course.code,
         courseId: course.code,
         examId: course.examId,
@@ -656,14 +656,14 @@ const saveScenario = async () => {
         method: 'GET'
       })
       
-      console.log('Available courses:', existingCourseResponse.courses)
+      console.log('Available courses:', existingCourseResponse.data.courses)
       console.log('Looking for course with code:', selectedScenario.value.code)
       
-      const existingCourse = existingCourseResponse.courses.find((c: any) => c.code === selectedScenario.value.code)
+      const existingCourse = existingCourseResponse.data.courses.find((c: any) => c.code === selectedScenario.value.code)
       
       if (!existingCourse) {
-        console.error('Course not found in database. Available courses:', existingCourseResponse.courses.map((c: any) => c.code))
-        saveError.value = `Kurs mit Code "${selectedScenario.value.code}" nicht gefunden. Verfügbare Kurse: ${(existingCourseResponse as any)?.courses?.map((c: any) => c.code).join(', ') || 'Keine verfügbar'}`
+        console.error('Course not found in database. Available courses:', existingCourseResponse.data.courses.map((c: any) => c.code))
+        saveError.value = `Kurs mit Code "${selectedScenario.value.code}" nicht gefunden. Verfügbare Kurse: ${(existingCourseResponse as any)?.data?.courses?.map((c: any) => c.code).join(', ') || 'Keine verfügbar'}`
         setTimeout(() => { saveError.value = '' }, 10000)
         return
       }

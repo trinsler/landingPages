@@ -1,5 +1,6 @@
 import { prisma } from '~/server/lib/prisma'
-import { KeywordAnalyzer, type KeywordAnalysisResult } from '~/server/lib/keyword-analyzer'
+import { analyzeAnswer } from '~/server/lib/keywords'
+import { defineEventHandler, getRouterParam, readBody, createError } from 'h3'
 
 interface SubmitAnswerRequest {
   questionId: string;
@@ -8,91 +9,52 @@ interface SubmitAnswerRequest {
   timeSpent: number;
 }
 
-interface SubmitAnswerResponse {
-  answerId: string;
-  analysis: KeywordAnalysisResult;
-  passed: boolean;
-  score: number;
-  percentage: number;
-}
-
-export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> => {
+export default defineEventHandler(async (event) => {
   const attemptId = getRouterParam(event, 'id')
   
   if (!attemptId) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Attempt ID is required'
-    })
+    throw createError({ statusCode: 400, statusMessage: 'Attempt ID required' })
   }
 
   const body = await readBody<SubmitAnswerRequest>(event)
   
-  if (!body.questionId || !body.answerText || !body.mode) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Question ID, answer text, and mode are required'
-    })
+  // Simplified validation
+  if (!body.questionId || !body.answerText?.trim() || !body.mode) {
+    throw createError({ statusCode: 400, statusMessage: 'Missing required fields' })
+  }
+
+  if (body.answerText.length > 2000) {
+    throw createError({ statusCode: 400, statusMessage: 'Answer too long (max 2000 chars)' })
   }
 
   try {
-    // Enhanced atomic transaction with attempt counting
-    const result = await prisma.$transaction(async (tx) => {
-      // Verify exam attempt exists
-      const attempt = await tx.examAttempt.findUnique({
-        where: { id: attemptId },
-        include: {
-          exam: {
-            include: {
-              courses: true
-            }
-          }
-        }
-      })
+    // Simplified transaction
+    return await prisma.$transaction(async (tx) => {
+      // Get attempt and question in parallel
+      const [attempt, question] = await Promise.all([
+        tx.examAttempt.findUnique({ where: { id: attemptId } }),
+        tx.question.findUnique({ where: { id: body.questionId } })
+      ])
 
       if (!attempt) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Exam attempt not found'
-        })
+        throw createError({ statusCode: 404, statusMessage: 'Exam attempt not found' })
       }
-
-      // Enhanced attempt counting with course maxAttempts
-      const course = attempt.exam?.courses?.[0]
-      const maxAttempts = course?.maxAttempts || 3
-      
-      if (attempt.attemptCount > maxAttempts) {
-        throw createError({
-          statusCode: 403,
-          statusMessage: `Maximum attempts (${maxAttempts}) exceeded`
-        })
-      }
-
-      // Get question with keywords
-      const question = await tx.question.findUnique({
-        where: { id: body.questionId }
-      })
 
       if (!question) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Question not found'
-        })
+        throw createError({ statusCode: 404, statusMessage: 'Question not found' })
       }
 
-      // Enhanced keyword analysis
-      const analyzer = new KeywordAnalyzer()
+      // Simple keyword analysis
       let keywords: string[] = []
-      
       try {
         keywords = JSON.parse(question.keywords || '[]')
       } catch {
         keywords = []
       }
 
-      const analysis = await analyzer.analyzeAnswer(body.answerText, keywords)
+      const analysis = analyzeAnswer(body.answerText, keywords)
 
-      // Create/update answer with enhanced scoring
+      // Create or update answer - SIMPLIFIED
       const answer = await tx.answer.upsert({
         where: {
           examAttemptId_questionId: {
@@ -109,10 +71,13 @@ export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> =
           scoreObtained: Math.round(analysis.score),
           percentage: analysis.percentage,
           passed: analysis.passed,
-          analysisDetails: JSON.stringify(analysis.details),
-          scoringBreakdown: JSON.stringify(analysis.details),
           timeSpent: body.timeSpent,
-          timestamp: new Date()
+          timestamp: new Date(),
+          // Simplified details - no duplication
+          analysisDetails: JSON.stringify({
+            foundKeywords: analysis.foundKeywords,
+            missedKeywords: analysis.missedKeywords
+          })
         },
         create: {
           examAttemptId: attemptId,
@@ -125,38 +90,35 @@ export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> =
           scoreObtained: Math.round(analysis.score),
           percentage: analysis.percentage,
           passed: analysis.passed,
-          analysisDetails: JSON.stringify(analysis.details),
-          scoringBreakdown: JSON.stringify(analysis.details),
-          timeSpent: body.timeSpent
-        }
-      })
-
-      // Simple attempt increment
-      await tx.examAttempt.update({
-        where: { id: attemptId },
-        data: { 
-          attemptCount: attempt.attemptCount + 1,
-          attemptsCount: (attempt.attemptsCount || 0) + 1
+          timeSpent: body.timeSpent,
+          analysisDetails: JSON.stringify({
+            foundKeywords: analysis.foundKeywords,
+            missedKeywords: analysis.missedKeywords
+          })
         }
       })
 
       return {
         answerId: answer.id,
-        analysis,
         passed: analysis.passed,
         score: analysis.score,
-        percentage: analysis.percentage
+        percentage: analysis.percentage,
+        foundKeywords: analysis.foundKeywords,
+        missedKeywords: analysis.missedKeywords
       }
     })
 
-    return result
-  } catch (error) {
+  } catch (error: any) {
+    console.error('Answer submission error:', error)
+    
+    // Return proper error response
     if (error.statusCode) {
       throw error
     }
+    
     throw createError({
       statusCode: 500,
-      statusMessage: 'Error submitting answer'
+      statusMessage: 'Failed to submit answer'
     })
   }
 })

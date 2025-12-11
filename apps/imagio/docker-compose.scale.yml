@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for scale
+  postgres:
+    image: postgres:15-alpine
+    container_name: imagio-postgres
+    environment:
+      POSTGRES_DB: imagio
+      POSTGRES_USER: imagio_user
+      POSTGRES_PASSWORD: imagio_pass_123
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imagio_user -d imagio"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache for scale
+  redis:
+    image: redis:7-alpine
+    container_name: imagio-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Main Application (Scale-ready)
+  imagio-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.scale
+    container_name: imagio-scale
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: "postgresql://imagio_user:imagio_pass_123@postgres:5432/imagio"
+      REDIS_URL: "redis://redis:6379"
+      JWT_SECRET: "scale-test-secret-change-in-production"
+      LOG_LEVEL: info
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Load Balancer (nginx) for multi-instance testing
+  nginx:
+    image: nginx:alpine
+    container_name: imagio-lb
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - imagio-app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  default:
+    name: imagio_scale_network

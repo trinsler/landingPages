@@ -1,22 +1,19 @@
 import { prisma } from '~/server/lib/prisma'
-import { createSuccessResponse, createErrorResponse, ErrorCodes, HttpStatus, type ApiResponse } from '~/server/lib/response-formatter'
+import { success } from '~/server/lib/api'
 
 interface DeleteData {
   code: string
   message: string
 }
 
-export default defineEventHandler(async (event): Promise<ApiResponse<DeleteData>> => {
+export default defineEventHandler(async (event) => {
   const code = getRouterParam(event, 'code')
 
   if (!code) {
-    const errorResponse = createErrorResponse(
-      ErrorCodes.VALIDATION_ERROR,
-      'Course code is required',
-      HttpStatus.BAD_REQUEST
-    )
-    setResponseStatus(event, HttpStatus.BAD_REQUEST)
-    return errorResponse
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Course code is required'
+    })
   }
 
   console.log(`DELETE request for course: ${code}`)
@@ -35,13 +32,10 @@ export default defineEventHandler(async (event): Promise<ApiResponse<DeleteData>
     })
 
     if (!course) {
-      const errorResponse = createErrorResponse(
-        ErrorCodes.COURSE_NOT_FOUND,
-        'Course not found',
-        HttpStatus.NOT_FOUND
-      )
-      setResponseStatus(event, HttpStatus.NOT_FOUND)
-      return errorResponse
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Course not found'
+      })
     }
 
     // Delete in correct order (questions -> exam -> course)
@@ -77,22 +71,15 @@ export default defineEventHandler(async (event): Promise<ApiResponse<DeleteData>
 
     console.log(`Course ${code} deleted successfully`)
 
-    const deleteData: DeleteData = {
+    return success({
       code,
       message: `Course ${code} deleted successfully`
-    }
-
-    return createSuccessResponse(deleteData)
+    })
   } catch (error: any) {
     console.error('Error deleting course:', error)
-    
-    const errorResponse = createErrorResponse(
-      ErrorCodes.INTERNAL_ERROR,
-      'Error deleting course',
-      HttpStatus.INTERNAL_SERVER_ERROR
-    )
-    
-    setResponseStatus(event, HttpStatus.INTERNAL_SERVER_ERROR)
-    return errorResponse
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Error deleting course'
+    })
   }
 })

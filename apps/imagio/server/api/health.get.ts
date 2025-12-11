@@ -1,4 +1,6 @@
 import { prisma } from '~/server/lib/prisma'
+import { redisHealthCheck } from '~/server/lib/redis'
+import { defineEventHandler, setResponseStatus } from 'h3'
 
 interface HealthCheckResponse {
   status: 'healthy' | 'unhealthy'
@@ -6,6 +8,10 @@ interface HealthCheckResponse {
   version: string
   uptime: number
   database: {
+    status: 'connected' | 'disconnected'
+    response_time?: number
+  }
+  redis: {
     status: 'connected' | 'disconnected'
     response_time?: number
   }
@@ -25,17 +31,28 @@ export default defineEventHandler(async (event): Promise<HealthCheckResponse> =>
     await prisma.$queryRaw`SELECT 1 as test`
     const dbResponseTime = Date.now() - dbStart
 
+    // Test Redis connection
+    const redisStart = Date.now()
+    const redisHealthy = await redisHealthCheck()
+    const redisResponseTime = Date.now() - redisStart
+
     // Get memory usage
     const memoryUsage = process.memoryUsage()
 
+    const isHealthy = redisHealthy // Redis is critical for scale
+
     return {
-      status: 'healthy',
+      status: isHealthy ? 'healthy' : 'unhealthy',
       timestamp: new Date().toISOString(),
       version: process.env.npm_package_version || '1.0.0',
       uptime: process.uptime(),
       database: {
         status: 'connected',
         response_time: dbResponseTime
+      },
+      redis: {
+        status: redisHealthy ? 'connected' : 'disconnected',
+        response_time: redisHealthy ? redisResponseTime : undefined
       },
       memory: {
         used: Math.round(memoryUsage.heapUsed / 1024 / 1024), // MB
@@ -55,6 +72,9 @@ export default defineEventHandler(async (event): Promise<HealthCheckResponse> =>
       version: process.env.npm_package_version || '1.0.0',
       uptime: process.uptime(),
       database: {
+        status: 'disconnected'
+      },
+      redis: {
         status: 'disconnected'
       },
       memory: {

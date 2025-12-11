@@ -1,5 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
-import { defineEventHandler, readBody, createError } from 'h3'
+import { success } from '~/server/lib/api'
 
 interface CreateScenarioRequest {
   name: string;
@@ -24,7 +24,7 @@ interface CreateScenarioResponse {
   };
 }
 
-export default defineEventHandler(async (event): Promise<CreateScenarioResponse> => {
+export default defineEventHandler(async (event) => {
   const body = await readBody<CreateScenarioRequest>(event)
   
   if (!body.name || !body.code) {
@@ -56,8 +56,7 @@ export default defineEventHandler(async (event): Promise<CreateScenarioResponse>
           description: body.description || '',
           sourceText: body.introduction || '',
           level: body.level || 1,
-          duration: body.totalTime || 3600, // 1 hour default
-          passingScore: 70
+          duration: body.totalTime || 3600 // 1 hour default
         }
       })
 
@@ -80,8 +79,7 @@ export default defineEventHandler(async (event): Promise<CreateScenarioResponse>
       return { course, exam }
     })
 
-    return {
-      success: true,
+    return success({
       scenario: {
         id: result.course.id,
         code: result.course.code,
@@ -91,7 +89,7 @@ export default defineEventHandler(async (event): Promise<CreateScenarioResponse>
         maxAttempts: result.course.maxAttempts || 3,
         examId: result.exam.id
       }
-    }
+    })
   } catch (error) {
     console.error('Error creating scenario:', error)
     if (error.statusCode) {

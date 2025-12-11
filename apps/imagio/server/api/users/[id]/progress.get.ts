@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { success } from '~/server/lib/api'
 
 interface UserProgressResponse {
   currentLevel: number;
@@ -21,7 +22,7 @@ interface UserProgressResponse {
   };
 }
 
-export default defineEventHandler(async (event): Promise<UserProgressResponse> => {
+export default defineEventHandler(async (event) => {
   const userId = getRouterParam(event, 'id')
   
   if (!userId) {
@@ -78,7 +79,7 @@ export default defineEventHandler(async (event): Promise<UserProgressResponse> =
       }
     }
 
-    return {
+    return success({
       currentLevel: userProgress?.currentLevel || 1,
       completedLevels: userProgress ? JSON.parse(userProgress.completedLevels) : [],
       statistics: {
@@ -90,7 +91,7 @@ export default defineEventHandler(async (event): Promise<UserProgressResponse> =
         averageScore: Math.round(averageScore)
       },
       recentActivity
-    }
+    })
   } catch (error) {
     if (error.statusCode) {
       throw error

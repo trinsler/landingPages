@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { success } from '~/server/lib/api'
 
 interface QuestionUpdate {
   id?: string
@@ -31,7 +32,7 @@ interface ExamResponse {
   questionsCount: number
 }
 
-export default defineEventHandler(async (event): Promise<ExamResponse> => {
+export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -95,7 +96,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
       }
     })
 
-    return {
+    return success({
       id: exam.id,
       title: exam.title,
       description: exam.description,
@@ -104,7 +105,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
       duration: exam.duration,
       isPublished: exam.isPublished,
       questionsCount: exam.questions.length
-    }
+    })
   } catch (error) {
     if (error.statusCode) {
       throw error

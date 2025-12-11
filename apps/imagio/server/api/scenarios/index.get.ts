@@ -1,6 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
-import { defineEventHandler, createError } from 'h3'
-import { createSuccessResponse, createErrorResponse, ErrorCodes, HttpStatus, type ApiResponse } from '~/server/lib/response-formatter'
+import { success } from '~/server/lib/api'
 
 interface ScenarioInfo {
   id: string;
@@ -13,7 +12,7 @@ interface ScenarioInfo {
   examId?: string;
 }
 
-export default defineEventHandler(async (event): Promise<ApiResponse<{ courses: ScenarioInfo[] }>> => {
+export default defineEventHandler(async (event) => {
   try {
     const courses = await prisma.course.findMany({
       where: {
@@ -47,23 +46,12 @@ export default defineEventHandler(async (event): Promise<ApiResponse<{ courses: 
       examId: course.examId || undefined
     }))
 
-    return createSuccessResponse({ courses: courseInfos }, {
-      pagination: {
-        page: 1,
-        pageSize: courses.length,
-        total: courses.length,
-        totalPages: 1
-      }
+    return success({ courses: courseInfos })
+  } catch (err) {
+    console.error('Error fetching scenarios:', err)
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to fetch scenarios'
     })
-  } catch (error) {
-    console.error('Error fetching scenarios:', error)
-    
-    const errorResponse = createErrorResponse(
-      ErrorCodes.INTERNAL_ERROR,
-      'Failed to fetch scenarios',
-      HttpStatus.INTERNAL_SERVER_ERROR
-    )
-    
-    return errorResponse
   }
 })

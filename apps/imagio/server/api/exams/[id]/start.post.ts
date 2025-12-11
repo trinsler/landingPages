@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { defineEventHandler, getRouterParam, readBody, createError } from 'h3'
 
 interface StartExamRequest {
   userId: string;

@@ -291,15 +291,15 @@ const loadExamData = async () => {
     
     // NOW LOAD THE EXACT QUESTIONS that admin created
     try {
-      const examResponse = await $fetch(`/api/courses/${savedCode}/exam`, {
+      const examResponse = await $fetch(`/api/exam/${savedCode}`, {
         method: 'GET'
       })
       
       console.log('Loaded EXACT exam questions:', examResponse)
       
-      if (examResponse && examResponse.questions && examResponse.questions.length > 0) {
+      if (examResponse && examResponse.data && examResponse.data.questions && examResponse.data.questions.length > 0) {
         // Use the EXACT questions from admin
-        questions.value = examResponse.questions.map((q: any) => ({
+        questions.value = examResponse.data.questions.map((q: any) => ({
           type: 'text', // Admin questions are always text-based
           text: q.text,
           answer: q.answer, // Store expected answer for keyword checking

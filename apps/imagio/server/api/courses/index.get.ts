@@ -1,7 +1,8 @@
 import { prisma } from '~/server/lib/prisma'
+import { success } from '~/server/lib/api'
 
 interface CourseInfo {
-  id: string;        // ← ADD MISSING ID FIELD
+  id: string;
   code: string;
   title: string;
   description: string;
@@ -29,7 +30,7 @@ export default defineEventHandler(async (event) => {
     })
 
     const courseInfos: CourseInfo[] = courses.map(course => ({
-      id: course.id,        // ← FIXED: Include ID for updates
+      id: course.id,
       code: course.code,
       title: course.title,
       description: course.description,
@@ -41,20 +42,12 @@ export default defineEventHandler(async (event) => {
       maxAttempts: course.maxAttempts || 3
     }))
 
-    // Return format expected by frontend: { courses: [...] }
-    return { 
-      courses: courseInfos,
-      success: true,
-      timestamp: new Date().toISOString()
-    }
+    return success({ courses: courseInfos })
   } catch (error) {
     console.error('Error fetching courses:', error)
-    
-    return {
-      courses: [],
-      success: false,
-      error: 'Failed to fetch courses',
-      timestamp: new Date().toISOString()
-    }
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to fetch courses'
+    })
   }
 })

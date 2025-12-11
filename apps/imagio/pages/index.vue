@@ -57,7 +57,10 @@ const translations = {
     codeRequired: 'Please enter a scenario code',
     codeTooShort: 'Code must be at least 3 characters',
     codeNotFound: 'Scenario code not found. Please check your code.',
-    codeInvalid: 'Invalid scenario code format'
+    codeInvalid: 'Invalid scenario code format',
+    availableCourses: 'Available Courses',
+    loadingCourses: 'Loading available courses...',
+    noCoursesAvailable: 'No courses available. Please contact your administrator.'
   },
   de: {
     title: 'Willkommen bei IMAGIO',
@@ -67,7 +70,10 @@ const translations = {
     codeRequired: 'Bitte geben Sie einen Szenario-Code ein',
     codeTooShort: 'Code muss mindestens 3 Zeichen lang sein',
     codeNotFound: 'Szenario-Code nicht gefunden. Bitte überprüfen Sie Ihren Code.',
-    codeInvalid: 'Ungültiges Szenario-Code Format'
+    codeInvalid: 'Ungültiges Szenario-Code Format',
+    availableCourses: 'Verfügbare Kurse',
+    loadingCourses: 'Lade verfügbare Kurse...',
+    noCoursesAvailable: 'Keine Kurse verfügbar. Bitte kontaktieren Sie Ihren Administrator.'
   }
 }
 
@@ -85,7 +91,8 @@ const loadCourses = async () => {
     const response = await $fetch('/api/courses', {
       method: 'GET'
     })
-    availableCourses.value = response.courses
+    console.log('Courses loaded:', response.data.courses.length, 'courses')
+    availableCourses.value = response.data.courses
   } catch (error) {
     console.error('Error loading courses:', error)
   } finally {
@@ -125,13 +132,20 @@ const validateCode = (code: string): boolean => {
 
 const handleDirectLogin = () => {
   const code = scenarioCode.value.trim().toUpperCase()
+  
+  console.log('Login attempt with code:', code)
+  console.log('Available courses:', availableCourses.value.map(c => c.code))
 
   if (validateCode(code)) {
+    console.log('Code validation successful, redirecting...')
     // Code is valid, store and redirect
     localStorage.setItem('currentScenarioCode', code)
     router.push('/introduction')
+  } else {
+    console.log('Code validation failed:', validationError.value)
   }
 }
+
 
 // Load courses on mount
 onMounted(() => {

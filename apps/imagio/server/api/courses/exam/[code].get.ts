@@ -20,11 +20,6 @@ interface QuestionDetails {
   selected: boolean;
 }
 
-interface ExamResponse {
-  exam: ExamDetails;
-  questions: QuestionDetails[];
-}
-
 export default defineEventHandler(async (event) => {
   const code = getRouterParam(event, 'code')
 

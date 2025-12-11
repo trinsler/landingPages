@@ -61,8 +61,7 @@ export default defineEventHandler(async (event): Promise<CreateCourseResponse> =
           description: body.description || '',
           sourceText: body.description || '',
           level: body.level || 1,
-          duration: body.totalTime || 3600,
-          passingScore: 70
+          duration: body.totalTime || 3600
         }
       })
 

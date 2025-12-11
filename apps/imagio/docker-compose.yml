@@ -22,11 +22,13 @@ services:
     
     # Development environment variables - use same database as localhost
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       PORT: 3000
       HOST: 0.0.0.0
       DATABASE_URL: "file:/app/prisma/dev.db"
       LOG_LEVEL: info
+      # Redis disabled for development
+      # REDIS_URL: ""
       # Security settings
       JWT_SECRET: "${JWT_SECRET:-CHANGE-THIS-IN-PRODUCTION}"
       BCRYPT_ROUNDS: 12

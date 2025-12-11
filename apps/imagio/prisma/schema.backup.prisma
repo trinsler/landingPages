@@ -5,7 +5,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -34,10 +34,6 @@ model User {
   userProgress UserProgress?
   scenarios    Scenario[]    @relation("ScenarioCreator")
   
-  // Performance indexes for scale
-  @@index([email])
-  @@index([sessionId])
-  @@index([lastActivityAt])
   @@map("users")
 }
 
@@ -63,10 +59,6 @@ model Scenario {
   questions           Question[]
   exams               Exam[]
   
-  // Performance indexes  
-  @@index([courseCode])
-  @@index([createdBy])
-  @@index([language])
   @@map("scenarios")
 }
 
@@ -112,10 +104,6 @@ model Course {
   exam             Exam?   @relation(fields: [examId], references: [id])
   examId           String?
   
-  // Performance indexes
-  @@index([code])
-  @@index([isPublished])
-  @@index([level])
   @@map("courses")
 }
 
@@ -209,12 +197,6 @@ model ExamAttempt {
   // Relations
   answers      Answer[]
   
-  // Performance indexes for high-traffic queries
-  @@index([userId])
-  @@index([examId])
-  @@index([status])
-  @@index([startedAt])
-  @@index([userId, examId]) // Composite for user's exam history
   @@map("exam_attempts")
 }
 
@@ -249,11 +231,6 @@ model Answer {
   createdAt       DateTime    @default(now())
   
   @@unique([examAttemptId, questionId])
-  // Performance indexes for analytics and reporting
-  @@index([examAttemptId])
-  @@index([questionId])
-  @@index([passed])
-  @@index([createdAt])
   @@map("answers")
 }
 

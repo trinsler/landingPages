@@ -1,30 +1,6 @@
 import { prisma } from '~/server/lib/prisma'
 import { success } from '~/server/lib/api'
 
-interface ExamDetails {
-  id: string;
-  title: string;
-  description: string;
-  sourceText: string;
-  level: number;
-  duration: number;
-  totalQuestions: number;
-}
-
-interface QuestionDetails {
-  id: string;
-  text: string;
-  answer?: string;
-  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
-  keywords: string[];
-  selected: boolean;
-}
-
-interface ExamResponse {
-  exam: ExamDetails;
-  questions: QuestionDetails[];
-}
-
 export default defineEventHandler(async (event) => {
   const code = getRouterParam(event, 'code')
 
@@ -60,6 +36,7 @@ export default defineEventHandler(async (event) => {
       console.log(`Course has exam:`, course.exam ? 'YES' : 'NO')
       if (course.exam) {
         console.log(`Exam has questions:`, course.exam.questions.length)
+        console.log(`Questions:`, course.exam.questions)
       }
     }
 
@@ -70,19 +47,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const exam: ExamDetails = {
-      id: course.exam.id,
-      title: course.exam.title,
-      description: course.exam.description,
-      sourceText: course.exam.sourceText,
-      level: course.exam.level,
-      duration: course.exam.duration || course.totalTime,
-      totalQuestions: course.exam.questions.length
-    }
-
-    console.log(`Raw questions from database:`, course.exam.questions)
-    
-    const questions: QuestionDetails[] = course.exam.questions.map(question => {
+    const questions = course.exam.questions.map(question => {
       let parsedKeywords: string[] = []
       try {
         parsedKeywords = JSON.parse(question.keywords || '[]')
@@ -95,21 +60,26 @@ export default defineEventHandler(async (event) => {
         id: question.id,
         text: question.text,
         answer: question.answer,
-        difficulty: question.difficulty as 'EASY' | 'MEDIUM' | 'HARD',
+        difficulty: question.difficulty,
         keywords: parsedKeywords,
         selected: question.selected
       }
     })
     
-    console.log(`Processed questions for response:`, questions)
+    console.log(`Returning ${questions.length} questions:`, questions)
 
-    // Return in format expected by frontend: direct questions array
-    console.log(`Final API response questions:`, questions)
     return success({
       questions,
-      exam
+      exam: {
+        id: course.exam.id,
+        title: course.exam.title,
+        description: course.exam.description,
+        level: course.exam.level,
+        duration: course.exam.duration || course.totalTime
+      }
     })
   } catch (error) {
+    console.error('Error in exam API:', error)
     if (error.statusCode) {
       throw error
     }

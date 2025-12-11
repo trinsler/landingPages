@@ -1,4 +1,5 @@
 import { prisma } from '~/server/lib/prisma'
+import { success } from '~/server/lib/api'
 
 interface QuestionData {
   text: string
@@ -20,18 +21,8 @@ interface CreateExamRequest {
   questions?: QuestionData[]
 }
 
-interface ExamResponse {
-  id: string
-  title: string
-  description: string
-  sourceText: string
-  level: number
-  duration: number | null
-  isPublished: boolean
-  questionsCount: number
-}
 
-export default defineEventHandler(async (event): Promise<ExamResponse> => {
+export default defineEventHandler(async (event: any) => {
   try {
     const body = await readBody<CreateExamRequest>(event)
 
@@ -53,7 +44,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
         duration: body.duration,
         isPublished: body.isPublished ?? true,
         questions: body.questions ? {
-          create: body.questions.map((q, index) => ({
+          create: body.questions.map((q: QuestionData, index: number) => ({
             text: q.text,
             answer: q.answer,
             difficulty: q.difficulty,
@@ -76,7 +67,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
       })
     }
 
-    return {
+    return success({
       id: exam.id,
       title: exam.title,
       description: exam.description,
@@ -85,7 +76,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
       duration: exam.duration,
       isPublished: exam.isPublished,
       questionsCount: exam.questions.length
-    }
+    })
   } catch (error) {
     if (error.statusCode) {
       throw error
