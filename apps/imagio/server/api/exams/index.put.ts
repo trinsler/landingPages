@@ -104,6 +104,7 @@ export default defineEventHandler(async (event): Promise<UpdateExamResponse> => 
           data: {
             examId: body.id,
             text: questionData.text,
+            answer: questionData.answer,
             difficulty: questionData.difficulty,
             keywords: JSON.stringify(questionData.keywords),
             selected: questionData.selected,

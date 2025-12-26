@@ -473,6 +473,7 @@ const editScenario = async (scenario: Scenario) => {
           // Merge course data with exam data
           selectedScenario.value = {
             ...scenario,
+            examId: examResponse.exam.id, // ← CRITICAL: Use correct examId from API
             introduction: examResponse.exam.sourceText || '',
             description: examResponse.exam.description || scenario.description || '',
             isNew: false // Mark as existing scenario for editing
@@ -557,7 +558,7 @@ const generateNewCode = async () => {
   
   isGeneratingCode.value = true
   try {
-    const codeResponse = await $fetch('/api/courses/generate-code', {
+    const codeResponse = await $fetch('/api/utils/generate-course-code', {
       method: 'GET'
     })
     
@@ -614,20 +615,11 @@ const saveScenario = async () => {
       return
     }
     
-    // Check for changes in existing scenarios
-    if (!isNewScenario) {
-      // Additional validation for existing courses
-      const originalScenario = scenarios.value.find(s => s.code === selectedScenario.value.code)
-      if (originalScenario && 
-          originalScenario.name === selectedScenario.value.name &&
-          originalScenario.description === selectedScenario.value.description &&
-          originalScenario.totalTime === selectedScenario.value.totalTime &&
-          originalScenario.timePerQuestion === selectedScenario.value.timePerQuestion &&
-          manualQuestions.value.length === (originalScenario.questionsCount || 0)) {
-        saveError.value = 'Keine Änderungen erkannt. Bitte nehmen Sie Änderungen vor oder schließen Sie den Editor.'
-        setTimeout(() => { saveError.value = '' }, 6000)
-        return
-      }
+    // Simplified change detection - allow saving if user has questions
+    if (!isNewScenario && manualQuestions.value.length === 0) {
+      saveError.value = 'Keine Fragen vorhanden. Bitte fügen Sie mindestens eine Frage hinzu.'
+      setTimeout(() => { saveError.value = '' }, 6000)
+      return
     }
 
     // Step 1: Create/Update Course
@@ -651,15 +643,22 @@ const saveScenario = async () => {
         }
       })
     } else {
-      // UPDATE existing course - find course by code first
+      // UPDATE existing course - use the stored courseId (not the new code!)
+      if (!selectedScenario.value.courseId) {
+        saveError.value = 'Fehler: Course ID fehlt für Update. Bitte neu laden.'
+        setTimeout(() => { saveError.value = '' }, 8000)
+        return
+      }
+      
+      console.log('Updating course with ID:', selectedScenario.value.courseId)
+      
+      // Find course by original courseId (which is the original code)
       const existingCourseResponse = await $fetch('/api/courses', {
         method: 'GET'
       })
       
-      console.log('Available courses:', existingCourseResponse.courses)
-      console.log('Looking for course with code:', selectedScenario.value.code)
-      
-      const existingCourse = existingCourseResponse.courses.find((c: any) => c.code === selectedScenario.value.code)
+      console.log('Looking for course with original code:', selectedScenario.value.courseId)
+      const existingCourse = existingCourseResponse.courses.find((c: any) => c.code === selectedScenario.value.courseId)
       
       if (!existingCourse) {
         console.error('Course not found in database. Available courses:', existingCourseResponse.courses.map((c: any) => c.code))
@@ -697,70 +696,25 @@ const saveScenario = async () => {
     }
 
     // Step 2: Create/Update Exam with Questions
-    console.log('Manual questions before processing:', manualQuestions.value)
-    
-    // FIRST: Update keywords from text for all questions
+    // Update keywords from text for all questions
     manualQuestions.value.forEach(question => {
       updateKeywordsFromText(question)
     })
-    
-    console.log('Manual questions after keyword processing:', manualQuestions.value)
     
     // Filter out empty questions and validate
     let questionsForExam = manualQuestions.value.filter(q => {
       const hasText = q.text && q.text.trim().length > 0
       const hasAnswer = q.answer && q.answer.trim().length > 0
-      const hasKeywords = q.keywords && q.keywords.length > 0
       
-      console.log(`Question validation:`, {
-        text: hasText ? 'YES' : 'NO',
-        answer: hasAnswer ? 'YES' : 'NO', 
-        keywords: hasKeywords ? `YES (${q.keywords.length})` : 'NO',
-        keywordsText: q.keywordsText,
-        question: q.text?.substring(0, 30) + '...'
-      })
       
-      return hasText && hasAnswer && hasKeywords
+      return hasText && hasAnswer
     })
     
-    // FALLBACK: If no questions with keywords, include questions with text+answer only
-    if (questionsForExam.length === 0) {
-      console.log('No questions with keywords found, trying fallback filter...')
-      questionsForExam = manualQuestions.value.filter(q => {
-        const hasText = q.text && q.text.trim().length > 0
-        const hasAnswer = q.answer && q.answer.trim().length > 0
-        return hasText && hasAnswer
-      }).map(q => ({
-        ...q,
-        keywords: q.keywords?.length > 0 ? q.keywords : ['allgemein'], // Default keyword
-      }))
-      console.log('Fallback questions:', questionsForExam)
-    }
-    
-    console.log('Filtered valid questions:', questionsForExam)
-    
-    // If new course has no valid questions, add default sample questions
-    if (isNewScenario && questionsForExam.length === 0) {
-      questionsForExam = [
-        {
-          text: 'Beschreiben Sie die wichtigsten Konzepte dieses Kurses.',
-          answer: 'Beispielantwort: Die wichtigsten Konzepte umfassen theoretische Grundlagen und praktische Anwendungen.',
-          difficulty: 'MEDIUM',
-          keywords: ['konzepte', 'grundlagen', 'anwendungen', 'theorie', 'praxis'],
-          selected: true
-        },
-        {
-          text: 'Wie würden Sie das Gelernte in der Praxis umsetzen?',
-          answer: 'Beispielantwort: Durch schrittweise Anwendung der erlernten Methoden in realen Projekten.',
-          difficulty: 'MEDIUM', 
-          keywords: ['praxis', 'umsetzung', 'anwendung', 'methoden', 'projekte'],
-          selected: true
-        }
-      ]
-      console.log('Using default questions for new course')
-    }
-    
-    console.log('Final questions for exam:', questionsForExam)
+    // Add default keywords if missing
+    questionsForExam = questionsForExam.map(q => ({
+      ...q,
+      keywords: q.keywords?.length > 0 ? q.keywords : ['allgemein']
+    }))
 
     const examData = {
       title: selectedScenario.value.name.trim(),
@@ -818,7 +772,15 @@ const saveScenario = async () => {
     updateSavedSnapshot()
     console.log('Save successful - snapshot updated, no unsaved changes')
 
-    // Reload scenarios list to show updated data
+    // Update localStorage with new code (important if code was changed)
+    const newCode = selectedScenario.value.code
+    localStorage.setItem('currentScenarioCode', newCode)
+    console.log('Updated currentScenarioCode to:', newCode)
+    
+    // Reload current scenario with fresh data including questions
+    if (selectedScenario.value) {
+      await editScenario(selectedScenario.value)
+    }
     await loadScenarios()
 
   } catch (error: any) {

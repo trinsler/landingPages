@@ -145,26 +145,44 @@ const loadAttemptData = (code: string) => {
   currentAttempt.value = savedAttempt ? parseInt(savedAttempt) : 1
 }
 
-const startScenario = () => {
+const startScenario = async () => {
   // Check if user has exceeded attempts
   if (currentAttempt.value > (scenarioData.value.attempts || 3)) {
     alert('Sie haben bereits alle verfügbaren Versuche aufgebraucht.')
     return
   }
   
-  // Store minimal exam data for direct start
-  localStorage.setItem('currentExamData', JSON.stringify({
-    id: scenarioData.value.examId,
-    title: scenarioData.value.title,
-    timeLimit: scenarioData.value.totalTime * 60, // Convert minutes to seconds
-    attempt: currentAttempt.value
-  }))
-  
-  // Increment attempt for next time
-  const attemptKey = `attempt_${scenarioCode.value}`
-  localStorage.setItem(attemptKey, (currentAttempt.value + 1).toString())
-  
-  router.push('/exam-taking')
+  try {
+    // Start exam attempt via API (creates ExamAttempt in DB)
+    const userId = 'student-001' // Use student ID
+    const examId = scenarioData.value.examId
+    
+    const attemptResponse = await $fetch(`/api/exams/${examId}/start`, {
+      method: 'POST',
+      body: { userId }
+    })
+    
+    console.log('Exam attempt started:', attemptResponse)
+    
+    // Store exam data + attempt ID for tracking
+    localStorage.setItem('currentExamData', JSON.stringify({
+      id: scenarioData.value.examId,
+      title: scenarioData.value.title,
+      timeLimit: scenarioData.value.totalTime * 60,
+      attempt: currentAttempt.value,
+      attemptId: attemptResponse.attemptId, // ← CRITICAL: Store attemptId for tracking
+      userId: userId
+    }))
+    
+    // Increment attempt for next time
+    const attemptKey = `attempt_${scenarioCode.value}`
+    localStorage.setItem(attemptKey, (currentAttempt.value + 1).toString())
+    
+    router.push('/exam-taking')
+  } catch (error) {
+    console.error('Error starting exam:', error)
+    alert('Fehler beim Starten des Exams. Bitte versuchen Sie es erneut.')
+  }
 }
 </script>
 

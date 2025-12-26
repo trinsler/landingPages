@@ -257,13 +257,31 @@ onUnmounted(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload)
 })
 
+// Add attempt tracking variables
+const attemptId = ref<string | null>(null)
+const userId = ref<string | null>(null)
+
 // Methods
 const loadExamData = async () => {
   const savedCode = localStorage.getItem('currentScenarioCode')
+  const examData = localStorage.getItem('currentExamData')
+  
   if (!savedCode) {
     console.error('No course code found')
     router.push('/')
     return
+  }
+  
+  // Load attempt ID and user ID from localStorage
+  if (examData) {
+    try {
+      const parsedData = JSON.parse(examData)
+      attemptId.value = parsedData.attemptId
+      userId.value = parsedData.userId
+      console.log('Loaded exam attempt:', { attemptId: attemptId.value, userId: userId.value })
+    } catch (e) {
+      console.error('Failed to parse exam data:', e)
+    }
   }
   
   console.log(`Loading EXACT exam for course code: ${savedCode}`)
@@ -416,20 +434,8 @@ const selectChoice = (index: number) => {
 }
 
 const submitCurrentAnswer = async () => {
-  let answer = ''
-  
-  if (currentQuestion.value?.type === 'multiple-choice') {
-    answer = currentQuestion.value.options[selectedChoice.value!]
-  } else {
-    answer = answerMode.value === 'oral' ? transcript.value : currentAnswer.value
-  }
-  
-  // Store answer
-  userAnswers.value[currentQuestionIndex.value] = answer
-  
-  // Simulate analysis (replace with actual AI analysis)
-  const analysis = await analyzeAnswer(answer)
-  questionAnalyses.value[currentQuestionIndex.value] = analysis
+  // Use the new submitAnswer function that calls the API
+  await submitAnswer()
 }
 
 const analyzeAnswer = async (answer: string) => {
@@ -508,6 +514,66 @@ const saveCurrentState = () => {
     }
   }
 }
+
+// Submit answer to API with attempt tracking
+const submitAnswer = async () => {
+  console.log('DEBUG: submitAnswer called', {
+    attemptId: attemptId.value,
+    currentQuestion: currentQuestion.value,
+    userId: userId.value
+  })
+  
+  if (!attemptId.value || !currentQuestion.value) {
+    console.error('Cannot submit answer: missing attemptId or question', {
+      attemptId: attemptId.value,
+      currentQuestion: currentQuestion.value
+    })
+    alert(`Debug: attemptId=${attemptId.value}, questionId=${currentQuestion.value?.id}`)
+    return
+  }
+  
+  let answerText = ''
+  if (currentQuestion.value?.type === 'multiple-choice') {
+    answerText = currentQuestion.value.options[selectedChoice.value!] || ''
+  } else {
+    answerText = answerMode.value === 'oral' ? transcript.value : currentAnswer.value
+  }
+  
+  if (!answerText.trim()) {
+    console.error('Cannot submit empty answer')
+    return
+  }
+  
+  try {
+    const response = await $fetch(`/api/attempts/${attemptId.value}/answers`, {
+      method: 'POST',
+      body: {
+        questionId: currentQuestion.value.id,
+        answerText: answerText,
+        mode: answerMode.value.toUpperCase() as 'WRITTEN' | 'ORAL',
+        timeSpent: Math.round((Date.now() - examStartTime.value) / 1000)
+      }
+    })
+    
+    console.log('Answer submitted successfully:', response)
+    
+    // Store analysis result
+    questionAnalyses.value[currentQuestionIndex.value] = response
+    userAnswers.value[currentQuestionIndex.value] = answerText
+    
+  } catch (error) {
+    console.error('Error submitting answer:', error)
+    console.error('Error details:', {
+      attemptId: attemptId.value,
+      questionId: currentQuestion.value?.id,
+      answerText,
+      error: error
+    })
+    // Show detailed error to user for debugging
+    alert(`Fehler beim Speichern: ${error.message || error}. attemptId: ${attemptId.value}`)
+  }
+}
+
 
 const loadQuestionState = () => {
   // Load saved state for this question

@@ -31,48 +31,10 @@ model User {
   // Relations
   examAttempts ExamAttempt[]
   userProgress UserProgress?
-  scenarios    Scenario[]    @relation("ScenarioCreator")
   
   @@map("users")
 }
 
-// ============================================
-// SCENARIO SYSTEM (per spec)
-// ============================================
-
-model Scenario {
-  id                  String   @id @default(uuid())
-  title               String
-  description         String
-  courseCode          String   @unique
-  maxAttempts         Int?     // vom Admin gesetzt
-  totalDurationSeconds Int?    // Gesamtzeit in Sekunden vom Admin gesetzt
-  language            String   @default("de") // 'de'|'en' etc.
-  designTheme         String?  // minimal palette/settings (JSON string)
-  createdBy           String
-  creator             User     @relation("ScenarioCreator", fields: [createdBy], references: [id])
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  
-  // Relations
-  questions           Question[]
-  exams               Exam[]
-  
-  @@map("scenarios")
-}
-
-model Keyword {
-  id           String   @id @default(uuid())
-  questionId   String
-  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  token        String   // keyword canonical
-  weight       Int      @default(1) // z.B. 1..10
-  synonyms     String?  // TEXT[] -- optional (JSON string)
-  allowPartial Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  
-  @@map("keywords")
-}
 
 // ============================================
 // COURSE & EXAM SYSTEM
@@ -113,8 +75,6 @@ model Exam {
   sourceText   String     // Text-Basis für Fragen
   level        Int        // 1-4
   duration     Int?       // Minuten
-  scenarioId   String?    // Link to scenario
-  scenario     Scenario?  @relation(fields: [scenarioId], references: [id])
   
   // Status
   isPublished  Boolean    @default(true)
@@ -133,25 +93,16 @@ model Exam {
 
 model Question {
   id           String    @id @default(uuid())
-  scenarioId   String?
-  scenario     Scenario? @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
   examId       String
   exam         Exam      @relation(fields: [examId], references: [id], onDelete: Cascade)
   
-  // Content
+  // Content  
   order        Int       @default(0)
-  questionText String?   // lokalisiert: {de: "...", en: "..."} (JSON string)
-  text         String    // fallback for existing data
-  questionType String    @default("text") // 'text'|'speech'|'multiple_choice'
-  pointsTotal  Int       @default(10)
-  answer       String?   // Optional vordefinierte Antwort
-  
-  // Difficulty & Keywords (Kern des Systems!)
+  text         String    // Question text
+  answer       String?   // Expected answer
   difficulty   String    @default("MEDIUM") // EASY, MEDIUM, HARD
-  keywords     String?   // JSON string von Schlüsselwörtern (legacy)
-  
-  // Configuration
-  selected     Boolean   @default(true)  // Frage aktiv?
+  keywords     String?   // JSON string von Keywords
+  selected     Boolean   @default(true)
   
   // Timestamps
   createdAt    DateTime  @default(now())
@@ -159,7 +110,6 @@ model Question {
   
   // Relations
   answers      Answer[]
-  keywordList  Keyword[]
   
   @@map("questions")
 }

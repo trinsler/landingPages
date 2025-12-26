@@ -37,9 +37,9 @@
               <div v-if="!question.editing" class="question-display-text">
                 {{ question.text || `${t('question', globalTranslations)} ${index + 1}` }}
               </div>
-              <div v-if="!question.editing && question.perfectAnswer" class="perfect-answer-display">
+              <div v-if="!question.editing && question.answer" class="perfect-answer-display">
                 <span class="answer-label">{{ t('perfectAnswer', globalTranslations) }}:</span>
-                <span class="answer-text">{{ question.perfectAnswer }}</span>
+                <span class="answer-text">{{ question.answer }}</span>
               </div>
               <input 
                 v-else
@@ -54,7 +54,7 @@
               />
               <textarea 
                 v-if="question.editing"
-                v-model="question.perfectAnswer"
+                v-model="question.answer"
                 @click.stop
                 @blur="stopEditing(question)"
                 class="perfect-answer-input"
@@ -171,7 +171,7 @@ const initializeQuestions = (scenario: any) => {
     if (!question.generatedKeywords) question.generatedKeywords = []
     if (!question.selectedKeywords) question.selectedKeywords = []
     if (!question.generatingKeywords) question.generatingKeywords = false
-    if (!question.perfectAnswer) question.perfectAnswer = ''
+    if (!question.answer) question.answer = ''
   })
 }
 
@@ -182,7 +182,7 @@ const addNewQuestion = () => {
   const newQuestion = {
     id: Date.now().toString(),
     text: '',
-    perfectAnswer: '',
+    answer: '',
     expanded: true,
     editing: true,
     keywords: [],
@@ -270,9 +270,9 @@ const stopEditing = (question: any) => {
   saveQuestionsToStorage()
 }
 
-// Generate keywords for question (max 10) - from perfect answer
+// Generate keywords for question (max 10) - from answer
 const generateKeywordsForQuestion = async (question: any) => {
-  const textToAnalyze = question.perfectAnswer || question.text
+  const textToAnalyze = question.answer || question.text
   if (!textToAnalyze.trim()) return
   
   question.generatingKeywords = true
@@ -382,7 +382,7 @@ watch(() => props.selectedScenario, (newScenario) => {
         if (!question.generatedKeywords) question.generatedKeywords = []
         if (!question.selectedKeywords) question.selectedKeywords = []
         if (!question.generatingKeywords) question.generatingKeywords = false
-        if (!question.perfectAnswer) question.perfectAnswer = ''
+        if (!question.answer) question.answer = ''
       })
       
       // Load from storage after initialization
