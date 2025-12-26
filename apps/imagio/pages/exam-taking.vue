@@ -127,7 +127,7 @@
             <div v-if="isAnswered" class="answer-feedback">
               <div class="feedback-status" :class="{ correct: currentAnalysis?.passed }">
                 {{ currentAnalysis?.passed ? 'Correct!' : 'Incorrect' }}
-                <span class="score">{{ currentAnalysis?.score || 0 }}/10</span>
+                <span class="score">{{ currentAnalysis?.score || 0 }}/{{ currentAnalysis?.maxScore || 0 }}</span>
               </div>
               
               <div v-if="currentAnalysis?.feedback" class="feedback-text">
@@ -317,7 +317,8 @@ const loadExamData = async () => {
       
       if (examResponse && examResponse.questions && examResponse.questions.length > 0) {
         // Use the EXACT questions from admin
-        questions.value = examResponse.questions.map((q: any) => ({
+        questions.value = examResponse.questions.map((q: any, index: number) => ({
+          id: q.id || `question_${index}`, // Use question ID or fallback to index
           type: 'text', // Admin questions are always text-based
           text: q.text,
           answer: q.answer, // Store expected answer for keyword checking
@@ -462,28 +463,33 @@ const analyzeAnswer = async (answer: string) => {
   
   console.log(`Keywords found in answer:`, keywordsFound)
   
-  // Score based on keyword match percentage
-  const keywordMatchPercentage = (keywordsFound.length / currentQuestion.keywords.length) * 100
+  // Score based on actual keywords found vs total keywords for this question
+  const totalKeywords = currentQuestion.keywords.length
+  const foundKeywords = keywordsFound.length
+  const keywordMatchPercentage = (foundKeywords / totalKeywords) * 100
   const minPassingScore = 50 // At least 50% of keywords must be present
   
   const passed = keywordMatchPercentage >= minPassingScore
-  const score = Math.round((keywordMatchPercentage / 100) * 10) // Convert to 0-10 scale
+  // Score shows actual keywords found out of total (e.g., 3/5, 7/8)
+  const score = foundKeywords // Actual number found
+  const maxScore = totalKeywords // Total possible for this question
   
   let feedback = ''
   if (passed) {
-    feedback = `Gut! Gefunden: ${keywordsFound.join(', ')}. ${keywordMatchPercentage.toFixed(0)}% der erwarteten Konzepte abgedeckt.`
+    feedback = `Gut! Gefunden: ${keywordsFound.join(', ')}. ${foundKeywords}/${totalKeywords} Keywords erkannt.`
   } else {
     const missingKeywords = currentQuestion.keywords.filter((keyword: string) => 
       !answerLowerCase.includes(keyword.toLowerCase())
     )
-    feedback = `Unvollständig. Gefunden: ${keywordsFound.join(', ') || 'keine'}. Fehlend: ${missingKeywords.join(', ')}. Nur ${keywordMatchPercentage.toFixed(0)}% abgedeckt.`
+    feedback = `Unvollständig. Gefunden: ${keywordsFound.join(', ') || 'keine'}. Fehlend: ${missingKeywords.join(', ')}. ${foundKeywords}/${totalKeywords} Keywords erkannt.`
   }
   
-  console.log(`Analysis result: ${passed ? 'PASSED' : 'FAILED'}, Score: ${score}, Feedback: ${feedback}`)
+  console.log(`Analysis result: ${passed ? 'PASSED' : 'FAILED'}, Score: ${foundKeywords}/${totalKeywords}, Feedback: ${feedback}`)
   
   return {
     passed,
     score,
+    maxScore, // Add maxScore to return object
     feedback
   }
 }
@@ -520,13 +526,15 @@ const submitAnswer = async () => {
   console.log('DEBUG: submitAnswer called', {
     attemptId: attemptId.value,
     currentQuestion: currentQuestion.value,
-    userId: userId.value
+    userId: userId.value,
+    questionId: currentQuestion.value?.id
   })
   
-  if (!attemptId.value || !currentQuestion.value) {
-    console.error('Cannot submit answer: missing attemptId or question', {
+  if (!attemptId.value || !currentQuestion.value || !currentQuestion.value.id) {
+    console.error('Cannot submit answer: missing data', {
       attemptId: attemptId.value,
-      currentQuestion: currentQuestion.value
+      currentQuestion: currentQuestion.value,
+      questionId: currentQuestion.value?.id
     })
     alert(`Debug: attemptId=${attemptId.value}, questionId=${currentQuestion.value?.id}`)
     return
@@ -604,7 +612,8 @@ const finishExam = () => {
       userAnswer: userAnswers.value[index] || 'No answer provided',
       correct: questionAnalyses.value[index]?.passed || false,
       feedback: questionAnalyses.value[index]?.feedback || '',
-      score: questionAnalyses.value[index]?.score || 0
+      score: questionAnalyses.value[index]?.score || 0,
+      maxScore: questionAnalyses.value[index]?.maxScore || question.keywords?.length || 0
     }))
   }
   

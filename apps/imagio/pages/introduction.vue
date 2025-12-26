@@ -153,8 +153,12 @@ const startScenario = async () => {
   }
   
   try {
+    // Clear any old exam data to start fresh
+    localStorage.removeItem('currentExamData')
+    localStorage.removeItem('currentExamResults')
+    
     // Start exam attempt via API (creates ExamAttempt in DB)
-    const userId = 'student-001' // Use student ID
+    const userId = 'student-001' // Use student ID  
     const examId = scenarioData.value.examId
     
     const attemptResponse = await $fetch(`/api/exams/${examId}/start`, {
@@ -162,15 +166,15 @@ const startScenario = async () => {
       body: { userId }
     })
     
-    console.log('Exam attempt started:', attemptResponse)
+    console.log('Exam attempt started (NEW):', attemptResponse)
     
-    // Store exam data + attempt ID for tracking
+    // Store exam data + NEW attempt ID for tracking
     localStorage.setItem('currentExamData', JSON.stringify({
       id: scenarioData.value.examId,
       title: scenarioData.value.title,
       timeLimit: scenarioData.value.totalTime * 60,
       attempt: currentAttempt.value,
-      attemptId: attemptResponse.attemptId, // ← CRITICAL: Store attemptId for tracking
+      attemptId: attemptResponse.attemptId, // ← FRESH attemptId for each start
       userId: userId
     }))
     

@@ -1,0 +1,188 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # DATABASE SERVICE (Isolated & Secure)
+  # ==========================================
+  imagio-db:
+    image: postgres:15-alpine
+    container_name: imagio-database
+    restart: unless-stopped
+    
+    environment:
+      POSTGRES_DB: imagio_prod
+      POSTGRES_USER: imagio_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    
+    volumes:
+      - imagio_db_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    
+    ports:
+      - "127.0.0.1:5432:5432"  # Only localhost access
+    
+    networks:
+      - imagio_backend_net
+    
+    # Security hardening
+    security_opt:
+      - no-new-privileges:true
+    
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imagio_user -d imagio_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # BACKEND SERVICE (APIs & Business Logic)
+  # ==========================================
+  imagio-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        NODE_ENV: production
+    
+    container_name: imagio-api
+    restart: unless-stopped
+    
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      HOST: 0.0.0.0
+      
+      # Database connection (secure internal network)
+      DATABASE_URL: "postgresql://imagio_user:${DB_PASSWORD}@imagio-db:5432/imagio_prod?schema=public"
+      
+      # Security secrets (from environment)
+      JWT_SECRET: ${JWT_SECRET}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      
+      # App configuration
+      CORS_ORIGIN: "http://localhost:3000"
+      LOG_LEVEL: info
+      BCRYPT_ROUNDS: 12
+    
+    volumes:
+      - ./logs:/app/logs:rw
+      - /app/node_modules  # Anonymous volume for node_modules
+    
+    ports:
+      - "127.0.0.1:4000:4000"  # Only localhost access
+    
+    depends_on:
+      imagio-db:
+        condition: service_healthy
+    
+    networks:
+      - imagio_backend_net
+      - imagio_frontend_net
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Security hardening
+    security_opt:
+      - no-new-privileges:true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # ==========================================
+  # FRONTEND SERVICE (Public & Static)
+  # ==========================================
+  imagio-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        NODE_ENV: production
+        BACKEND_URL: "http://imagio-backend:4000"
+    
+    container_name: imagio-web
+    restart: unless-stopped
+    
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      
+      # Public configuration (no secrets!)
+      NUXT_PUBLIC_API_BASE: "http://localhost:4000/api"
+      NUXT_PUBLIC_APP_NAME: "Imagio Learning Platform"
+      NUXT_PUBLIC_VERSION: "2.0.0"
+    
+    ports:
+      - "3000:3000"  # Public access
+    
+    depends_on:
+      imagio-backend:
+        condition: service_healthy
+    
+    networks:
+      - imagio_frontend_net
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    # Security hardening
+    security_opt:
+      - no-new-privileges:true
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+
+# ==========================================
+# NETWORKS (Security Isolation)
+# ==========================================
+networks:
+  # Backend network (DB + API only)
+  imagio_backend_net:
+    driver: bridge
+    internal: true  # No external access
+    name: imagio_backend_network
+  
+  # Frontend network (API + Web only)
+  imagio_frontend_net:
+    driver: bridge
+    name: imagio_frontend_network
+
+# ==========================================
+# VOLUMES (Persistent Data)
+# ==========================================
+volumes:
+  imagio_db_data:
+    driver: local
+    name: imagio_production_database
+  
+  imagio_logs:
+    driver: local
+    name: imagio_production_logs

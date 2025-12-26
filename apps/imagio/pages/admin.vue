@@ -268,7 +268,7 @@ Ungespeicherte Änderungen
 
                 <div class="form-field">
                   <div class="form-label-with-button">
-                    <label class="form-label">Keywords (durch Komma getrennt)</label>
+                    <label class="form-label">Keywords</label>
                     <button
                       @click="generateKeywordsForQuestion(question)"
                       class="ai-generate-button"
@@ -279,21 +279,46 @@ Ungespeicherte Änderungen
                         Generiere...
                       </span>
                       <span v-else>
-                        KI Keywords generieren
+                        Keywords generieren
                       </span>
                     </button>
                   </div>
-                  <input
-                    v-model="question.keywordsText"
-                    type="text"
-                    placeholder="z.B. algorithmus, computer, programmierung"
-                    class="form-input"
-                    @input="updateKeywordsFromText(question)"
-                  >
-                  <div class="keywords-preview">
-                    <span v-for="(keyword, i) in question.keywords" :key="i" class="keyword-tag">
-                      {{ keyword }}
-                    </span>
+                  
+                  <!-- AI Generated Keywords Selection -->
+                  <div v-if="question.aiSuggestedKeywords && question.aiSuggestedKeywords.length > 0" class="suggested-keywords-list">
+                    <div class="suggested-keywords">
+                      <button 
+                        v-for="(keyword, i) in question.aiSuggestedKeywords" 
+                        :key="i" 
+                        @click="addKeywordFromAI(question, keyword)"
+                        class="suggested-keyword"
+                        :class="{ selected: question.keywords.includes(keyword) }"
+                      >
+                        {{ keyword }}
+                      </button>
+                    </div>
+                    <button 
+                      @click="generateMoreKeywords(question)"
+                      class="generate-more-button"
+                      :disabled="question.isGeneratingKeywords"
+                    >
+                      Mehr generieren
+                    </button>
+                  </div>
+
+                  <!-- Selected Keywords Display -->
+                  <div class="keywords-display">
+                    <input
+                      v-model="question.keywordsText"
+                      type="text"
+                      placeholder="Keywords (durch Komma getrennt)"
+                      class="form-input"
+                      @input="updateKeywordsFromText(question)"
+                    >
+                    <div class="keywords-counter" :class="{ warning: question.keywords.length < 5 }">
+                      {{ question.keywords.length }} Keywords
+                      <span v-if="question.keywords.length < 5">(min. 5 erforderlich)</span>
+                    </div>
                   </div>
                   <div v-if="question.keywordError" class="keyword-error">
                     {{ question.keywordError }}
@@ -342,6 +367,8 @@ interface Question {
   order?: number
   isGeneratingKeywords?: boolean
   keywordError?: string
+  aiSuggestedKeywords?: string[]
+  manualKeywordInput?: string
 }
 
 interface Scenario {
@@ -820,7 +847,9 @@ const addNewQuestion = () => {
     answer: '',
     difficulty: 'MEDIUM',
     keywords: [],
-    keywordsText: ''
+    keywordsText: '',
+    aiSuggestedKeywords: [],
+    manualKeywordInput: ''
   }
   manualQuestions.value.push(newQuestion)
 }
@@ -871,14 +900,53 @@ const generateKeywordsForQuestion = async (question: Question) => {
       }
     })
 
-    // Update keywords
-    question.keywords = response.keywords
-    question.keywordsText = response.keywords.join(', ')
+    // Initialize AI suggested keywords if not exists
+    if (!question.aiSuggestedKeywords) {
+      question.aiSuggestedKeywords = []
+    }
+    
+    // Add new keywords to suggestions (avoid duplicates)
+    const newKeywords = response.keywords.filter((kw: string) => 
+      !question.aiSuggestedKeywords!.includes(kw) && !question.keywords.includes(kw)
+    )
+    question.aiSuggestedKeywords.push(...newKeywords)
+    
   } catch (error: any) {
     console.error('Error generating keywords:', error)
     question.keywordError = 'Fehler beim Generieren der Keywords. Bitte versuche es erneut.'
   } finally {
     question.isGeneratingKeywords = false
+  }
+}
+
+// Generate more keywords
+const generateMoreKeywords = async (question: Question) => {
+  await generateKeywordsForQuestion(question)
+}
+
+// Add keyword from AI suggestions
+const addKeywordFromAI = (question: Question, keyword: string) => {
+  if (!question.keywords.includes(keyword)) {
+    question.keywords.push(keyword)
+    question.keywordsText = question.keywords.join(', ')
+  }
+}
+
+// Remove selected keyword
+const removeKeyword = (question: Question, keyword: string) => {
+  question.keywords = question.keywords.filter(kw => kw !== keyword)
+  question.keywordsText = question.keywords.join(', ')
+}
+
+// Add manual keyword
+const addManualKeyword = (question: Question) => {
+  if (!question.manualKeywordInput) return
+  
+  const keyword = question.manualKeywordInput.trim().toLowerCase()
+  if (keyword && !question.keywords.includes(keyword)) {
+    question.keywords.push(keyword)
+    question.keywordsText = question.keywords.join(', ')
+    question.manualKeywordInput = ''
   }
 }
 
@@ -1632,5 +1700,69 @@ onMounted(() => {
   .fullscreen-editor.with-header {
     top: 56px;
   }
+}
+
+/* Minimalist Keywords Styles */
+.suggested-keywords-list {
+  margin-bottom: 1rem;
+}
+
+.suggested-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.suggested-keyword {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1f2937;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggested-keyword:hover {
+  border-color: #0097b2;
+  background: #f0f9ff;
+}
+
+.suggested-keyword.selected {
+  background: #0097b2;
+  color: white;
+  border-color: #0097b2;
+}
+
+.generate-more-button {
+  background: #f8fafc;
+  color: #0097b2;
+  border: 1px solid #0097b2;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.generate-more-button:hover:not(:disabled) {
+  background: #0097b2;
+  color: white;
+}
+
+.keywords-display {
+  margin-bottom: 1rem;
+}
+
+.keywords-counter {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.keywords-counter.warning {
+  color: #0097b2;
 }
 </style>

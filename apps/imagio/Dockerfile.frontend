@@ -1,0 +1,46 @@
+# ==========================================
+# FRONTEND DOCKERFILE (Nur Nuxt Client)
+# ==========================================
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies
+RUN apk add --no-cache libc6-compat
+
+# Copy package files
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy source code (exclude server folder)
+COPY . .
+RUN rm -rf server/ prisma/
+
+# Build frontend only
+ARG BACKEND_URL
+ENV NUXT_PUBLIC_API_BASE=${BACKEND_URL}/api
+
+RUN npm run build
+
+# ==========================================
+# PRODUCTION STAGE
+# ==========================================
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nuxtjs --ingroup nodejs
+
+# Copy built application
+COPY --from=builder --chown=nuxtjs:nodejs /app/.output ./.output
+COPY --from=builder --chown=nuxtjs:nodejs /app/node_modules ./node_modules
+
+# Copy static assets
+COPY --from=builder --chown=nuxtjs:nodejs /app/public ./public
+
+USER nuxtjs
+
+EXPOSE 3000
+
+CMD ["node", ".output/server/index.mjs"]
