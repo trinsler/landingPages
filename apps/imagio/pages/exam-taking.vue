@@ -318,6 +318,7 @@ const loadExamData = async () => {
       if (examResponse && examResponse.questions && examResponse.questions.length > 0) {
         // Use the EXACT questions from admin
         questions.value = examResponse.questions.map((q: any) => ({
+          id: q.id, // Include the question ID for API calls
           type: 'text', // Admin questions are always text-based
           text: q.text,
           answer: q.answer, // Store expected answer for keyword checking

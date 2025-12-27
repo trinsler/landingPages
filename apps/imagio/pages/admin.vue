@@ -392,8 +392,8 @@ const loadScenarios = async () => {
     // Transform API response to match our scenario format
     if (response && response.courses && Array.isArray(response.courses)) {
       scenarios.value = response.courses.map((course: any) => ({
-        id: course.code,
-        courseId: course.code,
+        id: course.id,        // Verwende echte DB ID
+        courseId: course.id,  // Verwende echte DB ID für Updates
         examId: course.examId,
         name: course.title,
         code: course.code,
@@ -422,38 +422,68 @@ const loadScenarios = async () => {
 
 // Create new scenario
 const createNewScenario = async () => {
-  // Check limit of 3 courses
-  if (scenarios.value.length >= 3) {
-    alert('Maximal 3 Szenarien erlaubt. Bitte lösche zuerst ein existierendes Szenario.')
+  // Check limit of 10 courses
+  if (scenarios.value.length >= 10) {
+    alert('Maximal 10 Szenarien erlaubt. Bitte lösche zuerst ein existierendes Szenario.')
     return
   }
 
   try {
     // Generate unique course code
-    const codeResponse = await $fetch('/api/courses/generate-code', {
+    const codeResponse = await $fetch('/api/utils/generate-course-code', {
       method: 'GET'
     })
 
-    const scenario: Scenario = {
-      name: 'Neues Szenario',
-      code: codeResponse.code, // Use generated unique code
+    // Create the course directly in database
+    const newCourseData = {
+      code: codeResponse.code,
+      title: 'Neues Szenario',
       description: '',
-      introduction: '',
       level: 1,
-      totalTime: 10,
+      totalTime: 600, // 10 minutes in seconds
+      totalQuestions: 0,
       timePerQuestion: 60,
-      questions: [],
-      isNew: true // Mark as new scenario
+      maxAttempts: 3,
+      isPublished: true
     }
-    selectedScenario.value = scenario
-    manualQuestions.value = []
-    activeEditorTab.value = 'info'
-    showScenarioEditor.value = true
-    
-    console.log('Generated unique course code:', codeResponse.code)
+
+    // Save course to database immediately
+    const courseResponse = await $fetch('/api/courses', {
+      method: 'POST',
+      body: newCourseData
+    })
+
+    if (courseResponse.success) {
+      // Create scenario object for frontend
+      const scenario: Scenario = {
+        id: courseResponse.course.id,
+        courseId: courseResponse.course.id, // Set courseId for future updates
+        name: courseResponse.course.title,
+        code: courseResponse.course.code,
+        description: courseResponse.course.description || '',
+        introduction: '',
+        level: courseResponse.course.level,
+        totalTime: Math.round(courseResponse.course.totalTime / 60), // Convert to minutes
+        timePerQuestion: courseResponse.course.timePerQuestion,
+        questions: [],
+        isNew: false // Already saved to database
+      }
+
+      // Add to scenarios list
+      scenarios.value.push(scenario)
+      
+      // Open editor for the new scenario
+      selectedScenario.value = scenario
+      manualQuestions.value = []
+      activeEditorTab.value = 'info'
+      showScenarioEditor.value = true
+      
+      console.log('Created new course with code:', codeResponse.code)
+      alert(`✅ Neues Szenario mit Code "${codeResponse.code}" erstellt!`)
+    }
   } catch (error) {
-    console.error('Error generating course code:', error)
-    alert('Fehler beim Generieren eines einzigartigen Kurs-Codes')
+    console.error('Error creating new scenario:', error)
+    alert('Fehler beim Erstellen eines neuen Szenarios: ' + (error.data?.message || error.message))
   }
 }
 
@@ -552,18 +582,102 @@ const closeEditor = () => {
   saveError.value = ''
 }
 
-// Generate new unique course code
+// Generate new unique course code with replacement logic
 const generateNewCode = async () => {
   if (!selectedScenario.value) return
   
+  const oldCode = selectedScenario.value.code
+  
+  // Wenn schon ein Code existiert, frage nach Bestätigung
+  if (oldCode && oldCode.trim().length > 0) {
+    const confirmReplace = confirm(
+      `Sind Sie sicher, dass Sie einen neuen Code generieren möchten?\n\n` +
+      `Aktueller Code: ${oldCode}\n` +
+      `→ Wird durch neuen eindeutigen Code ersetzt\n\n` +
+      `Alle Fragen bleiben erhalten.`
+    )
+    
+    if (!confirmReplace) {
+      return // User cancelled
+    }
+  }
+  
   isGeneratingCode.value = true
   try {
+    // Generiere neuen Code
     const codeResponse = await $fetch('/api/utils/generate-course-code', {
       method: 'GET'
     })
     
-    selectedScenario.value.code = codeResponse.code
-    console.log('Generated new code:', codeResponse.code)
+    const newCode = codeResponse.code
+    
+    // Wenn alter Code existierte, verwende Replace-API
+    if (oldCode && oldCode.trim().length > 0) {
+      try {
+        const replaceResponse = await $fetch('/api/courses/replace-code', {
+          method: 'POST',
+          body: {
+            oldCode: oldCode,
+            newCode: newCode
+          }
+        })
+        
+        if (replaceResponse.success) {
+          selectedScenario.value.code = newCode
+          console.log(`✅ Code erfolgreich geändert: ${oldCode} → ${newCode}`)
+          
+          // Update auch die Scenarios-Liste
+          const scenarioIndex = scenarios.value.findIndex(s => s.code === oldCode)
+          if (scenarioIndex !== -1) {
+            scenarios.value[scenarioIndex].code = newCode
+            // courseId bleibt gleich - nur der Code ändert sich
+          }
+          
+          // Reload scenarios um sicherzustellen, dass die Liste aktuell ist
+          await loadScenarios()
+        }
+        
+      } catch (replaceError) {
+        console.error('Error replacing code:', replaceError)
+        
+        // Bei Fehler: Versuche erneut mit neuem Code
+        console.warn(`Code "${newCode}" nicht verfügbar. Generiere neuen Code...`)
+        
+        // Generiere automatisch neuen Code
+        const retryCodeResponse = await $fetch('/api/utils/generate-course-code', {
+          method: 'GET'
+        })
+        
+        // Versuche mit dem neuen Code
+        const retryResponse = await $fetch('/api/courses/replace-code', {
+          method: 'POST',
+          body: {
+            oldCode: oldCode,
+            newCode: retryCodeResponse.code
+          }
+        })
+        
+        if (retryResponse.success) {
+          selectedScenario.value.code = retryCodeResponse.code
+          console.log(`✅ Code erfolgreich geändert: ${oldCode} → ${retryCodeResponse.code}`)
+          
+          // Update auch die Scenarios-Liste
+          const scenarioIndex = scenarios.value.findIndex(s => s.code === oldCode)
+          if (scenarioIndex !== -1) {
+            scenarios.value[scenarioIndex].code = retryCodeResponse.code
+            // courseId bleibt gleich - nur der Code ändert sich
+          }
+          
+          // Reload scenarios um sicherzustellen, dass die Liste aktuell ist
+          await loadScenarios()
+        }
+      }
+    } else {
+      // Kein alter Code, einfaches Update
+      selectedScenario.value.code = newCode
+      console.log('Generated new code:', newCode)
+    }
+    
   } catch (error) {
     console.error('Error generating code:', error)
     alert('Fehler beim Generieren eines neuen Codes')
@@ -652,13 +766,13 @@ const saveScenario = async () => {
       
       console.log('Updating course with ID:', selectedScenario.value.courseId)
       
-      // Find course by original courseId (which is the original code)
+      // Find course by courseId (which is now the real DB ID)
       const existingCourseResponse = await $fetch('/api/courses', {
         method: 'GET'
       })
       
-      console.log('Looking for course with original code:', selectedScenario.value.courseId)
-      const existingCourse = existingCourseResponse.courses.find((c: any) => c.code === selectedScenario.value.courseId)
+      console.log('Looking for course with ID:', selectedScenario.value.courseId)
+      const existingCourse = existingCourseResponse.courses.find((c: any) => c.id === selectedScenario.value.courseId)
       
       if (!existingCourse) {
         console.error('Course not found in database. Available courses:', existingCourseResponse.courses.map((c: any) => c.code))

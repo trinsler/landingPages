@@ -20,7 +20,11 @@ export default defineEventHandler(async (event) => {
         isPublished: true
       },
       include: {
-        exam: true
+        exam: {
+          include: {
+            questions: true
+          }
+        }
       },
       orderBy: [
         { level: 'asc' },
@@ -35,7 +39,7 @@ export default defineEventHandler(async (event) => {
       description: course.description,
       examId: course.examId || '',
       totalTime: course.totalTime,
-      totalQuestions: course.totalQuestions,
+      totalQuestions: course.exam?.questions?.length || 0, // Use actual question count from exam
       timePerQuestion: course.timePerQuestion,
       level: course.level,
       maxAttempts: course.maxAttempts || 3

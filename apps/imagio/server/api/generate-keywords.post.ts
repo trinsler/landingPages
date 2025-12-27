@@ -56,10 +56,14 @@ export default defineEventHandler(async (event): Promise<GenerateKeywordsRespons
       })
     }
 
-    // Try Ollama API first
+    // Try OpenAI API first
     try {
-      const OLLAMA_API_KEY = 'c1903e8724c24c1695fd846149592e35.K-zuMjEehI_Giqs3A4FtjF4W'
-      const OLLAMA_API_URL = 'https://api.ollama.ai/v1/chat/completions'
+      const OPENAI_API_KEY = process.env.OPENAI_API_KEY
+      const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions'
+      
+      if (!OPENAI_API_KEY || OPENAI_API_KEY === 'REPLACE_WITH_YOUR_REAL_API_KEY') {
+        throw new Error('OpenAI API Key not configured')
+      }
 
       const prompt = `Analysiere die folgende Antwort und extrahiere die wichtigsten Schlüsselwörter (Keywords).
 Gib NUR eine Liste von 8-12 relevanten Keywords zurück, durch Komma getrennt, ohne Nummerierung oder zusätzlichen Text.
@@ -69,14 +73,14 @@ ${body.questionText ? `Frage: ${body.questionText}\n\n` : ''}Antwort: ${body.ans
 
 Keywords:`
 
-      const response = await fetch(OLLAMA_API_URL, {
+      const response = await fetch(OPENAI_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OLLAMA_API_KEY}`
+          'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'qwen2.5:7b',
+          model: 'gpt-3.5-turbo',
           messages: [
             {
               role: 'system',
@@ -87,8 +91,8 @@ Keywords:`
               content: prompt
             }
           ],
-          temperature: 0.3,
-          max_tokens: 200
+          temperature: 0.7,
+          max_tokens: 150
         })
       })
 
@@ -107,16 +111,23 @@ Keywords:`
         }
       }
     } catch (apiError) {
-      console.error('Ollama API failed:', apiError)
-      throw createError({
-        statusCode: 503,
-        statusMessage: 'KI-Service nicht verfügbar. Bitte Keywords manuell eingeben.'
-      })
+      console.error('OpenAI API failed:', apiError)
+      // Fall back to simple keyword extraction
+      const fallbackKeywords = extractKeywordsFromText(body.answerText)
+      if (fallbackKeywords.length > 0) {
+        return { keywords: fallbackKeywords }
+      }
+    }
+
+    // Final fallback: simple keyword extraction
+    const keywords = extractKeywordsFromText(body.answerText)
+    if (keywords.length > 0) {
+      return { keywords }
     }
 
     throw createError({
       statusCode: 503,
-      statusMessage: 'KI-Service nicht verfügbar. Bitte Keywords manuell eingeben.'
+      statusMessage: 'Keine Keywords gefunden. Bitte Keywords manuell eingeben.'
     })
 
   } catch (error: any) {

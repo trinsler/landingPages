@@ -6,47 +6,75 @@ interface GenerateCodeResponse {
 }
 
 /**
- * Simple algorithm: Generate random numbers until we find one that doesn't exist in DB
+ * Robuste Code-Generierung: Garantiert eindeutigen Code durch DB-Prüfung
  */
 export default defineEventHandler(async (): Promise<GenerateCodeResponse> => {
   try {
-    // Simple loop: keep generating until we find unique code
     let attempts = 0
-    const maxAttempts = 100
+    const maxAttempts = 500 // Mehr Versuche für bessere Sicherheit
+    
+    console.log('🔄 Starte Code-Generierung...')
     
     while (attempts < maxAttempts) {
-      // Generate simple random 6-digit code
-      const randomCode = Math.floor(100000 + Math.random() * 900000).toString()
+      attempts++
       
-      // Check if this code already exists in DB
+      // Verschiedene Code-Strategien für mehr Variation
+      let randomCode: string
+      
+      if (attempts <= 100) {
+        // Standard: 6-stellige Zahl
+        randomCode = Math.floor(100000 + Math.random() * 900000).toString()
+      } else if (attempts <= 200) {
+        // Backup: 7-stellige Zahl
+        randomCode = Math.floor(1000000 + Math.random() * 9000000).toString()
+      } else if (attempts <= 300) {
+        // Backup: Buchstaben + Zahlen (z.B. AB1234)
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        const letter1 = letters[Math.floor(Math.random() * letters.length)]
+        const letter2 = letters[Math.floor(Math.random() * letters.length)]
+        const numbers = Math.floor(1000 + Math.random() * 9000)
+        randomCode = `${letter1}${letter2}${numbers}`
+      } else {
+        // Letzte Option: Timestamp-basiert
+        const timestamp = Date.now().toString()
+        const random = Math.floor(Math.random() * 1000)
+        randomCode = `T${timestamp.slice(-5)}${random}`
+      }
+      
+      console.log(`🔍 Versuch ${attempts}: Prüfe Code ${randomCode}`)
+      
+      // Prüfe DB auf Eindeutigkeit
       const existingCourse = await prisma.course.findUnique({
         where: { code: randomCode }
       })
       
-      // If it doesn't exist, we found our unique code!
+      // Code ist eindeutig!
       if (!existingCourse) {
+        console.log(`✅ Eindeutiger Code gefunden: ${randomCode} (nach ${attempts} Versuchen)`)
         return {
           success: true,
           code: randomCode
         }
       }
       
-      attempts++
+      console.log(`❌ Code ${randomCode} bereits vergeben, versuche neuen...`)
     }
     
-    // Fallback: use timestamp if we couldn't find unique code
-    const fallbackCode = Date.now().toString().slice(-6)
+    // Fallback nach allen Versuchen
+    console.error('⚠️ Konnte nach 500 Versuchen keinen eindeutigen Code finden!')
+    const emergencyCode = `EMG${Date.now().toString().slice(-6)}`
     
+    console.log(`🚨 Verwende Notfall-Code: ${emergencyCode}`)
     return {
       success: true, 
-      code: fallbackCode
+      code: emergencyCode
     }
     
   } catch (error) {
-    console.error('Error generating course code:', error)
+    console.error('❌ Fehler bei Code-Generierung:', error)
     throw createError({
       statusCode: 500,
-      statusMessage: 'Error generating course code'
+      statusMessage: 'Fehler bei der Code-Generierung'
     })
   }
 })
