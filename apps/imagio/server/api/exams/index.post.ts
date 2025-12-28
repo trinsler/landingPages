@@ -1,9 +1,10 @@
 import { prisma } from '~/server/lib/prisma'
+import { defineEventHandler, readBody, createError } from 'h3'
 
 interface QuestionData {
   text: string
   answer?: string
-  difficulty: string
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD'
   keywords: string[]
   selected?: boolean
   order?: number
@@ -43,6 +44,31 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
       })
     }
 
+    if (!body.level || body.level < 1 || body.level > 4) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Level must be between 1 and 4'
+      })
+    }
+
+    // Validate questions if provided
+    if (body.questions && body.questions.length > 0) {
+      for (const question of body.questions) {
+        if (!question.text || !question.text.trim()) {
+          throw createError({
+            statusCode: 400,
+            statusMessage: 'All questions must have text'
+          })
+        }
+        if (!['EASY', 'MEDIUM', 'HARD'].includes(question.difficulty)) {
+          throw createError({
+            statusCode: 400,
+            statusMessage: 'Question difficulty must be EASY, MEDIUM, or HARD'
+          })
+        }
+      }
+    }
+
     // Create exam with questions
     const exam = await prisma.exam.create({
       data: {
@@ -53,7 +79,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
         duration: body.duration,
         isPublished: body.isPublished ?? true,
         questions: body.questions ? {
-          create: body.questions.map((q, index) => ({
+          create: body.questions.map((q: QuestionData, index: number) => ({
             text: q.text,
             answer: q.answer,
             difficulty: q.difficulty,
@@ -70,10 +96,15 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
 
     // Link to course if courseId provided
     if (body.courseId) {
-      await prisma.course.update({
-        where: { id: body.courseId },
-        data: { examId: exam.id }
-      })
+      try {
+        await prisma.course.update({
+          where: { id: body.courseId },
+          data: { examId: exam.id }
+        })
+      } catch (courseError) {
+        console.warn('Failed to link exam to course:', courseError)
+        // Continue without linking - exam was created successfully
+      }
     }
 
     return {
@@ -93,7 +124,7 @@ export default defineEventHandler(async (event): Promise<ExamResponse> => {
     console.error('Error creating exam:', error)
     throw createError({
       statusCode: 500,
-      statusMessage: 'Error creating exam'
+      statusMessage: `Error creating exam: ${error.message}`
     })
   }
 })

@@ -39,13 +39,14 @@ export default defineEventHandler(async (event): Promise<StudentSessionResponse>
       })
     }
 
-    // Create or find user
+    // Create or find user by email (more unique than name)
+    const email = `${body.name.toLowerCase().replace(/\s+/g, '.')}@demo.com`
     const user = await prisma.user.upsert({
-      where: { name: body.name },
+      where: { email },
       update: {},
       create: {
         name: body.name,
-        email: `${body.name.toLowerCase().replace(/\s+/g, '.')}@demo.com`
+        email
       }
     })
 

@@ -85,11 +85,13 @@ export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> =
       let keywords: string[] = []
       
       try {
-        keywords = JSON.parse(question.keywords || '[]')
+        const parsed = JSON.parse(question.keywords || '[]')
+        keywords = Array.isArray(parsed) ? parsed : []
       } catch {
         keywords = []
       }
 
+      console.log('Keywords for analysis:', keywords)
       const analysis = await analyzer.analyzeAnswer(body.answerText, keywords)
 
       // Create/update answer with enhanced scoring
@@ -154,9 +156,10 @@ export default defineEventHandler(async (event): Promise<SubmitAnswerResponse> =
     if (error.statusCode) {
       throw error
     }
+    console.error('Error submitting answer:', error)
     throw createError({
       statusCode: 500,
-      statusMessage: 'Error submitting answer'
+      statusMessage: `Error submitting answer: ${error.message}`
     })
   }
 })
