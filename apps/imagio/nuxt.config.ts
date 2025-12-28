@@ -40,7 +40,31 @@ export default defineNuxtConfig({
   // Nitro Config
   nitro: {
     // Disable dev warnings für cleaner Output
-    devErrorHandler: false
+    devErrorHandler: false,
+    // CORS configuration for frontend team
+    cors: {
+      origin: [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000', 
+        'http://localhost:3001',
+        'http://127.0.0.1:3001',
+        'http://localhost:4000',
+        'http://127.0.0.1:4000'
+      ],
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    },
+    // Ensure API routes are handled properly
+    routeRules: {
+      '/api/**': { 
+        cors: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, Origin, X-Requested-With, Accept'
+        }
+      }
+    }
   },
 
   // Vite Konfiguration
