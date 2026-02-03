@@ -1,6 +1,6 @@
 {
   "name": "@imagio/learning-platform",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Enterprise-grade learning platform with advanced keyword analysis and speech recognition",
   "type": "module",
   "private": true,
@@ -79,7 +79,7 @@
     "@vue/test-utils": "^2.4.6",
     "autocannon": "^7.15.0",
     "clinic": "^13.0.0",
-    "eslint": "^9.17.0",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-security": "^3.0.1",
