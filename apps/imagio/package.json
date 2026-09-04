@@ -1,6 +1,6 @@
 {
   "name": "@imagio/learning-platform",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Enterprise-grade learning platform with advanced keyword analysis and speech recognition",
   "type": "module",
   "private": true,
@@ -93,7 +93,7 @@
     "tsx": "^4.19.2",
     "typedoc": "^0.27.4",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^3.2.6"
   },
   "lint-staged": {
     "*.{js,ts,vue}": [
