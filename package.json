@@ -1,6 +1,6 @@
 {
   "name": "landing-pages-monorepo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Monorepo für verschiedene Landing Pages mit geteilten Dependencies",
   "private": true,
   "scripts": {
@@ -43,7 +43,7 @@
     "tailwindcss": "^4.1.13",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4",
+    "vitest": "^4.0.0",
     "vue-tsc": "^3.0.7"
   },
   "dependencies": {
