@@ -1,6 +1,6 @@
 {
   "name": "landing-pages-monorepo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Monorepo für verschiedene Landing Pages mit geteilten Dependencies",
   "private": true,
   "scripts": {
@@ -36,12 +36,12 @@
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.19.2",
-    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/postcss": "^4.3.3",
     "@vitejs/plugin-vue": "^5.2.4",
     "gh-pages": "^6.3.0",
     "jsdom": "^25.0.1",
-    "tailwindcss": "^4.1.13",
-    "tsup": "^8.5.0",
+    "tailwindcss": "^4.3.3",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.0.7"
@@ -52,7 +52,7 @@
     "@nuxtjs/supabase": "^1.6.2",
     "@pinia/nuxt": "^0.11.2",
     "nuxt": "^4.1.2",
-    "pinia": "^3.0.3"
+    "pinia": "^3.0.4"
   },
   "repository": {
     "type": "git",
