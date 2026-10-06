@@ -14,11 +14,11 @@
   "dependencies": {
     "@monorepo/shared": "workspace:*",
     "@monorepo/ui": "workspace:*",
-    "nuxt": "^4.1.2",
+    "nuxt": "^4.5.1",
     "@nuxtjs/tailwindcss": "^6.13.1",
     "tailwindcss": "^4.1.13"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mein.Nachbar - Nuxt 3 App",
   "author": "Niels",
   "license": "MIT",
