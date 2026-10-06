@@ -1,6 +1,6 @@
 {
   "name": "@imagio/learning-platform",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Enterprise-grade learning platform with advanced keyword analysis and speech recognition",
   "type": "module",
   "private": true,
@@ -47,7 +47,7 @@
     "ci": "npm run validate && npm run test:coverage && npm run security:audit"
   },
   "dependencies": {
-    "@nuxt/devtools": "^1.5.0",
+    "@nuxt/devtools": "^3.3.1",
     "@nuxt/image": "^1.8.1",
     "@pinia/nuxt": "^0.5.5",
     "@prisma/client": "^5.22.0",
